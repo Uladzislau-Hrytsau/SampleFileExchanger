@@ -23,25 +23,17 @@ public class File {
     public File() {
     }
 
-    public File(Integer user_id, String url, Date date) {
+    public File(Integer id, Integer user_id, String url, Date date, String category) {
+        this.id = id;
         this.user_id = user_id;
         this.url = url;
         this.date = date;
-    }
-
-    public File(Integer id, Integer user_id, String url, Date date) {
-        this(user_id, url, date);
-        this.id = id;
-    }
-
-    public File(Integer id, Integer user_id, String url, String description, Date date) {
-        this(id, user_id, url, date);
-        this.description = description;
+        this.category = category;
     }
 
     public File(Integer id, Integer user_id, String url, String description, Date date, String category) {
-        this(id, user_id, url, description, date);
-        this.category = category;
+        this(id, user_id, url, date, category);
+        this.description = description;
     }
 
     public Integer getId() {

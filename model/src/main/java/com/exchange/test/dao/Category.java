@@ -14,13 +14,9 @@ public class Category {
     public Category() {
     }
 
-    public Category(String category) {
-        this.category = category;
-    }
-
     public Category(Integer id, String category) {
-        this(category);
         this.id = id;
+        this.category = category;
     }
 
     public Integer getId() {

@@ -59,7 +59,7 @@
                     <artifactId>maven-project-info-reports-plugin</artifactId>
                     <version>2.7</version>
                     <configuration>
-                        <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
+                        <dependencyLocationsEnablezd>false</dependencyLocationsEnablezd>
                     </configuration>
                 </plugin>
 

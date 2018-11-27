@@ -8,9 +8,9 @@ import java.util.Objects;
  */
 public class File {
 
-    private Integer id;
+    private Long id;
 
-    private Integer user_id;
+    private Long user_id;
 
     private String url;
 
@@ -23,7 +23,7 @@ public class File {
     public File() {
     }
 
-    public File(Integer id, Integer user_id, String url, Date date, String category) {
+    public File(Long id, Long user_id, String url, Date date, String category) {
         this.id = id;
         this.user_id = user_id;
         this.url = url;
@@ -31,24 +31,24 @@ public class File {
         this.category = category;
     }
 
-    public File(Integer id, Integer user_id, String url, String description, Date date, String category) {
+    public File(Long id, Long user_id, String url, String description, Date date, String category) {
         this(id, user_id, url, date, category);
         this.description = description;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Integer getUser_id() {
+    public Long getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(Integer user_id) {
+    public void setUser_id(Long user_id) {
         this.user_id = user_id;
     }
 
@@ -89,12 +89,12 @@ public class File {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         File file = (File) o;
-        return id.equals(file.id) &&
-                user_id.equals(file.user_id) &&
-                url.equals(file.url) &&
-                description.equals(file.description) &&
-                date.equals(file.date) &&
-                category.equals(file.category);
+        return Objects.equals(id, file.id) &&
+                Objects.equals(user_id, file.user_id) &&
+                Objects.equals(url, file.url) &&
+                Objects.equals(description, file.description) &&
+                Objects.equals(date, file.date) &&
+                Objects.equals(category, file.category);
     }
 
     @Override
@@ -113,5 +113,4 @@ public class File {
                 ", category='" + category + '\'' +
                 '}';
     }
-
 }

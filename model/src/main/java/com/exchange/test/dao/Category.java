@@ -7,23 +7,23 @@ import java.util.Objects;
  */
 public class Category {
 
-    private Integer id;
+    private Long id;
 
     private String category;
 
     public Category() {
     }
 
-    public Category(Integer id, String category) {
+    public Category(Long id, String category) {
         this.id = id;
         this.category = category;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

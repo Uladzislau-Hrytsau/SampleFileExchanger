@@ -8,7 +8,7 @@ import java.util.Objects;
  */
 public class User {
 
-    private Integer userId;
+    private Long userId;
 
     private String login;
 
@@ -28,31 +28,31 @@ public class User {
         this.password = password;
     }
 
-    public User(Integer userId, String login, String password) {
+    public User(Long userId, String login, String password) {
         this(login, password);
         this.userId = userId;
     }
 
-    public User(Integer userId, String login, String password, Boolean gender) {
+    public User(Long userId, String login, String password, Boolean gender) {
         this(userId, login, password);
         this.gender = gender;
     }
 
-    public User(Integer userId, String login, String password, Boolean gender, Date birthDate) {
+    public User(Long userId, String login, String password, Boolean gender, Date birthDate) {
         this(userId, login, password, gender);
         this.birthDate = birthDate;
     }
 
-    public User(Integer userId, String login, String password, Boolean gender, Date birthDate, String information) {
+    public User(Long userId, String login, String password, Boolean gender, Date birthDate, String information) {
         this(userId, login, password, gender, birthDate);
         this.information = information;
     }
 
-    public Integer getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
@@ -125,5 +125,4 @@ public class User {
                 ", information='" + information + '\'' +
                 '}';
     }
-
 }

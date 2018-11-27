@@ -6,10 +6,16 @@ import com.exchange.test.dao.UserDao;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 
 import javax.sql.DataSource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * UserDao implementation.
@@ -30,10 +36,10 @@ public class UserDaoImpl implements UserDao {
     private String getAllUsersSql;
 
     @Value("${user.selectById}")
-    private String selectUserBypIdSql;
+    private String selectUserByUserIdSql;
 
-    @Value("${user.selectByLogin}")
-    private String selectUserByLoginSql;
+    @Value("${user.selectByUserName}")
+    private String selectUserByUserNameSql;
 
     @Value("${user.insert}")
     private String insertUserSql;
@@ -48,28 +54,56 @@ public class UserDaoImpl implements UserDao {
         jdbcTemplate = new JdbcTemplate(dataSource);
         namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
+
     public List<User> getAllUsers() throws DataAccessException {
         return jdbcTemplate.query(getAllUsersSql, new UserRowMapper());
     }
 
-    public User getUserById(Integer userId) throws DataAccessException {
-        return null;
+    public User getUserByUserId(Long userId) throws DataAccessException {
+        SqlParameterSource namedParameters = new MapSqlParameterSource("p_user_id", userId);
+        User user = namedParameterJdbcTemplate.queryForObject(
+                selectUserByUserIdSql, namedParameters, new UserRowMapper()
+        );
+        return user;
     }
 
-    public User getUserByLogin(String login) throws DataAccessException {
-        return null;
+    public User getUserByLogin(String userName) throws DataAccessException {
+        SqlParameterSource namedParameters = new MapSqlParameterSource("p_user_name", userName);
+        User user = namedParameterJdbcTemplate.queryForObject(
+                selectUserByUserNameSql, namedParameters, new UserRowMapper()
+        );
+        return user;
     }
 
-    public Integer addUser(User user) throws DataAccessException {
-        return null;
+    public Long addUser(User user) throws DataAccessException {
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        MapSqlParameterSource parameterSource = new MapSqlParameterSource();
+        parameterSource.addValue(USER_ID, user.getUserId());
+        parameterSource.addValue(USER_NAME, user.getLogin());
+        parameterSource.addValue(USER_PASSWORD, user.getPassword());
+        parameterSource.addValue(USER_GENDER, user.getGender());
+        parameterSource.addValue(USER_BIRTH_DATE, user.getBirthDate());
+        parameterSource.addValue(USER_INFORMATION, user.getInformation());
+        namedParameterJdbcTemplate.update(
+                insertUserSql, parameterSource, keyHolder
+        );
+        return keyHolder.getKey().longValue();
     }
 
     public int updateUser(User user) throws DataAccessException {
-        return 0;
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put(USER_ID, user.getUserId());
+        params.put(USER_NAME, user.getLogin());
+        params.put(USER_PASSWORD, user.getPassword());
+        params.put(USER_GENDER, user.getGender());
+        params.put(USER_BIRTH_DATE, user.getBirthDate());
+        params.put(USER_INFORMATION, user.getInformation());
+        return namedParameterJdbcTemplate.update(updateUserSql, params);
     }
 
-    public int deleteUser(Integer userId) throws DataAccessException {
-        return 0;
+    public int deleteUser(Long userId) throws DataAccessException {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put(USER_ID, userId);
+        return namedParameterJdbcTemplate.update(deleteUserSql, params);
     }
-
 }

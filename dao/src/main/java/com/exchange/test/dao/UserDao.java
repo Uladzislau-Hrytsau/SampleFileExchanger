@@ -22,7 +22,7 @@ public interface UserDao {
      * @param userId user identifier.
      * @return user.
      */
-    User getUserById(Integer userId) throws DataAccessException;
+    User getUserByUserId(Long userId) throws DataAccessException;
 
     /**
      * Get user by login.
@@ -39,7 +39,7 @@ public interface UserDao {
      * @param user user.
      * @return new user Id.
      */
-    Integer addUser(User user) throws DataAccessException;
+    Long addUser(User user) throws DataAccessException;
 
     /**
      * Update user.
@@ -49,6 +49,6 @@ public interface UserDao {
      */
     int updateUser(User user) throws DataAccessException;
 
-    int deleteUser(Integer userId) throws DataAccessException;
+    int deleteUser(Long userId) throws DataAccessException;
 
 }

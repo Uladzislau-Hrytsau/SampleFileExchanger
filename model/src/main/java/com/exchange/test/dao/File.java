@@ -1,6 +1,7 @@
 package com.exchange.test.dao;
 
-import java.util.Date;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Objects;
 
 /**
@@ -16,24 +17,36 @@ public class File {
 
     private String description;
 
-    private Date date;
+    private LocalDate date;
 
     private String category;
 
     public File() {
     }
 
-    public File(Long id, Long user_id, String url, Date date, String category) {
+    public File(Long id, Long user_id, String url, LocalDate date) {
         this.id = id;
         this.user_id = user_id;
         this.url = url;
         this.date = date;
+    }
+
+    public File(Long id, Long user_id, String url, String description, LocalDate date) {
+        this(id, user_id, url, date);
+        this.description = description;
+    }
+
+    public File(Long id, Long user_id, String url, String description, LocalDate date, String category) {
+        this(id, user_id, url, description, date);
         this.category = category;
     }
 
-    public File(Long id, Long user_id, String url, String description, Date date, String category) {
-        this(id, user_id, url, date, category);
+    public File(Long id, Long user_id, String url, String description, String category) {
+        this.id = id;
+        this.user_id = user_id;
+        this.url = url;
         this.description = description;
+        this.category = category;
     }
 
     public Long getId() {
@@ -68,11 +81,11 @@ public class File {
         this.description = description;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

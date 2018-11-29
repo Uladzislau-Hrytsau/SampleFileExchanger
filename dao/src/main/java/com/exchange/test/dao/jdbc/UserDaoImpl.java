@@ -29,17 +29,19 @@ public class UserDaoImpl implements UserDao {
     public static final String USER_BIRTH_DATE = "user_birth_date";
     public static final String USER_INFORMATION = "user_information";
 
+    private UserRowMapper userRowMapper = new UserRowMapper();
+
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Value("${user.select}")
     private String getAllUsersSql;
 
-    @Value("${user.selectById}")
+    @Value("${user.selectByUserId}")
     private String selectUserByUserIdSql;
 
-    @Value("${user.selectByUserName}")
-    private String selectUserByUserNameSql;
+    @Value("${user.selectByLogin}")
+    private String selectByUserLoginSql;
 
     @Value("${user.insert}")
     private String insertUserSql;
@@ -56,23 +58,21 @@ public class UserDaoImpl implements UserDao {
     }
 
     public List<User> getAllUsers() throws DataAccessException {
-        return jdbcTemplate.query(getAllUsersSql, new UserRowMapper());
+        return jdbcTemplate.query(getAllUsersSql, userRowMapper);
     }
 
     public User getUserByUserId(Long userId) throws DataAccessException {
         SqlParameterSource namedParameters = new MapSqlParameterSource("p_user_id", userId);
-        User user = namedParameterJdbcTemplate.queryForObject(
-                selectUserByUserIdSql, namedParameters, new UserRowMapper()
+        return namedParameterJdbcTemplate.queryForObject(
+                selectUserByUserIdSql, namedParameters, userRowMapper
         );
-        return user;
     }
 
     public User getUserByLogin(String userName) throws DataAccessException {
         SqlParameterSource namedParameters = new MapSqlParameterSource("p_user_name", userName);
-        User user = namedParameterJdbcTemplate.queryForObject(
-                selectUserByUserNameSql, namedParameters, new UserRowMapper()
+        return namedParameterJdbcTemplate.queryForObject(
+                selectByUserLoginSql, namedParameters, userRowMapper
         );
-        return user;
     }
 
     public Long addUser(User user) throws DataAccessException {

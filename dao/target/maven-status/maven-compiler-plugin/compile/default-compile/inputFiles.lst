@@ -1,2 +1,9 @@
 /home/vlad/IdeaProjects/SampleFileExchanger/dao/src/main/java/com/exchange/test/dao/UserDao.java
-/home/vlad/IdeaProjects/SampleFileExchanger/dao/src/main/java/com/exchange/test/dao/UserDaoImpl.java
+/home/vlad/IdeaProjects/SampleFileExchanger/dao/src/main/java/com/exchange/test/dao/jdbc/CategoryDaoImpl.java
+/home/vlad/IdeaProjects/SampleFileExchanger/dao/src/main/java/com/exchange/test/dao/jdbc/FileDaoImpl.java
+/home/vlad/IdeaProjects/SampleFileExchanger/dao/src/main/java/com/exchange/test/dao/CategoryDao.java
+/home/vlad/IdeaProjects/SampleFileExchanger/dao/src/main/java/com/exchange/test/dao/jdbc/mapper/CategoryRowMapper.java
+/home/vlad/IdeaProjects/SampleFileExchanger/dao/src/main/java/com/exchange/test/dao/jdbc/mapper/UserRowMapper.java
+/home/vlad/IdeaProjects/SampleFileExchanger/dao/src/main/java/com/exchange/test/dao/FileDao.java
+/home/vlad/IdeaProjects/SampleFileExchanger/dao/src/main/java/com/exchange/test/dao/jdbc/UserDaoImpl.java
+/home/vlad/IdeaProjects/SampleFileExchanger/dao/src/main/java/com/exchange/test/dao/jdbc/mapper/FileRowMapper.java

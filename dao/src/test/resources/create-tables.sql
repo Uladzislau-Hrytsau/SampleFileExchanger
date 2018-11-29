@@ -1,5 +1,5 @@
 -- create-schema
-CREATE SCHEMA `lib` DEFAULT CHARACTER SET utf8;
+-- CREATE SCHEMA `lib` DEFAULT CHARACTER SET utf8;
 
 -- create-tables.sql
 CREATE TABLE `users`

@@ -1,5 +1,6 @@
 package com.exchange.test.dao;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 
@@ -16,7 +17,7 @@ public class User {
 
     private Boolean gender;
 
-    private Date birthDate;
+    private LocalDate birthDate;
 
     private String information;
 
@@ -38,12 +39,20 @@ public class User {
         this.gender = gender;
     }
 
-    public User(Long userId, String login, String password, Boolean gender, Date birthDate) {
+    public User(Long userId, String login, String password, Boolean gender, LocalDate birthDate) {
         this(userId, login, password, gender);
         this.birthDate = birthDate;
     }
 
-    public User(Long userId, String login, String password, Boolean gender, Date birthDate, String information) {
+    public User(Long userId, String login, String password, Boolean gender, String information) {
+        this.userId = userId;
+        this.login = login;
+        this.password = password;
+        this.gender = gender;
+        this.information = information;
+    }
+
+    public User(Long userId, String login, String password, Boolean gender, LocalDate birthDate, String information) {
         this(userId, login, password, gender, birthDate);
         this.information = information;
     }
@@ -80,11 +89,11 @@ public class User {
         this.gender = gender;
     }
 
-    public Date getBirthDate() {
+    public LocalDate getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
 

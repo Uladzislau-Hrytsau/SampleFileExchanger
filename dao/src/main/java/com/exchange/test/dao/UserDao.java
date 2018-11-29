@@ -28,7 +28,7 @@ public interface UserDao {
      * Get user by login.
      *
      * @param login user login.
-     * @return user
+     * @return user.
      * @throws DataAccessException
      */
     User getUserByLogin(String login) throws DataAccessException;
@@ -49,6 +49,13 @@ public interface UserDao {
      */
     int updateUser(User user) throws DataAccessException;
 
+    /**
+     * Delete user.
+     *
+     * @param userId user identifier.
+     * @return
+     * @throws DataAccessException
+     */
     int deleteUser(Long userId) throws DataAccessException;
 
 }

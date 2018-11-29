@@ -8,7 +8,7 @@ import org.junit.Test;
  */
 public class UserTest {
 
-    public static final int USER_ID = 10;
+    public static final Long USER_ID = 10L;
 
     public static final String LOGIN = "testLogin";
 
@@ -18,8 +18,8 @@ public class UserTest {
     public void getUserId() throws Exception {
 
         User user = new User();
-        user.setUserId(10);
-        Assert.assertEquals("User id: ", (Integer) USER_ID, user.getUserId());
+        user.setUserId(10L);
+        Assert.assertEquals("User id: ", USER_ID, user.getUserId());
     }
 
     @Test

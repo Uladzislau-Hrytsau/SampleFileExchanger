@@ -2,17 +2,21 @@ package com.exchange.test.dao.jdbc;
 
 import com.exchange.test.dao.File;
 import com.exchange.test.dao.FileDao;
-import com.exchange.test.dao.jdbc.mapper.*;
+import com.exchange.test.dao.jdbc.mapper.FileRowMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 
 import javax.sql.DataSource;
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * FileDao implementation.
@@ -28,6 +32,8 @@ public class FileDaoImpl implements FileDao {
 
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
+    private FileRowMapper fileRowMapper = new FileRowMapper();
 
     @Value("${file.selectByUserIdAndCategory}")
     String getAllFilesByUserIdAndCategorySql;
@@ -62,34 +68,56 @@ public class FileDaoImpl implements FileDao {
         return null;
     }
 
-    public List<File> getAllFilesByUserIdAndDate(Long userId, Date date) throws DataAccessException {
+    public List<File> getAllFilesByUserIdAndDate(Long userId, LocalDate date) throws DataAccessException {
         return null;
     }
 
     public List<File> getAllFilesByUserId(Long userId) throws DataAccessException {
-        return null;
+        SqlParameterSource namedParameters = new MapSqlParameterSource("p_user_id", userId);
+//        return jdbcTemplate.queryForObject(getAllFilesByUserIdSql, namedParameters, new FileRowMapper());
+        return jdbcTemplate.query(getAllFilesByUserIdSql, fileRowMapper, userId);
     }
 
     public List<File> getAllFiles() throws DataAccessException {
-        return jdbcTemplate.query(getAllFilesSql, new FileRowMapper());
+        return jdbcTemplate.query(getAllFilesSql, fileRowMapper);
     }
 
     public File getFileById(Long id) throws DataAccessException {
-        SqlParameterSource namedParameters = new MapSqlParameterSource("p_id", ID);
+        SqlParameterSource namedParameters = new MapSqlParameterSource("p_id", id);
         File file = namedParameterJdbcTemplate.queryForObject(
-                getFileByIdSql, namedParameters, new FileRowMapper());
+                getFileByIdSql, namedParameters, fileRowMapper);
         return file;
     }
 
     public Long addFile(File file) throws DataAccessException {
-        return null;
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        MapSqlParameterSource parameterSource = new MapSqlParameterSource();
+        parameterSource.addValue(ID, file.getId());
+        parameterSource.addValue(USER_ID, file.getUser_id());
+        parameterSource.addValue(URL, file.getUrl());
+        parameterSource.addValue(DESCRIPTION, file.getDescription());
+        parameterSource.addValue(DATE, file.getDate());
+        parameterSource.addValue(CATEGORY, file.getCategory());
+        namedParameterJdbcTemplate.update(
+                addFileSql, parameterSource, keyHolder
+        );
+        return keyHolder.getKey().longValue();
     }
 
     public int updateFile(File file) throws DataAccessException {
-        return 0;
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put(ID, file.getId());
+        params.put(USER_ID, file.getUser_id());
+        params.put(URL, file.getUrl());
+        params.put(DESCRIPTION, file.getDescription());
+        params.put(DATE, file.getDate());
+        params.put(CATEGORY, file.getCategory());
+        return namedParameterJdbcTemplate.update(updateFileSql, params);
     }
 
     public int deleteFile(Long id) throws DataAccessException {
-        return 0;
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put(ID, id);
+        return namedParameterJdbcTemplate.update(deleteFileSql, params);
     }
 }

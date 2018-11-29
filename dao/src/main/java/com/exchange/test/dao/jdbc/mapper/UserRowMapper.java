@@ -4,8 +4,10 @@ package com.exchange.test.dao.jdbc.mapper;
 import com.exchange.test.dao.User;
 import org.springframework.jdbc.core.RowMapper;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 import static com.exchange.test.dao.jdbc.UserDaoImpl.*;
 
@@ -17,9 +19,12 @@ public class UserRowMapper implements RowMapper<User> {
                 rs.getString(USER_NAME),
                 rs.getString(USER_PASSWORD),
                 rs.getBoolean(USER_GENDER),
-                rs.getDate(USER_BIRTH_DATE),
                 rs.getString(USER_INFORMATION)
         );
+        Date date = rs.getDate(USER_BIRTH_DATE);
+        if (date != null) {
+            user.setBirthDate(date.toLocalDate());
+        }
 //            user.setUserId(rs.getLong(USER_ID));
 //            user.setLogin(rs.getString(USER_NAME));
 //            user.setPassword(rs.getString(USER_PASSWORD));

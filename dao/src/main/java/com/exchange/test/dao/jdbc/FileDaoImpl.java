@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.sql.DataSource;
 import java.time.LocalDate;
@@ -64,11 +65,11 @@ public class FileDaoImpl implements FileDao {
         namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 
-    public List<File> getAllFilesByUserIdAndCategory(Long userId, String category) throws DataAccessException {
+    public List<File> getAllFilesByUserIdAndCategory(Long userId, String category) throws NotImplementedException {
         return null;
     }
 
-    public List<File> getAllFilesByUserIdAndDate(Long userId, LocalDate date) throws DataAccessException {
+    public List<File> getAllFilesByUserIdAndDate(Long userId, LocalDate date) throws NotImplementedException {
         return null;
     }
 

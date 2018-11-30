@@ -25,12 +25,6 @@ public class UserRowMapper implements RowMapper<User> {
         if (date != null) {
             user.setBirthDate(date.toLocalDate());
         }
-//            user.setUserId(rs.getLong(USER_ID));
-//            user.setLogin(rs.getString(USER_NAME));
-//            user.setPassword(rs.getString(USER_PASSWORD));
-//            user.setGender(rs.getBoolean(USER_GENDER));
-//            user.setBirthDate(rs.getDate(USER_BIRTH_DATE));
-//            user.setInformation(rs.getString(USER_INFORMATION));
         return user;
     }
 }

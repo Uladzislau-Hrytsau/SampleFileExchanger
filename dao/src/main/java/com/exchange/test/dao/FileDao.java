@@ -3,7 +3,6 @@ package com.exchange.test.dao;
 import org.springframework.dao.DataAccessException;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -15,22 +14,22 @@ public interface FileDao {
      * Get all files list by user-id and category.
      *
      * @param userId
-     * @param userId user identifier.
+     * @param userId   user identifier.
      * @param category file category.
      * @return file.
      * @throws DataAccessException
      */
-    //List<File> getAllFilesByUserIdAndCategory(Long userId, String category) throws DataAccessException;
+    List<File> getAllFilesByUserIdAndCategory(Long userId, String category) throws DataAccessException;
 
     /**
      * Get all files list by user-id and date.
      *
      * @param userId user identifier.
-     * @param date upload date.
+     * @param date   upload date.
      * @return file.
      * @throws DataAccessException
      */
-    //List<File> getAllFilesByUserIdAndDate(Long userId, LocalDate date) throws DataAccessException;
+    List<File> getAllFilesByUserIdAndDate(Long userId, LocalDate date) throws DataAccessException;
 
     /**
      * Get all files list by user-id.

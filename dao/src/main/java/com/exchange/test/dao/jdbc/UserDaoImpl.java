@@ -1,8 +1,8 @@
 package com.exchange.test.dao.jdbc;
 
-import com.exchange.test.dao.jdbc.mapper.*;
 import com.exchange.test.dao.User;
 import com.exchange.test.dao.UserDao;
+import com.exchange.test.dao.jdbc.mapper.UserRowMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;

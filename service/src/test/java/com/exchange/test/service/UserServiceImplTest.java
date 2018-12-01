@@ -1,5 +1,6 @@
-package com.exchange.test.dao;
+package com.exchange.test.service;
 
+import com.exchange.test.dao.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,16 +11,16 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
- * Created by Uladzislau Hrytsau on 28.11.18.
+ * Created by Uladzislau Hrytsau on 1.12.18.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath*:test-spring-dao.xml"})
+@ContextConfiguration(locations = {"classpath:service-test.xml"})
 @Transactional
-public class UserDaoImplTest {
-
+public class UserServiceImplTest {
 
     private static final Long USER_ID_1 = 1L;
     private static final String USER_LOGIN_1 = "userLogin1";
@@ -28,28 +29,39 @@ public class UserDaoImplTest {
     private static final LocalDate USER_BIRTH_DATE_1 = LocalDate.of(1000, 10, 10);
     private static final String USER_INFORMATION_1 = "userInformation1";
 
+    private static final Long USER_ID_2 = 2L;
+
     private static final User user_3 = new User(
             3L, "userLogin3", "userPassword3",
-            false, LocalDate.of(2000, 12, 20),
-            "information3");
+            false, LocalDate.of(8888, 8, 8),
+            "userInformation2"
+    );
     private static final User user_4 = new User(
             4L, "userLogin4", "userPassword4",
-            false, LocalDate.of(2000, 12, 20),
-            "information4");
+            true, LocalDate.of(7777, 7, 7),
+            "userInformation4"
+    );
 
     @Autowired
-    UserDao userDao;
+    UserService userService;
 
     @Test
     public void getAllUsersTest() {
-        List<User> users = userDao.getAllUsers();
-        assertTrue(users.size() > 0);
+        List<User> users = userService.getAllUsers();
+        assertNotNull(users);
+        assertEquals(2, users.size());
     }
 
     @Test
     public void getUserByUserIdTest() {
-        User user = userDao.getUserByUserId(1L);
+        User user = userService.getUserByUserId(USER_ID_1);
         assertNotNull(user);
+        assertNotNull(user.getUserId());
+        assertNotNull(user.getLogin());
+        assertNotNull(user.getPassword());
+        assertNotNull(user.getGender());
+        assertNotNull(user.getBirthDate());
+        assertNotNull(user.getInformation());
         assertEquals(USER_ID_1, user.getUserId());
         assertEquals(USER_LOGIN_1, user.getLogin());
         assertEquals(USER_PASSWORD_1, user.getPassword());
@@ -60,8 +72,14 @@ public class UserDaoImplTest {
 
     @Test
     public void getUserByLoginTest() {
-        User user = userDao.getUserByLogin(USER_LOGIN_1);
+        User user = userService.getUserByLogin(USER_LOGIN_1);
         assertNotNull(user);
+        assertNotNull(user.getUserId());
+        assertNotNull(user.getLogin());
+        assertNotNull(user.getPassword());
+        assertNotNull(user.getGender());
+        assertNotNull(user.getBirthDate());
+        assertNotNull(user.getInformation());
         assertEquals(USER_ID_1, user.getUserId());
         assertEquals(USER_LOGIN_1, user.getLogin());
         assertEquals(USER_PASSWORD_1, user.getPassword());
@@ -72,15 +90,16 @@ public class UserDaoImplTest {
 
     @Test
     public void addUserTest() {
-        List<User> users = userDao.getAllUsers();
+        List<User> users = userService.getAllUsers();
         assertNotNull(users);
         int quantityBefore = users.size();
 
-        Long userId = userDao.addUser(user_3);
-        assertNotNull(userId);
+        Long id = userService.addUser(user_3);
+        assertNotNull(id);
 
-        User newUser = userDao.getUserByUserId(userId);
+        User newUser = userService.getUserByUserId(id);
         assertNotNull(newUser);
+
         assertEquals(user_3.getUserId(), newUser.getUserId());
         assertEquals(user_3.getLogin(), newUser.getLogin());
         assertEquals(user_3.getPassword(), newUser.getPassword());
@@ -88,15 +107,13 @@ public class UserDaoImplTest {
         assertEquals(user_3.getBirthDate(), newUser.getBirthDate());
         assertEquals(user_3.getInformation(), newUser.getInformation());
 
-        users = userDao.getAllUsers();
-        assertNotNull(users);
+        users = userService.getAllUsers();
         assertEquals(quantityBefore + 1, users.size());
     }
 
     @Test
     public void updateUserTest() {
-
-        User user = userDao.getUserByUserId(2L);
+        User user = userService.getUserByUserId(USER_ID_2);
         assertNotNull(user);
 
         user.setLogin("updatedLogin");
@@ -105,10 +122,10 @@ public class UserDaoImplTest {
         user.setBirthDate(LocalDate.of(1111, 11, 11));
         user.setInformation("updatedInformation");
 
-        int count = userDao.updateUser(user);
+        int count = userService.updateUser(user);
         assertEquals(1, count);
 
-        User updatedUser = userDao.getUserByUserId(user.getUserId());
+        User updatedUser = userService.getUserByUserId(user.getUserId());
         assertNotNull(updatedUser);
 
         assertEquals(user.getLogin(), updatedUser.getLogin());
@@ -120,18 +137,31 @@ public class UserDaoImplTest {
 
     @Test
     public void deleteUserTest() {
-        Long userId = userDao.addUser(user_4);
-        assertNotNull(userId);
-
-        List<User> users = userDao.getAllUsers();
+        List<User> users = userService.getAllUsers();
         assertNotNull(users);
-        int  quantityBefore = users.size();
+        int quantityBefore = users.size();
 
-        int count = userDao.deleteUser(userId);
+        Long id = userService.addUser(user_4);
+        assertNotNull(id);
+
+        User newUser = userService.getUserByUserId(id);
+        assertNotNull(newUser);
+
+        assertEquals(user_4.getUserId(), newUser.getUserId());
+        assertEquals(user_4.getLogin(), newUser.getLogin());
+        assertEquals(user_4.getPassword(), newUser.getPassword());
+        assertEquals(user_4.getGender(), newUser.getGender());
+        assertEquals(user_4.getBirthDate(), newUser.getBirthDate());
+        assertEquals(user_4.getInformation(), newUser.getInformation());
+
+        users = userService.getAllUsers();
+        assertEquals(quantityBefore + 1, users.size());
+
+        int count = userService.deleteUser(id);
+        users = userService.getAllUsers();
+        assertNotNull(users);
         assertEquals(1, count);
-
-        users = userDao.getAllUsers();
-        assertNotNull(users);
-        assertEquals(quantityBefore - 1, users.size());
+        assertEquals(quantityBefore, users.size());
     }
+
 }

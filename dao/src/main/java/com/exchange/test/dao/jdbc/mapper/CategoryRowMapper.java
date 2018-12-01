@@ -9,6 +9,9 @@ import java.sql.SQLException;
 import static com.exchange.test.dao.jdbc.CategoryDaoImpl.CATEGORY;
 import static com.exchange.test.dao.jdbc.CategoryDaoImpl.ID;
 
+/**
+ * Created by Uladzislau Hrytsau on 27.11.18.
+ */
 public class CategoryRowMapper implements RowMapper<Category> {
 
     public Category mapRow(ResultSet rs, int rowNum) throws SQLException {

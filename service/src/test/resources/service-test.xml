@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns="http://www.springframework.org/schema/beans"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <import resource="classpath*:test-spring-db.xml"/>
 
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+
         <property name="locations">
             <list>
                 <value>classpath:app.properties</value>
-                <value>classpath:test-database.properties</value>
+                <value>classpath:database-test.properties</value>
             </list>
         </property>
     </bean>
@@ -19,8 +20,7 @@
         <constructor-arg ref="dataSource"/>
     </bean>
 
-    <bean id="fileDao" class="com.exchange.test.dao.jdbc.FileDaoImpl">
-        <constructor-arg ref="dataSource"/>
+    <bean id="userService" class="com.exchange.test.service.rest.UserServiceImpl">
+        <property name="userDao" ref="userDao"/>
     </bean>
-
 </beans>

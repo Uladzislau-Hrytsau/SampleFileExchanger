@@ -21,6 +21,7 @@ import java.util.Map;
 
 /**
  * FileDao implementation.
+ * Created by Uladzislau Hrytsau on 27.11.18.
  */
 public class FileDaoImpl implements FileDao {
 

@@ -10,8 +10,8 @@ values (3, 'entertainment');
 insert into users (user_id, user_name, user_password, user_gender, user_birth_date, user_information)
 values (1, 'userLogin1', 'userPassword1', true, '1000-10-10', 'userInformation1');
 
-insert into users (user_id, user_name, user_password)
-values (2, 'userLogin2', 'userPassword2');
+insert into users (user_id, user_name, user_password, user_gender, user_birth_date, user_information)
+values (2, 'userLogin2', 'userPassword2', false, '9999-9-9', 'userInformation2');
 
 insert into files (id, user_id, url, description, date, category)
 values (1, 1, 'url1', 'description1', '1111-11-11', 1);

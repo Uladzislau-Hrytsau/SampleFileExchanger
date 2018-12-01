@@ -19,6 +19,7 @@ import java.util.Map;
 
 /**
  * UserDao implementation.
+ * Created by Uladzislau Hrytsau on 27.11.18.
  */
 public class UserDaoImpl implements UserDao {
 

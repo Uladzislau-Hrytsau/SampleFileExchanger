@@ -12,6 +12,9 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
+/**
+ * Created by Uladzislau Hrytsau on 28.11.18.
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath*:test-spring-dao.xml"})
 @Transactional
@@ -32,26 +35,26 @@ public class FileDaoImplTest {
     FileDao fileDao;
 
     @Test
-    public void getAllFilesByUserId() {
+    public void getAllFilesByUserIdTest() {
         List<File> files = fileDao.getAllFilesByUserId(1L);
         assertTrue(files.size() > 0);
     }
 
     @Test
-    public void getAllFiles() {
+    public void getAllFilesTest() {
         List<File> files = fileDao.getAllFiles();
         assertTrue(files.size() > 0);
     }
 
     @Test
-    public void getFileById() {
+    public void getFileByIdTest() {
         File file = fileDao.getFileById(1L);
         assertNotNull(file);
         assertEquals(ID_1, file.getId());
     }
 
     @Test
-    public void addFile() {
+    public void addFileTest() {
         List<File> files = fileDao.getAllFiles();
         assertNotNull(files);
         int quantityBefore = files.size();
@@ -76,7 +79,7 @@ public class FileDaoImplTest {
 
 
     @Test
-    public void updateFile() {
+    public void updateFileTest() {
         File file = fileDao.getFileById(2L);
         assertNotNull(file);
 
@@ -96,7 +99,7 @@ public class FileDaoImplTest {
     }
 
     @Test
-    public void deleteFile() {
+    public void deleteFileTest() {
         Long id =  fileDao.addFile(file_2);
         assertNotNull(id);
 

@@ -8,6 +8,7 @@ import javax.sql.DataSource;
 
 /**
  * CategoryDao implementation.
+ * Created by Uladzislau Hrytsau on 27.11.18.
  */
 public class CategoryDaoImpl implements CategoryDao {
 

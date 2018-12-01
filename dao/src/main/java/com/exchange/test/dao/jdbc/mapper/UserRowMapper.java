@@ -10,6 +10,9 @@ import java.sql.SQLException;
 
 import static com.exchange.test.dao.jdbc.UserDaoImpl.*;
 
+/**
+ * Created by Uladzislau Hrytsau on 27.11.18.
+ */
 public class UserRowMapper implements RowMapper<User> {
 
     public User mapRow(ResultSet rs, int rowNum) throws SQLException {

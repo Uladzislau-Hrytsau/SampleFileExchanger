@@ -1,15 +1,15 @@
-package com.exchange.test.dao;
+package com.exchange.test.service;
 
+import com.exchange.test.dao.User;
 import org.springframework.dao.DataAccessException;
 
 import java.util.List;
 
 /**
- * UserDao interface.
- * Created by Uladzislau Hrytsau on 27.11.18.
+ * User Service interface
+ * Created by Uladzislau Hrytsau on 1.12.18.
  */
-public interface UserDao {
-
+public interface UserService {
     /**
      * Get all users list.
      *

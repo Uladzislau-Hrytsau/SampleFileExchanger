@@ -1,15 +1,16 @@
-package com.exchange.test.dao;
+package com.exchange.test.service;
 
+import com.exchange.test.dao.File;
 import org.springframework.dao.DataAccessException;
 
 import java.time.LocalDate;
 import java.util.List;
 
 /**
- * FileDao interface.
- * Created by Uladzislau Hrytsau on 27.11.18.
+ * File Service interface.
+ * Created by Uladzislau Hrytsau on 1.12.18.
  */
-public interface FileDao {
+public interface FileService {
 
     /**
      * Get all files list by user-id and category.
@@ -84,5 +85,4 @@ public interface FileDao {
      * @throws DataAccessException
      */
     int deleteFile(Long id) throws DataAccessException;
-
 }

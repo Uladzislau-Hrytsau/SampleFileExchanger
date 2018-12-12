@@ -1,10 +1,10 @@
-insert into category (id, category)
+insert into categories (id, category)
 values (1, 'default');
 
-insert into category (id, category)
+insert into categories (id, category)
 values (2, 'work');
 
-insert into category (id, category)
+insert into categories (id, category)
 values (3, 'entertainment');
 
 insert into users (user_id, user_name, user_password, user_gender, user_birth_date, user_information)

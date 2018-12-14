@@ -22,8 +22,10 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     UserDao userDao;
+
     @Autowired
     Validator validator;
+
     @Value("${userService.deleteError}")
     private String deleteError;
     @Value("${userService.updateError}")
@@ -37,6 +39,10 @@ public class UserServiceImpl implements UserService {
 
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
+    }
+
+    public void setValidator(Validator validator) {
+        this.validator = validator;
     }
 
     @Override

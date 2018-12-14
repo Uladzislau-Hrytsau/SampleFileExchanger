@@ -1,26 +1,24 @@
--- create-schema
-CREATE SCHEMA `lib` DEFAULT CHARACTER SET utf8;
+CREATE SCHEMA IF NOT EXISTS `lib` DEFAULT CHARACTER SET utf8 ;
 
--- test-create-tables.sql
-CREATE TABLE `users`
-(
-  `user_id`          bigint(10) unsigned NOT NULL AUTO_INCREMENT,
-  `user_name`        varchar(45) NOT NULL,
-  `user_password`    varchar(45) NOT NULL,
-  `user_gender`      varchar(45)   DEFAULT NULL,
-  `user_birth_date`  date          DEFAULT NULL,
+CREATE TABLE IF NOT EXISTS `users` (
+  `user_id` bigint(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_name` varchar(45) NOT NULL,
+  `user_password` varchar(45) NOT NULL,
+  `user_gender` varchar(45) DEFAULT NULL,
+  `user_birth_date` date DEFAULT NULL,
   `user_information` varchar(1024) DEFAULT NULL,
-  PRIMARY KEY (`user_id`, `user_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`user_id`,`user_name`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 
-CREATE TABLE `categories` (
+
+CREATE TABLE IF NOT EXISTS `categories` (
   `id` bigint(10) unsigned NOT NULL AUTO_INCREMENT,
   `category` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
-CREATE TABLE `files` (
+CREATE TABLE IF NOT EXISTS `files` (
   `id`    bigint(10) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` bigint(10) unsigned NOT NULL,
   `url` varchar(45) NOT NULL,

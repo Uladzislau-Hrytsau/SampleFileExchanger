@@ -20,12 +20,14 @@ public class CategoryDaoImpl implements CategoryDao {
 
     public static final String ID = "id";
     public static final String CATEGORY = "category";
+
     @Value("${category.select}")
     String getAllCategoriesSql;
     @Value("${category.selectById}")
     String getCategoryByIdSql;
     @Value("${category.checkCategoryById}")
     String checkCategoryByIdSql;
+
     private CategoryRowMapper categoryRowMapper = new CategoryRowMapper();
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;

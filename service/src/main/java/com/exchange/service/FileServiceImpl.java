@@ -52,6 +52,18 @@ public class FileServiceImpl implements FileService {
     private File file;
     private List<File> files;
 
+    public void setUserDao(UserDao userDao) {
+        this.userDao = userDao;
+    }
+
+    public void setFileDao(FileDao fileDao) {
+        this.fileDao = fileDao;
+    }
+
+    public void setCategoryDao(CategoryDao categoryDao) {
+        this.categoryDao = categoryDao;
+    }
+
     @Override
     public List<File> getAllFilesByUserIdAndCategory(Long userId, String category) throws NotImplementedException {
         return null;
@@ -73,8 +85,7 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public List<File> getAllFiles() {
-        files = fileDao.getAllFiles();
-        return files;
+        return fileDao.getAllFiles();
     }
 
     @Override

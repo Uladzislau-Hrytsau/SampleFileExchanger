@@ -1,17 +1,17 @@
 -- create-schema
 -- CREATE SCHEMA `lib` DEFAULT CHARACTER SET utf8;
 
--- test-create-tables.sql
-CREATE TABLE `users`
-(
-  `user_id`          bigint(10) unsigned NOT NULL AUTO_INCREMENT,
-  `user_name`        varchar(45) NOT NULL,
-  `user_password`    varchar(45) NOT NULL,
-  `user_gender`      varchar(45)   DEFAULT NULL,
-  `user_birth_date`  date          DEFAULT NULL,
+-- create-tables.sql
+CREATE TABLE `users` (
+  `user_id` bigint(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_name` varchar(45) NOT NULL,
+  `user_password` varchar(45) NOT NULL,
+  `user_gender` varchar(45) DEFAULT NULL,
+  `user_birth_date` date DEFAULT NULL,
   `user_information` varchar(1024) DEFAULT NULL,
-  PRIMARY KEY (`user_id`, `user_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`user_id`,`user_name`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+
 
 
 CREATE TABLE `categories` (
@@ -32,4 +32,9 @@ CREATE TABLE `files` (
   KEY `fk_files_1_idx` (`user_id`),
   KEY `fk_files_2_idx` (`category`),
   CONSTRAINT `fk_files_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+
+
+
+
+

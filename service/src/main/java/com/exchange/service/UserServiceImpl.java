@@ -41,10 +41,6 @@ public class UserServiceImpl implements UserService {
         this.userDao = userDao;
     }
 
-    public void setValidator(Validator validator) {
-        this.validator = validator;
-    }
-
     @Override
     public List<User> getAllUsers() {
         return userDao.getAllUsers();

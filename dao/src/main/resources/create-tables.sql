@@ -1,6 +1,8 @@
-CREATE SCHEMA IF NOT EXISTS `lib` DEFAULT CHARACTER SET utf8 ;
+-- create-schema
+-- CREATE SCHEMA `lib` DEFAULT CHARACTER SET utf8;
 
-CREATE TABLE IF NOT EXISTS `users` (
+-- create-tables.sql
+CREATE TABLE `users` (
   `user_id` bigint(10) unsigned NOT NULL AUTO_INCREMENT,
   `user_name` varchar(45) NOT NULL,
   `user_password` varchar(45) NOT NULL,
@@ -8,18 +10,19 @@ CREATE TABLE IF NOT EXISTS `users` (
   `user_birth_date` date DEFAULT NULL,
   `user_information` varchar(1024) DEFAULT NULL,
   PRIMARY KEY (`user_id`,`user_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 
 
-CREATE TABLE IF NOT EXISTS `categories` (
+CREATE TABLE `categories` (
   `id` bigint(10) unsigned NOT NULL AUTO_INCREMENT,
   `category` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
-CREATE TABLE IF NOT EXISTS `files` (
-  `id`    bigint(10) unsigned NOT NULL AUTO_INCREMENT,
+
+CREATE TABLE `files` (
+  `id` bigint(10) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` bigint(10) unsigned NOT NULL,
   `url` varchar(45) NOT NULL,
   `description` varchar(256) DEFAULT 'not set',
@@ -29,5 +32,16 @@ CREATE TABLE IF NOT EXISTS `files` (
   KEY `fk_files_1_idx` (`user_id`),
   KEY `fk_files_2_idx` (`category`),
   CONSTRAINT `fk_files_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+
+
+
+
+
+
+
+
+
+
+
 

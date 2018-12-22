@@ -9,9 +9,8 @@
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
             <list>
-                <value>classpath:message.properties</value>
                 <value>classpath:sql-queries.properties</value>
-                <value>classpath:database-test.properties</value>
+                <value>classpath:test-database.properties</value>
             </list>
         </property>
     </bean>
@@ -22,7 +21,9 @@
 
     <bean id="userService" class="com.exchange.service.UserServiceImpl">
         <property name="userDao" ref="userDao"/>
-        <!--<property name="validator" ref="validator"/>-->
     </bean>
+
+    <bean id="validator" class="com.exchange.service.validator.Validator"/>
+
 
 </beans>

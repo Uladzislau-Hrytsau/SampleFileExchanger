@@ -101,7 +101,7 @@ public class FileServiceImpl implements FileService {
     public Long addFile(File file) {
         Long userId = file.getUser_id();
         String url = file.getUrl();
-        if (userId == null || userId < 0L)
+        if (userId < 0L)
             throw new ValidationException(incorrectId);
         if (!userDao.checkUserByUserId(userId))
             throw new ValidationException(userDoesNotExist);
@@ -130,7 +130,7 @@ public class FileServiceImpl implements FileService {
     public void deleteFile(Long id) {
         if (id == null || id < 0L)
             throw new ValidationException(incorrectId);
-        if (fileDao.deleteFile(id) != 0)
+        if (fileDao.deleteFile(id) == 0)
             throw new InternalServerException(deleteError);
     }
 }

@@ -1,5 +1,7 @@
 package com.exchange.service;
 
+
+
 import com.exchange.dao.User;
 import org.junit.Assert;
 import org.junit.Test;
@@ -15,7 +17,7 @@ import java.util.List;
  * Created by mentor on 20.2.17.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:service-test.xml"})
+@ContextConfiguration(locations = {"classpath:test-spring-service.xml"})
 @Transactional
 public class UserServiceImplTest {
 
@@ -32,11 +34,10 @@ public class UserServiceImplTest {
 
     @Test
     public void getUserById() throws Exception {
-        // FIXME implement test
     }
 
     @Test
-    public void getUserByLogin() throws Exception {
+    public void getUserByLoginTest() {
         User user = userService.getUserByLogin(USER_LOGIN_1);
         Assert.assertNotNull(user);
         Assert.assertNotNull(user.getLogin());
@@ -44,17 +45,17 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void addUser() throws Exception {
+    public void addUser() {
         // FIXME implement test
     }
 
     @Test
-    public void updateUser() throws Exception {
+    public void updateUser() {
         // FIXME implement test
     }
 
     @Test
-    public void deleteUser() throws Exception {
+    public void deleteUser() {
         // FIXME implement test
     }
 

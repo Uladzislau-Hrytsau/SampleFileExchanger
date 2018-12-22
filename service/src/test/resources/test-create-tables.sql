@@ -1,3 +1,7 @@
+DROP TABLE IF EXISTS `categories`;
+DROP TABLE IF EXISTS `files`;
+DROP TABLE IF EXISTS `users`;
+
 CREATE TABLE `users` (
   `user_id` bigint(10) unsigned NOT NULL AUTO_INCREMENT,
   `user_name` varchar(45) NOT NULL,
@@ -8,14 +12,11 @@ CREATE TABLE `users` (
   PRIMARY KEY (`user_id`,`user_name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
-
-
 CREATE TABLE `categories` (
   `id` bigint(10) unsigned NOT NULL AUTO_INCREMENT,
   `category` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
-
 
 CREATE TABLE `files` (
   `id` bigint(10) unsigned NOT NULL AUTO_INCREMENT,

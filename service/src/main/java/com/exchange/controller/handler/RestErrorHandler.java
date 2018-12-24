@@ -1,5 +1,6 @@
-package com.exchange.controller;
+package com.exchange.controller.handler;
 
+import com.exchange.controller.response.Response;
 import com.exchange.exception.InternalServerException;
 import com.exchange.exception.ValidationException;
 import org.springframework.dao.DataAccessException;

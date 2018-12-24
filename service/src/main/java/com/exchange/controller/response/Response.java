@@ -1,4 +1,4 @@
-package com.exchange.controller;
+package com.exchange.controller.response;
 
 import java.util.List;
 

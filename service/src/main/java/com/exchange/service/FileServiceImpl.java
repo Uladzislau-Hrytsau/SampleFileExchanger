@@ -99,18 +99,25 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public Long addFile(File file) {
+
         Long userId = file.getUser_id();
         String url = file.getUrl();
-        if (userId < 0L)
+
+        if (userId == null || userId < 0L)
             throw new ValidationException(incorrectId);
+
         if (!userDao.checkUserByUserId(userId))
             throw new ValidationException(userDoesNotExist);
+
         if (url == null || url.isEmpty() || fileDao.checkFileByUrl(url))
             throw new ValidationException(incorrectUrl);
+
         if (file.getDate() == null)
             file.setDate(LocalDate.now());
+
         if (!categoryDao.checkCategoryById(file.getCategoryId()))
             throw new ValidationException(incorrectCategory);
+
         return fileDao.addFile(file);
     }
 
@@ -118,10 +125,13 @@ public class FileServiceImpl implements FileService {
     public void updateFile(File file) {
         String description = file.getDescription();
         Long category = file.getCategoryId();
+
         if (description == null || description.isEmpty())
             throw new ValidationException(incorrectDescription);
+
         if (category == null || category < 0L || categoryDao.checkCategoryById(category))
             throw new ValidationException(incorrectCategory);
+
         if (fileDao.updateFile(file) == 0)
             throw new InternalServerException(updateError);
     }

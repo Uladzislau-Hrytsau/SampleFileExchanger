@@ -8,8 +8,6 @@
        http://www.springframework.org/schema/jdbc
        http://www.springframework.org/schema/jdbc/spring-jdbc.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-    <!--<context:component-scan base-package="com.exchange"/>-->
-
     <mvc:annotation-driven/>
 
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -17,7 +15,6 @@
             <list>
                 <value>classpath:sql-queries.properties</value>
                 <value>classpath:database.properties</value>
-                <value>classpath:message.properties</value>
             </list>
         </property>
     </bean>

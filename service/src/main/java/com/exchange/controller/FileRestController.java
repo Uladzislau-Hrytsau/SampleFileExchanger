@@ -14,43 +14,42 @@ import java.util.List;
  */
 @CrossOrigin
 @RestController
-@RequestMapping("/file")
 public class FileRestController {
 
     @Autowired
     FileService fileService;
 
-    @GetMapping
+    @GetMapping("/files")
     @ResponseStatus(value = HttpStatus.OK)
     public List<File> getAllFiles() {
         return fileService.getAllFiles();
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/file/{id}")
     @ResponseStatus(value = HttpStatus.OK)
     public File getFileById(@PathVariable(value = "id") Long id) {
         return fileService.getFileById(id);
     }
 
-    @GetMapping("all/{userId}")
+    @GetMapping("/files/{userId}")
     @ResponseStatus(value = HttpStatus.OK)
     public List<File> getAllFilesByUserId(@PathVariable(value = "userId") Long userId) {
         return fileService.getAllFilesByUserId(userId);
     }
 
-    @PostMapping
+    @PostMapping("/file")
     @ResponseStatus(value = HttpStatus.CREATED)
     public Long addFile(@RequestBody File file) {
         return fileService.addFile(file);
     }
 
-    @PutMapping
+    @PutMapping("/file")
     @ResponseStatus(value = HttpStatus.OK)
     public void updateFile(@RequestBody File file) {
         fileService.updateFile(file);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/file/{id}")
     @ResponseStatus(value = HttpStatus.OK)
     public void deleteFile(@PathVariable(value = "id") Long id) {
         fileService.deleteFile(id);

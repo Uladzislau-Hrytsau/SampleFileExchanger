@@ -11,7 +11,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import static org.mockito.Matchers.anyLong;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -24,8 +23,6 @@ public class UserServiceImplMockTest {
     private static final String NULL_LOGIN = null;
     private static final String EMPTY_LOGIN = "";
 
-    private static final ValidationException validationException = new ValidationException();
-    private static final InternalServerException internalServerException = new InternalServerException();
     @Mock
     private UserDao userDaoMock;
     @Mock

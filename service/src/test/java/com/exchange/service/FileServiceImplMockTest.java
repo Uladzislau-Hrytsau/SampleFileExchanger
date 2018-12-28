@@ -27,9 +27,6 @@ public class FileServiceImplMockTest {
     private static final Long CORRECT_CATEGORY_ID = 3L;
     private static final Long NULL_CATEGORY_ID = null;
     private static final Long INCORRECT_CATEGORY_ID = -3L;
-    private static final String CORRECT_LOGIN = "login";
-    private static final String NULL_LOGIN = null;
-    private static final String EMPTY_LOGIN = "";
     private static final String CORRECT_URL = "url";
     private static final String NULL_URL = null;
     private static final String EMPTY_URL = "";
@@ -45,11 +42,9 @@ public class FileServiceImplMockTest {
     FileDao fileDaoMock;
     @Mock
     CategoryDao categoryDaoMock;
-    @Mock
-    File fileMock;
     @InjectMocks
     FileServiceImpl fileServiceImpl;
-    private File file = new File(
+    private final File file = new File(
             CORRECT_ID, CORRECT_ID, CORRECT_URL,
             CORRECT_DESCRIPTION, CORRECT_DATE,
             CORRECT_CATEGORY_ID

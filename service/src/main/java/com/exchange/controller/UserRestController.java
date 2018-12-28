@@ -14,43 +14,42 @@ import java.util.List;
  */
 @CrossOrigin
 @RestController
-@RequestMapping("/user")
 public class UserRestController {
 
     @Autowired
     private UserService userService;
 
-    @GetMapping
+    @GetMapping("/users")
     @ResponseStatus(value = HttpStatus.OK)
     public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
 
-    @GetMapping(value = "{id}")
+    @GetMapping(value = "/user/{id}")
     @ResponseStatus(value = HttpStatus.OK)
     public User getUserByUserId(@PathVariable(value = "id") Long userId) {
         return userService.getUserByUserId(userId);
     }
 
-    @GetMapping(value = "login/{login}")
+    @GetMapping(value = "/user/login/{login}")
     @ResponseStatus(value = HttpStatus.OK)
     public User getUserByLogin(@PathVariable(value = "login") String login) {
         return userService.getUserByLogin(login);
     }
 
-    @PostMapping
+    @PostMapping("/user")
     @ResponseStatus(value = HttpStatus.CREATED)
     public Long addUser(@RequestBody User user) {
         return userService.addUser(user);
     }
 
-    @PutMapping
+    @PutMapping("/user")
     @ResponseStatus(value = HttpStatus.OK)
     public void updateUser(@RequestBody User user) {
         userService.updateUser(user);
     }
 
-    @DeleteMapping(value = "{id}")
+    @DeleteMapping(value = "/user/{id}")
     @ResponseStatus(value = HttpStatus.OK)
     public void deleteUser(@PathVariable(value = "id") Long userId) {
         userService.deleteUser(userId);

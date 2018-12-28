@@ -9,17 +9,21 @@
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
             <list>
-                <value>classpath:app.properties</value>
-                <value>classpath:database.properties</value>
+                <value>classpath:sql-queries.properties</value>
+                <value>classpath:test-database.properties</value>
             </list>
         </property>
     </bean>
 
-    <bean id="userDao" class="com.exchange.test.dao.jdbc.UserDaoImpl">
+    <bean id="userDao" class="com.exchange.dao.jdbc.UserDaoImpl">
         <constructor-arg ref="dataSource"/>
     </bean>
 
-    <bean id="fileDao" class="com.exchange.test.dao.jdbc.FileDaoImpl">
+    <bean id="fileDao" class="com.exchange.dao.jdbc.FileDaoImpl">
+        <constructor-arg ref="dataSource"/>
+    </bean>
+
+    <bean id="categoryDao" class="com.exchange.dao.jdbc.CategoryDaoImpl">
         <constructor-arg ref="dataSource"/>
     </bean>
 

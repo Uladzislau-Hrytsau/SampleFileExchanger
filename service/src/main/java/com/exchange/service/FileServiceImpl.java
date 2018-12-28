@@ -24,30 +24,30 @@ import java.util.List;
 public class FileServiceImpl implements FileService {
 
     @Autowired
-    UserDao userDao;
+    private UserDao userDao;
 
     @Autowired
-    FileDao fileDao;
+    private FileDao fileDao;
 
     @Autowired
-    CategoryDao categoryDao;
+    private CategoryDao categoryDao;
 
     @Value("${fileService.incorrectId}")
-    String incorrectId;
+    private String incorrectId;
     @Value("${fileService.fileDoesNotExist}")
-    String fileDoesNotExist;
+    private String fileDoesNotExist;
     @Value("${fileService.incorrectUrl}")
-    String incorrectUrl;
+    private String incorrectUrl;
     @Value("${userService.userDoesNotExist}")
-    String userDoesNotExist;
+    private String userDoesNotExist;
     @Value("${fileService.incorrectCategory}")
-    String incorrectCategory;
+    private String incorrectCategory;
     @Value("${fileService.incorrectDescription}")
-    String incorrectDescription;
+    private String incorrectDescription;
     @Value("${fileService.updateError}")
-    String updateError;
+    private String updateError;
     @Value("${fileService.deleteError}")
-    String deleteError;
+    private String deleteError;
 
     private File file;
     private List<File> files;
@@ -62,16 +62,6 @@ public class FileServiceImpl implements FileService {
 
     public void setCategoryDao(CategoryDao categoryDao) {
         this.categoryDao = categoryDao;
-    }
-
-    @Override
-    public List<File> getAllFilesByUserIdAndCategory(Long userId, String category) throws NotImplementedException {
-        return null;
-    }
-
-    @Override
-    public List<File> getAllFilesByUserIdAndDate(Long userId, LocalDate date) throws NotImplementedException {
-        return null;
     }
 
     @Override

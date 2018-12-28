@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
-public class Validator {
+public class UserValidator {
 
     @Value("${userService.incorrectLoginOrPassword}")
     private String incorrectLoginOrPassword;

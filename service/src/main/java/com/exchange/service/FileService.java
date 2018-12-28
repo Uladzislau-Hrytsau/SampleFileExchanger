@@ -12,25 +12,6 @@ import java.util.List;
 public interface FileService {
 
     /**
-     * Get all files list by user-id and category.
-     *
-     * @param userId
-     * @param userId   user identifier.
-     * @param category file category.
-     * @return file.
-     */
-    List<File> getAllFilesByUserIdAndCategory(Long userId, String category);
-
-    /**
-     * Get all files list by user-id and date.
-     *
-     * @param userId user identifier.
-     * @param date   upload date.
-     * @return file.
-     */
-    List<File> getAllFilesByUserIdAndDate(Long userId, LocalDate date);
-
-    /**
      * Get all files list by user-id.
      *
      * @param userId user identifier.

@@ -12,7 +12,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ValidatorMockTest {
+public class UserValidatorMockTest {
 
     private static final String LOGIN = "login";
     private static final String PASSWORD = "password";
@@ -23,14 +23,14 @@ public class ValidatorMockTest {
     @Mock
     private User userMock;
     @InjectMocks
-    private Validator validator;
+    private UserValidator userValidator;
 
     @Test
     public void validateLoginAndPasswordSuccessMockTest() {
         when(userMock.getLogin()).thenReturn(LOGIN);
         when(userMock.getPassword()).thenReturn(PASSWORD);
         doReturn(false).when(userDaoMock).checkUserByLogin(anyString());
-        validator.validateLoginAndPassword(userMock, userDaoMock);
+        userValidator.validateLoginAndPassword(userMock, userDaoMock);
 
     }
 
@@ -39,7 +39,7 @@ public class ValidatorMockTest {
         when(userMock.getLogin()).thenReturn(EMPTY);
         when(userMock.getPassword()).thenReturn(EMPTY);
         verify(userDaoMock, times(0)).checkUserByLogin(anyString());
-        validator.validateLoginAndPassword(userMock, userDaoMock);
+        userValidator.validateLoginAndPassword(userMock, userDaoMock);
     }
 
     @Test(expected = ValidationException.class)
@@ -47,7 +47,7 @@ public class ValidatorMockTest {
         when(userMock.getLogin()).thenReturn(NULL);
         when(userMock.getPassword()).thenReturn(NULL);
         verify(userDaoMock, times(0)).checkUserByLogin(anyString());
-        validator.validateLoginAndPassword(userMock, userDaoMock);
+        userValidator.validateLoginAndPassword(userMock, userDaoMock);
     }
 
     @Test(expected = ValidationException.class)
@@ -55,7 +55,7 @@ public class ValidatorMockTest {
         when(userMock.getLogin()).thenReturn(LOGIN);
         when(userMock.getPassword()).thenReturn(PASSWORD);
         doThrow(ValidationException.class).when(userDaoMock).checkUserByLogin(anyString());
-        validator.validateLoginAndPassword(userMock, userDaoMock);
+        userValidator.validateLoginAndPassword(userMock, userDaoMock);
     }
 
 }

@@ -4,7 +4,7 @@ import com.exchange.dao.User;
 import com.exchange.dao.UserDao;
 import com.exchange.exception.InternalServerException;
 import com.exchange.exception.ValidationException;
-import com.exchange.service.validator.Validator;
+import com.exchange.service.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -21,10 +21,10 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    UserDao userDao;
+    private UserDao userDao;
 
     @Autowired
-    Validator validator;
+    private UserValidator userValidator;
 
     @Value("${userService.deleteError}")
     private String deleteError;
@@ -66,13 +66,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Long addUser(User user) {
-        validator.validateLoginAndPassword(user, userDao);
+        userValidator.validateLoginAndPassword(user, userDao);
         return userDao.addUser(user);
     }
 
     @Override
     public void updateUser(User user) {
-        validator.validateLoginAndPassword(user, userDao);
+        userValidator.validateLoginAndPassword(user, userDao);
         if (userDao.updateUser(user) == 0)
             throw new InternalServerException(updateError);
     }

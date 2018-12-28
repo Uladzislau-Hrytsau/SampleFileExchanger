@@ -37,13 +37,13 @@ public class FileServiceImplMockTest {
     private static final LocalDate NULL_DATE = null;
 
     @Mock
-    UserDao userDaoMock;
+    private UserDao userDaoMock;
     @Mock
-    FileDao fileDaoMock;
+    private FileDao fileDaoMock;
     @Mock
-    CategoryDao categoryDaoMock;
+    private CategoryDao categoryDaoMock;
     @InjectMocks
-    FileServiceImpl fileServiceImpl;
+    private FileServiceImpl fileServiceImpl;
     private final File file = new File(
             CORRECT_ID, CORRECT_ID, CORRECT_URL,
             CORRECT_DESCRIPTION, CORRECT_DATE,

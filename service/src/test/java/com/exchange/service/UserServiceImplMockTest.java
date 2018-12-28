@@ -4,7 +4,7 @@ import com.exchange.dao.User;
 import com.exchange.dao.UserDao;
 import com.exchange.exception.InternalServerException;
 import com.exchange.exception.ValidationException;
-import com.exchange.service.validator.Validator;
+import com.exchange.service.validator.UserValidator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -26,7 +26,7 @@ public class UserServiceImplMockTest {
     @Mock
     private UserDao userDaoMock;
     @Mock
-    private Validator validatorMock;
+    private UserValidator userValidatorMock;
     @Mock
     private User userMock;
     @InjectMocks
@@ -92,14 +92,14 @@ public class UserServiceImplMockTest {
 
     @Test
     public void addUserSuccess_1_MockTest() {
-        doNothing().when(validatorMock).validateLoginAndPassword(userMock, userDaoMock);
+        doNothing().when(userValidatorMock).validateLoginAndPassword(userMock, userDaoMock);
         userServiceImpl.addUser(userMock);
         verify(userDaoMock, times(1)).addUser(userMock);
     }
 
     @Test(expected = ValidationException.class)
     public void addUserUnSuccess_1_MockTest() {
-        doThrow(ValidationException.class).when(validatorMock).validateLoginAndPassword(userMock, userDaoMock);
+        doThrow(ValidationException.class).when(userValidatorMock).validateLoginAndPassword(userMock, userDaoMock);
         userServiceImpl.addUser(userMock);
         verify(userDaoMock, never()).addUser(any(User.class));
     }
@@ -107,21 +107,21 @@ public class UserServiceImplMockTest {
 
     @Test
     public void updateUserSuccess_1_MockTest() {
-        doNothing().when(validatorMock).validateLoginAndPassword(userMock, userDaoMock);
+        doNothing().when(userValidatorMock).validateLoginAndPassword(userMock, userDaoMock);
         when(userDaoMock.updateUser(userMock)).thenReturn(1);
         userServiceImpl.updateUser(userMock);
     }
 
     @Test(expected = ValidationException.class)
     public void updateUserUnSuccess_1_MockTest() {
-        doThrow(ValidationException.class).when(validatorMock).validateLoginAndPassword(userMock, userDaoMock);
+        doThrow(ValidationException.class).when(userValidatorMock).validateLoginAndPassword(userMock, userDaoMock);
         userServiceImpl.updateUser(userMock);
         verify(userDaoMock, never()).updateUser(any(User.class));
     }
 
     @Test(expected = InternalServerException.class)
     public void updateUserUnSuccess_2_MockTest() {
-        doNothing().when(validatorMock).validateLoginAndPassword(any(User.class), any(UserDao.class));
+        doNothing().when(userValidatorMock).validateLoginAndPassword(any(User.class), any(UserDao.class));
         when(userDaoMock.updateUser(any(User.class))).thenReturn(0);
         userServiceImpl.updateUser(userMock);
     }

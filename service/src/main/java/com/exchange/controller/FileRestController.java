@@ -17,7 +17,7 @@ import java.util.List;
 public class FileRestController {
 
     @Autowired
-    FileService fileService;
+    private FileService fileService;
 
     @GetMapping("/files")
     @ResponseStatus(value = HttpStatus.OK)

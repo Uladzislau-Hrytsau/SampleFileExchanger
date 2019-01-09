@@ -27,7 +27,7 @@ public interface CategoryDao {
      * Check category by identifier.
      *
      * @param id category identifier.
-     * @return
+     * @return boolean boolean
      */
     boolean checkCategoryById(Long id);
 

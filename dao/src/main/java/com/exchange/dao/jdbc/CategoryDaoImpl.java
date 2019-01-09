@@ -18,13 +18,28 @@ import java.util.List;
  */
 public class CategoryDaoImpl implements CategoryDao {
 
+    /**
+     * The constant ID.
+     */
     public static final String ID = "id";
+    /**
+     * The constant CATEGORY.
+     */
     public static final String CATEGORY = "category";
 
+    /**
+     * The Get all categories sql.
+     */
     @Value("${category.select}")
     String getAllCategoriesSql;
+    /**
+     * The Get category by id sql.
+     */
     @Value("${category.selectById}")
     String getCategoryByIdSql;
+    /**
+     * The Check category by id sql.
+     */
     @Value("${category.checkCategoryById}")
     String checkCategoryByIdSql;
 
@@ -32,6 +47,11 @@ public class CategoryDaoImpl implements CategoryDao {
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
+    /**
+     * Instantiates a new Category dao.
+     *
+     * @param dataSource the data source
+     */
     public CategoryDaoImpl(DataSource dataSource) {
         jdbcTemplate = new JdbcTemplate(dataSource);
         namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);

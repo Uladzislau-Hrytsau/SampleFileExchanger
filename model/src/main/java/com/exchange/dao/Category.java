@@ -11,26 +11,55 @@ public class Category {
 
     private String category;
 
+    /**
+     * Instantiates a new Category.
+     */
     public Category() {
     }
 
+    /**
+     * Instantiates a new Category.
+     *
+     * @param id       the id
+     * @param category the category
+     */
     public Category(Long id, String category) {
         this.id = id;
         this.category = category;
     }
 
+    /**
+     * Gets id.
+     *
+     * @return the id
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     * Sets id.
+     *
+     * @param id the id
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
+    /**
+     * Gets category.
+     *
+     * @return the category
+     */
     public String getCategory() {
         return category;
     }
 
+    /**
+     * Sets category.
+     *
+     * @param category the category
+     */
     public void setCategory(String category) {
         this.category = category;
     }

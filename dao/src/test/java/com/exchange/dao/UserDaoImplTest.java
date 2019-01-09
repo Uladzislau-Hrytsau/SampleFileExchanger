@@ -40,9 +40,15 @@ public class UserDaoImplTest {
             "userInformation4"
     );
 
+    /**
+     * The User dao.
+     */
     @Autowired
     UserDao userDao;
 
+    /**
+     * Gets all users test.
+     */
     @Test
     public void getAllUsersTest() {
         List<User> users = userDao.getAllUsers();
@@ -50,6 +56,9 @@ public class UserDaoImplTest {
         assertEquals(2, users.size());
     }
 
+    /**
+     * Gets user by user id test.
+     */
     @Test
     public void getUserByUserIdTest() {
         User user = userDao.getUserByUserId(USER_ID_1);
@@ -68,6 +77,9 @@ public class UserDaoImplTest {
         assertEquals(USER_INFORMATION_1, user.getInformation());
     }
 
+    /**
+     * Gets user by login test.
+     */
     @Test
     public void getUserByLoginTest() {
         User user = userDao.getUserByLogin(USER_LOGIN_1);
@@ -86,6 +98,9 @@ public class UserDaoImplTest {
         assertEquals(USER_INFORMATION_1, user.getInformation());
     }
 
+    /**
+     * Add user test.
+     */
     @Test
     public void addUserTest() {
         List<User> users = userDao.getAllUsers();
@@ -109,6 +124,9 @@ public class UserDaoImplTest {
         assertEquals(quantityBefore + 1, users.size());
     }
 
+    /**
+     * Update user test.
+     */
     @Test
     public void updateUserTest() {
         User user = userDao.getUserByUserId(USER_ID_2);
@@ -133,6 +151,9 @@ public class UserDaoImplTest {
         assertEquals(user.getInformation(), updatedUser.getInformation());
     }
 
+    /**
+     * Delete user test.
+     */
     @Test
     public void deleteUserTest() {
         List<User> users = userDao.getAllUsers();
@@ -162,11 +183,17 @@ public class UserDaoImplTest {
         assertEquals(quantityBefore, users.size());
     }
 
+    /**
+     * Check user by user id test.
+     */
     @Test
     public void checkUserByUserIdTest() {
         assertTrue(userDao.checkUserByUserId(USER_ID_1));
     }
 
+    /**
+     * Check user by login test.
+     */
     @Test
     public void checkUserByLoginTest() {
         assertTrue(userDao.checkUserByLogin(USER_LOGIN_1));

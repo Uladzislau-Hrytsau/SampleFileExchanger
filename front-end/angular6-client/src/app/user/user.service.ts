@@ -13,11 +13,10 @@ export class UserService {
 
   constructor(private http:HttpClient) {}
 
-  private userUrl = 'http://localhost:8088/users';
-  // private userUrl = '/api';
+  private userUrl = 'http://localhost:8088';
 
   public getAllUsers() {
-    return this.http.get<User[]>(this.userUrl);
+    return this.http.get<User[]>(this.userUrl.concat());
   }
 
 }

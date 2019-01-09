@@ -2,7 +2,6 @@ package com.exchange.service;
 
 import com.exchange.dao.File;
 
-import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -15,14 +14,14 @@ public interface FileService {
      * Get all files list by user-id.
      *
      * @param userId user identifier.
-     * @return file.
+     * @return file. all files by user id
      */
     List<File> getAllFilesByUserId(Long userId);
 
     /**
      * Get all files list.
      *
-     * @return file.
+     * @return file. all files
      */
     List<File> getAllFiles();
 
@@ -30,7 +29,7 @@ public interface FileService {
      * Get file by id.
      *
      * @param id user identifier.
-     * @return file.
+     * @return file. file by id
      */
     File getFileById(Long id);
 

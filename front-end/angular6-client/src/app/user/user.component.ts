@@ -19,9 +19,10 @@ export class UserComponent implements OnInit {
 
   ngOnInit() {
     this.userService.getAllUsers()
-      .subscribe( data => {
+      .subscribe(data => {
         this.users = data;
       });
   };
+
 
 }

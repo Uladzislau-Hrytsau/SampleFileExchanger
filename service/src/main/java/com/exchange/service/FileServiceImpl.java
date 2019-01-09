@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -52,14 +51,29 @@ public class FileServiceImpl implements FileService {
     private File file;
     private List<File> files;
 
+    /**
+     * Sets user dao.
+     *
+     * @param userDao the user dao
+     */
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
     }
 
+    /**
+     * Sets file dao.
+     *
+     * @param fileDao the file dao
+     */
     public void setFileDao(FileDao fileDao) {
         this.fileDao = fileDao;
     }
 
+    /**
+     * Sets category dao.
+     *
+     * @param categoryDao the category dao
+     */
     public void setCategoryDao(CategoryDao categoryDao) {
         this.categoryDao = categoryDao;
     }

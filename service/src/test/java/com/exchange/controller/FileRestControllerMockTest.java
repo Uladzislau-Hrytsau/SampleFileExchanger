@@ -29,6 +29,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/**
+ * The type File rest controller mock test.
+ */
 @RunWith(MockitoJUnitRunner.class)
 public class FileRestControllerMockTest {
 
@@ -49,6 +52,9 @@ public class FileRestControllerMockTest {
 
     private String fileJson;
 
+    /**
+     * Sets up.
+     */
     @Before
     public void setUp() {
         mockMvc = MockMvcBuilders.standaloneSetup(fileRestController)
@@ -56,6 +62,11 @@ public class FileRestControllerMockTest {
                 .build();
     }
 
+    /**
+     * Gets all files success 1 mock test.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void getAllFilesSuccess_1_MockTest() throws Exception {
         given(fileServiceMock.getAllFiles()).willReturn(Collections.singletonList(file));
@@ -65,6 +76,11 @@ public class FileRestControllerMockTest {
                 .andExpect(content().json("[" + asJsonString(file) + "]"));
     }
 
+    /**
+     * Gets file by id success 1 mock test.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void getFileByIdSuccess_1_MockTest() throws Exception {
         given(fileServiceMock.getFileById(anyLong())).willReturn(file);
@@ -74,6 +90,11 @@ public class FileRestControllerMockTest {
                 .andExpect(content().json(asJsonString(file)));
     }
 
+    /**
+     * Gets file by id un success 1 mock test.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void getFileByIdUnSuccess_1_MockTest() throws Exception {
         given(fileServiceMock.getFileById(anyLong())).willThrow(ValidationException.class);
@@ -83,6 +104,11 @@ public class FileRestControllerMockTest {
     }
 
 
+    /**
+     * Gets all files by user id success 1 mock test.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void getAllFilesByUserIdSuccess_1_MockTest() throws Exception {
         given(fileServiceMock.getAllFilesByUserId(anyLong())).willReturn(Collections.singletonList(file));
@@ -92,6 +118,11 @@ public class FileRestControllerMockTest {
                 .andExpect(content().json("[" + asJsonString(file) + "]"));
     }
 
+    /**
+     * Gets all files by user id un success 1 mock test.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void getAllFilesByUserIdUnSuccess_1_MockTest() throws Exception {
         given(fileServiceMock.getAllFilesByUserId(anyLong())).willThrow(ValidationException.class);
@@ -100,6 +131,11 @@ public class FileRestControllerMockTest {
                 .andExpect(status().isBadRequest());
     }
 
+    /**
+     * Add file success 1 mock test.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void addFileSuccess_1_MockTest() throws Exception {
         fileJson = asJsonString(updatedFile);
@@ -111,6 +147,11 @@ public class FileRestControllerMockTest {
                 .andExpect(status().isCreated());
     }
 
+    /**
+     * Add file un success 1 mock test.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void addFileUnSuccess_1_MockTest() throws Exception {
         fileJson = asJsonString(updatedFile);
@@ -122,6 +163,11 @@ public class FileRestControllerMockTest {
                 .andExpect(status().isBadRequest());
     }
 
+    /**
+     * Update file success 1 mock test.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void updateFileSuccess_1_MockTest() throws Exception {
         fileJson = asJsonString(updatedFile);
@@ -133,6 +179,11 @@ public class FileRestControllerMockTest {
                 .andExpect(status().isOk());
     }
 
+    /**
+     * Update file un success 1 mock test.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void updateFileUnSuccess_1_MockTest() throws Exception {
         fileJson = asJsonString(updatedFile);
@@ -144,6 +195,11 @@ public class FileRestControllerMockTest {
                 .andExpect(status().isBadRequest());
     }
 
+    /**
+     * Update file un success 2 mock test.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void updateFileUnSuccess_2_MockTest() throws Exception {
         fileJson = asJsonString(updatedFile);
@@ -155,6 +211,11 @@ public class FileRestControllerMockTest {
                 .andExpect(status().isInternalServerError());
     }
 
+    /**
+     * Delete file success 1 mock test.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void deleteFileSuccess_1_MockTest() throws Exception {
         doNothing().when(fileServiceMock).deleteFile(anyLong());
@@ -163,6 +224,11 @@ public class FileRestControllerMockTest {
                 .andExpect(status().isOk());
     }
 
+    /**
+     * Delete file un success 1 mock test.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void deleteFileUnSuccess_1_MockTest() throws Exception {
         doThrow(ValidationException.class).when(fileServiceMock).deleteFile(anyLong());
@@ -171,6 +237,11 @@ public class FileRestControllerMockTest {
                 .andExpect(status().isBadRequest());
     }
 
+    /**
+     * Delete file un success 2 mock test.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void deleteFileUnSuccess_2_MockTest() throws Exception {
         doThrow(InternalServerException.class).when(fileServiceMock).deleteFile(anyLong());

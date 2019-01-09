@@ -25,33 +25,84 @@ import java.util.Map;
  */
 public class FileDaoImpl implements FileDao {
 
+    /**
+     * The constant ID.
+     */
     public static final String ID = "id";
+    /**
+     * The constant USER_ID.
+     */
     public static final String USER_ID = "user_id";
+    /**
+     * The constant URL.
+     */
     public static final String URL = "url";
+    /**
+     * The constant DESCRIPTION.
+     */
     public static final String DESCRIPTION = "description";
+    /**
+     * The constant DATE.
+     */
     public static final String DATE = "date";
+    /**
+     * The constant CATEGORY.
+     */
     public static final String CATEGORY = "category";
 
+    /**
+     * The Get all files by user id and category sql.
+     */
     @Value("${file.selectByUserIdAndCategory}")
     String getAllFilesByUserIdAndCategorySql;
+    /**
+     * The Get all files by user id and date sql.
+     */
     @Value("${file.selectByUserIdAndDate}")
     String getAllFilesByUserIdAndDateSql;
+    /**
+     * The Get all files by user id sql.
+     */
     @Value("${file.selectByUserId}")
     String getAllFilesByUserIdSql;
+    /**
+     * The Get all files sql.
+     */
     @Value("${file.select}")
     String getAllFilesSql;
+    /**
+     * The Get file by id sql.
+     */
     @Value("${file.selectById}")
     String getFileByIdSql;
+    /**
+     * The Add file sql.
+     */
     @Value("${file.insert}")
     String addFileSql;
+    /**
+     * The Update file sql.
+     */
     @Value("${file.update}")
     String updateFileSql;
+    /**
+     * The Delete file sql.
+     */
     @Value("${file.delete}")
     String deleteFileSql;
+    /**
+     * The Check file by id sql.
+     */
     @Value("${file.checkFileById}")
     String checkFileByIdSql;
+    /**
+     * The Check file by user id sql.
+     */
     @Value("${file.checkFileByUserId}")
     String checkFileByUserIdSql;
+    /**
+     * The Check file by url sql.
+     */
     @Value("${file.checkFileByUrl}")
     String checkFileByUrlSql;
 
@@ -59,6 +110,11 @@ public class FileDaoImpl implements FileDao {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private FileRowMapper fileRowMapper = new FileRowMapper();
 
+    /**
+     * Instantiates a new File dao.
+     *
+     * @param dataSource the data source
+     */
     public FileDaoImpl(DataSource dataSource) {
         jdbcTemplate = new JdbcTemplate(dataSource);
         namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);

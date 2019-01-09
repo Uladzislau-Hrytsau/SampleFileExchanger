@@ -37,6 +37,11 @@ public class UserServiceImpl implements UserService {
     @Value("${userService.userDoesNotExist}")
     private String userDoesNotExist;
 
+    /**
+     * Sets user dao.
+     *
+     * @param userDao the user dao
+     */
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
     }

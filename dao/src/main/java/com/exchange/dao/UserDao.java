@@ -14,6 +14,7 @@ public interface UserDao {
      * Get all users list.
      *
      * @return all users list
+     * @throws DataAccessException the data access exception
      */
     List<User> getAllUsers() throws DataAccessException;
 
@@ -21,7 +22,8 @@ public interface UserDao {
      * Get user by Id.
      *
      * @param userId user identifier.
-     * @return user.
+     * @return user. user by user id
+     * @throws DataAccessException the data access exception
      */
     User getUserByUserId(Long userId) throws DataAccessException;
 
@@ -29,8 +31,8 @@ public interface UserDao {
      * Get user by login.
      *
      * @param login user login.
-     * @return user.
-     * @throws DataAccessException
+     * @return user. user by login
+     * @throws DataAccessException the data access exception
      */
     User getUserByLogin(String login) throws DataAccessException;
 
@@ -39,6 +41,7 @@ public interface UserDao {
      *
      * @param user user.
      * @return new user Id.
+     * @throws DataAccessException the data access exception
      */
     Long addUser(User user) throws DataAccessException;
 
@@ -47,6 +50,7 @@ public interface UserDao {
      *
      * @param user user.
      * @return new user Id.
+     * @throws DataAccessException the data access exception
      */
     int updateUser(User user) throws DataAccessException;
 
@@ -54,23 +58,24 @@ public interface UserDao {
      * Delete user.
      *
      * @param userId user identifier.
-     * @return
-     * @throws DataAccessException
+     * @return int int
+     * @throws DataAccessException the data access exception
      */
     int deleteUser(Long userId) throws DataAccessException;
 
     /**
      * Check user by user identifier.
      *
-     * @param userId
-     * @return
+     * @param userId the user id
+     * @return boolean boolean
      */
     boolean checkUserByUserId(Long userId);
+
     /**
      * Check user by user login.
      *
-     * @param login
-     * @return
+     * @param login the login
+     * @return boolean boolean
      */
     boolean checkUserByLogin(String login);
 

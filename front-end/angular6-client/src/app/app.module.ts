@@ -19,7 +19,9 @@ import {UserService} from "./user/user.service";
     HttpClientModule,
     FormsModule
   ],
-  providers: [UserService],
+  providers: [
+    UserService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

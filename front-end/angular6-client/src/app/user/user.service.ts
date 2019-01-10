@@ -16,7 +16,7 @@ export class UserService {
   private userUrl = 'http://localhost:8088';
 
   public getAllUsers() {
-    return this.http.get<User[]>(this.userUrl.concat());
+    return this.http.get<User[]>(this.userUrl.concat('/users'));
   }
 
 }

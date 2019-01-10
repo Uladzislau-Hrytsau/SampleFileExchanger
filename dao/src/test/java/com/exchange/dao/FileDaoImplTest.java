@@ -35,7 +35,7 @@ public class FileDaoImplTest {
      * The File dao.
      */
     @Autowired
-    FileDao fileDao;
+    private FileDao fileDao;
 
     /**
      * Gets all files by user id test.
@@ -120,7 +120,7 @@ public class FileDaoImplTest {
      */
     @Test
     public void deleteFileTest() {
-        Long id =  fileDao.addFile(file_2);
+        Long id = fileDao.addFile(file_2);
         assertNotNull(id);
 
         List<File> files = fileDao.getAllFiles();

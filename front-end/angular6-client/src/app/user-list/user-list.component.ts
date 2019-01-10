@@ -2,18 +2,18 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 
 import {User} from '../models/user.model';
-import {UserService} from './user.service';
+import {UserListService} from './user-list.service';
 
 @Component({
   selector: 'app-user',
-  templateUrl: './user.component.html',
+  templateUrl: './user-list.component.html',
   styles: []
 })
-export class UserComponent implements OnInit {
+export class UserListComponent implements OnInit {
 
   users: User[];
 
-  constructor(private router: Router, private userService: UserService) {
+  constructor(private router: Router, private userService: UserListService) {
 
   }
 

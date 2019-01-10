@@ -44,7 +44,7 @@ public class UserDaoImplTest {
      * The User dao.
      */
     @Autowired
-    UserDao userDao;
+    private UserDao userDao;
 
     /**
      * Gets all users test.

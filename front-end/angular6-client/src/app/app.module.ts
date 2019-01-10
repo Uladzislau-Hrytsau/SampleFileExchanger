@@ -4,14 +4,16 @@ import {FormsModule} from '@angular/forms';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {UserComponent} from './user/user.component';
+import {UserListComponent} from './user-list/user-list.component';
 import {HttpClientModule} from "@angular/common/http";
-import {UserService} from "./user/user.service";
+import {UserListService} from "./user-list/user-list.service";
+import { CreateUserComponent } from './create-user/create-user.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    UserComponent,
+    UserListComponent,
+    CreateUserComponent,
   ],
   imports: [
     BrowserModule,
@@ -20,7 +22,7 @@ import {UserService} from "./user/user.service";
     FormsModule
   ],
   providers: [
-    UserService
+    UserListService
   ],
   bootstrap: [AppComponent]
 })

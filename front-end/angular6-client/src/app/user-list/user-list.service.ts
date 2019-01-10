@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 import {User} from '../models/user.model';
+import {Observable} from "rxjs";
 
 
 const httpOptions = {
@@ -9,7 +10,7 @@ const httpOptions = {
 };
 
 @Injectable()
-export class UserService {
+export class UserListService {
 
   constructor(private http:HttpClient) {}
 
@@ -17,6 +18,9 @@ export class UserService {
 
   public getAllUsers() {
     return this.http.get<User[]>(this.userUrl.concat('/users'));
+  }
+  public addUser(user: Object): Observable<Object> {
+    return this.http.post(this.userUrl.concat('/user'), user);
   }
 
 }

@@ -23,7 +23,7 @@ public class CategoryDaoImplTest {
      * The Category dao.
      */
     @Autowired
-    CategoryDao categoryDao;
+    private CategoryDao categoryDao;
 
     /**
      * Gets all categories test.

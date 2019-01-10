@@ -15,7 +15,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.time.LocalDate;
 import java.util.Collections;
 
 import static com.exchange.controller.JsonConverter.asJsonString;
@@ -36,9 +35,8 @@ public class UserRestControllerMockTest {
     private static final String LOGIN = "userLogin";
     private static final User user = new User(
             1L, "userLogin", "userPassword",
-            true, LocalDate.of(2000, 2, 2), "userInformation"
+            true, "userInformation"
     );
-    private static final User usr = new User(2L, "login", "password");
     private String userJson;
     @Mock
     private UserService userServiceMock;
@@ -135,8 +133,8 @@ public class UserRestControllerMockTest {
      */
     @Test
     public void addUserSuccess_1_MockTest() throws Exception {
-        userJson = asJsonString(usr);
-        given(userServiceMock.addUser(usr)).willReturn(2L);
+        userJson = asJsonString(user);
+        given(userServiceMock.addUser(user)).willReturn(2L);
         mockMvc.perform(post("/user")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(userJson))
@@ -151,8 +149,8 @@ public class UserRestControllerMockTest {
      */
     @Test
     public void addUserUnSuccess_1_MockTest() throws Exception {
-        userJson = asJsonString(usr);
-        given(userServiceMock.addUser(usr)).willThrow(ValidationException.class);
+        userJson = asJsonString(user);
+        given(userServiceMock.addUser(user)).willThrow(ValidationException.class);
         mockMvc.perform(post("/user")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(userJson))
@@ -167,9 +165,9 @@ public class UserRestControllerMockTest {
      */
     @Test
     public void updateUserSuccess_1_MockTest() throws Exception {
-        doNothing().when(userServiceMock).updateUser(usr);
+        doNothing().when(userServiceMock).updateUser(user);
         mockMvc.perform(put("/user")
-                .content(asJsonString(usr))
+                .content(asJsonString(user))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk());
@@ -184,7 +182,7 @@ public class UserRestControllerMockTest {
     public void updateUserUnSuccess_1_MockTest() throws Exception {
         doThrow(ValidationException.class).when(userServiceMock).updateUser(any(User.class));
         mockMvc.perform(put("/user")
-                .content(asJsonString(usr))
+                .content(asJsonString(user))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isBadRequest());
@@ -199,7 +197,7 @@ public class UserRestControllerMockTest {
     public void updateUserUnSuccess_2_MockTest() throws Exception {
         doThrow(InternalServerException.class).when(userServiceMock).updateUser(any(User.class));
         mockMvc.perform(put("/user")
-                .content(asJsonString(usr))
+                .content(asJsonString(user))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isInternalServerError());

@@ -11,10 +11,8 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.sql.DataSource;
-import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,61 +52,62 @@ public class FileDaoImpl implements FileDao {
      * The Get all files by user id and category sql.
      */
     @Value("${file.selectByUserIdAndCategory}")
-    String getAllFilesByUserIdAndCategorySql;
+    private String getAllFilesByUserIdAndCategorySql;
     /**
      * The Get all files by user id and date sql.
      */
     @Value("${file.selectByUserIdAndDate}")
-    String getAllFilesByUserIdAndDateSql;
+    private String getAllFilesByUserIdAndDateSql;
     /**
      * The Get all files by user id sql.
      */
     @Value("${file.selectByUserId}")
-    String getAllFilesByUserIdSql;
+    private String getAllFilesByUserIdSql;
     /**
      * The Get all files sql.
      */
     @Value("${file.select}")
-    String getAllFilesSql;
+    private String getAllFilesSql;
     /**
      * The Get file by id sql.
      */
     @Value("${file.selectById}")
-    String getFileByIdSql;
+    private String getFileByIdSql;
     /**
      * The Add file sql.
      */
     @Value("${file.insert}")
-    String addFileSql;
+    private String addFileSql;
     /**
      * The Update file sql.
      */
     @Value("${file.update}")
-    String updateFileSql;
+    private String updateFileSql;
     /**
      * The Delete file sql.
      */
     @Value("${file.delete}")
-    String deleteFileSql;
+    private String deleteFileSql;
     /**
      * The Check file by id sql.
      */
     @Value("${file.checkFileById}")
-    String checkFileByIdSql;
+    private String checkFileByIdSql;
     /**
      * The Check file by user id sql.
      */
     @Value("${file.checkFileByUserId}")
-    String checkFileByUserIdSql;
+    private String checkFileByUserIdSql;
     /**
      * The Check file by url sql.
      */
     @Value("${file.checkFileByUrl}")
-    String checkFileByUrlSql;
+    private String checkFileByUrlSql;
 
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private FileRowMapper fileRowMapper = new FileRowMapper();
+
 
     /**
      * Instantiates a new File dao.
@@ -118,16 +117,6 @@ public class FileDaoImpl implements FileDao {
     public FileDaoImpl(DataSource dataSource) {
         jdbcTemplate = new JdbcTemplate(dataSource);
         namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
-    }
-
-    @Override
-    public List<File> getAllFilesByUserIdAndCategory(Long userId, String category) throws NotImplementedException {
-        return null;
-    }
-
-    @Override
-    public List<File> getAllFilesByUserIdAndDate(Long userId, LocalDate date) throws NotImplementedException {
-        return null;
     }
 
     @Override

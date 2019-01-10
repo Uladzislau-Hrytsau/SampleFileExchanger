@@ -2,7 +2,6 @@ package com.exchange.dao;
 
 import org.springframework.dao.DataAccessException;
 
-import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -10,26 +9,6 @@ import java.util.List;
  * Created by Uladzislau Hrytsau on 27.11.18.
  */
 public interface FileDao {
-
-    /**
-     * Get all files list by user-id and category.
-     *
-     * @param userId   the user id
-     * @param category file category.
-     * @return file. all files by user id and category
-     * @throws DataAccessException the data access exception
-     */
-    List<File> getAllFilesByUserIdAndCategory(Long userId, String category) throws DataAccessException;
-
-    /**
-     * Get all files list by user-id and date.
-     *
-     * @param userId user identifier.
-     * @param date   upload date.
-     * @return file. all files by user id and date
-     * @throws DataAccessException the data access exception
-     */
-    List<File> getAllFilesByUserIdAndDate(Long userId, LocalDate date) throws DataAccessException;
 
     /**
      * Get all files list by user-id.

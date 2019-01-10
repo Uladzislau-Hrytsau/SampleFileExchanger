@@ -19,7 +19,7 @@ public class UserRestController {
     @Autowired
     private UserService userService;
 
-    /**
+     /**
      * Gets all users.
      *
      * @return the all users

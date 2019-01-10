@@ -31,17 +31,17 @@ public class CategoryDaoImpl implements CategoryDao {
      * The Get all categories sql.
      */
     @Value("${category.select}")
-    String getAllCategoriesSql;
+    private String getAllCategoriesSql;
     /**
      * The Get category by id sql.
      */
     @Value("${category.selectById}")
-    String getCategoryByIdSql;
+    private String getCategoryByIdSql;
     /**
      * The Check category by id sql.
      */
     @Value("${category.checkCategoryById}")
-    String checkCategoryByIdSql;
+    private String checkCategoryByIdSql;
 
     private CategoryRowMapper categoryRowMapper = new CategoryRowMapper();
     private JdbcTemplate jdbcTemplate;

@@ -14,10 +14,10 @@ public class Config {
      *
      * @return the object mapper
      */
-    @Bean
-    public ObjectMapper getObjectMapper() {
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.registerModule(new com.fasterxml.jackson.datatype.jsr310.JavaTimeModule());
-        return objectMapper;
-    }
+//    @Bean
+//    public ObjectMapper getObjectMapper() {
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        objectMapper.registerModule(new com.fasterxml.jackson.datatype.jsr310.JavaTimeModule());
+//        return objectMapper;
+//    }
 }

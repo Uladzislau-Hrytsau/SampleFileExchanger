@@ -15,9 +15,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.time.LocalDate;
 import java.util.Collections;
 
-import static com.exchange.controller.JsonConverter.asJsonString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyLong;
@@ -43,10 +43,10 @@ public class FileRestControllerMockTest {
     private MockMvc mockMvc;
 
     private final File file = new File(
-            1L, 1L, "url1", "description1", 1L
+            1L, 1L, "url1", "description1", LocalDate.of(2019, 1, 12), 1L
     );
 
-    private String fileJson;
+    private static final String FILE_JSON = "{\"id\":1,\"user_id\":1,\"url\":\"url1\",\"description\":\"description1\",\"date\":\"2019-01-12\",\"categoryId\":1}";
 
     /**
      * Sets up.
@@ -69,7 +69,7 @@ public class FileRestControllerMockTest {
         mockMvc.perform(get("/files"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().json("[" + asJsonString(file) + "]"));
+                .andExpect(content().json("[" + FILE_JSON + "]"));
     }
 
     /**
@@ -83,7 +83,7 @@ public class FileRestControllerMockTest {
         mockMvc.perform(get("/file/{id}", anyLong()))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().json(asJsonString(file)));
+                .andExpect(content().json(FILE_JSON));
     }
 
     /**
@@ -111,7 +111,7 @@ public class FileRestControllerMockTest {
         mockMvc.perform(get("/files/{userId}", anyLong()))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().json("[" + asJsonString(file) + "]"));
+                .andExpect(content().json("[" + FILE_JSON + "]"));
     }
 
     /**
@@ -134,11 +134,10 @@ public class FileRestControllerMockTest {
      */
     @Test
     public void addFileSuccess_1_MockTest() throws Exception {
-        fileJson = asJsonString(file);
         given(fileServiceMock.addFile(any(File.class))).willReturn(anyLong());
         mockMvc.perform(post("/file")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(fileJson))
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(FILE_JSON))
                 .andDo(print())
                 .andExpect(status().isCreated());
     }
@@ -150,11 +149,10 @@ public class FileRestControllerMockTest {
      */
     @Test
     public void addFileUnSuccess_1_MockTest() throws Exception {
-        fileJson = asJsonString(file);
         given(fileServiceMock.addFile(any(File.class))).willThrow(ValidationException.class);
         mockMvc.perform(post("/file")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(fileJson))
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(FILE_JSON))
                 .andDo(print())
                 .andExpect(status().isBadRequest());
     }
@@ -166,11 +164,10 @@ public class FileRestControllerMockTest {
      */
     @Test
     public void updateFileSuccess_1_MockTest() throws Exception {
-        fileJson = asJsonString(file);
         doNothing().when(fileServiceMock).updateFile(any(File.class));
         mockMvc.perform(put("/file")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(fileJson))
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(FILE_JSON))
                 .andDo(print())
                 .andExpect(status().isOk());
     }
@@ -182,11 +179,10 @@ public class FileRestControllerMockTest {
      */
     @Test
     public void updateFileUnSuccess_1_MockTest() throws Exception {
-        fileJson = asJsonString(file);
         doThrow(ValidationException.class).when(fileServiceMock).updateFile(any(File.class));
         mockMvc.perform(put("/file")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(fileJson))
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(FILE_JSON))
                 .andDo(print())
                 .andExpect(status().isBadRequest());
     }
@@ -198,11 +194,10 @@ public class FileRestControllerMockTest {
      */
     @Test
     public void updateFileUnSuccess_2_MockTest() throws Exception {
-        fileJson = asJsonString(file);
         doThrow(InternalServerException.class).when(fileServiceMock).updateFile(any(File.class));
         mockMvc.perform(put("/file")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(fileJson))
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(FILE_JSON))
                 .andDo(print())
                 .andExpect(status().isInternalServerError());
     }

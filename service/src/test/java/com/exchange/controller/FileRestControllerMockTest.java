@@ -1,5 +1,6 @@
 package com.exchange.controller;
 
+import com.exchange.controller.converter.JsonConverter;
 import com.exchange.controller.handler.RestErrorHandler;
 import com.exchange.dao.File;
 import com.exchange.exception.InternalServerException;
@@ -42,11 +43,11 @@ public class FileRestControllerMockTest {
 
     private MockMvc mockMvc;
 
-    private final File file = new File(
+    private static final File file = new File(
             1L, 1L, "url1", "description1", LocalDate.of(2019, 1, 12), 1L
     );
 
-    private static final String FILE_JSON = "{\"id\":1,\"user_id\":1,\"url\":\"url1\",\"description\":\"description1\",\"date\":\"2019-01-12\",\"categoryId\":1}";
+    private static final String FILE_JSON = JsonConverter.asJsonString(file);
 
     /**
      * Sets up.

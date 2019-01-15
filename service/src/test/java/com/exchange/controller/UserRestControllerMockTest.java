@@ -6,7 +6,6 @@ import com.exchange.dao.User;
 import com.exchange.exception.InternalServerException;
 import com.exchange.exception.ValidationException;
 import com.exchange.service.UserService;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,9 +38,8 @@ public class UserRestControllerMockTest {
             1L, "userLogin", "userPassword",
             true, LocalDate.of(2019, 1, 11), "userInformation"
     );
-        private static final String USER_JSON = "{\"userId\":1,\"login\":\"userLogin\",\"password\":\"userPassword\",\"gender\":true,\"birthDate\":\"2019-01-11\",\"information\":\"userInformation\"}";
 
-//    private static final String USER_JSON = JsonConverter.asJsonString(user);
+    private static final String USER_JSON = JsonConverter.asJsonString(user);
 
     @Mock
     private UserService userServiceMock;

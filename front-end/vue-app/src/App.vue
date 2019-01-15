@@ -1,13 +1,19 @@
 <template>
   <div id="app">
-    <nav>
-      <router-link class="btn btn-primary" to="/">main</router-link>
-      <router-link class="btn btn-primary" to="/Users">get all users</router-link>
-      <router-link class="btn btn-primary" to="/CreateUser">Creat user</router-link>
-      <router-link class="btn btn-primary" to="/DeleteUser">delete user</router-link>
-      <router-link class="btn btn-primary" to="/UpdateUser">update user</router-link>
-      <router-link class="btn btn-primary" to="/Files">get all files</router-link>
-    </nav>
+    <b-navbar toggleable="md" type="dark" variant="dark">
+      <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
+      <b-navbar-brand to="/">FileExchanger</b-navbar-brand>
+      <b-collapse is-nav id="nav_collapse">
+        <b-navbar-nav>
+          <b-nav-item to="/Users">get all users</b-nav-item>
+          <b-nav-item to="/CreateUser">creat user</b-nav-item>
+          <b-nav-item to="/UpdateUser">update user</b-nav-item>
+          <b-nav-item to="/Files">get all files</b-nav-item>
+          <b-nav-item to="/CreateFile">creat file</b-nav-item>
+          <b-nav-item to="/UpdateFile">update file</b-nav-item>
+        </b-navbar-nav>
+      </b-collapse>
+    </b-navbar>
     <router-view/>
   </div>
 </template>
@@ -24,7 +30,7 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
-    color: #2c3e50;
-    margin-top: 60px;
+    color: #000000;
+    margin-top: auto;
   }
 </style>

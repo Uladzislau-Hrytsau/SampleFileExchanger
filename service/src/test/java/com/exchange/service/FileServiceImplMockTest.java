@@ -246,7 +246,7 @@ public class FileServiceImplMockTest {
         fileServiceImpl.updateFile(file);
         verify(categoryDaoMock, never()).checkCategoryById(anyLong());
         verify(fileDaoMock, never()).updateFile(file);
-   }
+    }
 
     /**
      * Update file un success 2 mock test.

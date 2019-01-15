@@ -54,7 +54,7 @@ public class RestErrorHandler {
      * @param ex the ex
      * @return the response
      */
-    @ExceptionHandler(InternalServerException.class)
+    @ExceptionHandler({InternalServerException.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public @ResponseBody
     Response handleInternalServerException(InternalServerException ex) {

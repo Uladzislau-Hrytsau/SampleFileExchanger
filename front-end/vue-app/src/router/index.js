@@ -1,10 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Hello from '@/components/Hello'
-import Users from '@/components/Users'
-import CreateUser from '@/components/CreateUser'
-import DeleteUser from '@/components/DeleteUser'
-import UpdateUser from '@/components/UpdateUser'
+import Index from '@/components/Index'
+import Users from '@/components/user/Users'
+import CreateUser from '@/components/user/CreateUser'
+import UpdateUser from '@/components/user/UpdateUser'
+import Files from '@/components/file/Files'
+import CreateFile from '@/components/file/CreateFile'
+import UpdateFile from '@/components/file/UpdateFile'
 
 Vue.use(Router)
 
@@ -12,8 +14,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Hello',
-      component: Hello
+      name: 'Index',
+      component: Index
     },
     {
       path: '/Users',
@@ -26,14 +28,24 @@ export default new Router({
       component: CreateUser
     },
     {
-      path: '/DeleteUser',
-      name: 'DeleteUser',
-      component: DeleteUser
-    },
-    {
       path: '/UpdateUser',
       name: 'UpdateUser',
       component: UpdateUser
+    },
+    {
+      path: '/Files',
+      name: 'Files',
+      component: Files
+    },
+    {
+      path: '/CreateFile',
+      name: 'CreateFile',
+      component: CreateFile
+    },
+    {
+      path: '/UpdateFile',
+      name: 'UpdateFile',
+      component: UpdateFile
     }
   ]
 })

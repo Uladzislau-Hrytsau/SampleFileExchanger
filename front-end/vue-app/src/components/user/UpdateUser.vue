@@ -2,6 +2,11 @@
   <div class="submitform">
 
     <div class="form-group">
+      <label for="userId">userId</label>
+      <input type="text" class="form-control" id="userId" required v-model="user.userId" name="userId">
+    </div>
+
+    <div class="form-group">
       <label for="login">login</label>
       <input type="text" class="form-control" id="login" required v-model="user.login" name="login">
     </div>
@@ -34,18 +39,19 @@
       </div>
     </div>
 
-    <button v-on:click="saveCustomer" class="btn btn-success">Submit</button>
+    <button v-on:click="saveCustomer" class="btn btn-success">update</button>
   </div>
 </template>
 
 <script>
-  import http from "../http-common";
+  import http from "../../http-common";
 
   export default {
-    name: "user",
+    name: "UpdateUser",
     data() {
       return {
         user: {
+          userId: "",
           login: "",
           password: "",
           gender: "",
@@ -60,6 +66,7 @@
       /* eslint-disable no-console */
       saveCustomer() {
         var data = {
+          userId: this.user.userId,
           login: this.user.login,
           password: this.user.password,
           gender: this.user.gender,
@@ -68,7 +75,7 @@
         };
 
         http
-          .post("/user", data)
+          .put("/user", data)
           .then(response => {
             console.log(response.data);
             this.$router.push('/');

@@ -3,6 +3,7 @@ package com.exchange.dao.jdbc;
 import com.exchange.dao.File;
 import com.exchange.dao.FileDao;
 import com.exchange.dao.jdbc.mapper.FileRowMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -106,7 +107,8 @@ public class FileDaoImpl implements FileDao {
 
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-    private FileRowMapper fileRowMapper = new FileRowMapper();
+    @Autowired
+    private FileRowMapper fileRowMapper;
 
 
     /**

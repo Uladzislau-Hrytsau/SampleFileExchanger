@@ -48,8 +48,11 @@ public class FileServiceImplMockTest {
     @InjectMocks
     private FileServiceImpl fileServiceImpl;
     private final File file = new File(
-            CORRECT_ID, CORRECT_ID, CORRECT_URL,
-            CORRECT_DESCRIPTION, CORRECT_DATE,
+            CORRECT_ID,
+            CORRECT_ID,
+            CORRECT_URL,
+            CORRECT_DESCRIPTION,
+            CORRECT_DATE,
             CORRECT_CATEGORY_ID
     );
 

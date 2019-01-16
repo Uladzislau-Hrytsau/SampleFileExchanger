@@ -45,6 +45,7 @@
 
     <bean id="categoryDao" class="com.exchange.dao.jdbc.CategoryDaoImpl">
         <constructor-arg ref="dataSource"/>
+
     </bean>
 
     <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">

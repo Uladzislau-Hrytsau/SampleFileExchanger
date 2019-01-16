@@ -3,6 +3,7 @@ package com.exchange.dao.jdbc;
 import com.exchange.dao.User;
 import com.exchange.dao.UserDao;
 import com.exchange.dao.jdbc.mapper.UserRowMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -48,7 +49,8 @@ public class UserDaoImpl implements UserDao {
      */
     public static final String USER_INFORMATION = "user_information";
 
-    private UserRowMapper userRowMapper = new UserRowMapper();
+    @Autowired
+    private UserRowMapper userRowMapper;
 
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;

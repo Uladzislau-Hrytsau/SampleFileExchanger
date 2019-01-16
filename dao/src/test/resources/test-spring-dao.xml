@@ -27,4 +27,8 @@
         <constructor-arg ref="dataSource"/>
     </bean>
 
+    <bean id="categoryRowMapper" class="com.exchange.dao.jdbc.mapper.CategoryRowMapper"/>
+    <bean id="userRowMapper" class="com.exchange.dao.jdbc.mapper.UserRowMapper"/>
+    <bean id="fileRowMapper" class="com.exchange.dao.jdbc.mapper.FileRowMapper"/>
+
 </beans>

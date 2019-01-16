@@ -43,11 +43,13 @@ public class FileRestControllerMockTest {
 
     private MockMvc mockMvc;
 
-    private static final File file = new File(
-            1L, 1L, "url1", "description1", LocalDate.of(2019, 1, 12), 1L
+    private File file = new File(
+            1L,
+            1L,
+            "url1",
+            "description1",
+            1L
     );
-
-    private static final String FILE_JSON = JsonConverter.asJsonString(file);
 
     /**
      * Sets up.
@@ -66,11 +68,12 @@ public class FileRestControllerMockTest {
      */
     @Test
     public void getAllFilesSuccess_1_MockTest() throws Exception {
+        file.setDate(LocalDate.of(2019, 1, 1));
         given(fileServiceMock.getAllFiles()).willReturn(Collections.singletonList(file));
         mockMvc.perform(get("/files"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().json("[" + FILE_JSON + "]"));
+                .andExpect(content().json(JsonConverter.asJsonString(Collections.singletonList(file))));
     }
 
     /**
@@ -80,11 +83,12 @@ public class FileRestControllerMockTest {
      */
     @Test
     public void getFileByIdSuccess_1_MockTest() throws Exception {
+        file.setDate(LocalDate.of(2019, 1, 2));
         given(fileServiceMock.getFileById(anyLong())).willReturn(file);
         mockMvc.perform(get("/file/{id}", anyLong()))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().json(FILE_JSON));
+                .andExpect(content().json(JsonConverter.asJsonString(file)));
     }
 
     /**
@@ -94,6 +98,7 @@ public class FileRestControllerMockTest {
      */
     @Test
     public void getFileByIdUnSuccess_1_MockTest() throws Exception {
+        file.setDate(LocalDate.of(2019, 1, 3));
         given(fileServiceMock.getFileById(anyLong())).willThrow(ValidationException.class);
         mockMvc.perform(get("/file/{id}", anyLong()))
                 .andDo(print())
@@ -108,11 +113,12 @@ public class FileRestControllerMockTest {
      */
     @Test
     public void getAllFilesByUserIdSuccess_1_MockTest() throws Exception {
+        file.setDate(LocalDate.of(2019, 1, 4));
         given(fileServiceMock.getAllFilesByUserId(anyLong())).willReturn(Collections.singletonList(file));
         mockMvc.perform(get("/files/{userId}", anyLong()))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().json("[" + FILE_JSON + "]"));
+                .andExpect(content().json(JsonConverter.asJsonString(Collections.singletonList(file))));
     }
 
     /**
@@ -122,6 +128,7 @@ public class FileRestControllerMockTest {
      */
     @Test
     public void getAllFilesByUserIdUnSuccess_1_MockTest() throws Exception {
+        file.setDate(LocalDate.of(2019, 1, 5));
         given(fileServiceMock.getAllFilesByUserId(anyLong())).willThrow(ValidationException.class);
         mockMvc.perform(get("/files/{userId}", anyLong()))
                 .andDo(print())
@@ -135,10 +142,11 @@ public class FileRestControllerMockTest {
      */
     @Test
     public void addFileSuccess_1_MockTest() throws Exception {
+        file.setDate(LocalDate.of(2019, 1, 6));
         given(fileServiceMock.addFile(any(File.class))).willReturn(anyLong());
         mockMvc.perform(post("/file")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(FILE_JSON))
+                .content(JsonConverter.asJsonString(file)))
                 .andDo(print())
                 .andExpect(status().isCreated());
     }
@@ -150,10 +158,11 @@ public class FileRestControllerMockTest {
      */
     @Test
     public void addFileUnSuccess_1_MockTest() throws Exception {
+        file.setDate(LocalDate.of(2019, 1, 7));
         given(fileServiceMock.addFile(any(File.class))).willThrow(ValidationException.class);
         mockMvc.perform(post("/file")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(FILE_JSON))
+                .content(JsonConverter.asJsonString(file)))
                 .andDo(print())
                 .andExpect(status().isBadRequest());
     }
@@ -165,10 +174,11 @@ public class FileRestControllerMockTest {
      */
     @Test
     public void updateFileSuccess_1_MockTest() throws Exception {
+        file.setDate(LocalDate.of(2019, 1, 8));
         doNothing().when(fileServiceMock).updateFile(any(File.class));
         mockMvc.perform(put("/file")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(FILE_JSON))
+                .content(JsonConverter.asJsonString(file)))
                 .andDo(print())
                 .andExpect(status().isOk());
     }
@@ -180,10 +190,11 @@ public class FileRestControllerMockTest {
      */
     @Test
     public void updateFileUnSuccess_1_MockTest() throws Exception {
+        file.setDate(LocalDate.of(2019, 1, 9));
         doThrow(ValidationException.class).when(fileServiceMock).updateFile(any(File.class));
         mockMvc.perform(put("/file")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(FILE_JSON))
+                .content(JsonConverter.asJsonString(file)))
                 .andDo(print())
                 .andExpect(status().isBadRequest());
     }
@@ -195,10 +206,11 @@ public class FileRestControllerMockTest {
      */
     @Test
     public void updateFileUnSuccess_2_MockTest() throws Exception {
+        file.setDate(LocalDate.of(2019, 1, 10));
         doThrow(InternalServerException.class).when(fileServiceMock).updateFile(any(File.class));
         mockMvc.perform(put("/file")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(FILE_JSON))
+                .content(JsonConverter.asJsonString(file)))
                 .andDo(print())
                 .andExpect(status().isInternalServerError());
     }
@@ -210,6 +222,7 @@ public class FileRestControllerMockTest {
      */
     @Test
     public void deleteFileSuccess_1_MockTest() throws Exception {
+        file.setDate(LocalDate.of(2019, 1, 11));
         doNothing().when(fileServiceMock).deleteFile(anyLong());
         mockMvc.perform(delete("/file/{id}", anyLong()))
                 .andDo(print())
@@ -223,6 +236,7 @@ public class FileRestControllerMockTest {
      */
     @Test
     public void deleteFileUnSuccess_1_MockTest() throws Exception {
+        file.setDate(LocalDate.of(2019, 1, 12));
         doThrow(ValidationException.class).when(fileServiceMock).deleteFile(anyLong());
         mockMvc.perform(delete("/file/{id}", anyLong()))
                 .andDo(print())
@@ -236,6 +250,7 @@ public class FileRestControllerMockTest {
      */
     @Test
     public void deleteFileUnSuccess_2_MockTest() throws Exception {
+        file.setDate(LocalDate.of(2019, 1, 13));
         doThrow(InternalServerException.class).when(fileServiceMock).deleteFile(anyLong());
         mockMvc.perform(delete("/file/{id}", anyLong()))
                 .andDo(print())

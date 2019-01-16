@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByUserId(Long userId) {
-        if (userId == null || userId <= 0L)
+        if (userId == null || userId < 0L)
             throw new ValidationException(incorrectId);
         if (!userDao.checkUserByUserId(userId))
             throw new ValidationException(userDoesNotExist);
@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(Long userId) {
-        if (userId == null || userId <= 0L)
+        if (userId == null || userId < 0L)
             throw new ValidationException(incorrectId);
         if (userDao.deleteUser(userId) == 0)
             throw new InternalServerException(deleteError);

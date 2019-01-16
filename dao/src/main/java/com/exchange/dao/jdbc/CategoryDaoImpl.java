@@ -3,6 +3,7 @@ package com.exchange.dao.jdbc;
 import com.exchange.dao.Category;
 import com.exchange.dao.CategoryDao;
 import com.exchange.dao.jdbc.mapper.CategoryRowMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -43,7 +44,9 @@ public class CategoryDaoImpl implements CategoryDao {
     @Value("${category.checkCategoryById}")
     private String checkCategoryByIdSql;
 
-    private CategoryRowMapper categoryRowMapper = new CategoryRowMapper();
+    @Autowired
+    private CategoryRowMapper categoryRowMapper;
+
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 

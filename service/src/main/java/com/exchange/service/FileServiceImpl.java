@@ -50,7 +50,7 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public List<File> getAllFilesByUserId(Long userId) {
-        if (userId == null || userId <= 0L)
+        if (userId == null || userId < 0L)
             throw new ValidationException(incorrectId);
         if (!fileDao.checkFileByUserId(userId))
             throw new ValidationException(fileDoesNotExist);
@@ -64,7 +64,7 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public File getFileById(Long id) {
-        if (id == null || id <= 0L)
+        if (id == null || id < 0L)
             throw new ValidationException(incorrectId);
         if (!fileDao.checkFileById(id))
             throw new ValidationException(fileDoesNotExist);
@@ -77,7 +77,7 @@ public class FileServiceImpl implements FileService {
         Long userId = file.getUser_id();
         String url = file.getUrl();
 
-        if (userId == null || userId <= 0L)
+        if (userId == null || userId < 0L)
             throw new ValidationException(incorrectId);
 
         if (!userDao.checkUserByUserId(userId))
@@ -103,7 +103,7 @@ public class FileServiceImpl implements FileService {
         if (description == null || description.isEmpty())
             throw new ValidationException(incorrectDescription);
 
-        if (category == null || category <= 0L || categoryDao.checkCategoryById(category))
+        if (category == null || category < 0L || categoryDao.checkCategoryById(category))
             throw new ValidationException(incorrectCategory);
 
         if (fileDao.updateFile(file) == 0)
@@ -112,7 +112,7 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public void deleteFile(Long id) {
-        if (id == null || id <= 0L)
+        if (id == null || id < 0L)
             throw new ValidationException(incorrectId);
         if (fileDao.deleteFile(id) == 0)
             throw new InternalServerException(deleteError);

@@ -3,6 +3,7 @@ package com.exchange.dao.jdbc.mapper;
 
 import com.exchange.dao.User;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Component;
 
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -13,6 +14,7 @@ import static com.exchange.dao.jdbc.UserDaoImpl.*;
 /**
  * Created by Uladzislau Hrytsau on 27.11.18.
  */
+@Component
 public class UserRowMapper implements RowMapper<User> {
 
     public User mapRow(ResultSet rs, int rowNum) throws SQLException {

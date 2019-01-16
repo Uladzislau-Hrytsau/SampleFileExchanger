@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -48,21 +47,6 @@ public class FileServiceImpl implements FileService {
     private String updateError;
     @Value("${fileService.deleteError}")
     private String deleteError;
-
-    private File file;
-    private List<File> files;
-
-    public void setUserDao(UserDao userDao) {
-        this.userDao = userDao;
-    }
-
-    public void setFileDao(FileDao fileDao) {
-        this.fileDao = fileDao;
-    }
-
-    public void setCategoryDao(CategoryDao categoryDao) {
-        this.categoryDao = categoryDao;
-    }
 
     @Override
     public List<File> getAllFilesByUserId(Long userId) {

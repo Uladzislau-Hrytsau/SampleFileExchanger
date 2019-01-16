@@ -2,6 +2,7 @@ package com.exchange.dao.jdbc.mapper;
 
 import com.exchange.dao.Category;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,6 +13,7 @@ import static com.exchange.dao.jdbc.CategoryDaoImpl.ID;
 /**
  * Created by Uladzislau Hrytsau on 27.11.18.
  */
+@Component
 public class CategoryRowMapper implements RowMapper<Category> {
 
     public Category mapRow(ResultSet rs, int rowNum) throws SQLException {

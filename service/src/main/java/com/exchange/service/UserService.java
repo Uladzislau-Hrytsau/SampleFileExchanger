@@ -21,7 +21,7 @@ public interface UserService {
      * Get user by Id.
      *
      * @param userId user identifier.
-     * @return user.
+     * @return user. user by user id
      */
     User getUserByUserId(Long userId);
 
@@ -29,7 +29,7 @@ public interface UserService {
      * Get user by login.
      *
      * @param login user login.
-     * @return user.
+     * @return user. user by login
      */
     User getUserByLogin(String login);
 

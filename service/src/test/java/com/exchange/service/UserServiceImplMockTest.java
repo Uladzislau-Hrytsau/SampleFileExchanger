@@ -13,6 +13,9 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.mockito.Mockito.*;
 
+/**
+ * The type User service impl mock test.
+ */
 @RunWith(MockitoJUnitRunner.class)
 public class UserServiceImplMockTest {
 
@@ -32,6 +35,9 @@ public class UserServiceImplMockTest {
     @InjectMocks
     private UserServiceImpl userServiceImpl;
 
+    /**
+     * Gets user by user id success 1 mock test.
+     */
     @Test
     public void getUserByUserIdSuccess_1_MockTest() {
         when(userDaoMock.checkUserByUserId(anyLong())).thenReturn(true);
@@ -39,6 +45,9 @@ public class UserServiceImplMockTest {
         verify(userDaoMock, times(1)).getUserByUserId(anyLong());
     }
 
+    /**
+     * Gets user by user id un success 1 mock test.
+     */
     @Test(expected = ValidationException.class)
     public void getUserByUserIdUnSuccess_1_MockTest() {
         userServiceImpl.getUserByUserId(NULL_ID);
@@ -46,6 +55,9 @@ public class UserServiceImplMockTest {
         verify(userDaoMock, never()).getUserByUserId(anyLong());
     }
 
+    /**
+     * Gets user by user id un success 2 mock test.
+     */
     @Test(expected = ValidationException.class)
     public void getUserByUserIdUnSuccess_2_MockTest() {
         userServiceImpl.getUserByUserId(INCORRECT_ID);
@@ -53,6 +65,9 @@ public class UserServiceImplMockTest {
         verify(userDaoMock, never()).getUserByUserId(anyLong());
     }
 
+    /**
+     * Gets user by user id un success 3 mock test.
+     */
     @Test(expected = ValidationException.class)
     public void getUserByUserIdUnSuccess_3_MockTest() {
         when(userDaoMock.checkUserByUserId(anyLong())).thenReturn(false);
@@ -61,6 +76,9 @@ public class UserServiceImplMockTest {
     }
 
 
+    /**
+     * Gets user by login success 1 mock test.
+     */
     @Test
     public void getUserByLoginSuccess_1_MockTest() {
         when(userDaoMock.checkUserByLogin(anyString())).thenReturn(true);
@@ -68,6 +86,9 @@ public class UserServiceImplMockTest {
         verify(userDaoMock, times(1)).getUserByLogin(anyString());
     }
 
+    /**
+     * Gets user by login un success 1 mock test.
+     */
     @Test(expected = ValidationException.class)
     public void getUserByLoginUnSuccess_1_MockTest() {
         userServiceImpl.getUserByLogin(NULL_LOGIN);
@@ -75,6 +96,9 @@ public class UserServiceImplMockTest {
         verify(userDaoMock, never()).getUserByLogin(anyString());
     }
 
+    /**
+     * Gets user by login un success 2 mock test.
+     */
     @Test(expected = ValidationException.class)
     public void getUserByLoginUnSuccess_2_MockTest() {
         userServiceImpl.getUserByLogin(EMPTY_LOGIN);
@@ -82,6 +106,9 @@ public class UserServiceImplMockTest {
         verify(userDaoMock, never()).getUserByLogin(anyString());
     }
 
+    /**
+     * Gets user by login un success 3 mock test.
+     */
     @Test(expected = ValidationException.class)
     public void getUserByLoginUnSuccess_3_MockTest() {
         when(userDaoMock.checkUserByLogin(anyString())).thenReturn(false);
@@ -90,6 +117,9 @@ public class UserServiceImplMockTest {
     }
 
 
+    /**
+     * Add user success 1 mock test.
+     */
     @Test
     public void addUserSuccess_1_MockTest() {
         doNothing().when(userValidatorMock).validateLoginAndPassword(userMock, userDaoMock);
@@ -97,6 +127,9 @@ public class UserServiceImplMockTest {
         verify(userDaoMock, times(1)).addUser(userMock);
     }
 
+    /**
+     * Add user un success 1 mock test.
+     */
     @Test(expected = ValidationException.class)
     public void addUserUnSuccess_1_MockTest() {
         doThrow(ValidationException.class).when(userValidatorMock).validateLoginAndPassword(userMock, userDaoMock);
@@ -105,6 +138,9 @@ public class UserServiceImplMockTest {
     }
 
 
+    /**
+     * Update user success 1 mock test.
+     */
     @Test
     public void updateUserSuccess_1_MockTest() {
         doNothing().when(userValidatorMock).validateLoginAndPassword(userMock, userDaoMock);
@@ -112,6 +148,9 @@ public class UserServiceImplMockTest {
         userServiceImpl.updateUser(userMock);
     }
 
+    /**
+     * Update user un success 1 mock test.
+     */
     @Test(expected = ValidationException.class)
     public void updateUserUnSuccess_1_MockTest() {
         doThrow(ValidationException.class).when(userValidatorMock).validateLoginAndPassword(userMock, userDaoMock);
@@ -119,6 +158,9 @@ public class UserServiceImplMockTest {
         verify(userDaoMock, never()).updateUser(any(User.class));
     }
 
+    /**
+     * Update user un success 2 mock test.
+     */
     @Test(expected = InternalServerException.class)
     public void updateUserUnSuccess_2_MockTest() {
         doNothing().when(userValidatorMock).validateLoginAndPassword(any(User.class), any(UserDao.class));
@@ -127,24 +169,36 @@ public class UserServiceImplMockTest {
     }
 
 
+    /**
+     * Delete user success 1 mock test.
+     */
     @Test
     public void deleteUserSuccess_1_MockTest() {
         when(userDaoMock.deleteUser(CORRECT_ID)).thenReturn(1);
         userServiceImpl.deleteUser(CORRECT_ID);
     }
 
+    /**
+     * Delete user un success 1 mock test.
+     */
     @Test(expected = ValidationException.class)
     public void deleteUserUnSuccess_1_MockTest() {
         userServiceImpl.deleteUser(INCORRECT_ID);
         verify(userDaoMock, never()).deleteUser(INCORRECT_ID);
     }
 
+    /**
+     * Delete user un success 2 mock test.
+     */
     @Test(expected = ValidationException.class)
     public void deleteUserUnSuccess_2_MockTest() {
         userServiceImpl.deleteUser(NULL_ID);
         verify(userDaoMock, never()).deleteUser(NULL_ID);
     }
 
+    /**
+     * Delete user un success 3 mock test.
+     */
     @Test(expected = InternalServerException.class)
     public void deleteUserUnSuccess_3_MockTest() {
         when(userDaoMock.deleteUser(CORRECT_ID)).thenReturn(0);

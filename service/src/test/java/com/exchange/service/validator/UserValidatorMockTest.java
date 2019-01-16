@@ -11,6 +11,9 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.mockito.Mockito.*;
 
+/**
+ * The type User validator mock test.
+ */
 @RunWith(MockitoJUnitRunner.class)
 public class UserValidatorMockTest {
 
@@ -25,6 +28,9 @@ public class UserValidatorMockTest {
     @InjectMocks
     private UserValidator userValidator;
 
+    /**
+     * Validate login and password success mock test.
+     */
     @Test
     public void validateLoginAndPasswordSuccessMockTest() {
         when(userMock.getLogin()).thenReturn(LOGIN);
@@ -34,6 +40,9 @@ public class UserValidatorMockTest {
 
     }
 
+    /**
+     * Validate login and password un success 1 mock test.
+     */
     @Test(expected = ValidationException.class)
     public void validateLoginAndPasswordUnSuccess_1_MockTest() {
         when(userMock.getLogin()).thenReturn(EMPTY);
@@ -42,6 +51,9 @@ public class UserValidatorMockTest {
         userValidator.validateLoginAndPassword(userMock, userDaoMock);
     }
 
+    /**
+     * Validate login and password un success 2 mock test.
+     */
     @Test(expected = ValidationException.class)
     public void validateLoginAndPasswordUnSuccess_2_MockTest() {
         when(userMock.getLogin()).thenReturn(NULL);
@@ -50,6 +62,9 @@ public class UserValidatorMockTest {
         userValidator.validateLoginAndPassword(userMock, userDaoMock);
     }
 
+    /**
+     * Validate login and password un success 3 mock test.
+     */
     @Test(expected = ValidationException.class)
     public void validateLoginAndPasswordUnSuccess_3_MockTest() {
         when(userMock.getLogin()).thenReturn(LOGIN);

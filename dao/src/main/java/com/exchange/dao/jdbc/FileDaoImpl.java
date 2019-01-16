@@ -3,6 +3,7 @@ package com.exchange.dao.jdbc;
 import com.exchange.dao.File;
 import com.exchange.dao.FileDao;
 import com.exchange.dao.jdbc.mapper.FileRowMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -11,10 +12,8 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.sql.DataSource;
-import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,53 +24,101 @@ import java.util.Map;
  */
 public class FileDaoImpl implements FileDao {
 
+    /**
+     * The constant ID.
+     */
     public static final String ID = "id";
+    /**
+     * The constant USER_ID.
+     */
     public static final String USER_ID = "user_id";
+    /**
+     * The constant URL.
+     */
     public static final String URL = "url";
+    /**
+     * The constant DESCRIPTION.
+     */
     public static final String DESCRIPTION = "description";
+    /**
+     * The constant DATE.
+     */
     public static final String DATE = "date";
+    /**
+     * The constant CATEGORY.
+     */
     public static final String CATEGORY = "category";
 
+    /**
+     * The Get all files by user id and category sql.
+     */
     @Value("${file.selectByUserIdAndCategory}")
-    String getAllFilesByUserIdAndCategorySql;
+    private String getAllFilesByUserIdAndCategorySql;
+    /**
+     * The Get all files by user id and date sql.
+     */
     @Value("${file.selectByUserIdAndDate}")
-    String getAllFilesByUserIdAndDateSql;
+    private String getAllFilesByUserIdAndDateSql;
+    /**
+     * The Get all files by user id sql.
+     */
     @Value("${file.selectByUserId}")
-    String getAllFilesByUserIdSql;
+    private String getAllFilesByUserIdSql;
+    /**
+     * The Get all files sql.
+     */
     @Value("${file.select}")
-    String getAllFilesSql;
+    private String getAllFilesSql;
+    /**
+     * The Get file by id sql.
+     */
     @Value("${file.selectById}")
-    String getFileByIdSql;
+    private String getFileByIdSql;
+    /**
+     * The Add file sql.
+     */
     @Value("${file.insert}")
-    String addFileSql;
+    private String addFileSql;
+    /**
+     * The Update file sql.
+     */
     @Value("${file.update}")
-    String updateFileSql;
+    private String updateFileSql;
+    /**
+     * The Delete file sql.
+     */
     @Value("${file.delete}")
-    String deleteFileSql;
+    private String deleteFileSql;
+    /**
+     * The Check file by id sql.
+     */
     @Value("${file.checkFileById}")
-    String checkFileByIdSql;
+    private String checkFileByIdSql;
+    /**
+     * The Check file by user id sql.
+     */
     @Value("${file.checkFileByUserId}")
-    String checkFileByUserIdSql;
+    private String checkFileByUserIdSql;
+    /**
+     * The Check file by url sql.
+     */
     @Value("${file.checkFileByUrl}")
-    String checkFileByUrlSql;
+    private String checkFileByUrlSql;
 
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-    private FileRowMapper fileRowMapper = new FileRowMapper();
+    @Autowired
+    private FileRowMapper fileRowMapper;
 
+
+    /**
+     * Instantiates a new File dao.
+     *
+     * @param dataSource the data source
+     */
     public FileDaoImpl(DataSource dataSource) {
         jdbcTemplate = new JdbcTemplate(dataSource);
         namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
-    }
-
-    @Override
-    public List<File> getAllFilesByUserIdAndCategory(Long userId, String category) throws NotImplementedException {
-        return null;
-    }
-
-    @Override
-    public List<File> getAllFilesByUserIdAndDate(Long userId, LocalDate date) throws NotImplementedException {
-        return null;
     }
 
     @Override

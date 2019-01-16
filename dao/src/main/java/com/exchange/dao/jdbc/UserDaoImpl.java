@@ -3,6 +3,7 @@ package com.exchange.dao.jdbc;
 import com.exchange.dao.User;
 import com.exchange.dao.UserDao;
 import com.exchange.dao.jdbc.mapper.UserRowMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -23,14 +24,33 @@ import java.util.Map;
  */
 public class UserDaoImpl implements UserDao {
 
+    /**
+     * The constant USER_ID.
+     */
     public static final String USER_ID = "user_id";
+    /**
+     * The constant USER_NAME.
+     */
     public static final String USER_NAME = "user_name";
+    /**
+     * The constant USER_PASSWORD.
+     */
     public static final String USER_PASSWORD = "user_password";
+    /**
+     * The constant USER_GENDER.
+     */
     public static final String USER_GENDER = "user_gender";
+    /**
+     * The constant USER_BIRTH_DATE.
+     */
     public static final String USER_BIRTH_DATE = "user_birth_date";
+    /**
+     * The constant USER_INFORMATION.
+     */
     public static final String USER_INFORMATION = "user_information";
 
-    private UserRowMapper userRowMapper = new UserRowMapper();
+    @Autowired
+    private UserRowMapper userRowMapper;
 
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
@@ -59,6 +79,11 @@ public class UserDaoImpl implements UserDao {
     @Value("${user.checkUserByUserId}")
     private String checkUserByUserIdSql;
 
+    /**
+     * Instantiates a new User dao.
+     *
+     * @param dataSource the data source
+     */
     public UserDaoImpl(DataSource dataSource) {
         jdbcTemplate = new JdbcTemplate(dataSource);
         namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);

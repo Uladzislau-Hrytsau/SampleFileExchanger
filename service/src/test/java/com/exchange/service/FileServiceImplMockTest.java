@@ -18,6 +18,9 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
 
+/**
+ * The type File service impl mock test.
+ */
 @RunWith(MockitoJUnitRunner.class)
 public class FileServiceImplMockTest {
 
@@ -45,11 +48,17 @@ public class FileServiceImplMockTest {
     @InjectMocks
     private FileServiceImpl fileServiceImpl;
     private final File file = new File(
-            CORRECT_ID, CORRECT_ID, CORRECT_URL,
-            CORRECT_DESCRIPTION, CORRECT_DATE,
+            CORRECT_ID,
+            CORRECT_ID,
+            CORRECT_URL,
+            CORRECT_DESCRIPTION,
+            CORRECT_DATE,
             CORRECT_CATEGORY_ID
     );
 
+    /**
+     * Gets all files by user id success 1 mock test.
+     */
     @Test
     public void getAllFilesByUserIdSuccess_1_MockTest() {
         when(fileDaoMock.checkFileByUserId(CORRECT_ID)).thenReturn(true);
@@ -57,6 +66,9 @@ public class FileServiceImplMockTest {
         verify(fileDaoMock, times(1)).getAllFilesByUserId(anyLong());
     }
 
+    /**
+     * Gets all files by user id un success 1 mock test.
+     */
     @Test(expected = ValidationException.class)
     public void getAllFilesByUserIdUnSuccess_1_MockTest() {
         fileServiceImpl.getAllFilesByUserId(NULL_ID);
@@ -64,6 +76,9 @@ public class FileServiceImplMockTest {
         verify(fileDaoMock, never()).getAllFilesByUserId(anyLong());
     }
 
+    /**
+     * Gets all files by user id un success 2 mock test.
+     */
     @Test(expected = ValidationException.class)
     public void getAllFilesByUserIdUnSuccess_2_MockTest() {
         fileServiceImpl.getAllFilesByUserId(INCORRECT_ID);
@@ -71,6 +86,9 @@ public class FileServiceImplMockTest {
         verify(fileDaoMock, never()).getAllFilesByUserId(anyLong());
     }
 
+    /**
+     * Gets all files by user id un success 3 mock test.
+     */
     @Test(expected = ValidationException.class)
     public void getAllFilesByUserIdUnSuccess_3_MockTest() {
         when(fileDaoMock.checkFileByUserId(anyLong())).thenReturn(false);
@@ -78,6 +96,9 @@ public class FileServiceImplMockTest {
         verify(fileDaoMock, never()).getAllFilesByUserId(anyLong());
     }
 
+    /**
+     * Gets file by id success 1 mock test.
+     */
     @Test
     public void getFileByIdSuccess_1_MockTest() {
         when(fileDaoMock.checkFileById(anyLong())).thenReturn(true);
@@ -85,6 +106,9 @@ public class FileServiceImplMockTest {
         verify(fileDaoMock, times(1)).getFileById(anyLong());
     }
 
+    /**
+     * Gets file by id un success 1 mock test.
+     */
     @Test(expected = ValidationException.class)
     public void getFileByIdUnSuccess_1_MockTest() {
         fileServiceImpl.getFileById(NULL_ID);
@@ -92,6 +116,9 @@ public class FileServiceImplMockTest {
         verify(fileDaoMock, never()).getFileById(anyLong());
     }
 
+    /**
+     * Gets file by id un success 2 mock test.
+     */
     @Test(expected = ValidationException.class)
     public void getFileByIdUnSuccess_2_MockTest() {
         fileServiceImpl.getFileById(INCORRECT_ID);
@@ -99,6 +126,9 @@ public class FileServiceImplMockTest {
         verify(fileDaoMock, never()).getFileById(anyLong());
     }
 
+    /**
+     * Gets file by id un success 3 mock test.
+     */
     @Test(expected = ValidationException.class)
     public void getFileByIdUnSuccess_3_MockTest() {
         when(fileDaoMock.checkFileById(anyLong())).thenReturn(false);
@@ -106,6 +136,9 @@ public class FileServiceImplMockTest {
         verify(fileDaoMock, never()).getFileById(anyLong());
     }
 
+    /**
+     * Add file success 1 mock test.
+     */
     @Test
     public void addFileSuccess_1_MockTest() {
         when(userDaoMock.checkUserByUserId(anyLong())).thenReturn(true);
@@ -115,6 +148,9 @@ public class FileServiceImplMockTest {
         verify(fileDaoMock, times(1)).addFile(any(File.class));
     }
 
+    /**
+     * Add file un success 1 mock test.
+     */
     @Test(expected = ValidationException.class)
     public void addFileUnSuccess_1_MockTest() {
         file.setId(INCORRECT_ID);
@@ -126,6 +162,9 @@ public class FileServiceImplMockTest {
         verify(fileDaoMock, never()).addFile(any(File.class));
     }
 
+    /**
+     * Add file un success 2 mock test.
+     */
     @Test(expected = ValidationException.class)
     public void addFileUnSuccess_2_MockTest() {
         file.setId(NULL_ID);
@@ -137,6 +176,9 @@ public class FileServiceImplMockTest {
         verify(fileDaoMock, never()).addFile(any(File.class));
     }
 
+    /**
+     * Add file un success 3 mock test.
+     */
     @Test(expected = ValidationException.class)
     public void addFileUnSuccess_3_MockTest() {
         when(userDaoMock.checkUserByUserId(anyLong())).thenReturn(false);
@@ -146,6 +188,9 @@ public class FileServiceImplMockTest {
         verify(fileDaoMock, never()).addFile(any(File.class));
     }
 
+    /**
+     * Add file un success 4 mock test.
+     */
     @Test(expected = ValidationException.class)
     public void addFileUnSuccess_4_MockTest() {
         file.setUrl(NULL_URL);
@@ -156,6 +201,9 @@ public class FileServiceImplMockTest {
         verify(fileDaoMock, never()).addFile(any(File.class));
     }
 
+    /**
+     * Add file un success 5 mock test.
+     */
     @Test(expected = ValidationException.class)
     public void addFileUnSuccess_5_MockTest() {
         file.setUrl(EMPTY_URL);
@@ -166,6 +214,9 @@ public class FileServiceImplMockTest {
         verify(fileDaoMock, never()).addFile(any(File.class));
     }
 
+    /**
+     * Add file un success 6 mock test.
+     */
     @Test(expected = ValidationException.class)
     public void addFileUnSuccess_6_MockTest() {
         when(userDaoMock.checkUserByUserId(anyLong())).thenReturn(true);
@@ -175,6 +226,9 @@ public class FileServiceImplMockTest {
         verify(fileDaoMock, never()).addFile(any(File.class));
     }
 
+    /**
+     * Add file un success 7 mock test.
+     */
     @Test(expected = ValidationException.class)
     public void addFileUnSuccess_7_MockTest() {
         file.setDate(NULL_DATE);
@@ -186,14 +240,20 @@ public class FileServiceImplMockTest {
         verify(fileDaoMock, never()).addFile(any(File.class));
     }
 
-   @Test(expected = ValidationException.class)
+    /**
+     * Update file un success 1 mock test.
+     */
+    @Test(expected = ValidationException.class)
     public void updateFileUnSuccess_1_MockTest() {
         file.setDescription(NULL_DESCRIPTION);
         fileServiceImpl.updateFile(file);
         verify(categoryDaoMock, never()).checkCategoryById(anyLong());
         verify(fileDaoMock, never()).updateFile(file);
-   }
+    }
 
+    /**
+     * Update file un success 2 mock test.
+     */
     @Test(expected = ValidationException.class)
     public void updateFileUnSuccess_2_MockTest() {
         file.setDescription(EMPTY_DESCRIPTION);
@@ -202,6 +262,9 @@ public class FileServiceImplMockTest {
         verify(fileDaoMock, never()).updateFile(file);
     }
 
+    /**
+     * Update file un success 3 mock test.
+     */
     @Test(expected = ValidationException.class)
     public void updateFileUnSuccess_3_MockTest() {
         file.setCategoryId(NULL_CATEGORY_ID);
@@ -210,6 +273,9 @@ public class FileServiceImplMockTest {
         verify(fileDaoMock, never()).updateFile(file);
     }
 
+    /**
+     * Update file un success 4 mock test.
+     */
     @Test(expected = ValidationException.class)
     public void updateFileUnSuccess_4_MockTest() {
         file.setCategoryId(INCORRECT_CATEGORY_ID);
@@ -218,6 +284,9 @@ public class FileServiceImplMockTest {
         verify(fileDaoMock, never()).updateFile(file);
     }
 
+    /**
+     * Update file un success 5 mock test.
+     */
     @Test(expected = ValidationException.class)
     public void updateFileUnSuccess_5_MockTest() {
         when(categoryDaoMock.checkCategoryById(anyLong())).thenReturn(true);
@@ -225,6 +294,9 @@ public class FileServiceImplMockTest {
         verify(fileDaoMock, never()).updateFile(file);
     }
 
+    /**
+     * Update file un success 6 mock test.
+     */
     @Test(expected = InternalServerException.class)
     public void updateFileUnSuccess_6_MockTest() {
         when(categoryDaoMock.checkCategoryById(anyLong())).thenReturn(false);
@@ -232,24 +304,36 @@ public class FileServiceImplMockTest {
         fileServiceImpl.updateFile(file);
     }
 
+    /**
+     * Delete file success 1 mock test.
+     */
     @Test
     public void deleteFileSuccess_1_MockTest() {
         when(fileDaoMock.deleteFile(anyLong())).thenReturn(1);
         fileServiceImpl.deleteFile(CORRECT_ID);
     }
 
+    /**
+     * Delete file un success 1 mock test.
+     */
     @Test(expected = ValidationException.class)
     public void deleteFileUnSuccess_1_MockTest() {
         fileServiceImpl.deleteFile(NULL_ID);
         verify(fileDaoMock, never()).deleteFile(anyLong());
     }
 
+    /**
+     * Delete file un success 2 mock test.
+     */
     @Test(expected = ValidationException.class)
     public void deleteFileUnSuccess_2_MockTest() {
         fileServiceImpl.deleteFile(INCORRECT_ID);
         verify(fileDaoMock, never()).deleteFile(anyLong());
     }
 
+    /**
+     * Delete file un success 3 mock test.
+     */
     @Test(expected = InternalServerException.class)
     public void deleteFileUnSuccess_3_MockTest() {
         when(fileDaoMock.deleteFile(anyLong())).thenReturn(0);

@@ -7,6 +7,8 @@ import com.exchange.exception.ValidationException;
 import com.exchange.service.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +27,10 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserValidator userValidator;
+
+    @Autowired
+    @Lazy
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Value("${userService.deleteError}")
     private String deleteError;
@@ -63,6 +69,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Long addUser(User user) {
         userValidator.validateLoginAndPassword(user, userDao);
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         return userDao.addUser(user);
     }
 

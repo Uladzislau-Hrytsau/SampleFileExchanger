@@ -198,4 +198,16 @@ public class UserDaoImplTest {
     public void checkUserByLoginTest() {
         assertTrue(userDao.checkUserByLogin(USER_LOGIN_1));
     }
+
+    @Test
+    public void getUserIdByLoginTest() {
+        String userName = "loginForTest";
+        String password = "1233214562w";
+        User user = new User(userName, password);
+        Long id = userDao.addUser(user);
+        assertNotNull(id);
+        Long newId = userDao.getUserIdByLogin(userName);
+        assertNotNull(newId);
+        assertEquals(id, newId);
+    }
 }

@@ -79,4 +79,12 @@ public interface UserDao {
      */
     boolean checkUserByLogin(String login);
 
+    /**
+     * Gets user id by login.
+     *
+     * @param login the login
+     * @return the user id by login
+     */
+    Long getUserIdByLogin(String login);
+
 }

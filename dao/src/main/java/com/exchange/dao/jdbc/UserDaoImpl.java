@@ -79,6 +79,9 @@ public class UserDaoImpl implements UserDao {
     @Value("${user.checkUserByUserId}")
     private String checkUserByUserIdSql;
 
+    @Value("${user.selectUserIdByLogin}")
+    private String getUserIdByLoginSql;
+
     /**
      * Instantiates a new User dao.
      *
@@ -128,7 +131,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public int updateUser(User user) throws DataAccessException {
-        Map<String, Object> params = new HashMap<String, Object>();
+        Map<String, Object> params = new HashMap<>();
         params.put(USER_ID, user.getUserId());
         params.put(USER_NAME, user.getLogin());
         params.put(USER_PASSWORD, user.getPassword());
@@ -140,18 +143,24 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public int deleteUser(Long userId) throws DataAccessException {
-        Map<String, Object> params = new HashMap<String, Object>();
+        Map<String, Object> params = new HashMap<>();
         params.put(USER_ID, userId);
         return namedParameterJdbcTemplate.update(deleteUserSql, params);
     }
 
     @Override
     public boolean checkUserByLogin(String userName) {
-        return jdbcTemplate.queryForObject(checkUserByLoginSql, new Object[]{userName}, Boolean.class);
+        return jdbcTemplate.queryForObject(checkUserByLoginSql, new String[]{userName}, Boolean.class);
     }
 
     @Override
     public boolean checkUserByUserId(Long userId) {
-        return jdbcTemplate.queryForObject(checkUserByUserIdSql, new Object[]{userId}, Boolean.class);
+        return jdbcTemplate.queryForObject(checkUserByUserIdSql, new Long[]{userId}, Boolean.class);
     }
+
+    @Override
+    public Long getUserIdByLogin(String login) {
+        return jdbcTemplate.queryForObject(getUserIdByLoginSql, new String[]{login}, Long.class);
+    }
+
 }

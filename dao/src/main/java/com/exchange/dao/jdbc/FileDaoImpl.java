@@ -107,6 +107,7 @@ public class FileDaoImpl implements FileDao {
 
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
     @Autowired
     private FileRowMapper fileRowMapper;
 

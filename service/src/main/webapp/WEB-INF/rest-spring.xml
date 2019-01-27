@@ -47,6 +47,10 @@
         <constructor-arg ref="dataSource"/>
     </bean>
 
+    <bean id="userRoleDao" class="com.exchange.dao.jdbc.UserRoleDaoImpl">
+        <constructor-arg ref="dataSource"/>
+    </bean>
+
     <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
         <property name="messageConverters">
             <list>

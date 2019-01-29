@@ -1,5 +1,7 @@
 <template>
+
   <div class="container mt-5">
+    <button class="btn btn-dark" @click="obtainAccessToken()">users</button>
     <table class="table table-bordered table-hover">
       <thead>
       <tr>
@@ -31,6 +33,12 @@
 
 <script>
   import http from "../../http-common";
+  import { Cookie } from 'ng2-cookies';
+  import VueRequests from 'vue-requests'
+  import { Http, Response, Headers, RequestOptions } from '@angular/http';
+  import 'rxjs/add/operator/map';
+  import 'rxjs/rx';
+  // import { Observable } from 'rxjs/Observable';
 
   export default {
     name: "Users",
@@ -76,6 +84,36 @@
             console.log(e);
           });
       },
+      obtainAccessToken(){
+        let params = new URLSearchParams();
+        params.append('username',"vlad");
+        params.append('password',"256247");
+        params.append('grant_type','password');
+        params.append('client_id','clientIdPassword');
+
+        let headers = new Headers({'Content-type': 'application/x-www-form-urlencoded; charset=utf-8', 'Authorization': 'Basic '+btoa("clientIdPassword:secret")});
+        let options = new RequestOptions({ headers: headers });
+        console.log(params.toString());
+        http.post('http://localhost:8088/oauth/token', params.toString(), options)
+          .map(res => res.json())
+          .subscribe(
+            data => this.saveToken(data),
+            err => alert('Invalid Credentials')
+          );
+      },
+      saveToken(token){
+        var expireDate = new Date().getTime() + (1000 * token.expires_in);
+        Cookie.set("access_token", token.access_token, expireDate);
+        console.log('Obtained Access token');
+        this._router.navigate(['/']);
+      },
+      // getResource(resourceUrl) : Observable<Foo>{
+      //   var headers = new Headers({'Content-type': 'application/x-www-form-urlencoded; charset=utf-8', 'Authorization': 'Bearer '+Cookie.get('access_token')});
+      //   var options = new RequestOptions({ headers: headers });
+      //   return http.get(resourceUrl, options)
+      //     .map((res:Response) => res.json())
+      //     .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
+      // }
       /* eslint-enable no-console */
     },
     mounted() {

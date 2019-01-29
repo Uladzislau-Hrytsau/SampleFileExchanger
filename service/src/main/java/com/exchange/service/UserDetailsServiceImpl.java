@@ -39,7 +39,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         Set<String> rolesFromTable = userRoleDao.getRolesByUserId(userId);
 
         Stream stream = rolesFromTable.stream();
-        stream.forEach((role) -> roles.add(new SimpleGrantedAuthority(role.toString().toUpperCase())));
+        stream.forEach((role) -> roles.add(new SimpleGrantedAuthority(role.toString())));
 
         return new org.springframework.security.core.userdetails.User(user.getLogin(), user.getPassword(), roles);
     }

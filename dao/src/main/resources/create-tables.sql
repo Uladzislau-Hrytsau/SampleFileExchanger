@@ -36,11 +36,13 @@ CREATE TABLE `role` (
 CREATE TABLE `user_role` (
   `user_id` bigint(10) unsigned NOT NULL,
   `role_id` bigint(10) unsigned NOT NULL,
+  `id` bigint(10) unsigned NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`),
   KEY `fk_user_role_1_idx` (`user_id`),
   KEY `fk_user_role_2_idx` (`role_id`),
   CONSTRAINT `fk_user_role_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_user_role_2` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 
 

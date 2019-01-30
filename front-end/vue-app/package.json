@@ -13,19 +13,12 @@
     "build": "node build/build.js"
   },
   "dependencies": {
-    "@angular/common": "^7.2.2",
-    "@angular/core": "^7.2.2",
-    "@angular/http": "^7.2.2",
-    "@angular/platform-browser": "^7.2.2",
     "axios": "^0.18.0",
     "bootstrap": "^4.2.1",
     "bootstrap-vue": "^2.0.0-rc.11",
     "jquery": "^3.3.1",
-    "ng2-cookies": "^1.0.12",
     "popper.js": "^1.14.6",
-    "rxjs": "^6.3.3",
     "vue": "^2.5.2",
-    "vue-requests": "^1.1.6",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {

@@ -52,8 +52,14 @@
     methods: {
       /* eslint-disable no-console */
       retrieveUsers() {
+        let headers = new Headers();
+
+        // headers.append("*", "*");
+        // headers.append('Authorization', 'Bearer 72ab5af3-2d37-4c17-aaa4-730d713ed1ee');
+        headers.append('Origin','*');
+
         http
-          .get("/users")
+          .get("/users"/*, {headers: headers}*/)
           .then(response => {
             this.users = response.data; // JSON are parsed automatically.
             console.log(response.data);
@@ -62,9 +68,14 @@
             console.log(e);
           });
       },
-      deleteUser(userId) {
+      deleteUser(userId,
+      ) {
         http
-          .delete("/user/" + userId)
+          .delete("/user/" + userId,
+            // {'headers':
+            //     {'Authorization': 'bearer b7f96453-7fd7-475d-87a0-58a9b13391ba'}
+            // }
+          )
           .then(response => {
             console.log(response.data);
             this.$router.push('/Users');

@@ -52,11 +52,11 @@
     methods: {
       /* eslint-disable no-console */
       retrieveUsers() {
-        let headers = new Headers();
+        // let headers = new Headers();
 
         // headers.append("*", "*");
         // headers.append('Authorization', 'Bearer 72ab5af3-2d37-4c17-aaa4-730d713ed1ee');
-        headers.append('Origin','*');
+        // headers.append('Origin','*');
 
         http
           .get("/users"/*, {headers: headers}*/)

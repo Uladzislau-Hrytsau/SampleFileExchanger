@@ -14,15 +14,6 @@
 
     <mvc:annotation-driven/>
 
-    <!--<mvc:cors>-->
-        <!--<mvc:mapping path="/**"-->
-                     <!--allowed-origins="*"/>-->
-                     <!--&lt;!&ndash;allowed-methods="*"&ndash;&gt;-->
-                     <!--&lt;!&ndash;allowed-headers="*"&ndash;&gt;-->
-                     <!--&lt;!&ndash;allow-credentials="false"&ndash;&gt;-->
-                     <!--&lt;!&ndash;max-age="4800" />&ndash;&gt;-->
-    <!--</mvc:cors>-->
-
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
             <list>

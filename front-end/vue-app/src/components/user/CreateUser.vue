@@ -41,6 +41,17 @@
 <script>
   import http from "../../http-common";
 
+  import axios from 'axios'
+
+  // const $http = axios.create({
+  //   baseURL: 'http://localhost:8088',
+  //   timeout: 1000,
+  //   headers: {
+  //     'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8; application/json',
+  //     'Access-Control-Allow-Origin': '*'
+  //   }
+  // })
+
   export default {
     name: "CreateUser",
     data() {

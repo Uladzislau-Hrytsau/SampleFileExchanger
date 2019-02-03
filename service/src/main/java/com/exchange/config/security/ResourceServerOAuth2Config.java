@@ -16,12 +16,15 @@ public class ResourceServerOAuth2Config
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http
-                .csrf()
-                .disable()
+                .anonymous().and()
+                .csrf().disable()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.OPTIONS, "/oauth/token")
-                .permitAll()
-                .anyRequest().authenticated();
+                .antMatchers(HttpMethod.OPTIONS, "/oauth/token").permitAll()
+                .antMatchers(HttpMethod.POST, "/oauth/token").permitAll()
+                .antMatchers(HttpMethod.OPTIONS, "/user").permitAll()
+                .antMatchers(HttpMethod.POST, "/user").permitAll()
+                .antMatchers("/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')");
+
     }
 
 }

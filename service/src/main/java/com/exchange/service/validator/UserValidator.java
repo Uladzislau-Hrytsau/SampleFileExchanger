@@ -30,6 +30,7 @@ public class UserValidator {
         if (login == null || password == null || login.isEmpty() || password.isEmpty())
             throw new ValidationException(incorrectLoginOrPassword);
         if (userDao.checkUserByLogin(login))
+            //TODO: can not update with current login
             throw new ValidationException(alreadyExist);
     }
 

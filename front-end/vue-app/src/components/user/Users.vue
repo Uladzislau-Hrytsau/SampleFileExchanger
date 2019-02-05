@@ -57,9 +57,13 @@
         // headers.append("*", "*");
         // headers.append('Authorization', 'Bearer 72ab5af3-2d37-4c17-aaa4-730d713ed1ee');
         // headers.append('Origin','*');
-
         http
-          .get("/users"/*, {headers: headers}*/)
+          .get("/users", {
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer 4df8f77d-f3da-4462-9e93-5dd9268f3bef',
+            }
+          })
           .then(response => {
             this.users = response.data; // JSON are parsed automatically.
             console.log(response.data);

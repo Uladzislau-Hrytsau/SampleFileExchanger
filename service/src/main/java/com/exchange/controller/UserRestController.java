@@ -13,7 +13,7 @@ import java.util.List;
  * Rest controller for user.
  * Created by Hrytsau Uladzislau on 4.12.18.
  */
-@CrossOrigin
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 public class UserRestController {
 

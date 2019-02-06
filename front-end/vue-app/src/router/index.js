@@ -7,8 +7,10 @@ import UpdateUser from '@/components/user/UpdateUser'
 import Files from '@/components/file/Files'
 import CreateFile from '@/components/file/CreateFile'
 import UpdateFile from '@/components/file/UpdateFile'
+import VueCookies from 'vue-cookies'
 
-Vue.use(Router)
+Vue.use(Router);
+Vue.use(VueCookies);
 
 export default new Router({
   routes: [

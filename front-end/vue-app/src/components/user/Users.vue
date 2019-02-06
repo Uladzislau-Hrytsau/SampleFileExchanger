@@ -32,6 +32,8 @@
 <script>
   import http from "../../http-common";
 
+  const qs = require('query-string');
+
   export default {
     name: "Users",
     data() {
@@ -52,18 +54,20 @@
     methods: {
       /* eslint-disable no-console */
       retrieveUsers() {
-        // let headers = new Headers();
-
-        // headers.append("*", "*");
-        // headers.append('Authorization', 'Bearer 72ab5af3-2d37-4c17-aaa4-730d713ed1ee');
-        // headers.append('Origin','*');
+        const requestBody = {
+          username: 'vlad',
+          password: '256247',
+          grant_type: 'password',
+        };
+        const config = {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Authorization' : 'Bearer ' + $cookies.get('token'),
+            'Access-Control-Allow-Origin': '*'
+          }
+        };
         http
-          .get("/users", {
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': 'Bearer 4df8f77d-f3da-4462-9e93-5dd9268f3bef',
-            }
-          })
+          .get("/users", qs.stringify(requestBody), config)
           .then(response => {
             this.users = response.data; // JSON are parsed automatically.
             console.log(response.data);

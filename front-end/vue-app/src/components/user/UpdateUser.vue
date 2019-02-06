@@ -42,7 +42,6 @@
     <button v-on:click="saveCustomer" class="btn btn-success">update</button>
   </div>
 </template>
-
 <script>
   import http from "../../http-common";
 

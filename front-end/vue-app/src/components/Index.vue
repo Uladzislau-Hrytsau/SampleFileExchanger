@@ -24,6 +24,8 @@
 <script>
 
   import http from "../http-common";
+  import VueCookies from  "../http-common"
+
   const qs = require('query-string');
 
   export default {
@@ -39,29 +41,19 @@
           username: 'vlad',
           password: '256247',
           grant_type: 'password',
-        }
+        };
         const config = {
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
             'Authorization': 'Basic Y2xpZW50SWRQYXNzd29yZDpzZWNyZXQ=',
           }
-        }
-        http.post('/oauth/token',qs.stringify(requestBody), config
-          /*{
-            headers: {
-              "Content-Type": "application/x-www-form-urlencoded",
-              "Authorization": "Basic Y2xpZW50SWRQYXNzd29yZDpzZWNyZXQ=",
-              "cache-control": "no-cache",
-              "Access-Control-Allow-Origin": "*"
-            },
-            body: {
-              'grant_type': 'password',
-              'username': 'vlad',
-              'password': '256247'
-            }
-          }*/
-        )
+        };
+        http.post('/oauth/token', qs.stringify(requestBody), config)
           .then(response => {
+            // VueCookies.config('7d')
+            // VueCookies.set('access_token', response.data);
+            $cookies.config('7d');
+            $cookies.set('token', response.data.access_token);
             console.log(response)
           })
           .catch(function (error) {

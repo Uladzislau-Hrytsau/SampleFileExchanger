@@ -46,7 +46,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers(HttpMethod.OPTIONS, "/oauth/token");
+        web.ignoring()
+                .antMatchers(HttpMethod.OPTIONS, "/oauth/token")
+                .antMatchers(HttpMethod.OPTIONS, "/**");
     }
 
     @Override
@@ -83,7 +85,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public FilterRegistrationBean<SimpleCorsFilter> loggingFilter(){
+    public FilterRegistrationBean<SimpleCorsFilter> loggingFilter() {
         FilterRegistrationBean<SimpleCorsFilter> registrationBean
                 = new FilterRegistrationBean<>();
 

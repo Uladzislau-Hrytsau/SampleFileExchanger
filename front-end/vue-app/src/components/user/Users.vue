@@ -54,20 +54,14 @@
     methods: {
       /* eslint-disable no-console */
       retrieveUsers() {
-        const requestBody = {
-          username: 'vlad',
-          password: '256247',
-          grant_type: 'password',
-        };
         const config = {
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
             'Authorization' : 'Bearer ' + $cookies.get('token'),
-            'Access-Control-Allow-Origin': '*'
           }
         };
         http
-          .get("/users", qs.stringify(requestBody), config)
+          .get("/users", config)
           .then(response => {
             this.users = response.data; // JSON are parsed automatically.
             console.log(response.data);

@@ -19,24 +19,12 @@ public class SimpleCorsFilter implements Filter {
     }
 
     @Override
-    public void init(FilterConfig fc) throws ServletException {
+    public void init(FilterConfig fc) {
     }
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse resp,
                          FilterChain chain) throws IOException, ServletException {
-
-        System.out.println("doFilter");
-        System.out.println("doFilter");
-        System.out.println("doFilter");
-        System.out.println("doFilter");
-        System.out.println("doFilter");
-        System.out.println("doFilter");
-        System.out.println("doFilter");
-        System.out.println("doFilter");
-        System.out.println("doFilter");
-        System.out.println("doFilter");
-        System.out.println("doFilter");
         HttpServletResponse response = (HttpServletResponse) resp;
         HttpServletRequest request = (HttpServletRequest) req;
         response.setHeader("Access-Control-Allow-Origin", "*");

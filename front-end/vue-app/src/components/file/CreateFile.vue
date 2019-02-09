@@ -50,7 +50,6 @@
       };
     },
     methods: {
-      /* eslint-disable no-console */
       saveFile() {
         var data = {
           user_id: this.file.user_id,
@@ -60,8 +59,14 @@
           categoryId: this.file.categoryId,
         };
 
+        const config = {
+          headers: {
+            'Authorization': 'Bearer ' + $cookies.get('token'),
+          }
+        };
+
         http
-          .post("/file", data)
+          .post("/file", data, config)
           .then(response => {
             console.log(response.data);
             this.$router.push('/');

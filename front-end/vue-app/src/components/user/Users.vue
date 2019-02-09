@@ -32,52 +32,25 @@
 <script>
   import http from "../../http-common";
 
-  const qs = require('query-string');
-
   export default {
     name: "Users",
     data() {
       return {
-        fields: [
-          'userId',
-          'login',
-          'password',
-          'gender',
-          'birthDate',
-          'information',
-          'delete'
-        ],
         users: [],
       };
     },
 
     methods: {
-      /* eslint-disable no-console */
       retrieveUsers() {
-        const config = {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Authorization' : 'Bearer ' + $cookies.get('token'),
-          }
-        };
-        http
-          .get("/users", config)
+        this.$store.dispatch('getUsers')
           .then(response => {
-            this.users = response.data; // JSON are parsed automatically.
-            console.log(response.data);
+            this.users = response.data
+            console.log(this.users)
           })
-          .catch(e => {
-            console.log(e);
-          });
       },
-      deleteUser(userId,
-      ) {
+      deleteUser(userId) {
         http
-          .delete("/user/" + userId,
-            // {'headers':
-            //     {'Authorization': 'bearer b7f96453-7fd7-475d-87a0-58a9b13391ba'}
-            // }
-          )
+          .delete("/user/" + userId)
           .then(response => {
             console.log(response.data);
             this.$router.push('/Users');
@@ -89,7 +62,6 @@
             console.log(e);
           });
       },
-      /* eslint-enable no-console */
     },
     mounted() {
       this.retrieveUsers();

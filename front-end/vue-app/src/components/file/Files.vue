@@ -36,30 +36,17 @@
     name: "files",
     data() {
       return {
-        fields: [
-          'id',
-          'user_id',
-          'url',
-          'description',
-          'date',
-          'categoryId'
-        ],
-        files: []
+        files: [],
       };
     },
 
     methods: {
-      /* eslint-disable no-console */
       retrieveFiles() {
-        http
-          .get("/files")
+        this.$store.dispatch('getFiles')
           .then(response => {
-            this.files = response.data; // JSON are parsed automatically.
-            console.log(response.data);
+            this.files = response.data
+            console.log(this.files)
           })
-          .catch(e => {
-            console.log(e);
-          });
       },
       deleteFile(id) {
         http
@@ -75,7 +62,6 @@
             console.log(e);
           });
       }
-      /* eslint-enable no-console */
     },
     mounted() {
       this.retrieveFiles();

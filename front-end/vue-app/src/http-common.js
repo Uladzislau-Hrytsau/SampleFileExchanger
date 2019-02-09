@@ -1,6 +1,7 @@
 import axios from "axios";
 import VueCookies from 'vue-cookies'
-import Vue from 'vue'
+import 'bootstrap-css-only/css/bootstrap.min.css';
+import 'mdbvue/build/css/mdb.css';
 
 Vue.use(VueCookies);
 

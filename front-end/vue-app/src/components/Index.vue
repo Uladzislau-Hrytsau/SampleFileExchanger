@@ -4,7 +4,7 @@
     <form>
       <label for="login">Login</label>
       <div>
-        <input id="login" type="text" v-model="login" required autofocus placeholder="Login">
+        <input id="login" type="text" v-model="username" required autofocus placeholder="Login">
       </div>
       <div>
         <label for="password">Password</label>
@@ -24,41 +24,54 @@
 <script>
 
   import http from "../http-common";
-  import VueCookies from  "../http-common"
+  import VueCookies from "../http-common"
+  import 'bootstrap-css-only/css/bootstrap.min.css';
+  import 'mdbvue/build/css/mdb.css';
 
   const qs = require('query-string');
 
   export default {
     data() {
       return {
-        login: "",
+        username: "",
         password: ""
       }
     },
     methods: {
       signIn() {
-        const requestBody = {
-          username: 'vlad',
-          password: '256247',
-          grant_type: 'password',
-        };
-        const config = {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Authorization': 'Basic Y2xpZW50SWRQYXNzd29yZDpzZWNyZXQ=',
-          }
-        };
-        http.post('/oauth/token', qs.stringify(requestBody), config)
-          .then(response => {
-            // VueCookies.config('7d')
-            // VueCookies.set('access_token', response.data);
-            $cookies.config('7d');
-            $cookies.set('token', response.data.access_token);
-            console.log(response)
+        // const requestBody = {
+        //   username: 'vlad',
+        //   password: '256247',
+        //   grant_type: 'password',
+        // };
+        // const config = {
+        //   headers: {
+        //     'Content-Type': 'application/x-www-form-urlencoded',
+        //     'Authorization': 'Basic Y2xpZW50SWRQYXNzd29yZDpzZWNyZXQ=',
+        //   }
+        // };
+        // http.post('/oauth/token', qs.stringify(requestBody), config)
+        //   .then(response => {
+        //     // VueCookies.config('7d')
+        //     // VueCookies.set('access_token', response.data);
+        //     $cookies.config('7d');
+        //     $cookies.set('token', response.data.access_token);
+        //     console.log(response)
+        //   })
+        //   .catch(function (error) {
+        //     console.error(error);
+        //   });
+        this.$store.dispatch('retrieveToken', {
+            username: this.username,
+            password: this.password,
           })
-          .catch(function (error) {
-            console.error(error);
-          });
+          .then(response => {
+
+          })
+          .catch(error => {
+            this.username = ''
+            this.password = ''
+          })
       }
     }
   }

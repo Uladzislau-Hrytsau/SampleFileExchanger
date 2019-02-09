@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 import java.util.List;
 
 /**
@@ -23,12 +25,14 @@ public class UserRestController {
     /**
      * Gets all users.
      *
+     * @param request the request
      * @return the all users
      */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/users")
     @ResponseStatus(value = HttpStatus.OK)
-    public List<User> getAllUsers() {
+    public List<User> getAllUsers(HttpServletRequest request) {
+        Principal principal = request.getUserPrincipal();
         return userService.getAllUsers();
     }
 
@@ -92,5 +96,17 @@ public class UserRestController {
     @ResponseStatus(value = HttpStatus.OK)
     public void deleteUser(@PathVariable(value = "id") Long userId) {
         userService.deleteUser(userId);
+    }
+
+    /**
+     * Current user name string.
+     *
+     * @param request the request
+     * @return the string
+     */
+    @GetMapping("/username")
+    public String currentUserName(HttpServletRequest request) {
+        Principal principal = request.getUserPrincipal();
+        return principal.getName();
     }
 }

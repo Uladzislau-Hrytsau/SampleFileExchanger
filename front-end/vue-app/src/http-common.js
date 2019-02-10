@@ -1,3 +1,5 @@
+// import Vue from 'vue'
+import Vue from 'vue'
 import axios from "axios";
 import VueCookies from 'vue-cookies'
 import 'bootstrap-css-only/css/bootstrap.min.css';

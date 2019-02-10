@@ -1,52 +1,27 @@
 package com.exchange.controller;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RestController;
+import com.exchange.service.UserRoleService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 public class SecurityController {
 
-    public SecurityController() {
-        super();
+    private UserRoleService userRoleService;
+
+    @Autowired
+    public SecurityController(UserRoleService userRoleService) {
+        this.userRoleService = userRoleService;
     }
 
-//    @GetMapping("/username")
-//    public String currentUserName(HttpServletRequest request) {
-//        Principal principal = request.getUserPrincipal();
-//        System.out.println(principal.getName());
-//        System.out.println(principal.getName());
-//        System.out.println(principal.getName());
-//        System.out.println(principal.getName());
-//        System.out.println(principal.getName());
-//        System.out.println(principal.getName());
-//        System.out.println(principal.getName());
-//        System.out.println(principal.getName());
-//        System.out.println(principal.getName());
-//        System.out.println(principal.getName());
-//        System.out.println(principal.getName());
-//        System.out.println(principal.getName());
-//        System.out.println(principal.getName());
-//        System.out.println(principal.getName());
-//        System.out.println(principal.getName());
-//        System.out.println(principal.getName());
-//        System.out.println(principal.getName());
-//        System.out.println(principal.getName());
-//        System.out.println(principal.getName());
-//        System.out.println(principal.getName());
-//        System.out.println(principal.getName());
-//        System.out.println(principal.getName());
-//        System.out.println(principal.getName());
-//        System.out.println(principal.getName());
-//        System.out.println(principal.getName());
-//        System.out.println(principal.getName());
-//        System.out.println(principal.getName());
-//        System.out.println(principal.getName());
-//        System.out.println(principal.getName());
-//        System.out.println(principal.getName());
-//        System.out.println(principal.getName());
-//
-//        return principal.getName();
-//    }
+    @GetMapping(value = "/role/{userName}")
+    @ResponseStatus(value = HttpStatus.OK)
+    public List<String> getUserRole(@PathVariable(value = "userName") String userName) {
+        return userRoleService.getRolesByUserName(userName);
+    }
 
 }

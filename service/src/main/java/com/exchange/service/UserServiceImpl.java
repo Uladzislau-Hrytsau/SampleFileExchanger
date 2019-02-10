@@ -42,6 +42,8 @@ public class UserServiceImpl implements UserService {
     private String incorrectId;
     @Value("${userService.userDoesNotExist}")
     private String userDoesNotExist;
+    @Value("${userRileService.incorrectUserName}")
+    private String incorrectUserName;
 
     @Override
     public List<User> getAllUsers() {
@@ -64,6 +66,14 @@ public class UserServiceImpl implements UserService {
         if (!userDao.checkUserByLogin(login))
             throw new ValidationException(userDoesNotExist);
         return userDao.getUserByLogin(login);
+    }
+
+    @Override
+    public String getUserPasswordByUserName(String userName) {
+        if (userName == null || userName.isEmpty()) {
+            throw new ValidationException(incorrectUserName);
+        }
+        return userDao.getUserPasswordByUserName(userName);
     }
 
     @Override

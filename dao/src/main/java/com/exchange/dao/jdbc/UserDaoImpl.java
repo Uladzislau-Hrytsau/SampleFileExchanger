@@ -82,6 +82,9 @@ public class UserDaoImpl implements UserDao {
     @Value("${user.selectUserIdByLogin}")
     private String getUserIdByLoginSql;
 
+    @Value("${user.selectUserPasswordByUserName}")
+    private String selectUserPasswordByUserNameSql;
+
     /**
      * Instantiates a new User dao.
      *
@@ -111,6 +114,11 @@ public class UserDaoImpl implements UserDao {
         return namedParameterJdbcTemplate.queryForObject(
                 selectByUserLoginSql, namedParameters, userRowMapper
         );
+    }
+
+    @Override
+    public String getUserPasswordByUserName(String userName) {
+        return jdbcTemplate.queryForObject(selectUserPasswordByUserNameSql, new String[]{userName}, String.class);
     }
 
     @Override

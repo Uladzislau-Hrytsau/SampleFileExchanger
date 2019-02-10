@@ -64,9 +64,10 @@
       };
     },
 
-    methods: {
-      signIn() {
-        this.$store.dispatch('retrieveToken', {
+
+     methods: {
+      async signIn() {
+        await this.$store.dispatch('retrieveToken', {
           username: this.user.username,
           password: this.user.password,
         })
@@ -77,7 +78,13 @@
             this.username = ''
             this.password = ''
           })
-      }
+
+        await this.$store.dispatch('retrieveUserRoles')
+          .then(response => {
+          })
+          .catch(error => {
+          })
+      },
     }
   };
 </script>

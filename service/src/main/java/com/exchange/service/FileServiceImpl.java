@@ -22,13 +22,11 @@ import java.util.List;
 @Transactional
 public class FileServiceImpl implements FileService {
 
-    @Autowired
+
     private UserDao userDao;
 
-    @Autowired
     private FileDao fileDao;
 
-    @Autowired
     private CategoryDao categoryDao;
 
     @Value("${fileService.incorrectId}")
@@ -48,6 +46,20 @@ public class FileServiceImpl implements FileService {
     @Value("${fileService.deleteError}")
     private String deleteError;
 
+    /**
+     * Instantiates a new File service.
+     *
+     * @param userDao     the user dao
+     * @param fileDao     the file dao
+     * @param categoryDao the category dao
+     */
+    @Autowired
+    public FileServiceImpl(UserDao userDao, FileDao fileDao, CategoryDao categoryDao) {
+        this.userDao = userDao;
+        this.fileDao = fileDao;
+        this.categoryDao = categoryDao;
+    }
+
     @Override
     public List<File> getAllFilesByUserId(Long userId) {
         if (userId == null || userId < 0L)
@@ -64,10 +76,12 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public File getFileById(Long id) {
-        if (id == null || id < 0L)
+        if (id == null || id < 0L) {
             throw new ValidationException(incorrectId);
-        if (!fileDao.checkFileById(id))
+        }
+        if (!fileDao.checkFileById(id)) {
             throw new ValidationException(fileDoesNotExist);
+        }
         return fileDao.getFileById(id);
     }
 
@@ -77,44 +91,55 @@ public class FileServiceImpl implements FileService {
         Long userId = file.getUser_id();
         String url = file.getUrl();
 
-        if (userId == null || userId < 0L)
+        if (userId == null || userId < 0L) {
             throw new ValidationException(incorrectId);
+        }
 
-        if (!userDao.checkUserByUserId(userId))
+        if (!userDao.checkUserByUserId(userId)) {
             throw new ValidationException(userDoesNotExist);
+        }
 
-        if (url == null || url.isEmpty() || fileDao.checkFileByUrl(url))
+        if (url == null || url.isEmpty() || fileDao.checkFileByUrl(url)) {
             throw new ValidationException(incorrectUrl);
+        }
 
-        if (file.getDate() == null)
+        if (file.getDate() == null) {
             file.setDate(LocalDate.now());
+        }
 
-        if (!categoryDao.checkCategoryById(file.getCategoryId()))
+        if (!categoryDao.checkCategoryById(file.getCategoryId())) {
             throw new ValidationException(incorrectCategory);
+        }
 
         return fileDao.addFile(file);
     }
 
     @Override
     public void updateFile(File file) {
+
         String description = file.getDescription();
         Long category = file.getCategoryId();
 
-        if (description == null || description.isEmpty())
+        if (description == null || description.isEmpty()) {
             throw new ValidationException(incorrectDescription);
+        }
 
-        if (category == null || category < 0L || categoryDao.checkCategoryById(category))
+        if (category == null || category < 0L || categoryDao.checkCategoryById(category)) {
             throw new ValidationException(incorrectCategory);
+        }
 
-        if (fileDao.updateFile(file) == 0)
+        if (fileDao.updateFile(file) == 0) {
             throw new InternalServerException(updateError);
+        }
     }
 
     @Override
     public void deleteFile(Long id) {
-        if (id == null || id < 0L)
+        if (id == null || id < 0L) {
             throw new ValidationException(incorrectId);
-        if (fileDao.deleteFile(id) == 0)
+        }
+        if (fileDao.deleteFile(id) == 0) {
             throw new InternalServerException(deleteError);
+        }
     }
 }

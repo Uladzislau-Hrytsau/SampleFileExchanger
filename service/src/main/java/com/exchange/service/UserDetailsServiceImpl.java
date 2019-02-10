@@ -1,6 +1,5 @@
 package com.exchange.service;
 
-import com.exchange.dao.User;
 import com.exchange.dao.UserDao;
 import com.exchange.dao.UserRoleDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Stream;
 
 /**
  * The type User details service.
@@ -23,25 +21,27 @@ import java.util.stream.Stream;
 @Transactional
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    @Autowired
     private UserDao userDao;
 
-    @Autowired
     private UserRoleDao userRoleDao;
+
+    @Autowired
+    public UserDetailsServiceImpl(UserDao userDao, UserRoleDao userRoleDao) {
+        this.userDao = userDao;
+        this.userRoleDao = userRoleDao;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        User user = userDao.getUserByLogin(login);
+        String password = userDao.getUserPasswordByUserName(login);
 
         Set<GrantedAuthority> roles = new HashSet<>();
 
-        Long userId = userDao.getUserIdByLogin(login);
-        Set<String> rolesFromTable = userRoleDao.getRolesByUserId(userId);
+        Set<String> rolesFromTable = new HashSet<>(userRoleDao.getRolesByUserName(login));
 
-        Stream stream = rolesFromTable.stream();
-        stream.forEach((role) -> roles.add(new SimpleGrantedAuthority(role.toString())));
+        rolesFromTable.forEach((role) -> roles.add(new SimpleGrantedAuthority(role)));
 
-        return new org.springframework.security.core.userdetails.User(user.getLogin(), user.getPassword(), roles);
+        return new org.springframework.security.core.userdetails.User(login, password, roles);
     }
 
 }

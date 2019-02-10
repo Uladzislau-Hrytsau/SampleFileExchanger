@@ -37,6 +37,14 @@ public interface UserDao {
     User getUserByLogin(String login) throws DataAccessException;
 
     /**
+     * Gets user password by user name.
+     *
+     * @param userName the user name
+     * @return the user password by user name
+     */
+    String getUserPasswordByUserName(String userName);
+
+    /**
      * Create new user.
      *
      * @param user user.

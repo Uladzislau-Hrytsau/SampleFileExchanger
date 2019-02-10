@@ -5,17 +5,13 @@
       <b-navbar-brand to="/">FileExchanger</b-navbar-brand>
       <b-collapse is-nav id="nav_collapse">
         <b-navbar-nav>
-          <b-nav-item :to="{ name : 'Users' }">get all users</b-nav-item>
-          <b-nav-item :to="{ name : 'UpdateUser'}">update user</b-nav-item>
-          <b-nav-item :to="{ name : 'Files' }">get all files</b-nav-item>
-          <b-nav-item :to="{ name : 'CreateFile' }">creat file</b-nav-item>
-          <b-nav-item :to="{ name : 'UpdateFile' }">update file</b-nav-item>
-          <!--<b-nav-item v-show="$cookies.get('token') == null" class="registration" to="/Registration">sing up</b-nav-item>-->
-          <b-nav-item class="registration" :to="{ name : 'Registration' }">sing up</b-nav-item>
-          <!--<b-nav-item v-show="$cookies.get('token') == null" class="authorization" to="/Authorization">sing in</b-nav-item>-->
-          <b-nav-item class="authorization" :to="{ name : 'Authorization' }">sing in</b-nav-item>
-          <!--<b-nav-item v-show="!($cookies.get('token') == null)" @click="logout" to="/">logout</b-nav-item>-->
-          <!--<b-nav-item @click="logout" :to="{ name : 'Index' }">logout</b-nav-item>-->
+          <b-nav-item v-show="!hasRoleAdmin && loggedIn" :to="{ name : 'Users' }">get all users</b-nav-item>
+          <b-nav-item v-show="hasRoleUser && loggedIn" :to="{ name : 'UpdateUser'}">update user</b-nav-item>
+          <b-nav-item v-show="!hasRoleAdmin && loggedIn" :to="{ name : 'Files' }">get all files</b-nav-item>
+          <b-nav-item v-show="hasRoleUser && loggedIn" :to="{ name : 'CreateFile' }">creat file</b-nav-item>
+          <b-nav-item v-show="loggedIn && hasRoleUser" :to="{ name : 'UpdateFile' }">update file</b-nav-item>
+          <b-nav-item v-show="!loggedIn" class="registration" :to="{ name : 'Registration' }">sing up</b-nav-item>
+          <b-nav-item v-show="!loggedIn" class="authorization" :to="{ name : 'Authorization' }">sing in</b-nav-item>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
@@ -33,7 +29,13 @@
     computed: {
       loggedIn() {
         return this.$store.getters.loggedIn
-      }
+      },
+      hasRoleUser() {
+        return this.$store.getters.hasRoleUser
+      },
+      hasRoleAdmin() {
+        return this.$store.getters.hasRoleAdmin
+      },
     }
   }
 </script>

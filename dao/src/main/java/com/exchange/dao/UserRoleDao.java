@@ -1,6 +1,6 @@
 package com.exchange.dao;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  * The interface User role dao.
@@ -8,12 +8,11 @@ import java.util.Set;
 public interface UserRoleDao {
 
     /**
-     * Gets roles by user id.
+     * Gets roles by user name.
      *
-     * @param userId the user id
-     * @return the roles by user id
+     * @param userName the user name
+     * @return the roles by user name
      */
-    Set<String> getRolesByUserId(Long userId);
-
+    List<String> getRolesByUserName(String userName);
 
 }

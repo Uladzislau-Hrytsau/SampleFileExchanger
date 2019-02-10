@@ -1,15 +1,13 @@
 package com.exchange.dao.jdbc;
 
 import com.exchange.dao.UserRoleDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Stream;
 
 /**
  * The type User role dao.
@@ -17,8 +15,8 @@ import java.util.stream.Stream;
 @Component
 public class UserRoleDaoImpl implements UserRoleDao {
 
-    @Value("${userRole.selectRolesByUserId}")
-    private String selectRolesByUserIdSql;
+    @Value("${userRole.selectRolesByUserName}")
+    private String selectRolesByUserNameSql;
 
     private JdbcTemplate jdbcTemplate;
 
@@ -27,21 +25,14 @@ public class UserRoleDaoImpl implements UserRoleDao {
      *
      * @param dataSource the data source
      */
+    @Autowired
     public UserRoleDaoImpl(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
     @Override
-    public Set<String> getRolesByUserId(Long userId) {
-
-        Set<String> role = new HashSet<>();
-
-        List<String> list = jdbcTemplate.queryForList(selectRolesByUserIdSql, String.class, userId);
-
-        Stream stream = list.stream();
-        stream.forEach(element -> role.add(element.toString()));
-
-        return role;
+    public List<String> getRolesByUserName(String userName) {
+        return jdbcTemplate.queryForList(selectRolesByUserNameSql, String.class, userName);
     }
 
 }

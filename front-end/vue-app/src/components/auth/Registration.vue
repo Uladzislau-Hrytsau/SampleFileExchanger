@@ -1,5 +1,5 @@
 <template>
-  <div v-show="$cookies.get('token')">
+  <div>
     <mdb-container>
       <mdb-row>
         <mdb-col size="12" class="text-center mb-5">
@@ -36,13 +36,8 @@
 </template>
 
 <script>
-  import http from "../http-common";
-  import axios from 'axios'
-  import VueCookies from "../http-common"
   import 'bootstrap-css-only/css/bootstrap.min.css';
   import 'mdbvue/build/css/mdb.css';
-
-  const qs = require('query-string');
 
   import {
     mdbContainer,
@@ -121,9 +116,6 @@
   };
 </script>
 
-<style>
-  .submitform {
-    max-width: 300px;
-    margin: auto;
-  }
+<style scoped>
+
 </style>

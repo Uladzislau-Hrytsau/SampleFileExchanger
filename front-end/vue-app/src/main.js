@@ -6,7 +6,6 @@ import Vue from 'vue'
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-import VueCookies from 'vue-cookies'
 import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.css'
 import 'mdbvue/build/css/mdb.css'
@@ -16,7 +15,6 @@ import router from './router'
 import {store} from './store/store'
 
 Vue.use(BootstrapVue);
-Vue.use(VueCookies);
 Vue.use(VueMaterial);
 
 Vue.config.productionTip = false;
@@ -33,7 +31,7 @@ router.beforeEach((to, from, next) => {
   } else if (to.matched.some(record => record.meta.requiresVisitor)) {
     if (store.getters.loggedIn) {
       next({
-        name: 'Index',
+        name: 'Main',
       })
     } else {
       next()

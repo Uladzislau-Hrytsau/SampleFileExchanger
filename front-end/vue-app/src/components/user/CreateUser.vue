@@ -39,9 +39,6 @@
 </template>
 
 <script>
-  import http from "../../http-common";
-
-  import axios from 'axios'
 
   export default {
     name: "CreateUser",

@@ -3,7 +3,7 @@
     <mdb-row>
       <mdb-col size="12" class="text-center mb-5">
         <mdb-modal-body class="grey-text">
-          <mdb-input size="sm" label="Login" icon="user" group type="text" validate error="wrong"
+          <mdb-input size="sm" label="Password" icon="user" group type="text" validate error="wrong"
                      success="right" required v-model="user.username"/>
           <mdb-input size="sm" label="Password" icon="key" group type="password" validate error="wrong"
                      success="right" required v-model="user.password"/>
@@ -18,12 +18,8 @@
 </template>
 
 <script>
-  import http from "../http-common";
-  import VueCookies from "../http-common"
   import 'bootstrap-css-only/css/bootstrap.min.css';
   import 'mdbvue/build/css/mdb.css';
-
-  const qs = require('query-string');
 
   import {
     mdbContainer,
@@ -64,8 +60,24 @@
       };
     },
 
+    computed: {
+      text: function () {
+        return 'textik'
+      },
+      loggedIn() {
+        return this.$store.getters.loggedIn
+      },
+      hasRoleUser() {
+        console.log(this.$store.getters.hasRoleUser)
+        return this.$store.getters.hasRoleUser
+      },
+      hasRoleAdmin() {
+        console.log(this.$store.getters.hasRoleAdmin)
+        return this.$store.getters.hasRoleAdmin
+      },
+    },
 
-     methods: {
+    methods: {
       async signIn() {
         await this.$store.dispatch('retrieveToken', {
           username: this.user.username,
@@ -81,6 +93,7 @@
 
         await this.$store.dispatch('retrieveUserRoles')
           .then(response => {
+            this.$router.push('/Main')
           })
           .catch(error => {
           })
@@ -88,9 +101,6 @@
     }
   };
 </script>
-
-<style scoped>
-</style>
 
 <style scoped>
 

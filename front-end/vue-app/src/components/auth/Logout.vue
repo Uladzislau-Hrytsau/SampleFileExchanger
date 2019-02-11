@@ -7,7 +7,7 @@
     created() {
       this.$store.dispatch('destroyToken')
         .then(response => {
-          this.$router.push({name: 'Index'})
+          this.$router.push({name: 'Main'})
         })
     }
   }

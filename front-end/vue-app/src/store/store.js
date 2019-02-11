@@ -12,11 +12,11 @@ export const store = new Vuex.Store({
 
   state: {
     token: localStorage.getItem('access_token') || null,
+    user_role: localStorage.getItem('roles') || null,
+    user: JSON.parse(localStorage.getItem('user')) || null,
     username: '',
     users: [],
     files: [],
-    role_user: '',
-    role_admin: '',
   },
 
   getters: {
@@ -24,10 +24,10 @@ export const store = new Vuex.Store({
       return state.token !== null
     },
     hasRoleUser(state) {
-      return state.role_user !== null
+      return state.user_role == null ? false : state.user_role.includes('ROLE_USER')
     },
     hasRoleAdmin(state) {
-      return state.role_admin !== null
+      return state.user_role == null ? false : state.user_role.includes('ROLE_ADMIN')
     },
   },
 
@@ -39,12 +39,7 @@ export const store = new Vuex.Store({
       state.token = null
     },
     retrieveUserRoles(state, userRole) {
-      if (userRole.includes('ROLE_USER')) {
-        state.role_user = true
-      }
-      if (userRole.includes('ROLE_ADMIN')) {
-        state.role_admin = true
-      }
+      state.user_role = userRole;
     },
     destroyUserRoles(state) {
       state.userRole = null
@@ -54,12 +49,18 @@ export const store = new Vuex.Store({
     },
     getFiles(state, files) {
       state.files = files;
-    }
+    },
+    saveUserInformation(state, user) {
+      state.user = user
+    },
+    destroyUserInformation(state) {
+      state.user = null;
+    },
   },
 
   actions: {
 
-     retrieveToken(context, credentials) {
+    retrieveToken(context, credentials) {
       const config = {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
@@ -105,9 +106,10 @@ export const store = new Vuex.Store({
     retrieveUserRoles(context) {
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token
 
+      if (context.getters.loggedIn) {
         return new Promise((resolve, reject) => {
           axios
-            .get('role/' + context.state.username)
+            .get('oauth/user')
             .then(response => {
               context.commit('retrieveUserRoles', response.data)
               localStorage.setItem('roles', response.data)
@@ -118,41 +120,90 @@ export const store = new Vuex.Store({
               reject(error)
             })
         })
-
+      }
     },
 
     getUsers(context) {
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token
 
-      return new Promise((resolve, reject) => {
-        axios
-          .get('users')
-          .then(response => {
-            context.commit('getUsers', response.data)
-            resolve(response)
-          })
-          .catch(error => {
-            console.log(error)
-            reject(error)
-          })
-      })
+      if (context.getters.loggedIn && context.getters.hasRoleAdmin && context.getters.hasRoleUser) {
+        return new Promise((resolve, reject) => {
+          axios
+            .get('users')
+            .then(response => {
+              context.commit('getUsers', response.data)
+              resolve(response)
+            })
+            .catch(error => {
+              console.log(error)
+              reject(error)
+            })
+        })
+      }
     },
 
     getFiles(context) {
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token
 
-      return new Promise((resolve, reject) => {
-        axios
-          .get('files')
-          .then(response => {
-            context.commit('getFiles', response.data)
-            resolve(response)
-          })
-          .catch(error => {
-            console.log(error)
-            reject(error)
-          })
-      })
-    }
+      if (context.getters.loggedIn && context.getters.hasRoleAdmin && context.getters.hasRoleUser)
+        return new Promise((resolve, reject) => {
+          axios
+            .get('files')
+            .then(response => {
+              context.commit('getFiles', response.data)
+              resolve(response)
+            })
+            .catch(error => {
+              console.log(error)
+              reject(error)
+            })
+        })
+    },
+
+    deleteUser(context, credentials) {
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token
+
+      if (context.getters.loggedIn && (context.getters.hasRoleAdmin || context.getters.hasRoleUser)) {
+        return new Promise((resolve, reject) => {
+          axios
+            .delete('user/' + credentials.userId)
+            .then(response => {
+              resolve(response)
+            })
+            .catch(error => {
+              console.log(error)
+              reject(error)
+            })
+        })
+      }
+    },
+
+    saveUserInformation(context, credentials) {
+      localStorage.setItem('user', JSON.stringify(credentials.user))
+      context.commit('saveUserInformation', credentials.user)
+    },
+
+    updateUser(context, credentials) {
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token
+
+      if (context.getters.loggedIn && (context.getters.hasRoleAdmin || context.getters.hasRoleUser)) {
+
+        return new Promise(((resolve, reject) => {
+          axios
+            .put('user', credentials.data)
+            .then(response => {
+              context.commit('destroyUserInformation')
+              localStorage.removeItem('user')
+              resolve(response)
+            })
+            .catch(error => {
+              console.log(error)
+              reject(error)
+            })
+        }))
+      }
+    },
+
+
   }
 })

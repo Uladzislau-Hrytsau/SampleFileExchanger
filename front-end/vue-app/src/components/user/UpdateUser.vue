@@ -1,55 +1,83 @@
 <template>
-  <div class="submitform">
+  <div>
+    <mdb-container>
+      <mdb-row>
+        <mdb-col size="12" class="text-center mb-5">
+          <mdb-modal-body class="grey-text">
+            <mdb-input size="sm" label="Login" icon="user" group type="text" validate error="wrong"
+                       success="right" required v-model="userNew.login"/>
+            <mdb-input size="sm" label="Password" icon="key" group type="password" validate error="wrong"
+                       success="right" required v-model="userNew.password"/>
+            <mdb-input size="sm" label="Birth date" icon="fas fa-birthday-cake" group type="date" validate error="wrong"
+                       success="right" required v-model="userNew.birthDate"/>
+            <mdb-input size="sm" label="About yourself" icon="fas fa-info" group type="text" validate error="wrong"
+                       success="right" required v-model="userNew.information"/>
+            <b-form-group label="Gender">
+              <b-form-radio-group v-model="selected"
+                                  :options="options"
+                                  name="radioInline">
+              </b-form-radio-group>
+            </b-form-group>
+          </mdb-modal-body>
 
-    <div class="form-group">
-      <label for="userId">userId</label>
-      <input type="text" class="form-control" id="userId" required v-model="user.userId" name="userId">
-    </div>
-
-    <div class="form-group">
-      <label for="login">login</label>
-      <input type="text" class="form-control" id="login" required v-model="user.login" name="login">
-    </div>
-
-    <div class="form-group">
-      <label for="password">password</label>
-      <input type="text" class="form-control" id="password" required v-model="user.password" name="password">
-    </div>
-
-    <div class="form-group">
-      <label for="birthDate">birthDate</label>
-      <input type="date" class="form-control" id="birthDate" required v-model="user.birthDate" name="birthDate">
-    </div>
-
-    <div class="form-group">
-      <label for="information">information</label>
-      <input type="text" class="form-control" id="information" required v-model="user.information" name="information">
-    </div>
-
-    <div class="form-group">
-      <form action="">
-        <input required v-model="user.gender" type="radio" name="gender" value="true"><label>Male</label><br>
-        <input required v-model="user.gender" type="radio" name="gender" value="false"><label>Female</label><br>
-      </form>
-    </div>
-
-    <div v-if="!validation">
-      <div class="form-group">
-        {{ response }}
-      </div>
-    </div>
-
-    <button v-on:click="saveCustomer" class="btn btn-success">update</button>
+          <mdb-modal-footer>
+            <mdb-btn color="primary" v-on:click="saveCustomer">update</mdb-btn>
+          </mdb-modal-footer>
+        </mdb-col>
+      </mdb-row>
+    </mdb-container>
   </div>
+  <!--<div v-if="!validation">-->
+  <!--<div class="form-group">-->
+  <!--{{ response }}-->
+  <!--</div>-->
+  <!--</div>-->
+
 </template>
 <script>
-  import http from "../../http-common";
+
+  import 'bootstrap-css-only/css/bootstrap.min.css';
+  import 'mdbvue/build/css/mdb.css';
+
+  import {
+    mdbContainer,
+    mdbRow,
+    mdbCol,
+    mdbInput,
+    mdbTextarea,
+    mdbBtn,
+    mdbIcon,
+    mdbModal,
+    mdbModalHeader,
+    mdbModalBody,
+    mdbModalFooter
+  } from 'mdbvue';
 
   export default {
     name: "UpdateUser",
+    components: {
+      mdbContainer,
+      mdbRow,
+      mdbCol,
+      mdbInput,
+      mdbTextarea,
+      mdbBtn,
+      mdbIcon,
+      mdbModal,
+      mdbModalHeader,
+      mdbModalBody,
+      mdbModalFooter
+    },
     data() {
       return {
-        user: {
+        options: [
+          {text: 'Male', value: true},
+          {text: 'Female', value: false},
+        ],
+        selected: '',
+
+        userOld: this.$store.state.user,
+        userNew: {
           userId: "",
           login: "",
           password: "",
@@ -64,26 +92,24 @@
     methods: {
       /* eslint-disable no-console */
       saveCustomer() {
+        // console.log(this.userOld.userId + "     4422424242424242")
         var data = {
-          userId: this.user.userId,
-          login: this.user.login,
-          password: this.user.password,
-          gender: this.user.gender,
-          birthDate: this.user.birthDate,
-          information: this.user.information,
+          userId: this.userOld.userId,
+          login: this.userNew.login,
+          password: this.userNew.password,
+          gender: this.selected,
+          birthDate: this.userNew.birthDate,
+          information: this.userNew.information,
         };
-
-        http
-          .put("/user", data)
+        this.$store.dispatch('updateUser', {
+          data: data
+        })
           .then(response => {
-            console.log(response.data);
-            this.$router.push('/');
+            this.$router.push('/Main')
           })
-          .catch(e => {
-            this.validation = false;
-            this.response.push(e.response.data.message);
-            console.log(e);
-          });
+          .catch(error => {
+            console.log(error)
+          })
       }
       /* eslint-enable no-console */
     }

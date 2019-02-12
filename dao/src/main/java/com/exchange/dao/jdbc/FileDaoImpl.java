@@ -157,7 +157,7 @@ public class FileDaoImpl implements FileDao {
 
     @Override
     public int updateFile(File file) throws DataAccessException {
-        Map<String, Object> params = new HashMap<String, Object>();
+        Map<String, Object> params = new HashMap<>();
         params.put(ID, file.getId());
         params.put(USER_ID, file.getUser_id());
         params.put(URL, file.getUrl());
@@ -169,7 +169,7 @@ public class FileDaoImpl implements FileDao {
 
     @Override
     public int deleteFile(Long id) throws DataAccessException {
-        Map<String, Object> params = new HashMap<String, Object>();
+        Map<String, Object> params = new HashMap<>();
         params.put(ID, id);
         return namedParameterJdbcTemplate.update(deleteFileSql, params);
     }

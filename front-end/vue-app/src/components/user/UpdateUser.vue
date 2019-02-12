@@ -27,12 +27,6 @@
       </mdb-row>
     </mdb-container>
   </div>
-  <!--<div v-if="!validation">-->
-  <!--<div class="form-group">-->
-  <!--{{ response }}-->
-  <!--</div>-->
-  <!--</div>-->
-
 </template>
 <script>
 
@@ -90,9 +84,7 @@
       };
     },
     methods: {
-      /* eslint-disable no-console */
       saveCustomer() {
-        // console.log(this.userOld.userId + "     4422424242424242")
         var data = {
           userId: this.userOld.userId,
           login: this.userNew.login,
@@ -116,9 +108,6 @@
   };
 </script>
 
-<style>
-  .submitform {
-    max-width: 300px;
-    margin: auto;
-  }
+<style scoped>
+
 </style>

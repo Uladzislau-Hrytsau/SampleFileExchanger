@@ -6,7 +6,6 @@
       <b-collapse is-nav id="nav_collapse">
         <b-navbar-nav>
           <b-nav-item v-show="loggedIn && hasRoleUser && hasRoleAdmin" :to="{ name : 'Users' }">get all users</b-nav-item>
-          <b-nav-item v-show="loggedIn && (hasRoleUser || hasRoleAdmin)" :to="{ name : 'UpdateUser'}">update user</b-nav-item>
           <b-nav-item v-show="loggedIn && hasRoleAdmin" :to="{ name : 'Files' }">get all files</b-nav-item>
           <b-nav-item v-show="loggedIn && (hasRoleUser || hasRoleAdmin)" :to="{ name : 'CreateFile' }">creat file</b-nav-item>
           <b-nav-item v-show="loggedIn && (hasRoleUser || hasRoleAdmin)" :to="{ name : 'UpdateFile' }">update file</b-nav-item>

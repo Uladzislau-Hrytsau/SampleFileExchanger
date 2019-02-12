@@ -76,9 +76,11 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public File getFileById(Long id) {
+
         if (id == null || id < 0L) {
             throw new ValidationException(incorrectId);
         }
+
         if (!fileDao.checkFileById(id)) {
             throw new ValidationException(fileDoesNotExist);
         }
@@ -124,12 +126,16 @@ public class FileServiceImpl implements FileService {
             throw new ValidationException(incorrectDescription);
         }
 
-        if (category == null || category < 0L || categoryDao.checkCategoryById(category)) {
+        if (category == null || category < 0L || !categoryDao.checkCategoryById(category)) {
             throw new ValidationException(incorrectCategory);
         }
 
         if (fileDao.updateFile(file) == 0) {
             throw new InternalServerException(updateError);
+        }
+
+        if (file.getDate() == null) {
+            file.setDate(LocalDate.now());
         }
     }
 

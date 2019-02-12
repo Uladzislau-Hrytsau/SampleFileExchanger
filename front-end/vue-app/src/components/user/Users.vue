@@ -66,8 +66,6 @@
           })
       },
       updateUser(user) {
-        // this.$store.state.user = user
-        // localStorage.setItem('user', user)
         this.$store.dispatch('saveUserInformation', {
           user: user
         })

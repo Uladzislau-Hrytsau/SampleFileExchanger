@@ -10,6 +10,7 @@
         <th>date</th>
         <th>categoryId</th>
         <th></th>
+        <th></th>
       </tr>
       </thead>
       <tbody>
@@ -22,6 +23,9 @@
         <td>{{ file.categoryId }}</td>
         <td>
           <button class="btn btn-dark" @click="deleteFile(file.id)">delete</button>
+        </td>
+        <td>
+          <button class="btn btn-dark" @click="updateFile(file)">update</button>
         </td>
       </tr>
       </tbody>
@@ -44,23 +48,25 @@
         this.$store.dispatch('getFiles')
           .then(response => {
             this.files = response.data
-            console.log(this.files)
           })
       },
       deleteFile(id) {
-        http
-          .delete("/file/" + id)
+        this.$store.dispatch('deleteFile', {
+          id: id
+        })
           .then(response => {
-            console.log(response.data);
-            this.$router.push('/Files');
             this.retrieveFiles();
           })
-          .catch(e => {
-            this.validation = false;
-            this.response.push(e.response.data.message);
-            console.log(e);
-          });
-      }
+          .catch(error => {
+            console.log(error)
+          })
+      },
+      updateFile(file) {
+        this.$store.dispatch('saveFileInformation', {
+          file: file,
+        })
+        this.$router.push('/UpdateFile')
+      },
     },
     mounted() {
       this.retrieveFiles();
@@ -68,10 +74,6 @@
   };
 </script>
 
-<style>
-  .list {
-    text-align: left;
-    max-width: 450px;
-    margin: auto;
-  }
+<style scoped>
+
 </style>

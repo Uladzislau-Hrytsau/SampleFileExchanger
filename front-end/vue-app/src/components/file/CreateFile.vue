@@ -1,89 +1,112 @@
 <template>
-  <div class="submitform">
-
-    <div class="form-group">
-      <label for="user_id">user_id</label>
-      <input type="text" class="form-control" id="user_id" required v-model="file.user_id" name="user_id">
-    </div>
-
-    <div class="form-group">
-      <label for="url">url</label>
-      <input type="text" class="form-control" id="url" required v-model="file.url" name="url">
-    </div>
-
-    <div class="form-group">
-      <label for="description">description</label>
-      <input type="text" class="form-control" id="description" required v-model="file.description" name="description">
-    </div>
-
-    <div class="form-group">
-      <label for="categoryId">categoryId</label>
-      <input type="text" class="form-control" id="categoryId" required v-model="file.categoryId" name="categoryId">
-    </div>
-
-    <div v-if="!validation">
-      <div class="form-group">
-        {{ response }}
-      </div>
-    </div>
-
-    <button v-on:click="saveFile" class="btn btn-success">create</button>
+  <div>
+    <mdb-container>
+      <mdb-row>
+        <mdb-col size="12" class="text-center mb-5">
+          <mdb-modal-body class="grey-text">
+            <mdb-input size="sm" label="Url" icon="user" group type="text" validate error="wrong"
+                       success="right" required v-model="file.url"/>
+            <mdb-input size="sm" label="Description" icon="key" group type="text" validate error="wrong"
+                       success="right" required v-model="file.description"/>
+            <label>
+              <select v-model="selected" class="browser-default custom-select">
+                <option selected value="1">Default</option>
+                <option value="2">Work</option>
+                <option value="3">Entertainment</option>
+              </select>
+            </label>
+          </mdb-modal-body>
+          <mdb-modal-footer>
+            <mdb-btn color="primary" v-on:click="createFile">Create</mdb-btn>
+          </mdb-modal-footer>
+          <div v-if="!validation">
+            <div class="form-group">
+              {{ response }}
+            </div>
+          </div>
+        </mdb-col>
+      </mdb-row>
+    </mdb-container>
   </div>
+
 </template>
 
 <script>
+  import 'bootstrap-css-only/css/bootstrap.min.css';
+  import 'mdbvue/build/css/mdb.css';
+
+  import {
+    mdbContainer,
+    mdbRow,
+    mdbCol,
+    mdbInput,
+    mdbTextarea,
+    mdbBtn,
+    mdbIcon,
+    mdbModal,
+    mdbModalHeader,
+    mdbModalBody,
+    mdbModalFooter
+  } from 'mdbvue';
 
   export default {
-    name: "file",
+    name: "Registration",
+    components: {
+      mdbContainer,
+      mdbRow,
+      mdbCol,
+      mdbInput,
+      mdbTextarea,
+      mdbBtn,
+      mdbIcon,
+      mdbModal,
+      mdbModalHeader,
+      mdbModalBody,
+      mdbModalFooter
+    },
     data() {
       return {
+        selected: 1,
+
         file: {
-          user_id: "",
           url: "",
           description: "",
-          date: "",
           categoryId: "",
         },
+
         validation: true,
         response: [],
+
       };
     },
     methods: {
-      saveFile() {
+      createFile() {
         var data = {
-          user_id: this.file.user_id,
+          user_id: this.$store.state.user.userId,
           url: this.file.url,
           description: this.file.description,
-          date: this.file.date,
-          categoryId: this.file.categoryId,
+          categoryId: this.selected,
         };
-
-        const config = {
-          headers: {
-            'Authorization': 'Bearer ' + $cookies.get('token'),
-          }
-        };
-
-        http
-          .post("/file", data, config)
+        this.$store.dispatch('createFile', {
+          data: data
+        })
           .then(response => {
-            console.log(response.data);
-            this.$router.push('/');
+            this.$router.push('/Main');
+            this.$store.dispatch('')
           })
-          .catch(e => {
+          .catch(error => {
             this.validation = false;
-            this.response.push(e.response.data.message);
-            console.log(e);
-          });
+            this.response.push(error.response.data.message)
+            console.log(error)
+          })
       }
-      /* eslint-enable no-console */
+    },
+    mounted(){
+      this.$store.dispatch('getUserInformation')
     }
   };
 </script>
 
-<style>
-  .submitform {
-    max-width: 300px;
-    margin: auto;
-  }
+<style scoped>
+
 </style>

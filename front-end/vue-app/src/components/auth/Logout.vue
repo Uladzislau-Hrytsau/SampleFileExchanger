@@ -9,6 +9,9 @@
         .then(response => {
           this.$router.push({name: 'Main'})
         })
+        .catch(error => {
+          console.log(error)
+        })
     }
   }
 </script>

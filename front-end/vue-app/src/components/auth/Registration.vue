@@ -23,15 +23,15 @@
           <mdb-modal-footer>
             <mdb-btn color="primary" v-on:click="signUp">Sign up</mdb-btn>
           </mdb-modal-footer>
+          <div v-if="!validation">
+            <div class="form-group">
+              {{ response }}
+            </div>
+          </div>
         </mdb-col>
       </mdb-row>
     </mdb-container>
   </div>
-  <!--<div v-if="!validation">-->
-  <!--<div class="form-group">-->
-  <!--{{ response }}-->
-  <!--</div>-->
-  <!--</div>-->
 
 </template>
 
@@ -71,11 +71,11 @@
     data() {
       return {
 
-        selected: '',
         options: [
           {text: 'Male', value: true},
           {text: 'Female', value: false},
         ],
+        selected: '',
 
         user: {
           login: "",
@@ -100,17 +100,17 @@
           information: this.user.information,
         };
 
-        http
-          .post("/user", data)
+        this.$store.dispatch('createUser', {
+          data: data
+        })
           .then(response => {
-            console.log(response.data);
             this.$router.push('/Authorization');
           })
-          .catch(e => {
+          .catch(error => {
             this.validation = false;
-            this.response.push(e.response.data.message);
-            console.log(e);
-          });
+            this.response.push(error.response.data.message)
+            console.log(error)
+          })
       }
     }
   };

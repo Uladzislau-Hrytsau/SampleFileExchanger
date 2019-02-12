@@ -3,7 +3,7 @@
     <mdb-row>
       <mdb-col size="12" class="text-center mb-5">
         <mdb-modal-body class="grey-text">
-          <mdb-input size="sm" label="Password" icon="user" group type="text" validate error="wrong"
+          <mdb-input size="sm" label="Login" icon="user" group type="text" validate error="wrong"
                      success="right" required v-model="user.username"/>
           <mdb-input size="sm" label="Password" icon="key" group type="password" validate error="wrong"
                      success="right" required v-model="user.password"/>
@@ -61,18 +61,13 @@
     },
 
     computed: {
-      text: function () {
-        return 'textik'
-      },
       loggedIn() {
         return this.$store.getters.loggedIn
       },
       hasRoleUser() {
-        console.log(this.$store.getters.hasRoleUser)
         return this.$store.getters.hasRoleUser
       },
       hasRoleAdmin() {
-        console.log(this.$store.getters.hasRoleAdmin)
         return this.$store.getters.hasRoleAdmin
       },
     },
@@ -96,6 +91,7 @@
             this.$router.push('/Main')
           })
           .catch(error => {
+            console.log(error)
           })
       },
     }

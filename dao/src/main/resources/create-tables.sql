@@ -44,15 +44,3 @@ CREATE TABLE `user_role` (
   CONSTRAINT `fk_user_role_2` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
-
-
-
-
-
-
-
-
-
-
-
-

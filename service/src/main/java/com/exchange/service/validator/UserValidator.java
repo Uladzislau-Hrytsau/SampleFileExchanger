@@ -27,11 +27,12 @@ public class UserValidator {
     public void validateLoginAndPassword(User user, UserDao userDao) {
         String login = user.getLogin();
         String password = user.getPassword();
-        if (login == null || password == null || login.isEmpty() || password.isEmpty())
+        if (login == null || password == null || login.isEmpty() || password.isEmpty()) {
             throw new ValidationException(incorrectLoginOrPassword);
-        if (userDao.checkUserByLogin(login))
+        }
+        if (userDao.checkUserByLogin(login)) {
             //TODO: can not update with current login
             throw new ValidationException(alreadyExist);
+        }
     }
-
 }

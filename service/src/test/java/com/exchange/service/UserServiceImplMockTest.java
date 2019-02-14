@@ -10,6 +10,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import static org.mockito.Mockito.*;
 
@@ -32,6 +33,8 @@ public class UserServiceImplMockTest {
     private UserValidator userValidatorMock;
     @Mock
     private User userMock;
+    @Mock
+    private BCryptPasswordEncoder bCryptPasswordEncoderMock;
     @InjectMocks
     private UserServiceImpl userServiceImpl;
 
@@ -122,7 +125,8 @@ public class UserServiceImplMockTest {
      */
     @Test
     public void addUserSuccess_1_MockTest() {
-        doNothing().when(userValidatorMock).validateLoginAndPassword(userMock, userDaoMock);
+        doNothing().when(userValidatorMock).validateLoginAndPassword(userMock);
+        doNothing().when(userValidatorMock).validateExistingLogin(CORRECT_LOGIN, userDaoMock);
         userServiceImpl.addUser(userMock);
         verify(userDaoMock, times(1)).addUser(userMock);
     }
@@ -132,7 +136,8 @@ public class UserServiceImplMockTest {
      */
     @Test(expected = ValidationException.class)
     public void addUserUnSuccess_1_MockTest() {
-        doThrow(ValidationException.class).when(userValidatorMock).validateLoginAndPassword(userMock, userDaoMock);
+        doThrow(ValidationException.class).when(userValidatorMock).validateLoginAndPassword(userMock);
+        doThrow(ValidationException.class).when(userValidatorMock).validateExistingLogin(CORRECT_LOGIN, userDaoMock);
         userServiceImpl.addUser(userMock);
         verify(userDaoMock, never()).addUser(any(User.class));
     }
@@ -143,7 +148,8 @@ public class UserServiceImplMockTest {
      */
     @Test
     public void updateUserSuccess_1_MockTest() {
-        doNothing().when(userValidatorMock).validateLoginAndPassword(userMock, userDaoMock);
+        doNothing().when(userValidatorMock).validateLoginAndPassword(userMock);
+        doNothing().when(userValidatorMock).validateExistingLogin(CORRECT_LOGIN, userDaoMock);
         when(userDaoMock.updateUser(userMock)).thenReturn(1);
         userServiceImpl.updateUser(userMock);
     }
@@ -153,7 +159,8 @@ public class UserServiceImplMockTest {
      */
     @Test(expected = ValidationException.class)
     public void updateUserUnSuccess_1_MockTest() {
-        doThrow(ValidationException.class).when(userValidatorMock).validateLoginAndPassword(userMock, userDaoMock);
+        doThrow(ValidationException.class).when(userValidatorMock).validateLoginAndPassword(userMock);
+        doThrow(ValidationException.class).when(userValidatorMock).validateExistingLogin(CORRECT_LOGIN, userDaoMock);
         userServiceImpl.updateUser(userMock);
         verify(userDaoMock, never()).updateUser(any(User.class));
     }
@@ -163,7 +170,8 @@ public class UserServiceImplMockTest {
      */
     @Test(expected = InternalServerException.class)
     public void updateUserUnSuccess_2_MockTest() {
-        doNothing().when(userValidatorMock).validateLoginAndPassword(any(User.class), any(UserDao.class));
+        doNothing().when(userValidatorMock).validateLoginAndPassword(any());
+        doNothing().when(userValidatorMock).validateExistingLogin(any(), any());
         when(userDaoMock.updateUser(any(User.class))).thenReturn(0);
         userServiceImpl.updateUser(userMock);
     }

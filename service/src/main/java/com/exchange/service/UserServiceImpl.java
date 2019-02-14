@@ -78,14 +78,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Long addUser(User user) {
-        userValidator.validateLoginAndPassword(user, userDao);
+        userValidator.validateLoginAndPassword(user);
+        userValidator.validateExistingLogin(user.getLogin(), userDao);
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         return userDao.addUser(user);
     }
 
     @Override
     public void updateUser(User user) {
-        userValidator.validateLoginAndPassword(user, userDao);
+        userValidator.validateLoginAndPassword(user);
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         if (userDao.updateUser(user) == 0)
             throw new InternalServerException(updateError);
     }

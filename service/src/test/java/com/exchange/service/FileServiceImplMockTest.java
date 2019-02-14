@@ -250,10 +250,6 @@ public class FileServiceImplMockTest {
         verify(categoryDaoMock, never()).checkCategoryById(anyLong());
         verify(fileDaoMock, never()).updateFile(file);
     }
-
-    /**
-     * Update file un success 2 mock test.
-     */
     @Test(expected = ValidationException.class)
     public void updateFileUnSuccess_2_MockTest() {
         file.setDescription(EMPTY_DESCRIPTION);
@@ -261,10 +257,6 @@ public class FileServiceImplMockTest {
         verify(categoryDaoMock, never()).checkCategoryById(anyLong());
         verify(fileDaoMock, never()).updateFile(file);
     }
-
-    /**
-     * Update file un success 3 mock test.
-     */
     @Test(expected = ValidationException.class)
     public void updateFileUnSuccess_3_MockTest() {
         file.setCategoryId(NULL_CATEGORY_ID);
@@ -272,10 +264,6 @@ public class FileServiceImplMockTest {
         fileServiceImpl.updateFile(file);
         verify(fileDaoMock, never()).updateFile(file);
     }
-
-    /**
-     * Update file un success 4 mock test.
-     */
     @Test(expected = ValidationException.class)
     public void updateFileUnSuccess_4_MockTest() {
         file.setCategoryId(INCORRECT_CATEGORY_ID);
@@ -283,23 +271,15 @@ public class FileServiceImplMockTest {
         fileServiceImpl.updateFile(file);
         verify(fileDaoMock, never()).updateFile(file);
     }
-
-    /**
-     * Update file un success 5 mock test.
-     */
     @Test(expected = ValidationException.class)
     public void updateFileUnSuccess_5_MockTest() {
-        when(categoryDaoMock.checkCategoryById(anyLong())).thenReturn(true);
+        when(categoryDaoMock.checkCategoryById(anyLong())).thenReturn(false);
         fileServiceImpl.updateFile(file);
         verify(fileDaoMock, never()).updateFile(file);
     }
-
-    /**
-     * Update file un success 6 mock test.
-     */
     @Test(expected = InternalServerException.class)
     public void updateFileUnSuccess_6_MockTest() {
-        when(categoryDaoMock.checkCategoryById(anyLong())).thenReturn(false);
+        when(categoryDaoMock.checkCategoryById(anyLong())).thenReturn(true);
         when(fileDaoMock.updateFile(any(File.class))).thenReturn(0);
         fileServiceImpl.updateFile(file);
     }

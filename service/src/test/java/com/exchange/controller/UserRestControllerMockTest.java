@@ -87,7 +87,16 @@ public class UserRestControllerMockTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().json(asJsonString(user)));
-//                .andExpect(content().json(USER_JSON));
+    }
+
+    @Test
+    public void getUserByUserIdUnSuccess_1_MockTest() throws Exception {
+        user.setBirthDate(LocalDate.of(2019, 1, 2));
+        given(userServiceMock.getUserByUserId(ID)).willReturn(user);
+        mockMvc.perform(get("/user/{id}", 1L)
+                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andDo(print())
+                .andExpect(status().isUnauthorized());
     }
 
     /**
@@ -96,7 +105,7 @@ public class UserRestControllerMockTest {
      * @throws Exception the exception
      */
     @Test
-    public void getUserByUserIdUnSuccess_1_MockTest() throws Exception {
+    public void getUserByUserIdUnSuccess_2_MockTest() throws Exception {
         user.setBirthDate(LocalDate.of(2019, 1, 3));
         given(userServiceMock.getUserByUserId(anyLong())).willThrow(ValidationException.class);
         mockMvc.perform(get("/user/{id}", 1L)

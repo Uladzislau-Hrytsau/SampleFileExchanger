@@ -21,18 +21,28 @@ public class UserValidator {
     /**
      * Validate login and password.
      *
-     * @param user    the user
+     * @param login   the login
      * @param userDao the user dao
      */
-    public void validateLoginAndPassword(User user, UserDao userDao) {
+    public void validateExistingLogin(String login, UserDao userDao) {
+        if (login == null || login.isEmpty()) {
+            throw new ValidationException(incorrectLoginOrPassword);
+        }
+        if (userDao.checkUserByLogin(login)) {
+            throw new ValidationException(alreadyExist);
+        }
+    }
+
+    /**
+     * Validate login and password.
+     *
+     * @param user the user
+     */
+    public void validateLoginAndPassword(User user) {
         String login = user.getLogin();
         String password = user.getPassword();
         if (login == null || password == null || login.isEmpty() || password.isEmpty()) {
             throw new ValidationException(incorrectLoginOrPassword);
-        }
-        if (userDao.checkUserByLogin(login)) {
-            //TODO: can not update with current login
-            throw new ValidationException(alreadyExist);
         }
     }
 }

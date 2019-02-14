@@ -29,48 +29,51 @@ public class UserValidatorMockTest {
     private UserValidator userValidator;
 
     /**
-     * Validate login and password success mock test.
+     * Validate login and password success 1 mock test.
      */
     @Test
-    public void validateLoginAndPasswordSuccessMockTest() {
+    public void validateLoginAndPasswordSuccess_1_MockTest() {
         when(userMock.getLogin()).thenReturn(LOGIN);
         when(userMock.getPassword()).thenReturn(PASSWORD);
-        doReturn(false).when(userDaoMock).checkUserByLogin(anyString());
-        userValidator.validateLoginAndPassword(userMock, userDaoMock);
-
+        userValidator.validateLoginAndPassword(userMock);
     }
 
     /**
-     * Validate login and password un success 1 mock test.
+     * Validate login and password unsuccess 1 mock test.
      */
     @Test(expected = ValidationException.class)
-    public void validateLoginAndPasswordUnSuccess_1_MockTest() {
+    public void validateLoginAndPasswordUnsuccess_1_MockTest() {
         when(userMock.getLogin()).thenReturn(EMPTY);
         when(userMock.getPassword()).thenReturn(EMPTY);
-        verify(userDaoMock, times(0)).checkUserByLogin(anyString());
-        userValidator.validateLoginAndPassword(userMock, userDaoMock);
+        userValidator.validateLoginAndPassword(userMock);
     }
 
     /**
-     * Validate login and password un success 2 mock test.
+     * Validate login and password unsuccess 2 mock test.
      */
     @Test(expected = ValidationException.class)
-    public void validateLoginAndPasswordUnSuccess_2_MockTest() {
+    public void validateLoginAndPasswordUnsuccess_2_MockTest() {
         when(userMock.getLogin()).thenReturn(NULL);
         when(userMock.getPassword()).thenReturn(NULL);
-        verify(userDaoMock, times(0)).checkUserByLogin(anyString());
-        userValidator.validateLoginAndPassword(userMock, userDaoMock);
+        userValidator.validateLoginAndPassword(userMock);
     }
 
     /**
-     * Validate login and password un success 3 mock test.
+     * Validate existing login success 1 mock test.
+     */
+    @Test
+    public void validateExistingLoginSuccess_1_MockTest() {
+        when(userDaoMock.checkUserByLogin(LOGIN)).thenReturn(false);
+        userValidator.validateExistingLogin(LOGIN, userDaoMock);
+    }
+
+    /**
+     * Validate existing login unseccess 1 mock test.
      */
     @Test(expected = ValidationException.class)
-    public void validateLoginAndPasswordUnSuccess_3_MockTest() {
-        when(userMock.getLogin()).thenReturn(LOGIN);
-        when(userMock.getPassword()).thenReturn(PASSWORD);
+    public void validateExistingLoginUnseccess_1_MockTest() {
         doThrow(ValidationException.class).when(userDaoMock).checkUserByLogin(anyString());
-        userValidator.validateLoginAndPassword(userMock, userDaoMock);
+        userValidator.validateExistingLogin(LOGIN, userDaoMock);
     }
 
 }

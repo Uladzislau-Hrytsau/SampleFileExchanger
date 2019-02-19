@@ -15,6 +15,18 @@ import java.io.IOException;
 @WebFilter("/*")
 public class SimpleCorsFilter implements Filter {
 
+    private static final String ACCESS_CONTROL_ALLOW_ORIGIN = "Access-Control-Allow-Origin";
+    private static final String ACCESS_CONTROL_ALLOW_CREDENTIALS = "Access-Control-Allow-Credentials";
+    private static final String ACCESS_CONTROL_ALLOW_METHODS = "Access-Control-Allow-Methods";
+    private static final String ACCESS_CONTROL_MAX_AGE = "Access-Control-Max-Age";
+    private static final String ACCESS_CONTROL_ALLOW_HEADERS = "Access-Control-Allow-Headers";
+    private static final String ASTERISK = "*";
+    private static final String TRUE = "true";
+    private static final String HTTP_METHODS = "POST, GET, OPTIONS, DELETE, PUT";
+    private static final String ACCESS_CONTROL_MAX_AGE_VALUE = "3600";
+    private static final String ACCESS_CONTROL_ALLOW_HEADERS_VALUE = "Origin, origin, x-requested-with, authorization, Content-Type, Authorization, credential, X-XSRF-TOKEN";
+    private static final String OPTIONS = "OPTIONS";
+
     public SimpleCorsFilter() {
     }
 
@@ -27,13 +39,13 @@ public class SimpleCorsFilter implements Filter {
                          FilterChain chain) throws IOException, ServletException {
         HttpServletResponse response = (HttpServletResponse) resp;
         HttpServletRequest request = (HttpServletRequest) req;
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Access-Control-Allow-Credentials", "true");
-        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE, PUT");
-        response.setHeader("Access-Control-Max-Age", "3600");
-        response.setHeader("Access-Control-Allow-Headers", "Origin, origin, x-requested-with, authorization, Content-Type, Authorization, credential, X-XSRF-TOKEN");
+        response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ASTERISK);
+        response.setHeader(ACCESS_CONTROL_ALLOW_CREDENTIALS, TRUE);
+        response.setHeader(ACCESS_CONTROL_ALLOW_METHODS, HTTP_METHODS);
+        response.setHeader(ACCESS_CONTROL_MAX_AGE, ACCESS_CONTROL_MAX_AGE_VALUE);
+        response.setHeader(ACCESS_CONTROL_ALLOW_HEADERS, ACCESS_CONTROL_ALLOW_HEADERS_VALUE);
 
-        if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+        if (OPTIONS.equalsIgnoreCase(request.getMethod())) {
             response.setStatus(HttpServletResponse.SC_OK);
         } else {
             chain.doFilter(req, resp);

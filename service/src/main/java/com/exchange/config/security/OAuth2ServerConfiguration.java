@@ -14,39 +14,46 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 
-/**
- * The type Auth server o auth 2 config.
- */
 @Configuration
 @EnableAuthorizationServer
 class OAuth2ServerConfiguration extends AuthorizationServerConfigurerAdapter {
 
-    @Autowired
-    @Qualifier("authenticationManagerBean")
-    private AuthenticationManager authenticationManager;
+    private static final String PERMIT_ALL = "permitAll()";
+    private static final String IS_AUTHENTICATED = "isAuthenticated()";
+    private static final String CLIENT_ID_PASSWORD = "clientIdPassword";
+    private static final String SECRET = "secret";
+    private static final String PASSWORD_GRANT_TYPE = "password";
+    private static final String AUTHORIZATION_CODE_GRANT_TYPE = "authorization_code";
+    private static final String REFRESH_TOKEN_GRANT_TYPE = "refresh_token";
+    private static final String READ_SCOPE = "read";
+    private static final String WRITE_SCOPE = "write";
+    private static final boolean AUTO_APPROVE = true;
 
-    /**
-     * The User details service.
-     */
-    @Autowired
+    private AuthenticationManager authenticationManager;
     private UserDetailsService userDetailsService;
+
+    @Autowired
+    public OAuth2ServerConfiguration(@Qualifier("authenticationManagerBean") AuthenticationManager authenticationManager, UserDetailsService userDetailsService) {
+        this.authenticationManager = authenticationManager;
+        this.userDetailsService = userDetailsService;
+    }
 
     @Override
     public void configure(
             AuthorizationServerSecurityConfigurer oauthServer) {
         oauthServer
-                .tokenKeyAccess("permitAll()")
-                .checkTokenAccess("isAuthenticated()");
+                .tokenKeyAccess(PERMIT_ALL)
+                .checkTokenAccess(IS_AUTHENTICATED);
     }
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
-                .withClient("clientIdPassword")
-                .secret("secret")
-                .authorizedGrantTypes("password", "authorization_code", "refresh_token")
-                .scopes("read", "write")
-                .autoApprove(true);
+                .withClient(CLIENT_ID_PASSWORD)
+                .secret(SECRET)
+                .authorizedGrantTypes(PASSWORD_GRANT_TYPE, AUTHORIZATION_CODE_GRANT_TYPE, REFRESH_TOKEN_GRANT_TYPE)
+                .scopes(READ_SCOPE, WRITE_SCOPE)
+                .autoApprove(AUTO_APPROVE);
     }
 
     @Override
@@ -58,11 +65,6 @@ class OAuth2ServerConfiguration extends AuthorizationServerConfigurerAdapter {
                 .userDetailsService(userDetailsService);
     }
 
-    /**
-     * Token store token store.
-     *
-     * @return the token store
-     */
     @Bean
     public TokenStore tokenStore() {
         return new InMemoryTokenStore();

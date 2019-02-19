@@ -1,48 +1,34 @@
 package com.exchange.service.validator;
 
-import com.exchange.dao.User;
 import com.exchange.dao.UserDao;
 import com.exchange.exception.ValidationException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-/**
- * The type User validator.
- */
 @Component
 public class UserValidator {
 
-    @Value("${userService.incorrectLoginOrPassword}")
-    private String incorrectLoginOrPassword;
+    @Value("${userService.incorrectLogin}")
+    private String incorrectLogin;
+
+    @Value("${userService.incorrectPassword}")
+    private String incorrectPassword;
 
     @Value("${userService.alreadyExist}")
     private String alreadyExist;
 
-    /**
-     * Validate login and password.
-     *
-     * @param login   the login
-     * @param userDao the user dao
-     */
     public void validateExistingLogin(String login, UserDao userDao) {
         if (login == null || login.isEmpty()) {
-            throw new ValidationException(incorrectLoginOrPassword);
+            throw new ValidationException(incorrectLogin);
         }
         if (userDao.checkUserByLogin(login)) {
             throw new ValidationException(alreadyExist);
         }
     }
 
-    /**
-     * Validate login and password.
-     *
-     * @param user the user
-     */
-    public void validateLoginAndPassword(User user) {
-        String login = user.getLogin();
-        String password = user.getPassword();
-        if (login == null || password == null || login.isEmpty() || password.isEmpty()) {
-            throw new ValidationException(incorrectLoginOrPassword);
+    public void validatePassword(String password) {
+        if (password == null || password.isEmpty()) {
+            throw new ValidationException(incorrectPassword);
         }
     }
 }

@@ -12,9 +12,6 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by Uladzislau Hrytsau on 28.11.18.
- */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath*:test-spring-dao.xml"})
 @Transactional
@@ -30,7 +27,7 @@ public class UserDaoImplTest {
     private static final Long USER_ID_2 = 2L;
 
     private static final User user_3 = new User(
-            3L, "userLogin3", "userPassword3",
+            3L, "getUserPasswordByUserName", "userPassword3",
             false, LocalDate.of(8888, 8, 8),
             "userInformation2"
     );
@@ -40,15 +37,9 @@ public class UserDaoImplTest {
             "userInformation4"
     );
 
-    /**
-     * The User dao.
-     */
     @Autowired
     private UserDao userDao;
 
-    /**
-     * Gets all users test.
-     */
     @Test
     public void getAllUsersTest() {
         List<User> users = userDao.getAllUsers();
@@ -56,9 +47,6 @@ public class UserDaoImplTest {
         assertEquals(2, users.size());
     }
 
-    /**
-     * Gets user by user id test.
-     */
     @Test
     public void getUserByUserIdTest() {
         User user = userDao.getUserByUserId(USER_ID_1);
@@ -77,9 +65,6 @@ public class UserDaoImplTest {
         assertEquals(USER_INFORMATION_1, user.getInformation());
     }
 
-    /**
-     * Gets user by login test.
-     */
     @Test
     public void getUserByLoginTest() {
         User user = userDao.getUserByLogin(USER_LOGIN_1);
@@ -98,9 +83,19 @@ public class UserDaoImplTest {
         assertEquals(USER_INFORMATION_1, user.getInformation());
     }
 
-    /**
-     * Add user test.
-     */
+    @Test
+    public void getUserPasswordByUserNameTest() {
+        String login = "loginForgetUserPassword";
+        String password = "passwordForgetUserPassword";
+        User user = new User(login, password);
+        assertNotNull(user);
+        Long id = userDao.addUser(user);
+        assertNotNull(id);
+        String passwordAfterGetUserPasswordByUserName = userDao.getUserPasswordByUserName(login);
+        assertNotNull(passwordAfterGetUserPasswordByUserName);
+        assertEquals(password, passwordAfterGetUserPasswordByUserName);
+    }
+
     @Test
     public void addUserTest() {
         List<User> users = userDao.getAllUsers();
@@ -124,9 +119,6 @@ public class UserDaoImplTest {
         assertEquals(quantityBefore + 1, users.size());
     }
 
-    /**
-     * Update user test.
-     */
     @Test
     public void updateUserTest() {
         User user = userDao.getUserByUserId(USER_ID_2);
@@ -151,9 +143,6 @@ public class UserDaoImplTest {
         assertEquals(user.getInformation(), updatedUser.getInformation());
     }
 
-    /**
-     * Delete user test.
-     */
     @Test
     public void deleteUserTest() {
         List<User> users = userDao.getAllUsers();
@@ -183,17 +172,11 @@ public class UserDaoImplTest {
         assertEquals(quantityBefore, users.size());
     }
 
-    /**
-     * Check user by user id test.
-     */
     @Test
     public void checkUserByUserIdTest() {
         assertTrue(userDao.checkUserByUserId(USER_ID_1));
     }
 
-    /**
-     * Check user by login test.
-     */
     @Test
     public void checkUserByLoginTest() {
         assertTrue(userDao.checkUserByLogin(USER_LOGIN_1));

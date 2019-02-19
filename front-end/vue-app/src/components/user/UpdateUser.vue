@@ -4,8 +4,8 @@
       <mdb-row>
         <mdb-col size="12" class="text-center mb-5">
           <mdb-modal-body class="grey-text">
-            <mdb-input size="sm" label="Login" icon="user" group type="text" validate error="wrong"
-                       success="right" required v-model="userNew.login"/>
+            <!--<mdb-input size="sm" label="Login" icon="user" group type="text" validate error="wrong"-->
+                       <!--success="right" required v-model="userNew.login"/>-->
             <mdb-input size="sm" label="Password" icon="key" group type="password" validate error="wrong"
                        success="right" required v-model="userNew.password"/>
             <mdb-input size="sm" label="Birth date" icon="fas fa-birthday-cake" group type="date" validate error="wrong"
@@ -87,7 +87,6 @@
       saveCustomer() {
         var data = {
           userId: this.userOld.userId,
-          login: this.userNew.login,
           password: this.userNew.password,
           gender: this.selected,
           birthDate: this.userNew.birthDate,

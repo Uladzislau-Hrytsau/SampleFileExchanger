@@ -11,23 +11,14 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by Uladzislau Hrytsau on 9.12.18
- */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath*:test-spring-dao.xml"})
 @Transactional
 public class CategoryDaoImplTest {
 
-    /**
-     * The Category dao.
-     */
     @Autowired
     private CategoryDao categoryDao;
 
-    /**
-     * Gets all categories test.
-     */
     @Test
     public void getAllCategoriesTest() {
         List<Category> categories = categoryDao.getAllCategories();
@@ -35,17 +26,11 @@ public class CategoryDaoImplTest {
         assertEquals(3, categories.size());
     }
 
-    /**
-     * Gets category by id test.
-     */
     @Test
     public void getCategoryByIdTest() {
         assertEquals("default", categoryDao.getCategoryById(1L).getCategory());
     }
 
-    /**
-     * Check category by id test.
-     */
     @Test
     public void checkCategoryByIdTest() {
         assertTrue(categoryDao.checkCategoryById(2L));

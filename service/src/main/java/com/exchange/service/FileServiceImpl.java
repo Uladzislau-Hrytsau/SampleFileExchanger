@@ -14,19 +14,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 
-/**
- * File Service implementation.
- * Created by Hrytsau Uladzislau on 1.12.18.
- */
 @Service
 @Transactional
 public class FileServiceImpl implements FileService {
 
-
     private UserDao userDao;
-
     private FileDao fileDao;
-
     private CategoryDao categoryDao;
 
     @Value("${fileService.incorrectId}")
@@ -46,18 +39,16 @@ public class FileServiceImpl implements FileService {
     @Value("${fileService.deleteError}")
     private String deleteError;
 
-    /**
-     * Instantiates a new File service.
-     *
-     * @param userDao     the user dao
-     * @param fileDao     the file dao
-     * @param categoryDao the category dao
-     */
     @Autowired
     public FileServiceImpl(UserDao userDao, FileDao fileDao, CategoryDao categoryDao) {
         this.userDao = userDao;
         this.fileDao = fileDao;
         this.categoryDao = categoryDao;
+    }
+
+    @Override
+    public List<File> getAllFiles() {
+        return fileDao.getAllFiles();
     }
 
     @Override
@@ -67,11 +58,6 @@ public class FileServiceImpl implements FileService {
         if (!fileDao.checkFileByUserId(userId))
             throw new ValidationException(fileDoesNotExist);
         return fileDao.getAllFilesByUserId(userId);
-    }
-
-    @Override
-    public List<File> getAllFiles() {
-        return fileDao.getAllFiles();
     }
 
     @Override

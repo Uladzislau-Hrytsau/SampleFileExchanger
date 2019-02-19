@@ -18,108 +18,47 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * FileDao implementation.
- * Created by Uladzislau Hrytsau on 27.11.18.
- */
 public class FileDaoImpl implements FileDao {
 
-    /**
-     * The constant ID.
-     */
     public static final String ID = "id";
-    /**
-     * The constant USER_ID.
-     */
     public static final String USER_ID = "user_id";
-    /**
-     * The constant URL.
-     */
     public static final String URL = "url";
-    /**
-     * The constant DESCRIPTION.
-     */
     public static final String DESCRIPTION = "description";
-    /**
-     * The constant DATE.
-     */
     public static final String DATE = "date";
-    /**
-     * The constant CATEGORY.
-     */
     public static final String CATEGORY = "category";
 
-    /**
-     * The Get all files by user id and category sql.
-     */
     @Value("${file.selectByUserIdAndCategory}")
     private String getAllFilesByUserIdAndCategorySql;
-    /**
-     * The Get all files by user id and date sql.
-     */
     @Value("${file.selectByUserIdAndDate}")
     private String getAllFilesByUserIdAndDateSql;
-    /**
-     * The Get all files by user id sql.
-     */
     @Value("${file.selectByUserId}")
     private String getAllFilesByUserIdSql;
-    /**
-     * The Get all files sql.
-     */
     @Value("${file.select}")
     private String getAllFilesSql;
-    /**
-     * The Get file by id sql.
-     */
     @Value("${file.selectById}")
     private String getFileByIdSql;
-    /**
-     * The Add file sql.
-     */
     @Value("${file.insert}")
     private String addFileSql;
-    /**
-     * The Update file sql.
-     */
     @Value("${file.update}")
     private String updateFileSql;
-    /**
-     * The Delete file sql.
-     */
     @Value("${file.delete}")
     private String deleteFileSql;
-    /**
-     * The Check file by id sql.
-     */
     @Value("${file.checkFileById}")
     private String checkFileByIdSql;
-    /**
-     * The Check file by user id sql.
-     */
     @Value("${file.checkFileByUserId}")
     private String checkFileByUserIdSql;
-    /**
-     * The Check file by url sql.
-     */
     @Value("${file.checkFileByUrl}")
     private String checkFileByUrlSql;
 
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-
-    @Autowired
     private FileRowMapper fileRowMapper;
 
-
-    /**
-     * Instantiates a new File dao.
-     *
-     * @param dataSource the data source
-     */
-    public FileDaoImpl(DataSource dataSource) {
-        jdbcTemplate = new JdbcTemplate(dataSource);
-        namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+    @Autowired
+    public FileDaoImpl(DataSource dataSource, FileRowMapper fileRowMapper) {
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
+        this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+        this.fileRowMapper = fileRowMapper;
     }
 
     @Override

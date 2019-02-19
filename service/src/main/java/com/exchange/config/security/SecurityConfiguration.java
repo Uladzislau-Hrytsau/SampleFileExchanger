@@ -1,7 +1,6 @@
 package com.exchange.config.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -20,17 +19,20 @@ import org.springframework.security.oauth2.provider.approval.ApprovalStore;
 import org.springframework.security.oauth2.provider.approval.TokenApprovalStore;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 
-/**
- * The type Server security config.
- */
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    @Autowired
+    private static final String OAUTH_TOKEN_ENDPOINT = "/oauth/token";
+    private static final String ALL_ENDPOINTS = "/**";
+    private static final int ENCODE_SIZE = 10;
     private UserDetailsService userDetailsService;
 
+    @Autowired
+    public SecurityConfiguration(UserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -40,15 +42,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/oauth/token").permitAll()
+                .antMatchers(OAUTH_TOKEN_ENDPOINT).permitAll()
                 .anyRequest().authenticated();
     }
 
     @Override
-    public void configure(WebSecurity web) throws Exception {
+    public void configure(WebSecurity web) {
         web.ignoring()
-                .antMatchers(HttpMethod.OPTIONS, "/oauth/token")
-                .antMatchers(HttpMethod.OPTIONS, "/**");
+                .antMatchers(HttpMethod.OPTIONS, OAUTH_TOKEN_ENDPOINT)
+                .antMatchers(HttpMethod.OPTIONS, ALL_ENDPOINTS);
     }
 
     @Override
@@ -60,7 +62,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder(10);
+        return new BCryptPasswordEncoder(ENCODE_SIZE);
     }
 
     @Override
@@ -78,20 +80,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Bean
     @Autowired
-    public ApprovalStore approvalStore(TokenStore tokenStore) throws Exception {
+    public ApprovalStore approvalStore(TokenStore tokenStore) {
         TokenApprovalStore store = new TokenApprovalStore();
         store.setTokenStore(tokenStore);
         return store;
     }
 
-    @Bean
-    public FilterRegistrationBean<SimpleCorsFilter> loggingFilter() {
-        FilterRegistrationBean<SimpleCorsFilter> registrationBean
-                = new FilterRegistrationBean<>();
-
-        registrationBean.setFilter(new SimpleCorsFilter());
-        registrationBean.addUrlPatterns("/*");
-
-        return registrationBean;
-    }
 }

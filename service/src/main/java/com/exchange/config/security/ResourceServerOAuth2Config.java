@@ -13,17 +13,22 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 public class ResourceServerOAuth2Config
         extends ResourceServerConfigurerAdapter {
 
+    private static final String OAUTH_TOKEN_ENDPOINT = "/oauth/token";
+    private static final String USER_ENDPOINT = "/user";
+    private static final String ALL_ENDPOINTS = "/**";
+    private static final String HAS_ROLE_ADMIN_OR_HAS_ROLE_USER = "hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')";
+
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http
                 .anonymous().and()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.OPTIONS, "/oauth/token").permitAll()
-                .antMatchers(HttpMethod.POST, "/oauth/token").permitAll()
-                .antMatchers(HttpMethod.OPTIONS, "/user").permitAll()
-                .antMatchers(HttpMethod.POST, "/user").permitAll()
-                .antMatchers("/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')");
+                .antMatchers(HttpMethod.OPTIONS, OAUTH_TOKEN_ENDPOINT).permitAll()
+                .antMatchers(HttpMethod.POST, OAUTH_TOKEN_ENDPOINT).permitAll()
+                .antMatchers(HttpMethod.OPTIONS, USER_ENDPOINT).permitAll()
+                .antMatchers(HttpMethod.POST, USER_ENDPOINT).permitAll()
+                .antMatchers(ALL_ENDPOINTS).access(HAS_ROLE_ADMIN_OR_HAS_ROLE_USER);
 
     }
 

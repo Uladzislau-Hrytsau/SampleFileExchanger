@@ -12,18 +12,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.Collections;
 
-/**
- * The type Rest error handler.
- */
 @ControllerAdvice
 public class RestErrorHandler {
 
-    /**
-     * Handle data access exception response.
-     *
-     * @param ex the ex
-     * @return the response
-     */
     @ExceptionHandler(DataAccessException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public @ResponseBody
@@ -33,12 +24,6 @@ public class RestErrorHandler {
         return response;
     }
 
-    /**
-     * Handle validation exception response.
-     *
-     * @param ex the ex
-     * @return the response
-     */
     @ExceptionHandler(ValidationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public @ResponseBody
@@ -48,12 +33,6 @@ public class RestErrorHandler {
         return response;
     }
 
-    /**
-     * Handle internal server exception response.
-     *
-     * @param ex the ex
-     * @return the response
-     */
     @ExceptionHandler({InternalServerException.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public @ResponseBody

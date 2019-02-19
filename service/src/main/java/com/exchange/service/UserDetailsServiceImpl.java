@@ -14,9 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * The type User details service.
- */
 @Service
 @Transactional
 public class UserDetailsServiceImpl implements UserDetailsService {

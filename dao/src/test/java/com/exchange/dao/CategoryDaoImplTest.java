@@ -37,7 +37,7 @@ public class CategoryDaoImplTest {
      */
     @Test
     public void getCategoryByIdTest() {
-        assertEquals("default", categoryDao.getCategoryById(1L).getCategory());
+        assertEquals("default", categoryDao.getCategoryById(1L).getFileCategory());
     }
 
     /**

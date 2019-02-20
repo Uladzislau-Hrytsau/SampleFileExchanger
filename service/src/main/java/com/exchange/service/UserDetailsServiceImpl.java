@@ -38,7 +38,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String login) {
         String password = userDao.getUserPasswordByUserName(login);
 
         Set<GrantedAuthority> roles = new HashSet<>();

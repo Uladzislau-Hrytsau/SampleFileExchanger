@@ -9,7 +9,7 @@ public class Category {
 
     private Long id;
 
-    private String category;
+    private String fileCategory;
 
     /**
      * Instantiates a new Category.
@@ -20,12 +20,12 @@ public class Category {
     /**
      * Instantiates a new Category.
      *
-     * @param id       the id
-     * @param category the category
+     * @param id           the id
+     * @param fileCategory the file category
      */
-    public Category(Long id, String category) {
+    public Category(Long id, String fileCategory) {
         this.id = id;
-        this.category = category;
+        this.fileCategory = fileCategory;
     }
 
     /**
@@ -47,21 +47,21 @@ public class Category {
     }
 
     /**
-     * Gets category.
+     * Gets file category.
      *
-     * @return the category
+     * @return the file category
      */
-    public String getCategory() {
-        return category;
+    public String getFileCategory() {
+        return fileCategory;
     }
 
     /**
-     * Sets category.
+     * Sets file category.
      *
-     * @param category the category
+     * @param fileCategory the file category
      */
-    public void setCategory(String category) {
-        this.category = category;
+    public void setFileCategory(String fileCategory) {
+        this.fileCategory = fileCategory;
     }
 
     @Override
@@ -70,19 +70,19 @@ public class Category {
         if (o == null || getClass() != o.getClass()) return false;
         Category category1 = (Category) o;
         return Objects.equals(id, category1.id) &&
-                Objects.equals(category, category1.category);
+                Objects.equals(fileCategory, category1.fileCategory);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, category);
+        return Objects.hash(id, fileCategory);
     }
 
     @Override
     public String toString() {
         return "Category{" +
                 "id=" + id +
-                ", category='" + category + '\'' +
+                ", category='" + fileCategory + '\'' +
                 '}';
     }
 }

@@ -77,7 +77,7 @@ public class FileDaoImplTest {
         File newFile = fileDao.getFileById(id);
         assertNotNull(newFile);
         assertEquals(file_1.getId(), newFile.getId());
-        assertEquals(file_1.getUser_id(), newFile.getUser_id());
+        assertEquals(file_1.getUserId(), newFile.getUserId());
         assertEquals(file_1.getUrl(), newFile.getUrl());
         assertEquals(file_1.getDescription(), newFile.getDescription());
         assertEquals(file_1.getDate(), newFile.getDate());
@@ -105,7 +105,7 @@ public class FileDaoImplTest {
 
         File updatedFile = fileDao.getFileById(file.getId());
         assertEquals(file.getId(), updatedFile.getId());
-        assertEquals(file.getUser_id(), updatedFile.getUser_id());
+        assertEquals(file.getUserId(), updatedFile.getUserId());
         assertEquals(file.getUrl(), updatedFile.getUrl());
         assertEquals(file.getDescription(), updatedFile.getDescription());
         assertEquals(file.getDate(), updatedFile.getDate());

@@ -4,7 +4,6 @@ import com.exchange.dao.User;
 import com.exchange.dao.UserDao;
 import com.exchange.dao.jdbc.mapper.UserRowMapper;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -94,12 +93,12 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public List<User> getAllUsers() throws DataAccessException {
+    public List<User> getAllUsers() {
         return jdbcTemplate.query(getAllUsersSql, userRowMapper);
     }
 
     @Override
-    public User getUserByUserId(Long userId) throws DataAccessException {
+    public User getUserByUserId(Long userId) {
         SqlParameterSource namedParameters = new MapSqlParameterSource("p_user_id", userId);
         return namedParameterJdbcTemplate.queryForObject(
                 selectUserByUserIdSql, namedParameters, userRowMapper
@@ -107,7 +106,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User getUserByLogin(String userName) throws DataAccessException {
+    public User getUserByLogin(String userName) {
         SqlParameterSource namedParameters = new MapSqlParameterSource("p_user_name", userName);
         return namedParameterJdbcTemplate.queryForObject(
                 selectByUserLoginSql, namedParameters, userRowMapper
@@ -120,7 +119,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public Long addUser(User user) throws DataAccessException {
+    public Long addUser(User user) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
         parameterSource.addValue(USER_ID, user.getUserId());
@@ -136,7 +135,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public int updateUser(User user) throws DataAccessException {
+    public int updateUser(User user) {
         Map<String, Object> params = new HashMap<>();
         params.put(USER_ID, user.getUserId());
         params.put(USER_NAME, user.getLogin());
@@ -148,7 +147,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public int deleteUser(Long userId) throws DataAccessException {
+    public int deleteUser(Long userId) {
         Map<String, Object> params = new HashMap<>();
         params.put(USER_ID, userId);
         return namedParameterJdbcTemplate.update(deleteUserSql, params);

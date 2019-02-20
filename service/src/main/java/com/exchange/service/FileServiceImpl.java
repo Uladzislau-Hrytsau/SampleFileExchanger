@@ -86,7 +86,7 @@ public class FileServiceImpl implements FileService {
     @Override
     public Long addFile(File file) {
 
-        Long userId = file.getUser_id();
+        Long userId = file.getUserId();
         String url = file.getUrl();
 
         if (userId == null || userId < 0L) {

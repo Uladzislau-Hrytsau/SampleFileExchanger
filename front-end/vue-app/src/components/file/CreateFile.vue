@@ -82,7 +82,7 @@
     methods: {
       createFile() {
         var data = {
-          user_id: this.$store.state.user.userId,
+          userId: this.$store.state.user.userId,
           url: this.file.url,
           description: this.file.description,
           categoryId: this.selected,

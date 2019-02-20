@@ -72,7 +72,7 @@
       saveFile() {
         var data = {
           id: this.fileOld.id,
-          userId: this.fileOld.user_id,
+          userId: this.fileOld.userId,
           url: this.fileOld.url,
           description: this.fileNew.description,
           categoryId: this.fileNew.categoryId,

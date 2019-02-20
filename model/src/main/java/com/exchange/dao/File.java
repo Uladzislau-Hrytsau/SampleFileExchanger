@@ -12,7 +12,7 @@ public class File {
 
     private Long id;
 
-    private Long user_id;
+    private Long userId;
 
     private String url;
 
@@ -32,14 +32,14 @@ public class File {
     /**
      * Instantiates a new File.
      *
-     * @param id      the id
-     * @param user_id the user id
-     * @param url     the url
-     * @param date    the date
+     * @param id     the id
+     * @param userId the user id
+     * @param url    the url
+     * @param date   the date
      */
-    public File(Long id, Long user_id, String url, LocalDate date) {
+    public File(Long id, Long userId, String url, LocalDate date) {
         this.id = id;
-        this.user_id = user_id;
+        this.userId = userId;
         this.url = url;
         this.date = date;
     }
@@ -48,13 +48,13 @@ public class File {
      * Instantiates a new File.
      *
      * @param id          the id
-     * @param user_id     the user id
+     * @param userId      the user id
      * @param url         the url
      * @param description the description
      * @param date        the date
      */
-    public File(Long id, Long user_id, String url, String description, LocalDate date) {
-        this(id, user_id, url, date);
+    public File(Long id, Long userId, String url, String description, LocalDate date) {
+        this(id, userId, url, date);
         this.description = description;
     }
 
@@ -62,14 +62,14 @@ public class File {
      * Instantiates a new File.
      *
      * @param id          the id
-     * @param user_id     the user id
+     * @param userId      the user id
      * @param url         the url
      * @param description the description
      * @param date        the date
      * @param categoryId  the category id
      */
-    public File(Long id, Long user_id, String url, String description, LocalDate date, Long categoryId) {
-        this(id, user_id, url, description, date);
+    public File(Long id, Long userId, String url, String description, LocalDate date, Long categoryId) {
+        this(id, userId, url, description, date);
         this.categoryId = categoryId;
     }
 
@@ -77,14 +77,14 @@ public class File {
      * Instantiates a new File.
      *
      * @param id          the id
-     * @param user_id     the user id
+     * @param userId      the user id
      * @param url         the url
      * @param description the description
      * @param categoryId  the category id
      */
-    public File(Long id, Long user_id, String url, String description, Long categoryId) {
+    public File(Long id, Long userId, String url, String description, Long categoryId) {
         this.id = id;
-        this.user_id = user_id;
+        this.userId = userId;
         this.url = url;
         this.description = description;
         this.categoryId = categoryId;
@@ -113,17 +113,17 @@ public class File {
      *
      * @return the user id
      */
-    public Long getUser_id() {
-        return user_id;
+    public Long getUserId() {
+        return userId;
     }
 
     /**
      * Sets user id.
      *
-     * @param user_id the user id
+     * @param userId the user id
      */
-    public void setUser_id(Long user_id) {
-        this.user_id = user_id;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     /**
@@ -204,7 +204,7 @@ public class File {
         if (o == null || getClass() != o.getClass()) return false;
         File file = (File) o;
         return Objects.equals(id, file.id) &&
-                Objects.equals(user_id, file.user_id) &&
+                Objects.equals(userId, file.userId) &&
                 Objects.equals(url, file.url) &&
                 Objects.equals(description, file.description) &&
                 Objects.equals(date, file.date) &&
@@ -213,14 +213,14 @@ public class File {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, user_id, url, description, date, categoryId);
+        return Objects.hash(id, userId, url, description, date, categoryId);
     }
 
     @Override
     public String toString() {
         return "File{" +
                 "id=" + id +
-                ", user_id=" + user_id +
+                ", user_id=" + userId +
                 ", url='" + url + '\'' +
                 ", description='" + description + '\'' +
                 ", date=" + date +

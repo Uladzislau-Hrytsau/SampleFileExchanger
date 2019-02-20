@@ -5,7 +5,6 @@ import com.exchange.dao.FileDao;
 import com.exchange.dao.jdbc.mapper.FileRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -89,28 +88,28 @@ public class FileDaoImpl implements FileDao {
     }
 
     @Override
-    public List<File> getAllFilesByUserId(Long userId) throws DataAccessException {
+    public List<File> getAllFilesByUserId(Long userId) {
         return jdbcTemplate.query(getAllFilesByUserIdSql, fileRowMapper, userId);
     }
 
     @Override
-    public List<File> getAllFiles() throws DataAccessException {
+    public List<File> getAllFiles() {
         return jdbcTemplate.query(getAllFilesSql, fileRowMapper);
     }
 
     @Override
-    public File getFileById(Long id) throws DataAccessException {
+    public File getFileById(Long id) {
         SqlParameterSource namedParameters = new MapSqlParameterSource("p_id", id);
         return namedParameterJdbcTemplate.queryForObject(
                 getFileByIdSql, namedParameters, fileRowMapper);
     }
 
     @Override
-    public Long addFile(File file) throws DataAccessException {
+    public Long addFile(File file) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
         parameterSource.addValue(ID, file.getId());
-        parameterSource.addValue(USER_ID, file.getUser_id());
+        parameterSource.addValue(USER_ID, file.getUserId());
         parameterSource.addValue(URL, file.getUrl());
         parameterSource.addValue(DESCRIPTION, file.getDescription());
         parameterSource.addValue(DATE, file.getDate());
@@ -122,10 +121,10 @@ public class FileDaoImpl implements FileDao {
     }
 
     @Override
-    public int updateFile(File file) throws DataAccessException {
+    public int updateFile(File file) {
         Map<String, Object> params = new HashMap<>();
         params.put(ID, file.getId());
-        params.put(USER_ID, file.getUser_id());
+        params.put(USER_ID, file.getUserId());
         params.put(URL, file.getUrl());
         params.put(DESCRIPTION, file.getDescription());
         params.put(DATE, file.getDate());
@@ -134,7 +133,7 @@ public class FileDaoImpl implements FileDao {
     }
 
     @Override
-    public int deleteFile(Long id) throws DataAccessException {
+    public int deleteFile(Long id) {
         Map<String, Object> params = new HashMap<>();
         params.put(ID, id);
         return namedParameterJdbcTemplate.update(deleteFileSql, params);

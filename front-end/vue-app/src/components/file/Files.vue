@@ -4,7 +4,7 @@
       <thead>
       <tr>
         <th>id</th>
-        <th>user_id</th>
+        <th>userId</th>
         <th>url</th>
         <th>description</th>
         <th>date</th>
@@ -16,7 +16,7 @@
       <tbody>
       <tr v-for="file in files">
         <th>{{ file.id }}</th>
-        <th>{{ file.user_id }}</th>
+        <th>{{ file.userId }}</th>
         <td>{{ file.url }}</td>
         <td>{{ file.description }}</td>
         <td>{{ file.date }}</td>

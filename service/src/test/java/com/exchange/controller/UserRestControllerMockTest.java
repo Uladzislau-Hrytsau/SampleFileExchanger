@@ -26,6 +26,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/**
+ * The type User rest controller mock test.
+ */
 @RunWith(MockitoJUnitRunner.class)
 public class UserRestControllerMockTest {
     private static final Long ID_URL_PARAMETER = 1L;
@@ -51,6 +54,9 @@ public class UserRestControllerMockTest {
     private UserRestController userRestController;
     private MockMvc mockMvc;
 
+    /**
+     * Sets up.
+     */
     @Before
     public void setUp() {
         mockMvc = MockMvcBuilders.standaloneSetup(userRestController)
@@ -59,6 +65,11 @@ public class UserRestControllerMockTest {
                 .build();
     }
 
+    /**
+     * Gets all users success 1 mock test.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void getAllUsersSuccess_1_MockTest() throws Exception {
         user.setBirthDate(LocalDate.of(2019, 1, 1));
@@ -69,6 +80,11 @@ public class UserRestControllerMockTest {
                 .andExpect(content().json(asJsonString(Collections.singletonList(user))));
     }
 
+    /**
+     * Gets user by user id success 1 mock test.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void getUserByUserIdSuccess_1_MockTest() throws Exception {
         user.setBirthDate(LocalDate.of(2019, 1, 2));
@@ -79,6 +95,11 @@ public class UserRestControllerMockTest {
                 .andExpect(content().json(asJsonString(user)));
     }
 
+    /**
+     * Gets user by user id un success 1 mock test.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void getUserByUserIdUnSuccess_1_MockTest() throws Exception {
         user.setBirthDate(LocalDate.of(2019, 1, 2));
@@ -88,6 +109,11 @@ public class UserRestControllerMockTest {
                 .andExpect(status().isOk());
     }
 
+    /**
+     * Gets user by user id un success 2 mock test.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void getUserByUserIdUnSuccess_2_MockTest() throws Exception {
         user.setBirthDate(LocalDate.of(2019, 1, 3));
@@ -97,6 +123,11 @@ public class UserRestControllerMockTest {
                 .andExpect(status().isBadRequest());
     }
 
+    /**
+     * Gets user by login success 1 mock test.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void getUserByLoginSuccess_1_MockTest() throws Exception {
         user.setBirthDate(LocalDate.of(2019, 1, 4));
@@ -107,6 +138,11 @@ public class UserRestControllerMockTest {
                 .andExpect(content().json(asJsonString(user)));
     }
 
+    /**
+     * Gets user by login un success 1 mock test.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void getUserByLoginUnSuccess_1_MockTest() throws Exception {
         user.setBirthDate(LocalDate.of(2019, 1, 5));
@@ -116,6 +152,11 @@ public class UserRestControllerMockTest {
                 .andExpect(status().isBadRequest());
     }
 
+    /**
+     * Add user success 1 mock test.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void addUserSuccess_1_MockTest() throws Exception {
         user.setBirthDate(LocalDate.of(2019, 1, 6));
@@ -126,6 +167,11 @@ public class UserRestControllerMockTest {
                 .andExpect(status().isCreated());
     }
 
+    /**
+     * Add user un success 1 mock test.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void addUserUnSuccess_1_MockTest() throws Exception {
         user.setBirthDate(LocalDate.of(2019, 1, 7));
@@ -136,6 +182,11 @@ public class UserRestControllerMockTest {
                 .andExpect(status().isBadRequest());
     }
 
+    /**
+     * Update user success 1 mock test.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void updateUserSuccess_1_MockTest() throws Exception {
         user.setBirthDate(LocalDate.of(2019, 1, 8));
@@ -146,6 +197,11 @@ public class UserRestControllerMockTest {
                 .andExpect(status().isOk());
     }
 
+    /**
+     * Update user un success 1 mock test.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void updateUserUnSuccess_1_MockTest() throws Exception {
         user.setBirthDate(LocalDate.of(2019, 1, 9));
@@ -156,6 +212,11 @@ public class UserRestControllerMockTest {
                 .andExpect(status().isBadRequest());
     }
 
+    /**
+     * Update user un success 2 mock test.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void updateUserUnSuccess_2_MockTest() throws Exception {
         user.setBirthDate(LocalDate.of(2019, 1, 10));
@@ -166,6 +227,11 @@ public class UserRestControllerMockTest {
                 .andExpect(status().isInternalServerError());
     }
 
+    /**
+     * Delete user success 1 mock test.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void deleteUserSuccess_1_MockTest() throws Exception {
         user.setBirthDate(LocalDate.of(2019, 1, 11));
@@ -175,6 +241,11 @@ public class UserRestControllerMockTest {
                 .andExpect(status().isOk());
     }
 
+    /**
+     * Delete user un success 1 mock test.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void deleteUserUnSuccess_1_MockTest() throws Exception {
         user.setBirthDate(LocalDate.of(2019, 1, 11));
@@ -185,6 +256,11 @@ public class UserRestControllerMockTest {
                 .andExpect(status().isBadRequest());
     }
 
+    /**
+     * Delete user un success 2 mock test.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void deleteUserUnSuccess_2_MockTest() throws Exception {
         user.setBirthDate(LocalDate.of(2019, 1, 12));

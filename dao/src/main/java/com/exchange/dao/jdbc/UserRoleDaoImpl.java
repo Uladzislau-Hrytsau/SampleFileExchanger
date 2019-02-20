@@ -9,6 +9,9 @@ import org.springframework.stereotype.Component;
 import javax.sql.DataSource;
 import java.util.List;
 
+/**
+ * The type User role dao.
+ */
 @Component
 public class UserRoleDaoImpl implements UserRoleDao {
 
@@ -17,6 +20,11 @@ public class UserRoleDaoImpl implements UserRoleDao {
 
     private JdbcTemplate jdbcTemplate;
 
+    /**
+     * Instantiates a new User role dao.
+     *
+     * @param dataSource the data source
+     */
     @Autowired
     public UserRoleDaoImpl(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);

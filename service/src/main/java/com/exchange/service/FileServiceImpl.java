@@ -14,6 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * The type File service.
+ */
 @Service
 @Transactional
 public class FileServiceImpl implements FileService {
@@ -39,6 +42,13 @@ public class FileServiceImpl implements FileService {
     @Value("${fileService.deleteError}")
     private String deleteError;
 
+    /**
+     * Instantiates a new File service.
+     *
+     * @param userDao     the user dao
+     * @param fileDao     the file dao
+     * @param categoryDao the category dao
+     */
     @Autowired
     public FileServiceImpl(UserDao userDao, FileDao fileDao, CategoryDao categoryDao) {
         this.userDao = userDao;

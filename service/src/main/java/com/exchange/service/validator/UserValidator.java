@@ -5,6 +5,9 @@ import com.exchange.exception.ValidationException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+/**
+ * The type User validator.
+ */
 @Component
 public class UserValidator {
 
@@ -17,6 +20,12 @@ public class UserValidator {
     @Value("${userService.alreadyExist}")
     private String alreadyExist;
 
+    /**
+     * Validate existing login.
+     *
+     * @param login   the login
+     * @param userDao the user dao
+     */
     public void validateExistingLogin(String login, UserDao userDao) {
         if (login == null || login.isEmpty()) {
             throw new ValidationException(incorrectLogin);
@@ -26,6 +35,11 @@ public class UserValidator {
         }
     }
 
+    /**
+     * Validate password.
+     *
+     * @param password the password
+     */
     public void validatePassword(String password) {
         if (password == null || password.isEmpty()) {
             throw new ValidationException(incorrectPassword);

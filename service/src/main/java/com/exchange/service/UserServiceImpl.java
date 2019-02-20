@@ -14,6 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * The type User service.
+ */
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
@@ -36,6 +39,13 @@ public class UserServiceImpl implements UserService {
     @Value("${userRileService.incorrectUserName}")
     private String incorrectUserName;
 
+    /**
+     * Instantiates a new User service.
+     *
+     * @param userDao               the user dao
+     * @param userValidator         the user validator
+     * @param bCryptPasswordEncoder the b crypt password encoder
+     */
     @Autowired
     public UserServiceImpl(UserDao userDao, UserValidator userValidator, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userDao = userDao;

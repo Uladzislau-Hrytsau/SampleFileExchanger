@@ -11,6 +11,9 @@ import java.sql.SQLException;
 
 import static com.exchange.dao.jdbc.UserDaoImpl.*;
 
+/**
+ * The type User row mapper.
+ */
 @Component
 public class UserRowMapper implements RowMapper<User> {
 

@@ -17,13 +17,34 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The type User dao.
+ */
 public class UserDaoImpl implements UserDao {
 
+    /**
+     * The constant USER_ID.
+     */
     public static final String USER_ID = "user_id";
+    /**
+     * The constant USER_NAME.
+     */
     public static final String USER_NAME = "user_name";
+    /**
+     * The constant USER_PASSWORD.
+     */
     public static final String USER_PASSWORD = "user_password";
+    /**
+     * The constant USER_GENDER.
+     */
     public static final String USER_GENDER = "user_gender";
+    /**
+     * The constant USER_BIRTH_DATE.
+     */
     public static final String USER_BIRTH_DATE = "user_birth_date";
+    /**
+     * The constant USER_INFORMATION.
+     */
     public static final String USER_INFORMATION = "user_information";
 
     private JdbcTemplate jdbcTemplate;
@@ -60,6 +81,12 @@ public class UserDaoImpl implements UserDao {
     @Value("${user.selectUserPasswordByUserName}")
     private String selectUserPasswordByUserNameSql;
 
+    /**
+     * Instantiates a new User dao.
+     *
+     * @param dataSource    the data source
+     * @param userRowMapper the user row mapper
+     */
     public UserDaoImpl(DataSource dataSource, UserRowMapper userRowMapper) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
         this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);

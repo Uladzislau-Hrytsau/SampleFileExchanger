@@ -12,6 +12,9 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
+/**
+ * The type File dao impl test.
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath*:test-spring-dao.xml"})
 @Transactional
@@ -31,18 +34,27 @@ public class FileDaoImplTest {
     @Autowired
     private FileDao fileDao;
 
+    /**
+     * Gets all files by user id test.
+     */
     @Test
     public void getAllFilesByUserIdTest() {
         List<File> files = fileDao.getAllFilesByUserId(1L);
         assertTrue(files.size() > 0);
     }
 
+    /**
+     * Gets all files test.
+     */
     @Test
     public void getAllFilesTest() {
         List<File> files = fileDao.getAllFiles();
         assertTrue(files.size() > 0);
     }
 
+    /**
+     * Gets file by id test.
+     */
     @Test
     public void getFileByIdTest() {
         File file = fileDao.getFileById(1L);
@@ -50,6 +62,9 @@ public class FileDaoImplTest {
         assertEquals(ID_1, file.getId());
     }
 
+    /**
+     * Add file test.
+     */
     @Test
     public void addFileTest() {
         List<File> files = fileDao.getAllFiles();
@@ -74,6 +89,9 @@ public class FileDaoImplTest {
     }
 
 
+    /**
+     * Update file test.
+     */
     @Test
     public void updateFileTest() {
         File file = fileDao.getFileById(2L);
@@ -94,6 +112,9 @@ public class FileDaoImplTest {
         assertEquals(file.getCategoryId(), updatedFile.getCategoryId());
     }
 
+    /**
+     * Delete file test.
+     */
     @Test
     public void deleteFileTest() {
         Long id = fileDao.addFile(file_2);
@@ -111,16 +132,25 @@ public class FileDaoImplTest {
         assertEquals(quantityBefore - 1, files.size());
     }
 
+    /**
+     * Check file by id test.
+     */
     @Test
     public void checkFileByIdTest() {
         assertTrue(fileDao.checkFileById(1L));
     }
 
+    /**
+     * Check file by user id test.
+     */
     @Test
     public void checkFileByUserIdTest() {
         assertTrue(fileDao.checkFileByUserId(2L));
     }
 
+    /**
+     * Check file by url test.
+     */
     @Test
     public void checkFileByUrlTest() {
         assertTrue(fileDao.checkFileByUrl("url1"));

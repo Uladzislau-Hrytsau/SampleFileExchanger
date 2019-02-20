@@ -14,6 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.List;
 
+/**
+ * The type Security rest controller.
+ */
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 public class SecurityRestController {
@@ -22,12 +25,24 @@ public class SecurityRestController {
 
     private UserService userService;
 
+    /**
+     * Instantiates a new Security rest controller.
+     *
+     * @param userRoleService the user role service
+     * @param userService     the user service
+     */
     @Autowired
     public SecurityRestController(UserRoleService userRoleService, UserService userService) {
         this.userRoleService = userRoleService;
         this.userService = userService;
     }
 
+    /**
+     * Gets user role.
+     *
+     * @param httpServletRequest the http servlet request
+     * @return the user role
+     */
     @GetMapping(value = "/oauth/role")
     @ResponseStatus(value = HttpStatus.OK)
     public List<String> getUserRole(HttpServletRequest httpServletRequest) {
@@ -35,6 +50,12 @@ public class SecurityRestController {
         return userRoleService.getRolesByUserName(principal.getName());
     }
 
+    /**
+     * Gets user.
+     *
+     * @param httpServletRequest the http servlet request
+     * @return the user
+     */
     @GetMapping(value = "/oauth/user")
     @ResponseStatus(value = HttpStatus.OK)
     public User getUser(HttpServletRequest httpServletRequest) {

@@ -9,17 +9,30 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * The type User rest controller.
+ */
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 public class UserRestController {
 
     private final UserService userService;
 
+    /**
+     * Instantiates a new User rest controller.
+     *
+     * @param userService the user service
+     */
     @Autowired
     public UserRestController(UserService userService) {
         this.userService = userService;
     }
 
+    /**
+     * Gets all users.
+     *
+     * @return the all users
+     */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/users")
     @ResponseStatus(value = HttpStatus.OK)
@@ -27,6 +40,12 @@ public class UserRestController {
         return userService.getAllUsers();
     }
 
+    /**
+     * Gets user by user id.
+     *
+     * @param userId the user id
+     * @return the user by user id
+     */
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @GetMapping(value = "/user/{id}")
     @ResponseStatus(value = HttpStatus.OK)
@@ -34,6 +53,12 @@ public class UserRestController {
         return userService.getUserByUserId(userId);
     }
 
+    /**
+     * Gets user by login.
+     *
+     * @param login the login
+     * @return the user by login
+     */
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @GetMapping(value = "/user/login/{login}")
     @ResponseStatus(value = HttpStatus.OK)
@@ -41,12 +66,23 @@ public class UserRestController {
         return userService.getUserByLogin(login);
     }
 
+    /**
+     * Add user long.
+     *
+     * @param user the user
+     * @return the long
+     */
     @PostMapping("/user")
     @ResponseStatus(value = HttpStatus.CREATED)
     public Long addUser(@RequestBody User user) {
         return userService.addUser(user);
     }
 
+    /**
+     * Update user.
+     *
+     * @param user the user
+     */
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @PutMapping("/user")
     @ResponseStatus(value = HttpStatus.OK)
@@ -54,6 +90,11 @@ public class UserRestController {
         userService.updateUser(user);
     }
 
+    /**
+     * Delete user.
+     *
+     * @param userId the user id
+     */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping(value = "/user/{id}")
     @ResponseStatus(value = HttpStatus.OK)

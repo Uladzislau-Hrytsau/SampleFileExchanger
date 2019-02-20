@@ -14,6 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * The type User details service.
+ */
 @Service
 @Transactional
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -22,6 +25,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     private UserRoleDao userRoleDao;
 
+    /**
+     * Instantiates a new User details service.
+     *
+     * @param userDao     the user dao
+     * @param userRoleDao the user role dao
+     */
     @Autowired
     public UserDetailsServiceImpl(UserDao userDao, UserRoleDao userRoleDao) {
         this.userDao = userDao;

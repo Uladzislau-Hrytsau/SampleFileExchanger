@@ -10,6 +10,9 @@ import java.sql.SQLException;
 import static com.exchange.dao.jdbc.CategoryDaoImpl.CATEGORY;
 import static com.exchange.dao.jdbc.CategoryDaoImpl.ID;
 
+/**
+ * The type Category row mapper.
+ */
 @Component
 public class CategoryRowMapper implements RowMapper<Category> {
 

@@ -13,9 +13,18 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import javax.sql.DataSource;
 import java.util.List;
 
+/**
+ * The type Category dao.
+ */
 public class CategoryDaoImpl implements CategoryDao {
 
+    /**
+     * The constant ID.
+     */
     public static final String ID = "id";
+    /**
+     * The constant CATEGORY.
+     */
     public static final String CATEGORY = "category";
 
     @Value("${category.select}")
@@ -29,6 +38,12 @@ public class CategoryDaoImpl implements CategoryDao {
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
+    /**
+     * Instantiates a new Category dao.
+     *
+     * @param dataSource        the data source
+     * @param categoryRowMapper the category row mapper
+     */
     @Autowired
     public CategoryDaoImpl(DataSource dataSource, CategoryRowMapper categoryRowMapper) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);

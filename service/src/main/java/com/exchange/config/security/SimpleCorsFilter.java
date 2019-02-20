@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * The type Simple cors filter.
+ */
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @WebFilter("/*")
@@ -27,6 +30,9 @@ public class SimpleCorsFilter implements Filter {
     private static final String ACCESS_CONTROL_ALLOW_HEADERS_VALUE = "Origin, origin, x-requested-with, authorization, Content-Type, Authorization, credential, X-XSRF-TOKEN";
     private static final String OPTIONS = "OPTIONS";
 
+    /**
+     * Instantiates a new Simple cors filter.
+     */
     public SimpleCorsFilter() {
     }
 

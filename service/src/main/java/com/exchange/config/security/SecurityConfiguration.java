@@ -19,6 +19,9 @@ import org.springframework.security.oauth2.provider.approval.ApprovalStore;
 import org.springframework.security.oauth2.provider.approval.TokenApprovalStore;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 
+/**
+ * The type Security configuration.
+ */
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -29,6 +32,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private static final int ENCODE_SIZE = 10;
     private UserDetailsService userDetailsService;
 
+    /**
+     * Instantiates a new Security configuration.
+     *
+     * @param userDetailsService the user details service
+     */
     @Autowired
     public SecurityConfiguration(UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
@@ -60,6 +68,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
+    /**
+     * B crypt password encoder b crypt password encoder.
+     *
+     * @return the b crypt password encoder
+     */
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder(ENCODE_SIZE);
@@ -70,6 +83,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         auth.authenticationProvider(authenticationProvider());
     }
 
+    /**
+     * Authentication provider dao authentication provider.
+     *
+     * @return the dao authentication provider
+     */
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
@@ -78,6 +96,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return provider;
     }
 
+    /**
+     * Approval store approval store.
+     *
+     * @param tokenStore the token store
+     * @return the approval store
+     */
     @Bean
     @Autowired
     public ApprovalStore approvalStore(TokenStore tokenStore) {

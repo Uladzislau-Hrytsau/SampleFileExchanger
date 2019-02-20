@@ -12,6 +12,9 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+/**
+ * The type User role dao impl test.
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath*:test-spring-dao.xml"})
 @Transactional
@@ -22,6 +25,9 @@ public class UserRoleDaoImplTest {
 
     private static final String USERNAME = "userLogin1";
 
+    /**
+     * Gets roles by user name test.
+     */
     @Test
     public void getRolesByUserNameTest() {
         List<String> roles = userRoleDao.getRolesByUserName(USERNAME);

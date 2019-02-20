@@ -9,6 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * The type User role service.
+ */
 @Service
 @Transactional
 public class UserRoleServiceImpl implements UserRoleService {
@@ -18,6 +21,11 @@ public class UserRoleServiceImpl implements UserRoleService {
     @Value("${userRileService.incorrectUserName}")
     private String incorrectUserName;
 
+    /**
+     * Instantiates a new User role service.
+     *
+     * @param userRoleDao the user role dao
+     */
     @Autowired
     public UserRoleServiceImpl(UserRoleDao userRoleDao) {
         this.userRoleDao = userRoleDao;

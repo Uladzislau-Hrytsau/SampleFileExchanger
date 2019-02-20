@@ -18,13 +18,34 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The type File dao.
+ */
 public class FileDaoImpl implements FileDao {
 
+    /**
+     * The constant ID.
+     */
     public static final String ID = "id";
+    /**
+     * The constant USER_ID.
+     */
     public static final String USER_ID = "user_id";
+    /**
+     * The constant URL.
+     */
     public static final String URL = "url";
+    /**
+     * The constant DESCRIPTION.
+     */
     public static final String DESCRIPTION = "description";
+    /**
+     * The constant DATE.
+     */
     public static final String DATE = "date";
+    /**
+     * The constant CATEGORY.
+     */
     public static final String CATEGORY = "category";
 
     @Value("${file.selectByUserIdAndCategory}")
@@ -54,6 +75,12 @@ public class FileDaoImpl implements FileDao {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private FileRowMapper fileRowMapper;
 
+    /**
+     * Instantiates a new File dao.
+     *
+     * @param dataSource    the data source
+     * @param fileRowMapper the file row mapper
+     */
     @Autowired
     public FileDaoImpl(DataSource dataSource, FileRowMapper fileRowMapper) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);

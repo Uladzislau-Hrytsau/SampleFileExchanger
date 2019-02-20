@@ -14,6 +14,9 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 
+/**
+ * The type O auth 2 server configuration.
+ */
 @Configuration
 @EnableAuthorizationServer
 class OAuth2ServerConfiguration extends AuthorizationServerConfigurerAdapter {
@@ -32,6 +35,12 @@ class OAuth2ServerConfiguration extends AuthorizationServerConfigurerAdapter {
     private AuthenticationManager authenticationManager;
     private UserDetailsService userDetailsService;
 
+    /**
+     * Instantiates a new O auth 2 server configuration.
+     *
+     * @param authenticationManager the authentication manager
+     * @param userDetailsService    the user details service
+     */
     @Autowired
     public OAuth2ServerConfiguration(@Qualifier("authenticationManagerBean") AuthenticationManager authenticationManager, UserDetailsService userDetailsService) {
         this.authenticationManager = authenticationManager;
@@ -65,6 +74,11 @@ class OAuth2ServerConfiguration extends AuthorizationServerConfigurerAdapter {
                 .userDetailsService(userDetailsService);
     }
 
+    /**
+     * Token store token store.
+     *
+     * @return the token store
+     */
     @Bean
     public TokenStore tokenStore() {
         return new InMemoryTokenStore();

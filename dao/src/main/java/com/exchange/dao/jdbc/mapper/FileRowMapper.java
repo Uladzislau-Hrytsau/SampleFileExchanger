@@ -10,6 +10,9 @@ import java.sql.SQLException;
 
 import static com.exchange.dao.jdbc.FileDaoImpl.*;
 
+/**
+ * The type File row mapper.
+ */
 @Component
 public class FileRowMapper implements RowMapper<File> {
     public File mapRow(ResultSet rs, int rowNum) throws SQLException {

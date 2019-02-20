@@ -15,7 +15,7 @@ public interface UserDao {
      * @return the all users
      * @throws DataAccessException the data access exception
      */
-    List<User> getAllUsers() throws DataAccessException;
+    List<User> getAllUsers();
 
     /**
      * Gets user by user id.
@@ -24,7 +24,7 @@ public interface UserDao {
      * @return the user by user id
      * @throws DataAccessException the data access exception
      */
-    User getUserByUserId(Long userId) throws DataAccessException;
+    User getUserByUserId(Long userId);
 
     /**
      * Gets user by login.
@@ -33,7 +33,7 @@ public interface UserDao {
      * @return the user by login
      * @throws DataAccessException the data access exception
      */
-    User getUserByLogin(String login) throws DataAccessException;
+    User getUserByLogin(String login);
 
     /**
      * Gets user password by user name.
@@ -50,7 +50,7 @@ public interface UserDao {
      * @return the long
      * @throws DataAccessException the data access exception
      */
-    Long addUser(User user) throws DataAccessException;
+    Long addUser(User user);
 
     /**
      * Update user int.
@@ -59,7 +59,7 @@ public interface UserDao {
      * @return the int
      * @throws DataAccessException the data access exception
      */
-    int updateUser(User user) throws DataAccessException;
+    int updateUser(User user);
 
     /**
      * Delete user int.
@@ -68,7 +68,7 @@ public interface UserDao {
      * @return the int
      * @throws DataAccessException the data access exception
      */
-    int deleteUser(Long userId) throws DataAccessException;
+    int deleteUser(Long userId);
 
     /**
      * Check user by user id boolean.

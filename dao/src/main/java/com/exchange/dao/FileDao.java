@@ -16,7 +16,7 @@ public interface FileDao {
      * @return the all files by user id
      * @throws DataAccessException the data access exception
      */
-    List<File> getAllFilesByUserId(Long userId) throws DataAccessException;
+    List<File> getAllFilesByUserId(Long userId);
 
     /**
      * Gets all files.
@@ -24,7 +24,7 @@ public interface FileDao {
      * @return the all files
      * @throws DataAccessException the data access exception
      */
-    List<File> getAllFiles() throws DataAccessException;
+    List<File> getAllFiles();
 
     /**
      * Gets file by id.
@@ -33,7 +33,7 @@ public interface FileDao {
      * @return the file by id
      * @throws DataAccessException the data access exception
      */
-    File getFileById(Long id) throws DataAccessException;
+    File getFileById(Long id);
 
     /**
      * Add file long.
@@ -42,7 +42,7 @@ public interface FileDao {
      * @return the long
      * @throws DataAccessException the data access exception
      */
-    Long addFile(File file) throws DataAccessException;
+    Long addFile(File file);
 
     /**
      * Update file int.
@@ -51,7 +51,7 @@ public interface FileDao {
      * @return the int
      * @throws DataAccessException the data access exception
      */
-    int updateFile(File file) throws DataAccessException;
+    int updateFile(File file);
 
     /**
      * Delete file int.
@@ -60,7 +60,7 @@ public interface FileDao {
      * @return the int
      * @throws DataAccessException the data access exception
      */
-    int deleteFile(Long id) throws DataAccessException;
+    int deleteFile(Long id);
 
     /**
      * Check file by id boolean.

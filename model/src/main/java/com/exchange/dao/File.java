@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 /**
- * Created by Uladzislau Hrytsau on 23.11.18.
+ * The type File.
  */
 public class File {
 

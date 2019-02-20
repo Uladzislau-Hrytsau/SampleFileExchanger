@@ -4,7 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * Created by Uladzislau Hrytsau on 8.12.18
+ * The type Internal server exception.
  */
 public class InternalServerException extends RuntimeException {
 

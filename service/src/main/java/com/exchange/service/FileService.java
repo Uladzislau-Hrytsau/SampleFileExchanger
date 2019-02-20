@@ -5,53 +5,52 @@ import com.exchange.dao.File;
 import java.util.List;
 
 /**
- * File Service interface.
- * Created by Uladzislau Hrytsau on 1.12.18.
+ * The interface File service.
  */
 public interface FileService {
 
     /**
-     * Get all files list by user-id.
+     * Gets all files.
      *
-     * @param userId user identifier.
-     * @return file. all files by user id
-     */
-    List<File> getAllFilesByUserId(Long userId);
-
-    /**
-     * Get all files list.
-     *
-     * @return file. all files
+     * @return the all files
      */
     List<File> getAllFiles();
 
     /**
-     * Get file by id.
+     * Gets all files by user id.
      *
-     * @param id user identifier.
-     * @return file. file by id
+     * @param userId the user id
+     * @return the all files by user id
+     */
+    List<File> getAllFilesByUserId(Long userId);
+
+    /**
+     * Gets file by id.
+     *
+     * @param id the id
+     * @return the file by id
      */
     File getFileById(Long id);
 
     /**
-     * Create new file.
+     * Add file long.
      *
-     * @param file user file
-     * @return new file id.
+     * @param file the file
+     * @return the long
      */
     Long addFile(File file);
 
     /**
      * Update file.
      *
-     * @param file user file.
+     * @param file the file
      */
     void updateFile(File file);
 
     /**
      * Delete file.
      *
-     * @param id file identifier.
+     * @param id the id
      */
     void deleteFile(Long id);
 }

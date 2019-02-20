@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import static com.exchange.dao.jdbc.FileDaoImpl.*;
 
 /**
- * Created by Uladzislau Hrytsau on 27.11.18.
+ * The type File row mapper.
  */
 @Component
 public class FileRowMapper implements RowMapper<File> {

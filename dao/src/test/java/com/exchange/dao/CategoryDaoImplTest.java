@@ -12,16 +12,13 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 /**
- * Created by Uladzislau Hrytsau on 9.12.18
+ * The type Category dao impl test.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath*:test-spring-dao.xml"})
 @Transactional
 public class CategoryDaoImplTest {
 
-    /**
-     * The Category dao.
-     */
     @Autowired
     private CategoryDao categoryDao;
 

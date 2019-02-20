@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 /**
- * Created by Uladzislau Hrytsau on 20.11.18.
+ * The type User.
  */
 public class User {
 

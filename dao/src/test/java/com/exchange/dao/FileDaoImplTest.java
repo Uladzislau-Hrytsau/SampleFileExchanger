@@ -13,7 +13,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 /**
- * Created by Uladzislau Hrytsau on 28.11.18.
+ * The type File dao impl test.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath*:test-spring-dao.xml"})
@@ -31,9 +31,6 @@ public class FileDaoImplTest {
             LocalDate.of(9399, 12, 2), 3L
     );
 
-    /**
-     * The File dao.
-     */
     @Autowired
     private FileDao fileDao;
 

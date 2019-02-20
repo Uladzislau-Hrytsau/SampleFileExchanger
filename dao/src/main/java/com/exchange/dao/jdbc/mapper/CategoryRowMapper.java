@@ -11,7 +11,7 @@ import static com.exchange.dao.jdbc.CategoryDaoImpl.CATEGORY;
 import static com.exchange.dao.jdbc.CategoryDaoImpl.ID;
 
 /**
- * Created by Uladzislau Hrytsau on 27.11.18.
+ * The type Category row mapper.
  */
 @Component
 public class CategoryRowMapper implements RowMapper<Category> {

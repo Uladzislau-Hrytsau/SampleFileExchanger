@@ -3,31 +3,30 @@ package com.exchange.dao;
 import java.util.List;
 
 /**
- * CategoryDao interface.
- * Created by Uladzislau Hrytsau on 27.11.18.
+ * The interface Category dao.
  */
 public interface CategoryDao {
 
     /**
-     * Get all categories list.
+     * Gets all categories.
      *
-     * @return categories list.
+     * @return the all categories
      */
     List<Category> getAllCategories();
 
     /**
-     * Get category by category identifier.
+     * Gets category by id.
      *
-     * @param id category identifier.
-     * @return category by identifier.
+     * @param id the id
+     * @return the category by id
      */
     Category getCategoryById(Long id);
 
     /**
-     * Check category by identifier.
+     * Check category by id boolean.
      *
-     * @param id category identifier.
-     * @return boolean by identifier.
+     * @param id the id
+     * @return the boolean
      */
     boolean checkCategoryById(Long id);
 

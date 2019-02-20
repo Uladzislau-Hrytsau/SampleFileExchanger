@@ -19,8 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * FileDao implementation.
- * Created by Uladzislau Hrytsau on 27.11.18.
+ * The type File dao.
  */
 public class FileDaoImpl implements FileDao {
 
@@ -49,76 +48,44 @@ public class FileDaoImpl implements FileDao {
      */
     public static final String CATEGORY = "category";
 
-    /**
-     * The Get all files by user id and category sql.
-     */
     @Value("${file.selectByUserIdAndCategory}")
     private String getAllFilesByUserIdAndCategorySql;
-    /**
-     * The Get all files by user id and date sql.
-     */
     @Value("${file.selectByUserIdAndDate}")
     private String getAllFilesByUserIdAndDateSql;
-    /**
-     * The Get all files by user id sql.
-     */
     @Value("${file.selectByUserId}")
     private String getAllFilesByUserIdSql;
-    /**
-     * The Get all files sql.
-     */
     @Value("${file.select}")
     private String getAllFilesSql;
-    /**
-     * The Get file by id sql.
-     */
     @Value("${file.selectById}")
     private String getFileByIdSql;
-    /**
-     * The Add file sql.
-     */
     @Value("${file.insert}")
     private String addFileSql;
-    /**
-     * The Update file sql.
-     */
     @Value("${file.update}")
     private String updateFileSql;
-    /**
-     * The Delete file sql.
-     */
     @Value("${file.delete}")
     private String deleteFileSql;
-    /**
-     * The Check file by id sql.
-     */
     @Value("${file.checkFileById}")
     private String checkFileByIdSql;
-    /**
-     * The Check file by user id sql.
-     */
     @Value("${file.checkFileByUserId}")
     private String checkFileByUserIdSql;
-    /**
-     * The Check file by url sql.
-     */
     @Value("${file.checkFileByUrl}")
     private String checkFileByUrlSql;
 
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-    @Autowired
     private FileRowMapper fileRowMapper;
-
 
     /**
      * Instantiates a new File dao.
      *
-     * @param dataSource the data source
+     * @param dataSource    the data source
+     * @param fileRowMapper the file row mapper
      */
-    public FileDaoImpl(DataSource dataSource) {
-        jdbcTemplate = new JdbcTemplate(dataSource);
-        namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+    @Autowired
+    public FileDaoImpl(DataSource dataSource, FileRowMapper fileRowMapper) {
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
+        this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+        this.fileRowMapper = fileRowMapper;
     }
 
     @Override
@@ -156,7 +123,7 @@ public class FileDaoImpl implements FileDao {
 
     @Override
     public int updateFile(File file) throws DataAccessException {
-        Map<String, Object> params = new HashMap<String, Object>();
+        Map<String, Object> params = new HashMap<>();
         params.put(ID, file.getId());
         params.put(USER_ID, file.getUser_id());
         params.put(URL, file.getUrl());
@@ -168,7 +135,7 @@ public class FileDaoImpl implements FileDao {
 
     @Override
     public int deleteFile(Long id) throws DataAccessException {
-        Map<String, Object> params = new HashMap<String, Object>();
+        Map<String, Object> params = new HashMap<>();
         params.put(ID, id);
         return namedParameterJdbcTemplate.update(deleteFileSql, params);
     }

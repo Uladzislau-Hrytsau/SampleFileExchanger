@@ -3,7 +3,7 @@ package com.exchange.dao;
 import java.util.Objects;
 
 /**
- * Created by Uladzislau Hrytsau on 23.11.18.
+ * The type Category.
  */
 public class Category {
 

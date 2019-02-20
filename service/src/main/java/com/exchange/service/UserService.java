@@ -6,52 +6,59 @@ import com.exchange.dao.User;
 import java.util.List;
 
 /**
- * User Service interface
- * Created by Uladzislau Hrytsau on 1.12.18.
+ * The interface User service.
  */
 public interface UserService {
     /**
-     * Get all users list.
+     * Gets all users.
      *
-     * @return all users list
+     * @return the all users
      */
     List<User> getAllUsers();
 
     /**
-     * Get user by Id.
+     * Gets user by user id.
      *
-     * @param userId user identifier.
-     * @return user. user by user id
+     * @param userId the user id
+     * @return the user by user id
      */
     User getUserByUserId(Long userId);
 
     /**
-     * Get user by login.
+     * Gets user by login.
      *
-     * @param login user login.
-     * @return user. user by login
+     * @param login the login
+     * @return the user by login
      */
     User getUserByLogin(String login);
 
     /**
-     * Create new user.
+     * Gets user password by user name.
      *
-     * @param user user.
-     * @return new user Id.
+     * @param userName the user name
+     * @return the user password by user name
+     */
+    String getUserPasswordByUserName(String userName);
+
+    /**
+     * Add user long.
+     *
+     * @param user the user
+     * @return the long
      */
     Long addUser(User user);
 
     /**
      * Update user.
      *
-     * @param user user.
+     * @param user the user
      */
     void updateUser(User user);
 
     /**
      * Delete user.
      *
-     * @param userId user identifier.
+     * @param userId the user id
      */
     void deleteUser(Long userId);
 

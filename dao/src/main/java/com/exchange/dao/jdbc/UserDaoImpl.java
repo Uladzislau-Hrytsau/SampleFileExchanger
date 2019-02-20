@@ -3,7 +3,6 @@ package com.exchange.dao.jdbc;
 import com.exchange.dao.User;
 import com.exchange.dao.UserDao;
 import com.exchange.dao.jdbc.mapper.UserRowMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -19,8 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * UserDao implementation.
- * Created by Uladzislau Hrytsau on 27.11.18.
+ * The type User dao.
  */
 public class UserDaoImpl implements UserDao {
 
@@ -49,11 +47,9 @@ public class UserDaoImpl implements UserDao {
      */
     public static final String USER_INFORMATION = "user_information";
 
-    @Autowired
-    private UserRowMapper userRowMapper;
-
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    private UserRowMapper userRowMapper;
 
     @Value("${user.select}")
     private String getAllUsersSql;
@@ -79,14 +75,22 @@ public class UserDaoImpl implements UserDao {
     @Value("${user.checkUserByUserId}")
     private String checkUserByUserIdSql;
 
+    @Value("${user.selectUserIdByLogin}")
+    private String getUserIdByLoginSql;
+
+    @Value("${user.selectUserPasswordByUserName}")
+    private String selectUserPasswordByUserNameSql;
+
     /**
      * Instantiates a new User dao.
      *
-     * @param dataSource the data source
+     * @param dataSource    the data source
+     * @param userRowMapper the user row mapper
      */
-    public UserDaoImpl(DataSource dataSource) {
-        jdbcTemplate = new JdbcTemplate(dataSource);
-        namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+    public UserDaoImpl(DataSource dataSource, UserRowMapper userRowMapper) {
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
+        this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+        this.userRowMapper = userRowMapper;
     }
 
     @Override
@@ -111,6 +115,11 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public String getUserPasswordByUserName(String userName) {
+        return jdbcTemplate.queryForObject(selectUserPasswordByUserNameSql, new String[]{userName}, String.class);
+    }
+
+    @Override
     public Long addUser(User user) throws DataAccessException {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
@@ -128,7 +137,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public int updateUser(User user) throws DataAccessException {
-        Map<String, Object> params = new HashMap<String, Object>();
+        Map<String, Object> params = new HashMap<>();
         params.put(USER_ID, user.getUserId());
         params.put(USER_NAME, user.getLogin());
         params.put(USER_PASSWORD, user.getPassword());
@@ -140,18 +149,24 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public int deleteUser(Long userId) throws DataAccessException {
-        Map<String, Object> params = new HashMap<String, Object>();
+        Map<String, Object> params = new HashMap<>();
         params.put(USER_ID, userId);
         return namedParameterJdbcTemplate.update(deleteUserSql, params);
     }
 
     @Override
     public boolean checkUserByLogin(String userName) {
-        return jdbcTemplate.queryForObject(checkUserByLoginSql, new Object[]{userName}, Boolean.class);
+        return jdbcTemplate.queryForObject(checkUserByLoginSql, new String[]{userName}, Boolean.class);
     }
 
     @Override
     public boolean checkUserByUserId(Long userId) {
-        return jdbcTemplate.queryForObject(checkUserByUserIdSql, new Object[]{userId}, Boolean.class);
+        return jdbcTemplate.queryForObject(checkUserByUserIdSql, new Long[]{userId}, Boolean.class);
     }
+
+    @Override
+    public Long getUserIdByLogin(String login) {
+        return jdbcTemplate.queryForObject(getUserIdByLoginSql, new String[]{login}, Long.class);
+    }
+
 }

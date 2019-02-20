@@ -1,7 +1,7 @@
 package com.exchange.exception;
 
 /**
- * Created by Uladzislau Hrytsau on 7.12.18
+ * The type Validation exception.
  */
 public class ValidationException extends RuntimeException {
 

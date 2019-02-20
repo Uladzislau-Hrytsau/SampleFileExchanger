@@ -5,85 +5,84 @@ import org.springframework.dao.DataAccessException;
 import java.util.List;
 
 /**
- * FileDao interface.
- * Created by Uladzislau Hrytsau on 27.11.18.
+ * The interface File dao.
  */
 public interface FileDao {
 
     /**
-     * Get all files list by user-id.
+     * Gets all files by user id.
      *
-     * @param userId user identifier.
-     * @return file. all files by user id
+     * @param userId the user id
+     * @return the all files by user id
      * @throws DataAccessException the data access exception
      */
     List<File> getAllFilesByUserId(Long userId) throws DataAccessException;
 
     /**
-     * Get all files list.
+     * Gets all files.
      *
-     * @return file. all files
+     * @return the all files
      * @throws DataAccessException the data access exception
      */
     List<File> getAllFiles() throws DataAccessException;
 
     /**
-     * Get file by id.
+     * Gets file by id.
      *
-     * @param id user identifier.
-     * @return file. file by id
+     * @param id the id
+     * @return the file by id
      * @throws DataAccessException the data access exception
      */
     File getFileById(Long id) throws DataAccessException;
 
     /**
-     * Create new file.
+     * Add file long.
      *
-     * @param file user file
-     * @return new file id.
+     * @param file the file
+     * @return the long
      * @throws DataAccessException the data access exception
      */
     Long addFile(File file) throws DataAccessException;
 
     /**
-     * Update file.
+     * Update file int.
      *
-     * @param file user file.
-     * @return new user id.
+     * @param file the file
+     * @return the int
      * @throws DataAccessException the data access exception
      */
     int updateFile(File file) throws DataAccessException;
 
     /**
-     * Delete file.
+     * Delete file int.
      *
-     * @param id file identifier.
-     * @return int int
+     * @param id the id
+     * @return the int
      * @throws DataAccessException the data access exception
      */
     int deleteFile(Long id) throws DataAccessException;
 
     /**
-     * Check file by identifier.
+     * Check file by id boolean.
      *
-     * @param id file identifier.
-     * @return boolean boolean
+     * @param id the id
+     * @return the boolean
      */
     boolean checkFileById(Long id);
 
     /**
-     * Check file by user identifier.
+     * Check file by user id boolean.
      *
-     * @param userId user identifier.
-     * @return boolean boolean
+     * @param userId the user id
+     * @return the boolean
      */
     boolean checkFileByUserId(Long userId);
 
     /**
-     * Check file by file url.
+     * Check file by url boolean.
      *
-     * @param url file url.
-     * @return boolean boolean
+     * @param url the url
+     * @return the boolean
      */
     boolean checkFileByUrl(String url);
 

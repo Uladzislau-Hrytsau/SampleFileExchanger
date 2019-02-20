@@ -14,8 +14,7 @@ import javax.sql.DataSource;
 import java.util.List;
 
 /**
- * CategoryDao implementation.
- * Created by Uladzislau Hrytsau on 27.11.18.
+ * The type Category dao.
  */
 public class CategoryDaoImpl implements CategoryDao {
 
@@ -28,36 +27,28 @@ public class CategoryDaoImpl implements CategoryDao {
      */
     public static final String CATEGORY = "category";
 
-    /**
-     * The Get all categories sql.
-     */
     @Value("${category.select}")
     private String getAllCategoriesSql;
-    /**
-     * The Get category by id sql.
-     */
     @Value("${category.selectById}")
     private String getCategoryByIdSql;
-    /**
-     * The Check category by id sql.
-     */
     @Value("${category.checkCategoryById}")
     private String checkCategoryByIdSql;
 
-    @Autowired
     private CategoryRowMapper categoryRowMapper;
-
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     /**
      * Instantiates a new Category dao.
      *
-     * @param dataSource the data source
+     * @param dataSource        the data source
+     * @param categoryRowMapper the category row mapper
      */
-    public CategoryDaoImpl(DataSource dataSource) {
-        jdbcTemplate = new JdbcTemplate(dataSource);
-        namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+    @Autowired
+    public CategoryDaoImpl(DataSource dataSource, CategoryRowMapper categoryRowMapper) {
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
+        this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+        this.categoryRowMapper = categoryRowMapper;
     }
 
     @Override

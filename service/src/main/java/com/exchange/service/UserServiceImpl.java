@@ -7,24 +7,24 @@ import com.exchange.exception.ValidationException;
 import com.exchange.service.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 /**
- * User Service implementation.
- * Created by Uladzislau Hrytsau on 1.12.18.
+ * The type User service.
  */
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
 
-    @Autowired
     private UserDao userDao;
-
-    @Autowired
     private UserValidator userValidator;
+    @Lazy
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Value("${userService.deleteError}")
     private String deleteError;
@@ -36,6 +36,22 @@ public class UserServiceImpl implements UserService {
     private String incorrectId;
     @Value("${userService.userDoesNotExist}")
     private String userDoesNotExist;
+    @Value("${userRileService.incorrectUserName}")
+    private String incorrectUserName;
+
+    /**
+     * Instantiates a new User service.
+     *
+     * @param userDao               the user dao
+     * @param userValidator         the user validator
+     * @param bCryptPasswordEncoder the b crypt password encoder
+     */
+    @Autowired
+    public UserServiceImpl(UserDao userDao, UserValidator userValidator, BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.userDao = userDao;
+        this.userValidator = userValidator;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    }
 
     @Override
     public List<User> getAllUsers() {
@@ -61,14 +77,25 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public String getUserPasswordByUserName(String userName) {
+        if (userName == null || userName.isEmpty()) {
+            throw new ValidationException(incorrectUserName);
+        }
+        return userDao.getUserPasswordByUserName(userName);
+    }
+
+    @Override
     public Long addUser(User user) {
-        userValidator.validateLoginAndPassword(user, userDao);
+        userValidator.validatePassword(user.getPassword());
+        userValidator.validateExistingLogin(user.getLogin(), userDao);
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         return userDao.addUser(user);
     }
 
     @Override
     public void updateUser(User user) {
-        userValidator.validateLoginAndPassword(user, userDao);
+        userValidator.validatePassword(user.getPassword());
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         if (userDao.updateUser(user) == 0)
             throw new InternalServerException(updateError);
     }

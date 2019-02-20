@@ -4,26 +4,36 @@ import com.exchange.dao.User;
 import com.exchange.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 /**
- * Rest controller for user.
- * Created by Hrytsau Uladzislau on 4.12.18.
+ * The type User rest controller.
  */
-@CrossOrigin
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 public class UserRestController {
 
+    private final UserService userService;
+
+    /**
+     * Instantiates a new User rest controller.
+     *
+     * @param userService the user service
+     */
     @Autowired
-    private UserService userService;
+    public UserRestController(UserService userService) {
+        this.userService = userService;
+    }
 
     /**
      * Gets all users.
      *
      * @return the all users
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/users")
     @ResponseStatus(value = HttpStatus.OK)
     public List<User> getAllUsers() {
@@ -36,6 +46,7 @@ public class UserRestController {
      * @param userId the user id
      * @return the user by user id
      */
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @GetMapping(value = "/user/{id}")
     @ResponseStatus(value = HttpStatus.OK)
     public User getUserByUserId(@PathVariable(value = "id") Long userId) {
@@ -48,6 +59,7 @@ public class UserRestController {
      * @param login the login
      * @return the user by login
      */
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @GetMapping(value = "/user/login/{login}")
     @ResponseStatus(value = HttpStatus.OK)
     public User getUserByLogin(@PathVariable(value = "login") String login) {
@@ -71,6 +83,7 @@ public class UserRestController {
      *
      * @param user the user
      */
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @PutMapping("/user")
     @ResponseStatus(value = HttpStatus.OK)
     public void updateUser(@RequestBody User user) {
@@ -82,9 +95,11 @@ public class UserRestController {
      *
      * @param userId the user id
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping(value = "/user/{id}")
     @ResponseStatus(value = HttpStatus.OK)
     public void deleteUser(@PathVariable(value = "id") Long userId) {
         userService.deleteUser(userId);
     }
+
 }

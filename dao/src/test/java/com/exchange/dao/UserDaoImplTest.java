@@ -13,7 +13,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 /**
- * Created by Uladzislau Hrytsau on 28.11.18.
+ * The type User dao impl test.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath*:test-spring-dao.xml"})
@@ -30,7 +30,7 @@ public class UserDaoImplTest {
     private static final Long USER_ID_2 = 2L;
 
     private static final User user_3 = new User(
-            3L, "userLogin3", "userPassword3",
+            3L, "getUserPasswordByUserName", "userPassword3",
             false, LocalDate.of(8888, 8, 8),
             "userInformation2"
     );
@@ -40,9 +40,6 @@ public class UserDaoImplTest {
             "userInformation4"
     );
 
-    /**
-     * The User dao.
-     */
     @Autowired
     private UserDao userDao;
 
@@ -96,6 +93,22 @@ public class UserDaoImplTest {
         assertEquals(USER_GENDER_1, user.getGender());
         assertEquals(USER_BIRTH_DATE_1, user.getBirthDate());
         assertEquals(USER_INFORMATION_1, user.getInformation());
+    }
+
+    /**
+     * Gets user password by user name test.
+     */
+    @Test
+    public void getUserPasswordByUserNameTest() {
+        String login = "loginForgetUserPassword";
+        String password = "passwordForgetUserPassword";
+        User user = new User(login, password);
+        assertNotNull(user);
+        Long id = userDao.addUser(user);
+        assertNotNull(id);
+        String passwordAfterGetUserPasswordByUserName = userDao.getUserPasswordByUserName(login);
+        assertNotNull(passwordAfterGetUserPasswordByUserName);
+        assertEquals(password, passwordAfterGetUserPasswordByUserName);
     }
 
     /**
@@ -197,5 +210,20 @@ public class UserDaoImplTest {
     @Test
     public void checkUserByLoginTest() {
         assertTrue(userDao.checkUserByLogin(USER_LOGIN_1));
+    }
+
+    /**
+     * Gets user id by login test.
+     */
+    @Test
+    public void getUserIdByLoginTest() {
+        String userName = "loginForTest";
+        String password = "1233214562w";
+        User user = new User(userName, password);
+        Long id = userDao.addUser(user);
+        assertNotNull(id);
+        Long newId = userDao.getUserIdByLogin(userName);
+        assertNotNull(newId);
+        assertEquals(id, newId);
     }
 }

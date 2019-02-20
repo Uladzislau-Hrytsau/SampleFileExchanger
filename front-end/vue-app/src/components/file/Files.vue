@@ -10,6 +10,7 @@
         <th>date</th>
         <th>categoryId</th>
         <th></th>
+        <th></th>
       </tr>
       </thead>
       <tbody>
@@ -23,6 +24,9 @@
         <td>
           <button class="btn btn-dark" @click="deleteFile(file.id)">delete</button>
         </td>
+        <td>
+          <button class="btn btn-dark" @click="updateFile(file)">update</button>
+        </td>
       </tr>
       </tbody>
     </table>
@@ -30,52 +34,39 @@
 </template>
 
 <script>
-  import http from "../../http-common";
 
   export default {
     name: "files",
     data() {
       return {
-        fields: [
-          'id',
-          'user_id',
-          'url',
-          'description',
-          'date',
-          'categoryId'
-        ],
-        files: []
+        files: [],
       };
     },
 
     methods: {
-      /* eslint-disable no-console */
       retrieveFiles() {
-        http
-          .get("/files")
+        this.$store.dispatch('getFiles')
           .then(response => {
-            this.files = response.data; // JSON are parsed automatically.
-            console.log(response.data);
+            this.files = response.data
           })
-          .catch(e => {
-            console.log(e);
-          });
       },
       deleteFile(id) {
-        http
-          .delete("/file/" + id)
+        this.$store.dispatch('deleteFile', {
+          id: id
+        })
           .then(response => {
-            console.log(response.data);
-            this.$router.push('/Files');
             this.retrieveFiles();
           })
-          .catch(e => {
-            this.validation = false;
-            this.response.push(e.response.data.message);
-            console.log(e);
-          });
-      }
-      /* eslint-enable no-console */
+          .catch(error => {
+            console.log(error)
+          })
+      },
+      updateFile(file) {
+        this.$store.dispatch('saveFileInformation', {
+          file: file,
+        })
+        this.$router.push('/UpdateFile')
+      },
     },
     mounted() {
       this.retrieveFiles();
@@ -83,10 +74,6 @@
   };
 </script>
 
-<style>
-  .list {
-    text-align: left;
-    max-width: 450px;
-    margin: auto;
-  }
+<style scoped>
+
 </style>

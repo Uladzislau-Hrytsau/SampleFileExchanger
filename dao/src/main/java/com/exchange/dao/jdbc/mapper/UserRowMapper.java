@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import static com.exchange.dao.jdbc.UserDaoImpl.*;
 
 /**
- * Created by Uladzislau Hrytsau on 27.11.18.
+ * The type User row mapper.
  */
 @Component
 public class UserRowMapper implements RowMapper<User> {

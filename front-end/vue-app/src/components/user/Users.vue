@@ -10,6 +10,7 @@
         <th>birthDate</th>
         <th>information</th>
         <th></th>
+        <th></th>
       </tr>
       </thead>
       <tbody>
@@ -23,6 +24,9 @@
         <td>
           <button class="btn btn-dark" @click="deleteUser(user.userId)">delete</button>
         </td>
+        <td>
+          <button class="btn btn-dark" @click="updateUser(user)">update</button>
+        </td>
       </tr>
       </tbody>
     </table>
@@ -30,53 +34,43 @@
 </template>
 
 <script>
-  import http from "../../http-common";
 
   export default {
     name: "Users",
     data() {
       return {
-        fields: [
-          'userId',
-          'login',
-          'password',
-          'gender',
-          'birthDate',
-          'information',
-          'delete'
-        ],
         users: [],
       };
     },
 
     methods: {
-      /* eslint-disable no-console */
       retrieveUsers() {
-        http
-          .get("/users")
+        this.$store.dispatch('getUsers')
           .then(response => {
-            this.users = response.data; // JSON are parsed automatically.
-            console.log(response.data);
+            this.users = response.data
+            console.log(this.users)
           })
-          .catch(e => {
-            console.log(e);
-          });
+          .catch(error => {
+            console.log(error)
+          })
       },
       deleteUser(userId) {
-        http
-          .delete("/user/" + userId)
+        this.$store.dispatch('deleteUser', {
+          userId: userId
+        })
           .then(response => {
-            console.log(response.data);
-            this.$router.push('/Users');
             this.retrieveUsers();
           })
-          .catch(e => {
-            this.validation = false;
-            this.response.push(e.response.data.message);
-            console.log(e);
-          });
+          .catch(error => {
+            console.log(error)
+          })
       },
-      /* eslint-enable no-console */
+      updateUser(user) {
+        this.$store.dispatch('saveUserInformation', {
+          user: user
+        })
+        this.$router.push('/UpdateUser')
+      }
     },
     mounted() {
       this.retrieveUsers();

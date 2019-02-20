@@ -5,78 +5,93 @@ import org.springframework.dao.DataAccessException;
 import java.util.List;
 
 /**
- * UserDao interface.
- * Created by Uladzislau Hrytsau on 27.11.18.
+ * The interface User dao.
  */
 public interface UserDao {
 
     /**
-     * Get all users list.
+     * Gets all users.
      *
-     * @return all users list
+     * @return the all users
      * @throws DataAccessException the data access exception
      */
     List<User> getAllUsers() throws DataAccessException;
 
     /**
-     * Get user by Id.
+     * Gets user by user id.
      *
-     * @param userId user identifier.
-     * @return user. user by user id
+     * @param userId the user id
+     * @return the user by user id
      * @throws DataAccessException the data access exception
      */
     User getUserByUserId(Long userId) throws DataAccessException;
 
     /**
-     * Get user by login.
+     * Gets user by login.
      *
-     * @param login user login.
-     * @return user. user by login
+     * @param login the login
+     * @return the user by login
      * @throws DataAccessException the data access exception
      */
     User getUserByLogin(String login) throws DataAccessException;
 
     /**
-     * Create new user.
+     * Gets user password by user name.
      *
-     * @param user user.
-     * @return new user Id.
+     * @param userName the user name
+     * @return the user password by user name
+     */
+    String getUserPasswordByUserName(String userName);
+
+    /**
+     * Add user long.
+     *
+     * @param user the user
+     * @return the long
      * @throws DataAccessException the data access exception
      */
     Long addUser(User user) throws DataAccessException;
 
     /**
-     * Update user.
+     * Update user int.
      *
-     * @param user user.
-     * @return new user Id.
+     * @param user the user
+     * @return the int
      * @throws DataAccessException the data access exception
      */
     int updateUser(User user) throws DataAccessException;
 
     /**
-     * Delete user.
+     * Delete user int.
      *
-     * @param userId user identifier.
-     * @return int int
+     * @param userId the user id
+     * @return the int
      * @throws DataAccessException the data access exception
      */
     int deleteUser(Long userId) throws DataAccessException;
 
     /**
-     * Check user by user identifier.
+     * Check user by user id boolean.
      *
      * @param userId the user id
-     * @return boolean boolean
+     * @return the boolean
      */
     boolean checkUserByUserId(Long userId);
 
     /**
-     * Check user by user login.
+     * Check user by login boolean.
      *
      * @param login the login
-     * @return boolean boolean
+     * @return the boolean
      */
     boolean checkUserByLogin(String login);
+
+    /**
+     * Gets user id by login.
+     *
+     * @param login the login
+     * @return the user id by login
+     */
+    Long getUserIdByLogin(String login);
 
 }

@@ -122,7 +122,7 @@ public class UserDaoImpl implements UserDao {
     public Long addUser(User user) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
-        parameterSource.addValue(USER_ID, user.getUserId());
+//        parameterSource.addValue(USER_ID, user.getUserId());
         parameterSource.addValue(USER_NAME, user.getLogin());
         parameterSource.addValue(USER_PASSWORD, user.getPassword());
         parameterSource.addValue(USER_GENDER, user.getGender());
@@ -138,7 +138,6 @@ public class UserDaoImpl implements UserDao {
     public int updateUser(User user) {
         Map<String, Object> params = new HashMap<>();
         params.put(USER_ID, user.getUserId());
-        params.put(USER_NAME, user.getLogin());
         params.put(USER_PASSWORD, user.getPassword());
         params.put(USER_GENDER, user.getGender());
         params.put(USER_BIRTH_DATE, user.getBirthDate());

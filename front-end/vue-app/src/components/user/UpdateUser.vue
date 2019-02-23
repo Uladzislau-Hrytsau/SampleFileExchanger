@@ -71,7 +71,6 @@
         userOld: this.$store.state.user,
         userNew: {
           userId: "",
-          login: "",
           password: "",
           gender: "",
           birthDate: "",
@@ -83,7 +82,7 @@
     },
     methods: {
       saveCustomer() {
-        var data = {
+        let data = {
           userId: this.userOld.userId,
           password: this.userNew.password,
           gender: this.selected,
@@ -100,7 +99,6 @@
             console.log(error)
           })
       }
-      /* eslint-enable no-console */
     }
   };
 </script>

@@ -39,6 +39,8 @@ public class UserDaoImplTest {
             true, LocalDate.of(7777, 7, 7),
             "userInformation4"
     );
+    private static final int ONE = 1;
+    private static final int TWO = 2;
 
     @Autowired
     private UserDao userDao;
@@ -50,7 +52,7 @@ public class UserDaoImplTest {
     public void getAllUsersTest() {
         List<User> users = userDao.getAllUsers();
         assertNotNull(users);
-        assertEquals(2, users.size());
+        assertEquals(TWO, users.size());
     }
 
     /**
@@ -134,7 +136,7 @@ public class UserDaoImplTest {
         assertEquals(user_3.getInformation(), newUser.getInformation());
 
         users = userDao.getAllUsers();
-        assertEquals(quantityBefore + 1, users.size());
+        assertEquals(quantityBefore + ONE, users.size());
     }
 
     /**
@@ -145,19 +147,17 @@ public class UserDaoImplTest {
         User user = userDao.getUserByUserId(USER_ID_2);
         assertNotNull(user);
 
-        user.setLogin("updatedLogin");
         user.setPassword("updatedPassword");
         user.setGender(true);
         user.setBirthDate(LocalDate.of(1111, 11, 11));
         user.setInformation("updatedInformation");
 
         int count = userDao.updateUser(user);
-        assertEquals(1, count);
+        assertEquals(ONE, count);
 
         User updatedUser = userDao.getUserByUserId(user.getUserId());
         assertNotNull(updatedUser);
 
-        assertEquals(user.getLogin(), updatedUser.getLogin());
         assertEquals(user.getPassword(), updatedUser.getPassword());
         assertEquals(user.getGender(), updatedUser.getGender());
         assertEquals(user.getBirthDate(), updatedUser.getBirthDate());
@@ -187,12 +187,12 @@ public class UserDaoImplTest {
         assertEquals(user_4.getInformation(), newUser.getInformation());
 
         users = userDao.getAllUsers();
-        assertEquals(quantityBefore + 1, users.size());
+        assertEquals(quantityBefore + ONE, users.size());
 
         int count = userDao.deleteUser(id);
         users = userDao.getAllUsers();
         assertNotNull(users);
-        assertEquals(1, count);
+        assertEquals(ONE, count);
         assertEquals(quantityBefore, users.size());
     }
 

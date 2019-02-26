@@ -8,6 +8,7 @@
   import 'mdbvue/build/css/mdb.css';
 
   export default {
+    name: "Main",
     data() {
       return {
 

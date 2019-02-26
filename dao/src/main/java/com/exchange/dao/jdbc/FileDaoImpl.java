@@ -3,7 +3,6 @@ package com.exchange.dao.jdbc;
 import com.exchange.dao.File;
 import com.exchange.dao.FileDao;
 import com.exchange.dao.jdbc.mapper.FileRowMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -11,6 +10,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.util.HashMap;
@@ -20,6 +20,7 @@ import java.util.Map;
 /**
  * The type File dao.
  */
+@Component
 public class FileDaoImpl implements FileDao {
 
     /**
@@ -80,7 +81,6 @@ public class FileDaoImpl implements FileDao {
      * @param dataSource    the data source
      * @param fileRowMapper the file row mapper
      */
-    @Autowired
     public FileDaoImpl(DataSource dataSource, FileRowMapper fileRowMapper) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
         this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);

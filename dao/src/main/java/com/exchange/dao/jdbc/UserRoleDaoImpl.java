@@ -1,7 +1,6 @@
 package com.exchange.dao.jdbc;
 
 import com.exchange.dao.UserRoleDao;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -25,7 +24,6 @@ public class UserRoleDaoImpl implements UserRoleDao {
      *
      * @param dataSource the data source
      */
-    @Autowired
     public UserRoleDaoImpl(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }

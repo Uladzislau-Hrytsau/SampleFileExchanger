@@ -15,6 +15,14 @@
                 <option value="3">Entertainment</option>
               </select>
             </label>
+
+            <div class="large-12 medium-12 small-12 cell">
+              <label>File
+                <input type="file" id="upFile" ref="file" v-on:change="handleFileUpload()"/>
+              </label>
+              <button v-on:click="uploadFile">Submit</button>
+            </div>
+
           </mdb-modal-body>
           <mdb-modal-footer>
             <mdb-btn color="primary" v-on:click="createFile">Create</mdb-btn>
@@ -34,6 +42,8 @@
 <script>
   import 'bootstrap-css-only/css/bootstrap.min.css';
   import 'mdbvue/build/css/mdb.css';
+
+  import axios from 'axios'
 
   import {
     mdbContainer,
@@ -67,7 +77,7 @@
     data() {
       return {
         selected: 1,
-
+        upFile: "",
         file: {
           url: "",
           description: "",
@@ -99,9 +109,42 @@
             this.response.push(error.response.data.message)
             console.log(error)
           })
+      },
+      uploadFile() {
+        let data = {
+          upFile: this.upFile
+        };
+        this.$store.dispatch('uploadFile', {
+          data: data
+        })
+          .then(response => {
+            console.log("----- successfully -----")
+          })
+          .catch(error => {
+            console.log(error)
+          })
+
+        // let formData = new FormData();
+        // formData.append('file', this.file);
+        // axios.post( 'uploading',
+        //   formData,
+        //   {
+        //     headers: {
+        //       'Content-Type': 'multipart/form-data'
+        //     }
+        //   }
+        // ).then(function(){
+        //   console.log('SUCCESS!!');
+        // })
+        //   .catch(function(){
+        //     console.log('FAILURE!!');
+        //   });
+      },
+      handleFileUpload() {
+        this.upFile = this.$refs.file.files[0];
       }
     },
-    mounted(){
+    mounted() {
       this.$store.dispatch('getUserInformation')
     }
   };

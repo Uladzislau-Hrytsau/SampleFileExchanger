@@ -144,30 +144,30 @@ public class FileRestControllerMockTest {
      *
      * @throws Exception the exception
      */
-    @Test
-    public void addFileSuccess_1_MockTest() throws Exception {
-        file.setDate(LocalDate.of(2019, 1, 6));
-        given(fileServiceMock.addFile(any(File.class))).willReturn(anyLong());
-        mockMvc.perform(post(FILE_URL_QUERY)
-                .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(asJsonString(file)))
-                .andExpect(status().isCreated());
-    }
+//    @Test
+//    public void addFileSuccess_1_MockTest() throws Exception {
+//        file.setDate(LocalDate.of(2019, 1, 6));
+//        given(fileServiceMock.addFile(any(File.class))).willReturn(anyLong());
+//        mockMvc.perform(post(FILE_URL_QUERY)
+//                .contentType(MediaType.APPLICATION_JSON_UTF8)
+//                .content(asJsonString(file)))
+//                .andExpect(status().isCreated());
+//    }
 
     /**
      * Add file un success 1 mock test.
      *
      * @throws Exception the exception
      */
-    @Test
-    public void addFileUnSuccess_1_MockTest() throws Exception {
-        file.setDate(LocalDate.of(2019, 1, 7));
-        given(fileServiceMock.addFile(any(File.class))).willThrow(ValidationException.class);
-        mockMvc.perform(post(FILE_URL_QUERY)
-                .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(asJsonString(file)))
-                .andExpect(status().isBadRequest());
-    }
+//    @Test
+//    public void addFileUnSuccess_1_MockTest() throws Exception {
+//        file.setDate(LocalDate.of(2019, 1, 7));
+//        given(fileServiceMock.addFile(any(File.class))).willThrow(ValidationException.class);
+//        mockMvc.perform(post(FILE_URL_QUERY)
+//                .contentType(MediaType.APPLICATION_JSON_UTF8)
+//                .content(asJsonString(file)))
+//                .andExpect(status().isBadRequest());
+//    }
 
     /**
      * Update file success 1 mock test.

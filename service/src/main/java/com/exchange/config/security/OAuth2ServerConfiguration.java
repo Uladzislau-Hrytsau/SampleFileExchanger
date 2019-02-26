@@ -66,8 +66,7 @@ class OAuth2ServerConfiguration extends AuthorizationServerConfigurerAdapter {
     }
 
     @Override
-    public void configure(
-            AuthorizationServerEndpointsConfigurer endpoints) {
+    public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
         endpoints
                 .tokenStore(tokenStore())
                 .authenticationManager(authenticationManager)

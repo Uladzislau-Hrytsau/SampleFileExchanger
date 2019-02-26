@@ -16,15 +16,18 @@
     </bean>
 
     <bean id="userDao" class="com.exchange.dao.jdbc.UserDaoImpl">
-        <constructor-arg ref="dataSource"/>
+        <constructor-arg ref="dataSource" index="0"/>
+        <constructor-arg ref="userRowMapper" index="1"/>
     </bean>
 
     <bean id="fileDao" class="com.exchange.dao.jdbc.FileDaoImpl">
-        <constructor-arg ref="dataSource"/>
+        <constructor-arg ref="dataSource" index="0"/>
+        <constructor-arg ref="fileRowMapper" index="1"/>
     </bean>
 
     <bean id="categoryDao" class="com.exchange.dao.jdbc.CategoryDaoImpl">
-        <constructor-arg ref="dataSource"/>
+        <constructor-arg ref="dataSource" index="0"/>
+        <constructor-arg ref="categoryRowMapper" index="1"/>
     </bean>
 
     <bean id="userRoleDao" class="com.exchange.dao.jdbc.UserRoleDaoImpl">

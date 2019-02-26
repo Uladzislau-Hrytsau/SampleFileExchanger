@@ -11,8 +11,8 @@ const qs = require('query-string');
 export const store = new Vuex.Store({
 
   state: {
-    token: localStorage.getItem('access_token') || null,
-    user_role: localStorage.getItem('roles') || null,
+    token: localStorage.getItem('access_token')    || null,
+    user_role: localStorage.getItem('roles')       || null,
     user: JSON.parse(localStorage.getItem('user')) || null,
     file: JSON.parse(localStorage.getItem('file')) || null,
     username: '',
@@ -298,6 +298,34 @@ export const store = new Vuex.Store({
         return new Promise(((resolve, reject) => {
           axios
             .post('file', credentials.data)
+            .then(response => {
+              resolve(response)
+            })
+            .catch(error => {
+              console.log(error)
+              reject(error)
+            })
+        }))
+      }
+    },
+
+    uploadFile(context, credentials) {
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token
+
+      let file = new FormData();
+      file.append('file', credentials.data.upFile)
+
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        }
+      };
+
+      if (context.getters.loggedIn && (context.getters.hasRoleAdmin || context.getters.hasRoleUser)) {
+
+        return new Promise(((resolve, reject) => {
+          axios
+            .post('uploading', file)
             .then(response => {
               resolve(response)
             })

@@ -3,12 +3,12 @@ package com.exchange.dao.jdbc;
 import com.exchange.dao.Category;
 import com.exchange.dao.CategoryDao;
 import com.exchange.dao.jdbc.mapper.CategoryRowMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.util.List;
@@ -16,6 +16,7 @@ import java.util.List;
 /**
  * The type Category dao.
  */
+@Component
 public class CategoryDaoImpl implements CategoryDao {
 
     /**
@@ -44,7 +45,6 @@ public class CategoryDaoImpl implements CategoryDao {
      * @param dataSource        the data source
      * @param categoryRowMapper the category row mapper
      */
-    @Autowired
     public CategoryDaoImpl(DataSource dataSource, CategoryRowMapper categoryRowMapper) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
         this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);

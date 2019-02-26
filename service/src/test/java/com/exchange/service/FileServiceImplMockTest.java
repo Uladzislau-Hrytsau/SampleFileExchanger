@@ -14,8 +14,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.time.LocalDate;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
 
 /**
@@ -151,120 +149,120 @@ public class FileServiceImplMockTest {
     /**
      * Add file success 1 mock test.
      */
-    @Test
-    public void addFileSuccess_1_MockTest() {
-        when(userDaoMock.checkUserByUserId(anyLong())).thenReturn(true);
-        when(fileDaoMock.checkFileByUrl(anyString())).thenReturn(false);
-        when(categoryDaoMock.checkCategoryById(anyLong())).thenReturn(true);
-        fileServiceImpl.addFile(file);
-        verify(fileDaoMock, times(ONE)).addFile(any(File.class));
-    }
+//    @Test
+//    public void addFileSuccess_1_MockTest() {
+//        when(userDaoMock.checkUserByUserId(anyLong())).thenReturn(true);
+//        when(fileDaoMock.checkFileByUrl(anyString())).thenReturn(false);
+//        when(categoryDaoMock.checkCategoryById(anyLong())).thenReturn(true);
+//        fileServiceImpl.addFile(file);
+//        verify(fileDaoMock, times(ONE)).addFile(any(File.class));
+//    }
 
     /**
      * Add file un success 1 mock test.
      */
-    @Test(expected = ValidationException.class)
-    public void addFileUnSuccess_1_MockTest() {
-        file.setId(INCORRECT_ID);
-        file.setUserId(INCORRECT_ID);
-        fileServiceImpl.addFile(file);
-        verify(userDaoMock, never()).checkUserByUserId(anyLong());
-        verify(fileDaoMock, never()).checkFileByUrl(anyString());
-        verify(categoryDaoMock, never()).checkCategoryById(anyLong());
-        verify(fileDaoMock, never()).addFile(any(File.class));
-    }
+//    @Test(expected = ValidationException.class)
+//    public void addFileUnSuccess_1_MockTest() {
+//        file.setId(INCORRECT_ID);
+//        file.setUserId(INCORRECT_ID);
+//        fileServiceImpl.addFile(file);
+//        verify(userDaoMock, never()).checkUserByUserId(anyLong());
+//        verify(fileDaoMock, never()).checkFileByUrl(anyString());
+//        verify(categoryDaoMock, never()).checkCategoryById(anyLong());
+//        verify(fileDaoMock, never()).addFile(any(File.class));
+//    }
 
     /**
      * Add file un success 2 mock test.
      */
-    @Test(expected = ValidationException.class)
-    public void addFileUnSuccess_2_MockTest() {
-        file.setId(NULL_ID);
-        file.setUserId(NULL_ID);
-        fileServiceImpl.addFile(file);
-        verify(userDaoMock, never()).checkUserByUserId(anyLong());
-        verify(fileDaoMock, never()).checkFileByUrl(anyString());
-        verify(categoryDaoMock, never()).checkCategoryById(anyLong());
-        verify(fileDaoMock, never()).addFile(any(File.class));
-    }
+//    @Test(expected = ValidationException.class)
+//    public void addFileUnSuccess_2_MockTest() {
+//        file.setId(NULL_ID);
+//        file.setUserId(NULL_ID);
+//        fileServiceImpl.addFile(file);
+//        verify(userDaoMock, never()).checkUserByUserId(anyLong());
+//        verify(fileDaoMock, never()).checkFileByUrl(anyString());
+//        verify(categoryDaoMock, never()).checkCategoryById(anyLong());
+//        verify(fileDaoMock, never()).addFile(any(File.class));
+//    }
 
     /**
      * Add file un success 3 mock test.
      */
-    @Test(expected = ValidationException.class)
-    public void addFileUnSuccess_3_MockTest() {
-        when(userDaoMock.checkUserByUserId(anyLong())).thenReturn(false);
-        fileServiceImpl.addFile(file);
-        verify(fileDaoMock, never()).checkFileByUrl(anyString());
-        verify(categoryDaoMock, never()).checkCategoryById(anyLong());
-        verify(fileDaoMock, never()).addFile(any(File.class));
-    }
+//    @Test(expected = ValidationException.class)
+//    public void addFileUnSuccess_3_MockTest() {
+//        when(userDaoMock.checkUserByUserId(anyLong())).thenReturn(false);
+//        fileServiceImpl.addFile(file);
+//        verify(fileDaoMock, never()).checkFileByUrl(anyString());
+//        verify(categoryDaoMock, never()).checkCategoryById(anyLong());
+//        verify(fileDaoMock, never()).addFile(any(File.class));
+//    }
 
     /**
      * Add file un success 4 mock test.
      */
-    @Test(expected = ValidationException.class)
-    public void addFileUnSuccess_4_MockTest() {
-        file.setUrl(NULL_URL);
-        when(userDaoMock.checkUserByUserId(anyLong())).thenReturn(true);
-        when(fileDaoMock.checkFileByUrl(anyString())).thenReturn(true);
-        fileServiceImpl.addFile(file);
-        verify(categoryDaoMock, never()).checkCategoryById(anyLong());
-        verify(fileDaoMock, never()).addFile(any(File.class));
-    }
+//    @Test(expected = ValidationException.class)
+//    public void addFileUnSuccess_4_MockTest() {
+//        file.setUrl(NULL_URL);
+//        when(userDaoMock.checkUserByUserId(anyLong())).thenReturn(true);
+//        when(fileDaoMock.checkFileByUrl(anyString())).thenReturn(true);
+//        fileServiceImpl.addFile(file);
+//        verify(categoryDaoMock, never()).checkCategoryById(anyLong());
+//        verify(fileDaoMock, never()).addFile(any(File.class));
+//    }
 
     /**
      * Add file un success 5 mock test.
      */
-    @Test(expected = ValidationException.class)
-    public void addFileUnSuccess_5_MockTest() {
-        file.setUrl(EMPTY_URL);
-        when(userDaoMock.checkUserByUserId(anyLong())).thenReturn(true);
-        when(fileDaoMock.checkFileByUrl(anyString())).thenReturn(true);
-        fileServiceImpl.addFile(file);
-        verify(categoryDaoMock, never()).checkCategoryById(anyLong());
-        verify(fileDaoMock, never()).addFile(any(File.class));
-    }
+//    @Test(expected = ValidationException.class)
+//    public void addFileUnSuccess_5_MockTest() {
+//        file.setUrl(EMPTY_URL);
+//        when(userDaoMock.checkUserByUserId(anyLong())).thenReturn(true);
+//        when(fileDaoMock.checkFileByUrl(anyString())).thenReturn(true);
+//        fileServiceImpl.addFile(file);
+//        verify(categoryDaoMock, never()).checkCategoryById(anyLong());
+//        verify(fileDaoMock, never()).addFile(any(File.class));
+//    }
 
     /**
      * Add file un success 6 mock test.
      */
-    @Test(expected = ValidationException.class)
-    public void addFileUnSuccess_6_MockTest() {
-        when(userDaoMock.checkUserByUserId(anyLong())).thenReturn(true);
-        when(fileDaoMock.checkFileByUrl(anyString())).thenReturn(true);
-        fileServiceImpl.addFile(file);
-        verify(categoryDaoMock, never()).checkCategoryById(anyLong());
-        verify(fileDaoMock, never()).addFile(any(File.class));
-    }
+//    @Test(expected = ValidationException.class)
+//    public void addFileUnSuccess_6_MockTest() {
+//        when(userDaoMock.checkUserByUserId(anyLong())).thenReturn(true);
+//        when(fileDaoMock.checkFileByUrl(anyString())).thenReturn(true);
+//        fileServiceImpl.addFile(file);
+//        verify(categoryDaoMock, never()).checkCategoryById(anyLong());
+//        verify(fileDaoMock, never()).addFile(any(File.class));
+//    }
 
     /**
      * Add file un success 7 mock test.
      */
-    @Test(expected = ValidationException.class)
-    public void addFileUnSuccess_7_MockTest() {
-        file.setDate(NULL_DATE);
-        when(userDaoMock.checkUserByUserId(anyLong())).thenReturn(true);
-        when(fileDaoMock.checkFileByUrl(anyString())).thenReturn(true);
-        when(categoryDaoMock.checkCategoryById(anyLong())).thenReturn(false);
-        fileServiceImpl.addFile(file);
-        assertThat(file.getDate(), is(notNull()));
-        verify(fileDaoMock, never()).addFile(any(File.class));
-    }
+//    @Test(expected = ValidationException.class)
+//    public void addFileUnSuccess_7_MockTest() {
+//        file.setDate(NULL_DATE);
+//        when(userDaoMock.checkUserByUserId(anyLong())).thenReturn(true);
+//        when(fileDaoMock.checkFileByUrl(anyString())).thenReturn(true);
+//        when(categoryDaoMock.checkCategoryById(anyLong())).thenReturn(false);
+//        fileServiceImpl.addFile(file);
+//        assertThat(file.getDate(), is(notNull()));
+//        verify(fileDaoMock, never()).addFile(any(File.class));
+//    }
 
     /**
      * Add file un success 8 mock test.
      */
-    @Test(expected = ValidationException.class)
-    public void addFileUnSuccess_8_MockTest() {
-        file.setDate(NULL_DATE);
-        when(userDaoMock.checkUserByUserId(anyLong())).thenReturn(true);
-        when(fileDaoMock.checkFileByUrl(anyString())).thenReturn(false);
-        when(categoryDaoMock.checkCategoryById(anyLong())).thenReturn(false);
-        fileServiceImpl.addFile(file);
-        assertThat(file.getDate(), is(notNull()));
-        verify(fileDaoMock, never()).addFile(any(File.class));
-    }
+//    @Test(expected = ValidationException.class)
+//    public void addFileUnSuccess_8_MockTest() {
+//        file.setDate(NULL_DATE);
+//        when(userDaoMock.checkUserByUserId(anyLong())).thenReturn(true);
+//        when(fileDaoMock.checkFileByUrl(anyString())).thenReturn(false);
+//        when(categoryDaoMock.checkCategoryById(anyLong())).thenReturn(false);
+//        fileServiceImpl.addFile(file);
+//        assertThat(file.getDate(), is(notNull()));
+//        verify(fileDaoMock, never()).addFile(any(File.class));
+//    }
 
     /**
      * Update file un success 1 mock test.

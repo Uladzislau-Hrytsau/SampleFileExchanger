@@ -2,17 +2,21 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/mvc
        http://www.springframework.org/schema/mvc/spring-mvc.xsd
        http://www.springframework.org/schema/context
-       http://www.springframework.org/schema/context/spring-context.xsd">
+       http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <context:component-scan base-package="com.exchange"/>
-
     <mvc:annotation-driven/>
+    <tx:annotation-driven/>
+
+    <!--<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">-->
+    <!--<property name="maxUploadSize" value="10000000"/>-->
+    <!--</bean>-->
 
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
@@ -37,14 +41,17 @@
 
     <bean id="userDao" class="com.exchange.dao.jdbc.UserDaoImpl">
         <constructor-arg ref="dataSource"/>
+        <constructor-arg ref="userRowMapper"/>
     </bean>
 
     <bean id="fileDao" class="com.exchange.dao.jdbc.FileDaoImpl">
         <constructor-arg ref="dataSource"/>
+        <constructor-arg ref="fileRowMapper"/>
     </bean>
 
     <bean id="categoryDao" class="com.exchange.dao.jdbc.CategoryDaoImpl">
         <constructor-arg ref="dataSource"/>
+        <constructor-arg ref="categoryRowMapper"/>
     </bean>
 
     <bean id="userRoleDao" class="com.exchange.dao.jdbc.UserRoleDaoImpl">

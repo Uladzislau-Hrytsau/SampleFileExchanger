@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.util.HashMap;
@@ -19,6 +20,7 @@ import java.util.Map;
 /**
  * The type User dao.
  */
+@Component
 public class UserDaoImpl implements UserDao {
 
     /**
@@ -122,7 +124,6 @@ public class UserDaoImpl implements UserDao {
     public Long addUser(User user) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
-//        parameterSource.addValue(USER_ID, user.getUserId());
         parameterSource.addValue(USER_NAME, user.getLogin());
         parameterSource.addValue(USER_PASSWORD, user.getPassword());
         parameterSource.addValue(USER_GENDER, user.getGender());

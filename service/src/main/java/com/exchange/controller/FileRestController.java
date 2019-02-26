@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.security.Principal;
 import java.util.List;
 
 /**
@@ -69,14 +71,16 @@ public class FileRestController {
     /**
      * Add file long.
      *
-     * @param file the file
+     * @param file          the file
+     * @param multipartFile the multipart file
+     * @param principal     the principal
      * @return the long
      */
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN') or hasRole('IS_AUTHENTICATED_ANONYMOUSLY')")
-    @PostMapping("/file")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    @PostMapping(value = "/file")
     @ResponseStatus(value = HttpStatus.CREATED)
-    public Long addFile(@RequestBody File file) {
-        return fileService.addFile(file);
+    public Long addFile(@RequestBody File file, @RequestParam("file") MultipartFile multipartFile, Principal principal) {
+        return fileService.addFile(file, multipartFile, principal.getName());
     }
 
     /**

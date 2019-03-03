@@ -1,10 +1,13 @@
 package com.exchange.controller;
 
+import com.exchange.config.security.userdetails.UserDetails;
 import com.exchange.dao.User;
 import com.exchange.service.UserRoleService;
 import com.exchange.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -12,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -37,17 +42,14 @@ public class SecurityRestController {
         this.userService = userService;
     }
 
-    /**
-     * Gets user role.
-     *
-     * @param httpServletRequest the http servlet request
-     * @return the user role
-     */
     @GetMapping(value = "/oauth/role")
     @ResponseStatus(value = HttpStatus.OK)
-    public List<String> getUserRole(HttpServletRequest httpServletRequest) {
-        Principal principal = httpServletRequest.getUserPrincipal();
-        return userRoleService.getRolesByUserName(principal.getName());
+    public List<String> getUserRole(Authentication authentication, HttpServletRequest httpServletRequest) {
+        UserDetails userDetails = (UserDetails) authentication;
+        List<String> list = new ArrayList<>();
+        Collection<GrantedAuthority> glist = userDetails.getAuthorities();
+        glist.forEach(item -> list.add(item.getAuthority()));
+        return list;
     }
 
     /**
@@ -56,11 +58,11 @@ public class SecurityRestController {
      * @param httpServletRequest the http servlet request
      * @return the user
      */
-    @GetMapping(value = "/oauth/user")
-    @ResponseStatus(value = HttpStatus.OK)
-    public User getUser(HttpServletRequest httpServletRequest) {
-        Principal principal = httpServletRequest.getUserPrincipal();
-        return userService.getUserByLogin(principal.getName());
-    }
+//    @GetMapping(value = "/oauth/user")
+//    @ResponseStatus(value = HttpStatus.OK)
+//    public User getUser(HttpServletRequest httpServletRequest) {
+//        Principal principal = httpServletRequest.getUserPrincipal();
+//        return userService.getUserByLogin(principal.getName());
+//    }
 
 }

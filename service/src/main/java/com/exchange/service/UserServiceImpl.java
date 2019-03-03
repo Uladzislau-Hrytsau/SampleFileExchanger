@@ -87,7 +87,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Long addUser(User user) {
         userValidator.validatePassword(user.getPassword());
-        userValidator.validateExistingLogin(user.getLogin(), userDao);
+//        userValidator.validateExistingLogin(user.getLogin(), userDao);
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         return userDao.addUser(user);
     }

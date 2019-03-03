@@ -86,4 +86,11 @@ public interface FileDao {
      */
     boolean checkFileByUrl(String url);
 
+    /**
+     * Exists by encode name boolean.
+     *
+     * @param encodeName the encode name
+     * @return the boolean
+     */
+    boolean existsByEncodeName(String encodeName);
 }

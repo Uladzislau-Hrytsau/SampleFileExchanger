@@ -5,10 +5,10 @@ import com.exchange.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.security.Principal;
 import java.util.List;
 
 /**
@@ -71,16 +71,16 @@ public class FileRestController {
     /**
      * Add file long.
      *
-     * @param file          the file
-     * @param multipartFile the multipart file
-     * @param principal     the principal
+     * @param file           the file
+     * @param multipartFile  the multipart file
+     * @param authentication the authentication
      * @return the long
      */
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @PostMapping(value = "/file")
     @ResponseStatus(value = HttpStatus.CREATED)
-    public Long addFile(@RequestBody File file, @RequestParam("file") MultipartFile multipartFile, Principal principal) {
-        return fileService.addFile(file, multipartFile, principal.getName());
+    public Long addFile(@RequestBody File file, @RequestParam("file") MultipartFile multipartFile, Authentication authentication) {
+        return fileService.addFile(file, multipartFile, authentication);
     }
 
     /**

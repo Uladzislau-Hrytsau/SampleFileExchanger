@@ -1,6 +1,7 @@
 package com.exchange.dao;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * The interface Category dao.
@@ -30,4 +31,11 @@ public interface CategoryDao {
      */
     boolean checkCategoryById(Long id);
 
+    /**
+     * Exists by category boolean.
+     *
+     * @param categories the categories
+     * @return the boolean
+     */
+    Boolean existsByCategories(Set<Category> categories);
 }

@@ -1,14 +1,13 @@
 package com.exchange.service;
 
-import com.exchange.dao.CategoryDao;
-import com.exchange.dao.File;
-import com.exchange.dao.FileDao;
-import com.exchange.dao.UserDao;
+import com.exchange.config.security.userdetails.UserDetails;
+import com.exchange.dao.*;
 import com.exchange.dao.file.FileWriter;
 import com.exchange.exception.InternalServerException;
 import com.exchange.exception.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.ServletContext;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -94,63 +94,41 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public Long addFile(File file, MultipartFile multipartFile, String userName) {
-
-        // TODO: validate url, description and category of file
-        // TODO: set creation file date
-        file.setUserId(userDao.getUserIdByLogin(userName));
-        // TODO: encode file name
-        String fileName = multipartFile.getOriginalFilename();
-        String encodeFileName = UUID.randomUUID().toString();
-        String filePath = servletContext.getRealPath("WEB-INF/repo" + java.io.File.separator + encodeFileName);
-
-
-        // TODO: Last step(saving file)
+    public Long addFile(File file, MultipartFile multipartFile, Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication;
+        String description = file.getDescription();
+        if (description == null || description.isEmpty()) {
+            throw new ValidationException();
+        }
+//        if (categoryDao.existsByCategories(file.getCategories())) {
+//            throw new ValidationException();
+//        }
+        file.setUserId(userDetails.getUserId());
+        file.setRealName(multipartFile.getOriginalFilename());
+        String encodeName;
+        do {
+            encodeName = UUID.randomUUID().toString();
+        } while (fileDao.existsByEncodeName(encodeName));
+        file.setEncodeName(encodeName);
+        file.setDate(LocalDate.now());
+        String filePath = servletContext.getRealPath("WEB-INF/repo" + java.io.File.separator + encodeName);
         fileWriter.saveFile(multipartFile, filePath);
-        // TODO: End
-
-        //
-
-//        Long userId = file.getUserId();
-//        String url = file.getUrl();
-//
-//        if (userId == null || userId < 0L) {
-//            throw new ValidationException(incorrectId);
-//        }
-//
-//        if (!userDao.checkUserByUserId(userId)) {
-//            throw new ValidationException(userDoesNotExist);
-//        }
-//
-//        if (url == null || url.isEmpty() || fileDao.checkFileByUrl(url)) {
-//            throw new ValidationException(incorrectUrl);
-//        }
-//
-//        if (file.getDate() == null) {
-//            file.setDate(LocalDate.now());
-//        }
-//
-//        if (!categoryDao.checkCategoryById(file.getCategoryId())) {
-//            throw new ValidationException(incorrectCategory);
-//        }
-//
-//        return fileDao.addFile(file);
-        return 0L;
+        return fileDao.addFile(file);
     }
 
     @Override
     public void updateFile(File file) {
 
         String description = file.getDescription();
-        Long category = file.getCategoryId();
+//        Long category = file.getCategoryId();
 
         if (description == null || description.isEmpty()) {
             throw new ValidationException(incorrectDescription);
         }
 
-        if (category == null || category < 0L || !categoryDao.checkCategoryById(category)) {
-            throw new ValidationException(incorrectCategory);
-        }
+//        if (category == null || category < 0L || !categoryDao.checkCategoryById(category)) {
+//            throw new ValidationException(incorrectCategory);
+//        }
 
         if (fileDao.updateFile(file) == 0) {
             throw new InternalServerException(updateError);

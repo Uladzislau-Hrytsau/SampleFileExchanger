@@ -7,82 +7,52 @@ import java.util.Objects;
  */
 public class Category {
 
-    private Long id;
+    private Long userId;
+    private Long categoryId;
 
-    private String fileCategory;
-
-    /**
-     * Instantiates a new Category.
-     */
     public Category() {
     }
 
-    /**
-     * Instantiates a new Category.
-     *
-     * @param id           the id
-     * @param fileCategory the file category
-     */
-    public Category(Long id, String fileCategory) {
-        this.id = id;
-        this.fileCategory = fileCategory;
+    public Category(Long userId, Long categoryId) {
+        this.userId = userId;
+        this.categoryId = categoryId;
     }
 
-    /**
-     * Gets id.
-     *
-     * @return the id
-     */
-    public Long getId() {
-        return id;
+    public Long getUserId() {
+        return userId;
     }
 
-    /**
-     * Sets id.
-     *
-     * @param id the id
-     */
-    public void setId(Long id) {
-        this.id = id;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
-    /**
-     * Gets file category.
-     *
-     * @return the file category
-     */
-    public String getFileCategory() {
-        return fileCategory;
+    public Long getCategoryId() {
+        return categoryId;
     }
 
-    /**
-     * Sets file category.
-     *
-     * @param fileCategory the file category
-     */
-    public void setFileCategory(String fileCategory) {
-        this.fileCategory = fileCategory;
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Category category1 = (Category) o;
-        return Objects.equals(id, category1.id) &&
-                Objects.equals(fileCategory, category1.fileCategory);
+        Category category = (Category) o;
+        return Objects.equals(userId, category.userId) &&
+                Objects.equals(categoryId, category.categoryId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, fileCategory);
+        return Objects.hash(userId, categoryId);
     }
 
     @Override
     public String toString() {
         return "Category{" +
-                "id=" + id +
-                ", category='" + fileCategory + '\'' +
+                "userId=" + userId +
+                ", categoryId=" + categoryId +
                 '}';
     }
 }

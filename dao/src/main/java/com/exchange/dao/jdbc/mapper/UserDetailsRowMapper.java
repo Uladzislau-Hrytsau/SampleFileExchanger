@@ -18,7 +18,7 @@ public class UserDetailsRowMapper implements RowMapper<UserDetailsDto> {
     @Override
     public UserDetailsDto mapRow(ResultSet rs, int rowNum) throws SQLException {
         UserDetailsDto userDetailsDto = new UserDetailsDto();
-        userDetailsDto.setUserId(rs.getLong("user_id"));
+        userDetailsDto.setUserId(rs.getLong("id"));
         userDetailsDto.setUserName(rs.getString("user_name"));
         userDetailsDto.setUserPassword(rs.getString("user_password"));
         Set<String> set = new HashSet<>();

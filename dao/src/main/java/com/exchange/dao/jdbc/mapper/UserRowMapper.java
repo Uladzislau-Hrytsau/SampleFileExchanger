@@ -19,11 +19,11 @@ public class UserRowMapper implements RowMapper<User> {
 
     public User mapRow(ResultSet rs, int rowNum) throws SQLException {
         User user = new User(
-                rs.getLong(USER_ID),
-                rs.getString(USER_NAME),
-                rs.getString(USER_PASSWORD),
-                rs.getBoolean(USER_GENDER),
-                rs.getString(USER_INFORMATION)
+//                rs.getLong(USER_ID),
+//                rs.getString(USER_NAME),
+//                rs.getString(USER_PASSWORD),
+//                rs.getBoolean(USER_GENDER),
+//                rs.getString(USER_INFORMATION)
         );
         Date date = rs.getDate(USER_BIRTH_DATE);
         if (date != null) {

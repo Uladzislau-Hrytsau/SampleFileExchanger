@@ -17,11 +17,11 @@ import static com.exchange.dao.jdbc.FileDaoImpl.*;
 public class FileRowMapper implements RowMapper<File> {
     public File mapRow(ResultSet rs, int rowNum) throws SQLException {
         File file = new File(
-                rs.getLong(ID),
-                rs.getLong(USER_ID),
-                rs.getString(URL),
-                rs.getString(DESCRIPTION),
-                rs.getLong(CATEGORY)
+//                rs.getLong(ID),
+//                rs.getLong(USER_ID),
+//                rs.getString(URL),
+//                rs.getString(DESCRIPTION),
+//                rs.getLong(CATEGORY)
         );
         Date date = rs.getDate(DATE);
         if (date != null) {

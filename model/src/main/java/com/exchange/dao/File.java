@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.LocalDate;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * The type File.
@@ -11,17 +12,14 @@ import java.util.Objects;
 public class File {
 
     private Long id;
-
     private Long userId;
-
-    private String url;
-
+    private Long folderId;
     private String description;
-
+    private String realName;
+    private String encodeName;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate date;
-
-    private Long categoryId;
+    private Set<Category> categories;
 
     /**
      * Instantiates a new File.
@@ -32,62 +30,41 @@ public class File {
     /**
      * Instantiates a new File.
      *
-     * @param id     the id
-     * @param userId the user id
-     * @param url    the url
-     * @param date   the date
+     * @param userId     the user id
+     * @param folderId   the Folder id
+     * @param realName   the real name
+     * @param encodeName the encode name
+     * @param categories the categories
      */
-    public File(Long id, Long userId, String url, LocalDate date) {
+    public File(Long userId, Long folderId, String realName, String encodeName, Set<Category> categories) {
+        this.userId = userId;
+        this.folderId = folderId;
+        this.realName = realName;
+        this.encodeName = encodeName;
+        this.categories = categories;
+    }
+
+    /**
+     * Instantiates a new File.
+     *
+     * @param id          the id
+     * @param userId      the user id
+     * @param folderId    the folder id
+     * @param description the description
+     * @param realName    the real name
+     * @param encodeName  the encode name
+     * @param date        the date
+     * @param categories  the categories
+     */
+    public File(Long id, Long userId, Long folderId, String description, String realName, String encodeName, LocalDate date, Set<Category> categories) {
         this.id = id;
         this.userId = userId;
-        this.url = url;
+        this.folderId = folderId;
+        this.description = description;
+        this.realName = realName;
+        this.encodeName = encodeName;
         this.date = date;
-    }
-
-    /**
-     * Instantiates a new File.
-     *
-     * @param id          the id
-     * @param userId      the user id
-     * @param url         the url
-     * @param description the description
-     * @param date        the date
-     */
-    public File(Long id, Long userId, String url, String description, LocalDate date) {
-        this(id, userId, url, date);
-        this.description = description;
-    }
-
-    /**
-     * Instantiates a new File.
-     *
-     * @param id          the id
-     * @param userId      the user id
-     * @param url         the url
-     * @param description the description
-     * @param date        the date
-     * @param categoryId  the category id
-     */
-    public File(Long id, Long userId, String url, String description, LocalDate date, Long categoryId) {
-        this(id, userId, url, description, date);
-        this.categoryId = categoryId;
-    }
-
-    /**
-     * Instantiates a new File.
-     *
-     * @param id          the id
-     * @param userId      the user id
-     * @param url         the url
-     * @param description the description
-     * @param categoryId  the category id
-     */
-    public File(Long id, Long userId, String url, String description, Long categoryId) {
-        this.id = id;
-        this.userId = userId;
-        this.url = url;
-        this.description = description;
-        this.categoryId = categoryId;
+        this.categories = categories;
     }
 
     /**
@@ -127,21 +104,21 @@ public class File {
     }
 
     /**
-     * Gets url.
+     * Gets Folder id.
      *
-     * @return the url
+     * @return the Folder id
      */
-    public String getUrl() {
-        return url;
+    public Long getFolderId() {
+        return folderId;
     }
 
     /**
-     * Sets url.
+     * Sets Folder id.
      *
-     * @param url the url
+     * @param folderId the Folder id
      */
-    public void setUrl(String url) {
-        this.url = url;
+    public void setFolderId(Long folderId) {
+        this.folderId = folderId;
     }
 
     /**
@@ -163,12 +140,66 @@ public class File {
     }
 
     /**
+     * Gets real name.
+     *
+     * @return the real name
+     */
+    public String getRealName() {
+        return realName;
+    }
+
+    /**
+     * Sets real name.
+     *
+     * @param realName the real name
+     */
+    public void setRealName(String realName) {
+        this.realName = realName;
+    }
+
+    /**
+     * Gets encode name.
+     *
+     * @return the encode name
+     */
+    public String getEncodeName() {
+        return encodeName;
+    }
+
+    /**
+     * Sets encode name.
+     *
+     * @param encodeName the encode name
+     */
+    public void setEncodeName(String encodeName) {
+        this.encodeName = encodeName;
+    }
+
+    /**
      * Gets date.
      *
      * @return the date
      */
     public LocalDate getDate() {
         return date;
+    }
+
+    /**
+     * Gets categories.
+     *
+     * @return the categories
+     */
+    public Set<Category> getCategories() {
+        return categories;
+    }
+
+    /**
+     * Sets categories.
+     *
+     * @param categories the categories
+     */
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
     }
 
     /**
@@ -180,24 +211,6 @@ public class File {
         this.date = date;
     }
 
-    /**
-     * Gets category id.
-     *
-     * @return the category id
-     */
-    public Long getCategoryId() {
-        return categoryId;
-    }
-
-    /**
-     * Sets category id.
-     *
-     * @param categoryId the category id
-     */
-    public void setCategoryId(Long categoryId) {
-        this.categoryId = categoryId;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -205,26 +218,30 @@ public class File {
         File file = (File) o;
         return Objects.equals(id, file.id) &&
                 Objects.equals(userId, file.userId) &&
-                Objects.equals(url, file.url) &&
+                Objects.equals(folderId, file.folderId) &&
                 Objects.equals(description, file.description) &&
+                Objects.equals(realName, file.realName) &&
+                Objects.equals(encodeName, file.encodeName) &&
                 Objects.equals(date, file.date) &&
-                Objects.equals(categoryId, file.categoryId);
+                Objects.equals(categories, file.categories);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userId, url, description, date, categoryId);
+        return Objects.hash(id, userId, folderId, description, realName, encodeName, date, categories);
     }
 
     @Override
     public String toString() {
         return "File{" +
                 "id=" + id +
-                ", user_id=" + userId +
-                ", url='" + url + '\'' +
+                ", userId=" + userId +
+                ", folderId=" + folderId +
                 ", description='" + description + '\'' +
+                ", realName='" + realName + '\'' +
+                ", encodeName='" + encodeName + '\'' +
                 ", date=" + date +
-                ", categoryId=" + categoryId +
+                ", categories=" + categories +
                 '}';
     }
 }

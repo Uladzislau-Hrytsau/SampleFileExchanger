@@ -70,6 +70,8 @@ public class FileDaoImpl implements FileDao {
     private String checkFileByUserIdSql;
     @Value("${file.checkFileByUrl}")
     private String checkFileByUrlSql;
+    @Value("${file.existsByEncodeName}")
+    private String existsByEncodeNameSql;
 
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
@@ -110,10 +112,10 @@ public class FileDaoImpl implements FileDao {
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
         parameterSource.addValue(ID, file.getId());
         parameterSource.addValue(USER_ID, file.getUserId());
-        parameterSource.addValue(URL, file.getUrl());
+//        parameterSource.addValue(URL, file.getUrl());
         parameterSource.addValue(DESCRIPTION, file.getDescription());
         parameterSource.addValue(DATE, file.getDate());
-        parameterSource.addValue(CATEGORY, file.getCategoryId());
+//        parameterSource.addValue(CATEGORY, file.getCategoryId());
         namedParameterJdbcTemplate.update(
                 addFileSql, parameterSource, keyHolder
         );
@@ -125,10 +127,10 @@ public class FileDaoImpl implements FileDao {
         Map<String, Object> params = new HashMap<>();
         params.put(ID, file.getId());
         params.put(USER_ID, file.getUserId());
-        params.put(URL, file.getUrl());
+//        params.put(URL, file.getUrl());
         params.put(DESCRIPTION, file.getDescription());
         params.put(DATE, file.getDate());
-        params.put(CATEGORY, file.getCategoryId());
+//        params.put(CATEGORY, file.getCategoryId());
         return namedParameterJdbcTemplate.update(updateFileSql, params);
     }
 
@@ -141,16 +143,21 @@ public class FileDaoImpl implements FileDao {
 
     @Override
     public boolean checkFileById(Long id) {
-        return jdbcTemplate.queryForObject(checkFileByIdSql, new Object[]{id}, boolean.class);
+        return jdbcTemplate.queryForObject(checkFileByIdSql, new Long[]{id}, boolean.class);
     }
 
     @Override
     public boolean checkFileByUserId(Long userId) {
-        return jdbcTemplate.queryForObject(checkFileByUserIdSql, new Object[]{userId}, boolean.class);
+        return jdbcTemplate.queryForObject(checkFileByUserIdSql, new Long[]{userId}, boolean.class);
     }
 
     @Override
     public boolean checkFileByUrl(String url) {
-        return jdbcTemplate.queryForObject(checkFileByUrlSql, new Object[]{url}, boolean.class);
+        return jdbcTemplate.queryForObject(checkFileByUrlSql, new String[]{url}, boolean.class);
+    }
+
+    @Override
+    public boolean existsByEncodeName(String encodeName) {
+        return jdbcTemplate.queryForObject(existsByEncodeNameSql, new String[]{encodeName}, boolean.class);
     }
 }

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.util.List;
+import java.util.Set;
 
 /**
  * The type Category dao.
@@ -19,14 +20,8 @@ import java.util.List;
 @Component
 public class CategoryDaoImpl implements CategoryDao {
 
-    /**
-     * The constant ID.
-     */
-    public static final String ID = "id";
-    /**
-     * The constant CATEGORY.
-     */
-    public static final String CATEGORY = "category";
+    private static final String USER_ID = "user_id";
+    private static final String CATEGORY_ID = "category_id";
 
     @Value("${category.select}")
     private String getAllCategoriesSql;
@@ -34,9 +29,11 @@ public class CategoryDaoImpl implements CategoryDao {
     private String getCategoryByIdSql;
     @Value("${category.checkCategoryById}")
     private String checkCategoryByIdSql;
+    @Value("${category.existsByUserIdAndCategoryId}")
+    private String existsByUserIdAndCategoryIdSql;
 
-    private CategoryRowMapper categoryRowMapper;
     private JdbcTemplate jdbcTemplate;
+    private CategoryRowMapper categoryRowMapper;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     /**
@@ -65,5 +62,17 @@ public class CategoryDaoImpl implements CategoryDao {
     @Override
     public boolean checkCategoryById(Long id) {
         return jdbcTemplate.queryForObject(checkCategoryByIdSql, new Object[]{id}, boolean.class);
+    }
+
+    @Override
+    public Boolean existsByCategories(Set<Category> categories) {
+        MapSqlParameterSource parameterSource = new MapSqlParameterSource();
+        categories.forEach(
+                category -> {
+                    parameterSource.addValue(USER_ID, category.getUserId());
+                    parameterSource.addValue(CATEGORY_ID, category.getCategoryId());
+                }
+        );
+        return namedParameterJdbcTemplate.queryForObject(existsByUserIdAndCategoryIdSql, parameterSource, Boolean.class);
     }
 }

@@ -1,6 +1,7 @@
 package com.exchange.service;
 
 import com.exchange.dao.File;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -36,12 +37,12 @@ public interface FileService {
     /**
      * Add file long.
      *
-     * @param file          the file
-     * @param multipartFile the multipart file
-     * @param userName      the user name
+     * @param file           the file
+     * @param multipartFile  the multipart file
+     * @param authentication the authentication
      * @return the long
      */
-    Long addFile(File file, MultipartFile multipartFile, String userName);
+    Long addFile(File file, MultipartFile multipartFile, Authentication authentication);
 
     /**
      * Update file.

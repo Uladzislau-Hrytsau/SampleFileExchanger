@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
-import javax.sql.DataSource;
 import java.util.List;
 
 /**
@@ -22,10 +21,10 @@ public class UserRoleDaoImpl implements UserRoleDao {
     /**
      * Instantiates a new User role dao.
      *
-     * @param dataSource the data source
+     * @param jdbcTemplate the jdbc template
      */
-    public UserRoleDaoImpl(DataSource dataSource) {
-        this.jdbcTemplate = new JdbcTemplate(dataSource);
+    public UserRoleDaoImpl(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     @Override

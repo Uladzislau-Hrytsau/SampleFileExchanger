@@ -1,31 +1,5 @@
 package com.exchange.controller;
 
-import com.exchange.controller.handler.RestErrorHandler;
-import com.exchange.dao.User;
-import com.exchange.exception.InternalServerException;
-import com.exchange.exception.ValidationException;
-import com.exchange.service.UserService;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-
-import java.time.LocalDate;
-import java.util.Collections;
-
-import static com.exchange.controller.converter.JsonConverter.asJsonString;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 /**
  * The type User rest controller mock test.
  */

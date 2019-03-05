@@ -3,6 +3,7 @@ package com.exchange.dao.jdbc;
 import com.exchange.dao.File;
 import com.exchange.dao.FileDao;
 import com.exchange.dao.jdbc.mapper.FileRowMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -12,7 +13,6 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
-import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,21 +32,25 @@ public class FileDaoImpl implements FileDao {
      */
     public static final String USER_ID = "user_id";
     /**
-     * The constant URL.
+     * The constant DATE.
      */
-    public static final String URL = "url";
+    public static final String DATE = "date";
     /**
      * The constant DESCRIPTION.
      */
     public static final String DESCRIPTION = "description";
     /**
-     * The constant DATE.
+     * The constant FOLDER_ID.
      */
-    public static final String DATE = "date";
+    public static final String FOLDER_ID = "folder_id";
     /**
-     * The constant CATEGORY.
+     * The constant REAL_NAME.
      */
-    public static final String CATEGORY = "category";
+    public static final String REAL_NAME = "real_name";
+    /**
+     * The constant ENCODE_NAME.
+     */
+    public static final String ENCODE_NAME = "encode_name";
 
     @Value("${file.selectByUserIdAndCategory}")
     private String getAllFilesByUserIdAndCategorySql;
@@ -80,14 +84,17 @@ public class FileDaoImpl implements FileDao {
     /**
      * Instantiates a new File dao.
      *
-     * @param dataSource    the data source
-     * @param fileRowMapper the file row mapper
+     * @param jdbcTemplate               the jdbc template
+     * @param namedParameterJdbcTemplate the named parameter jdbc template
+     * @param fileRowMapper              the file row mapper
      */
-    public FileDaoImpl(DataSource dataSource, FileRowMapper fileRowMapper) {
-        this.jdbcTemplate = new JdbcTemplate(dataSource);
-        this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+    @Autowired
+    public FileDaoImpl(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate, FileRowMapper fileRowMapper) {
+        this.jdbcTemplate = jdbcTemplate;
+        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
         this.fileRowMapper = fileRowMapper;
     }
+
 
     @Override
     public List<File> getAllFilesByUserId(Long userId) {
@@ -112,13 +119,12 @@ public class FileDaoImpl implements FileDao {
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
         parameterSource.addValue(ID, file.getId());
         parameterSource.addValue(USER_ID, file.getUserId());
-//        parameterSource.addValue(URL, file.getUrl());
+        parameterSource.addValue(FOLDER_ID, file.getFolderId());
         parameterSource.addValue(DESCRIPTION, file.getDescription());
+        parameterSource.addValue(REAL_NAME, file.getRealName());
+        parameterSource.addValue(ENCODE_NAME, file.getEncodeName());
         parameterSource.addValue(DATE, file.getDate());
-//        parameterSource.addValue(CATEGORY, file.getCategoryId());
-        namedParameterJdbcTemplate.update(
-                addFileSql, parameterSource, keyHolder
-        );
+        namedParameterJdbcTemplate.update(addFileSql, parameterSource, keyHolder);
         return keyHolder.getKey().longValue();
     }
 

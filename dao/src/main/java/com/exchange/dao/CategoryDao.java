@@ -1,5 +1,7 @@
 package com.exchange.dao;
 
+import com.exchange.dto.FileCategoryDto;
+
 import java.util.List;
 import java.util.Set;
 
@@ -35,7 +37,17 @@ public interface CategoryDao {
      * Exists by category boolean.
      *
      * @param categories the categories
+     * @param userId     the user id
      * @return the boolean
      */
-    Boolean existsByCategories(Set<Category> categories);
+    Boolean existsByCategories(Set<Long> categories, Long userId);
+
+    /**
+     * Add file categories list.
+     *
+     * @param categories the categories
+     * @return the list
+     */
+    int[] addFileCategories(Set<FileCategoryDto> categories);
+
 }

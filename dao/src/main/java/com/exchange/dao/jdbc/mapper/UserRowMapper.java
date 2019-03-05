@@ -9,7 +9,7 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static com.exchange.dao.jdbc.UserDaoImpl.*;
+import static com.exchange.dao.jdbc.UserDaoImpl.USER_BIRTH_DATE;
 
 /**
  * The type User row mapper.

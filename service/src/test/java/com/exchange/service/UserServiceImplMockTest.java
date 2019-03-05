@@ -1,19 +1,5 @@
 package com.exchange.service;
 
-import com.exchange.dao.User;
-import com.exchange.dao.UserDao;
-import com.exchange.exception.InternalServerException;
-import com.exchange.exception.ValidationException;
-import com.exchange.service.validator.UserValidator;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
-import static org.mockito.Mockito.*;
-
 /**
  * The type User service impl mock test.
  */

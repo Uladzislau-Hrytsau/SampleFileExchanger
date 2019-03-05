@@ -4,6 +4,7 @@ import com.exchange.dao.File;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -37,12 +38,13 @@ public interface FileService {
     /**
      * Add file long.
      *
-     * @param file           the file
+     * @param jsonFile       the json file
      * @param multipartFile  the multipart file
      * @param authentication the authentication
      * @return the long
+     * @throws IOException the io exception
      */
-    Long addFile(File file, MultipartFile multipartFile, Authentication authentication);
+    Long addFile(String jsonFile, MultipartFile multipartFile, Authentication authentication) throws IOException;
 
     /**
      * Update file.

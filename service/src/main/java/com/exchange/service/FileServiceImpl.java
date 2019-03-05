@@ -1,10 +1,15 @@
 package com.exchange.service;
 
 import com.exchange.config.security.userdetails.UserDetails;
-import com.exchange.dao.*;
+import com.exchange.dao.CategoryDao;
+import com.exchange.dao.File;
+import com.exchange.dao.FileDao;
+import com.exchange.dao.UserDao;
 import com.exchange.dao.file.FileWriter;
+import com.exchange.dto.FileCategoryDto;
 import com.exchange.exception.InternalServerException;
 import com.exchange.exception.ValidationException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
@@ -13,7 +18,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletContext;
+import java.io.IOException;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -29,7 +36,8 @@ public class FileServiceImpl implements FileService {
     private FileDao fileDao;
     private CategoryDao categoryDao;
     private ServletContext servletContext;
-    private final FileWriter fileWriter;
+    private FileWriter fileWriter;
+    private ObjectMapper objectMapper;
 
     @Value("${fileService.incorrectId}")
     private String incorrectId;
@@ -48,6 +56,7 @@ public class FileServiceImpl implements FileService {
     @Value("${fileService.deleteError}")
     private String deleteError;
 
+
     /**
      * Instantiates a new File service.
      *
@@ -56,14 +65,16 @@ public class FileServiceImpl implements FileService {
      * @param categoryDao    the category dao
      * @param servletContext the servlet context
      * @param fileWriter     the file writer
+     * @param objectMapper   the object mapper
      */
     @Autowired
-    public FileServiceImpl(UserDao userDao, FileDao fileDao, CategoryDao categoryDao, ServletContext servletContext, FileWriter fileWriter) {
+    public FileServiceImpl(UserDao userDao, FileDao fileDao, CategoryDao categoryDao, ServletContext servletContext, FileWriter fileWriter, ObjectMapper objectMapper) {
         this.userDao = userDao;
         this.fileDao = fileDao;
         this.categoryDao = categoryDao;
         this.servletContext = servletContext;
         this.fileWriter = fileWriter;
+        this.objectMapper = objectMapper;
     }
 
     @Override
@@ -94,15 +105,17 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public Long addFile(File file, MultipartFile multipartFile, Authentication authentication) {
-        UserDetails userDetails = (UserDetails) authentication;
+    public Long addFile(String jsonFile, MultipartFile multipartFile, Authentication authentication) throws IOException {
+        // TODO: checked exception?
+        File file = objectMapper.readValue(jsonFile, File.class);
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         String description = file.getDescription();
         if (description == null || description.isEmpty()) {
             throw new ValidationException();
         }
-//        if (categoryDao.existsByCategories(file.getCategories())) {
-//            throw new ValidationException();
-//        }
+        if (!categoryDao.existsByCategories(file.getCategories(), userDetails.getUserId())) {
+            throw new ValidationException();
+        }
         file.setUserId(userDetails.getUserId());
         file.setRealName(multipartFile.getOriginalFilename());
         String encodeName;
@@ -113,7 +126,19 @@ public class FileServiceImpl implements FileService {
         file.setDate(LocalDate.now());
         String filePath = servletContext.getRealPath("WEB-INF/repo" + java.io.File.separator + encodeName);
         fileWriter.saveFile(multipartFile, filePath);
-        return fileDao.addFile(file);
+        Long fileId = fileDao.addFile(file);
+
+        Set<FileCategoryDto> fileCategoryDtos = new HashSet<>(file.getCategories().size());
+        Set<Long> fileCategories = file.getCategories();
+
+        fileCategories.forEach(item -> {
+            fileCategoryDtos.add(new FileCategoryDto(item, fileId));
+        });
+        int[] array = categoryDao.addFileCategories(fileCategoryDtos);
+        for (int item : array) {
+            System.out.println(item);
+        }
+        return fileId;
     }
 
     @Override

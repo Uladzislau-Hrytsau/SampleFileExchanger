@@ -3,6 +3,7 @@ package com.exchange.dao.jdbc;
 import com.exchange.dao.User;
 import com.exchange.dao.UserDao;
 import com.exchange.dao.jdbc.mapper.UserRowMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -12,7 +13,6 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
-import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +26,7 @@ public class UserDaoImpl implements UserDao {
     /**
      * The constant USER_ID.
      */
-    public static final String USER_ID = "user_id";
+    private static final String USER_ID = "user_id";
     /**
      * The constant USER_NAME.
      */
@@ -34,11 +34,11 @@ public class UserDaoImpl implements UserDao {
     /**
      * The constant USER_PASSWORD.
      */
-    public static final String USER_PASSWORD = "user_password";
+    private static final String USER_PASSWORD = "user_password";
     /**
      * The constant USER_GENDER.
      */
-    public static final String USER_GENDER = "user_gender";
+    private static final String USER_GENDER = "user_gender";
     /**
      * The constant USER_BIRTH_DATE.
      */
@@ -46,7 +46,7 @@ public class UserDaoImpl implements UserDao {
     /**
      * The constant USER_INFORMATION.
      */
-    public static final String USER_INFORMATION = "user_information";
+    private static final String USER_INFORMATION = "user_information";
 
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
@@ -85,12 +85,14 @@ public class UserDaoImpl implements UserDao {
     /**
      * Instantiates a new User dao.
      *
-     * @param dataSource    the data source
-     * @param userRowMapper the user row mapper
+     * @param jdbcTemplate               the jdbc template
+     * @param namedParameterJdbcTemplate the named parameter jdbc template
+     * @param userRowMapper              the user row mapper
      */
-    public UserDaoImpl(DataSource dataSource, UserRowMapper userRowMapper) {
-        this.jdbcTemplate = new JdbcTemplate(dataSource);
-        this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+    @Autowired
+    public UserDaoImpl(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate, UserRowMapper userRowMapper) {
+        this.jdbcTemplate = jdbcTemplate;
+        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
         this.userRowMapper = userRowMapper;
     }
 

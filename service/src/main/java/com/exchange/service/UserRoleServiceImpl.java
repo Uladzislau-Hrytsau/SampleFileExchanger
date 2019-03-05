@@ -1,13 +1,17 @@
 package com.exchange.service;
 
+import com.exchange.config.security.userdetails.UserDetails;
 import com.exchange.dao.UserRoleDao;
-import com.exchange.exception.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * The type User role service.
@@ -32,11 +36,12 @@ public class UserRoleServiceImpl implements UserRoleService {
     }
 
     @Override
-    public List<String> getRolesByUserName(String userName) {
-        if (userName == null || userName.isEmpty()) {
-            throw new ValidationException(incorrectUserName);
-        }
-        return userRoleDao.getRolesByUserName(userName);
+    public Set<String> getRolesByAuthentication(Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        Collection<GrantedAuthority> collection = userDetails.getAuthorities();
+        Set<String> roles = new HashSet<>(collection.size());
+        collection.forEach(item -> roles.add(item.getAuthority()));
+        return roles;
     }
 
 }

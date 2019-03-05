@@ -1,21 +1,5 @@
 package com.exchange.service;
 
-import com.exchange.dao.CategoryDao;
-import com.exchange.dao.File;
-import com.exchange.dao.FileDao;
-import com.exchange.dao.UserDao;
-import com.exchange.exception.InternalServerException;
-import com.exchange.exception.ValidationException;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
-
-import java.time.LocalDate;
-
-import static org.mockito.Mockito.*;
-
 /**
  * The type File service impl mock test.
  */

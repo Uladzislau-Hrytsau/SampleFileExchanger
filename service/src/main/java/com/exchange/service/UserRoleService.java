@@ -1,9 +1,10 @@
 package com.exchange.service;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * The interface User role service.
@@ -15,9 +16,9 @@ public interface UserRoleService {
     /**
      * Gets roles by user name.
      *
-     * @param userName the user name
+     * @param authentication the authentication
      * @return the roles by user name
      */
-    List<String> getRolesByUserName(String userName);
+    Set<String> getRolesByAuthentication(Authentication authentication);
 
 }

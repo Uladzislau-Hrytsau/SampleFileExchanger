@@ -19,29 +19,12 @@ public class File {
     private String encodeName;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate date;
-    private Set<Category> categories;
+    private Set<Long> categories;
 
     /**
      * Instantiates a new File.
      */
     public File() {
-    }
-
-    /**
-     * Instantiates a new File.
-     *
-     * @param userId     the user id
-     * @param folderId   the Folder id
-     * @param realName   the real name
-     * @param encodeName the encode name
-     * @param categories the categories
-     */
-    public File(Long userId, Long folderId, String realName, String encodeName, Set<Category> categories) {
-        this.userId = userId;
-        this.folderId = folderId;
-        this.realName = realName;
-        this.encodeName = encodeName;
-        this.categories = categories;
     }
 
     /**
@@ -56,7 +39,7 @@ public class File {
      * @param date        the date
      * @param categories  the categories
      */
-    public File(Long id, Long userId, Long folderId, String description, String realName, String encodeName, LocalDate date, Set<Category> categories) {
+    public File(Long id, Long userId, Long folderId, String description, String realName, String encodeName, LocalDate date, Set<Long> categories) {
         this.id = id;
         this.userId = userId;
         this.folderId = folderId;
@@ -104,18 +87,18 @@ public class File {
     }
 
     /**
-     * Gets Folder id.
+     * Gets folder id.
      *
-     * @return the Folder id
+     * @return the folder id
      */
     public Long getFolderId() {
         return folderId;
     }
 
     /**
-     * Sets Folder id.
+     * Sets folder id.
      *
-     * @param folderId the Folder id
+     * @param folderId the folder id
      */
     public void setFolderId(Long folderId) {
         this.folderId = folderId;
@@ -185,11 +168,20 @@ public class File {
     }
 
     /**
+     * Sets date.
+     *
+     * @param date the date
+     */
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    /**
      * Gets categories.
      *
      * @return the categories
      */
-    public Set<Category> getCategories() {
+    public Set<Long> getCategories() {
         return categories;
     }
 
@@ -198,17 +190,8 @@ public class File {
      *
      * @param categories the categories
      */
-    public void setCategories(Set<Category> categories) {
+    public void setCategories(Set<Long> categories) {
         this.categories = categories;
-    }
-
-    /**
-     * Sets date.
-     *
-     * @param date the date
-     */
-    public void setDate(LocalDate date) {
-        this.date = date;
     }
 
     @Override

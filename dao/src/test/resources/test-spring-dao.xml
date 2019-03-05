@@ -15,23 +15,30 @@
         </property>
     </bean>
 
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <constructor-arg ref="dataSource"/>
+    </bean>
+
+    <bean id="namedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+        <constructor-arg ref="dataSource"/>
+    </bean>
+
     <bean id="userDao" class="com.exchange.dao.jdbc.UserDaoImpl">
-        <constructor-arg ref="dataSource" index="0"/>
-        <constructor-arg ref="userRowMapper" index="1"/>
+        <constructor-arg ref="jdbcTemplate" index="0"/>
+        <constructor-arg ref="namedParameterJdbcTemplate" index="1"/>
+        <constructor-arg ref="userRowMapper" index="2"/>
     </bean>
 
     <bean id="fileDao" class="com.exchange.dao.jdbc.FileDaoImpl">
-        <constructor-arg ref="dataSource" index="0"/>
-        <constructor-arg ref="fileRowMapper" index="1"/>
+        <constructor-arg ref="jdbcTemplate" index="0"/>
+        <constructor-arg ref="namedParameterJdbcTemplate" index="1"/>
+        <constructor-arg ref="fileRowMapper" index="2"/>
     </bean>
 
     <bean id="categoryDao" class="com.exchange.dao.jdbc.CategoryDaoImpl">
-        <constructor-arg ref="dataSource" index="0"/>
-        <constructor-arg ref="categoryRowMapper" index="1"/>
-    </bean>
-
-    <bean id="userRoleDao" class="com.exchange.dao.jdbc.UserRoleDaoImpl">
-        <constructor-arg ref="dataSource"/>
+        <constructor-arg ref="jdbcTemplate" index="0"/>
+        <constructor-arg ref="namedParameterJdbcTemplate" index="1"/>
+        <constructor-arg ref="categoryRowMapper" index="2"/>
     </bean>
 
     <bean id="userRowMapper" class="com.exchange.dao.jdbc.mapper.UserRowMapper"/>

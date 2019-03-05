@@ -295,6 +295,7 @@ export const store = new Vuex.Store({
 
       if (context.getters.loggedIn && (context.getters.hasRoleAdmin || context.getters.hasRoleUser)) {
 
+
         return new Promise(((resolve, reject) => {
           axios
             .post('file', credentials.data)
@@ -306,14 +307,17 @@ export const store = new Vuex.Store({
               reject(error)
             })
         }))
+
+
       }
     },
 
     uploadFile(context, credentials) {
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token
 
-      let file = new FormData();
-      file.append('file', credentials.data.upFile)
+      let multipartFile = new FormData();
+      multipartFile.append('file', JSON.stringify(credentials.file))
+      multipartFile.append('multipartFile', credentials.multipartFile)
 
       const config = {
         headers: {
@@ -325,7 +329,7 @@ export const store = new Vuex.Store({
 
         return new Promise(((resolve, reject) => {
           axios
-            .post('uploading', file)
+            .post('file', multipartFile)
             .then(response => {
               resolve(response)
             })

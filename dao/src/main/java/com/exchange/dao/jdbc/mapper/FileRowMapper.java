@@ -8,7 +8,7 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static com.exchange.dao.jdbc.FileDaoImpl.*;
+import static com.exchange.dao.jdbc.FileDaoImpl.DATE;
 
 /**
  * The type File row mapper.

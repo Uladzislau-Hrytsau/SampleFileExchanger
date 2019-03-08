@@ -74,6 +74,7 @@ public class UserDetails extends User {
      * @return the user id
      */
     public Long getUserId() {
+
         return userId;
     }
 

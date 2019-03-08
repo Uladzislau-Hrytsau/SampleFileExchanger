@@ -22,6 +22,10 @@
 <script>
   import 'bootstrap-css-only/css/bootstrap.min.css';
   import 'mdbvue/build/css/mdb.css';
+  import VueMaterial from 'vue-material'
+  import 'vue-material/dist/vue-material.min.css'
+
+
 
   export default {
     name: 'App',

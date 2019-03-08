@@ -3,7 +3,23 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 
+import VueMaterial from 'vue-material'
+import 'vue-material/dist/vue-material.min.css'
+
+import VFolder from 'v-folder';
+Vue.use(VFolder);
+
+Vue.use(VueMaterial)
 Vue.use(Vuex)
+
+// import slVueTree from 'sl-vue-tree';
+// import 'sl-vue-tree/dist/sl-vue-tree-dark.css';
+// Vue.use(slVueTree);
+//
+// import 'vue-awesome/icons';
+// import Icon from 'vue-awesome/components/Icon';
+// Vue.use(Icon);
+
 axios.defaults.baseURL = 'http://localhost:8088'
 
 const qs = require('query-string');
@@ -229,7 +245,6 @@ export const store = new Vuex.Store({
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token
 
       if (context.getters.loggedIn && context.getters.hasRoleAdmin && context.getters.hasRoleUser)
-
         return new Promise((resolve, reject) => {
           axios
             .delete('file/' + credentials.id)
@@ -252,7 +267,6 @@ export const store = new Vuex.Store({
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token
 
       if (context.getters.loggedIn && (context.getters.hasRoleAdmin || context.getters.hasRoleUser)) {
-
         return new Promise(((resolve, reject) => {
           axios
             .put('file', credentials.data)
@@ -273,7 +287,6 @@ export const store = new Vuex.Store({
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token
 
       if (context.getters.loggedIn && (context.getters.hasRoleAdmin || context.getters.hasRoleUser)) {
-
         return new Promise(((resolve, reject) => {
           axios
             .get('oauth/user')
@@ -287,28 +300,6 @@ export const store = new Vuex.Store({
               reject(error)
             })
         }))
-      }
-    },
-
-    createFile(context, credentials) {
-      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token
-
-      if (context.getters.loggedIn && (context.getters.hasRoleAdmin || context.getters.hasRoleUser)) {
-
-
-        return new Promise(((resolve, reject) => {
-          axios
-            .post('file', credentials.data)
-            .then(response => {
-              resolve(response)
-            })
-            .catch(error => {
-              console.log(error)
-              reject(error)
-            })
-        }))
-
-
       }
     },
 
@@ -326,10 +317,9 @@ export const store = new Vuex.Store({
       };
 
       if (context.getters.loggedIn && (context.getters.hasRoleAdmin || context.getters.hasRoleUser)) {
-
         return new Promise(((resolve, reject) => {
           axios
-            .post('file', multipartFile)
+            .post('file', multipartFile, config)
             .then(response => {
               resolve(response)
             })

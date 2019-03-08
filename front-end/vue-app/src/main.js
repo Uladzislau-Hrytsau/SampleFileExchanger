@@ -7,15 +7,25 @@ import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import VueMaterial from 'vue-material'
-import 'vue-material/dist/vue-material.css'
+import 'vue-material/dist/vue-material.min.css'
 import 'mdbvue/build/css/mdb.css'
-
 import App from './App'
 import router from './router'
 import {store} from './store/store'
 
 Vue.use(BootstrapVue);
 Vue.use(VueMaterial);
+
+// import VFolder from 'v-folder';
+// Vue.use(VFolder);
+
+// import slVueTree from 'sl-vue-tree';
+// import 'sl-vue-tree/dist/sl-vue-tree-dark.css';
+// Vue.use(slVueTree);
+//
+// import 'vue-awesome/icons';
+// import Icon from 'vue-awesome/components/Icon';
+// Vue.use(Icon);
 
 Vue.config.productionTip = false;
 

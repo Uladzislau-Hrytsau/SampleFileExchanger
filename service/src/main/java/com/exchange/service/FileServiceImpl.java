@@ -56,7 +56,6 @@ public class FileServiceImpl implements FileService {
     @Value("${fileService.deleteError}")
     private String deleteError;
 
-
     /**
      * Instantiates a new File service.
      *
@@ -107,6 +106,7 @@ public class FileServiceImpl implements FileService {
     @Override
     public Long addFile(String jsonFile, MultipartFile multipartFile, Authentication authentication) throws IOException {
         // TODO: checked exception?
+        // TODO: clean-up
         File file = objectMapper.readValue(jsonFile, File.class);
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         String description = file.getDescription();
@@ -134,10 +134,7 @@ public class FileServiceImpl implements FileService {
         fileCategories.forEach(item -> {
             fileCategoryDtos.add(new FileCategoryDto(item, fileId));
         });
-        int[] array = categoryDao.addFileCategories(fileCategoryDtos);
-        for (int item : array) {
-            System.out.println(item);
-        }
+        categoryDao.addFileCategories(fileCategoryDtos);
         return fileId;
     }
 

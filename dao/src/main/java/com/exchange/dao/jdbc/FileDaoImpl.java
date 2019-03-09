@@ -2,7 +2,9 @@ package com.exchange.dao.jdbc;
 
 import com.exchange.dao.File;
 import com.exchange.dao.FileDao;
-import com.exchange.dao.jdbc.mapper.FileRowMapper;
+import com.exchange.dao.jdbc.mapper.dto.FileStructureDtoRowMapper;
+import com.exchange.dao.jdbc.mapper.model.FileRowMapper;
+import com.exchange.dto.FileStructureDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -76,10 +78,13 @@ public class FileDaoImpl implements FileDao {
     private String checkFileByUrlSql;
     @Value("${file.existsByEncodeName}")
     private String existsByEncodeNameSql;
+    @Value("${file.selectByUserIdAndFolderId}")
+    private String selectByUserIdAndFolderIdSql;
 
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private FileRowMapper fileRowMapper;
+    private FileStructureDtoRowMapper fileStructureDtoRowMapper;
 
     /**
      * Instantiates a new File dao.
@@ -87,12 +92,14 @@ public class FileDaoImpl implements FileDao {
      * @param jdbcTemplate               the jdbc template
      * @param namedParameterJdbcTemplate the named parameter jdbc template
      * @param fileRowMapper              the file row mapper
+     * @param fileStructureDtoRowMapper  the file structure dto row mapper
      */
     @Autowired
-    public FileDaoImpl(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate, FileRowMapper fileRowMapper) {
+    public FileDaoImpl(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate, FileRowMapper fileRowMapper, FileStructureDtoRowMapper fileStructureDtoRowMapper) {
         this.jdbcTemplate = jdbcTemplate;
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
         this.fileRowMapper = fileRowMapper;
+        this.fileStructureDtoRowMapper = fileStructureDtoRowMapper;
     }
 
 
@@ -165,5 +172,13 @@ public class FileDaoImpl implements FileDao {
     @Override
     public boolean existsByEncodeName(String encodeName) {
         return jdbcTemplate.queryForObject(existsByEncodeNameSql, new String[]{encodeName}, boolean.class);
+    }
+
+    @Override
+    public List<FileStructureDto> getAllFilesByUserIdAndFolderId(Long userId, Long folderId) {
+        MapSqlParameterSource parameterSource = new MapSqlParameterSource();
+        parameterSource.addValue(FOLDER_ID, folderId);
+        parameterSource.addValue(USER_ID, userId);
+        return namedParameterJdbcTemplate.query(selectByUserIdAndFolderIdSql, parameterSource, fileStructureDtoRowMapper);
     }
 }

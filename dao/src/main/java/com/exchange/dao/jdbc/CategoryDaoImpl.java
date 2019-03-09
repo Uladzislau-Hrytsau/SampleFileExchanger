@@ -2,7 +2,7 @@ package com.exchange.dao.jdbc;
 
 import com.exchange.dao.Category;
 import com.exchange.dao.CategoryDao;
-import com.exchange.dao.jdbc.mapper.CategoryRowMapper;
+import com.exchange.dao.jdbc.mapper.model.CategoryRowMapper;
 import com.exchange.dto.FileCategoryDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

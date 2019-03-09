@@ -1,12 +1,10 @@
 package com.exchange.service;
 
 import com.exchange.config.security.userdetails.UserDetails;
-import com.exchange.dao.CategoryDao;
-import com.exchange.dao.File;
-import com.exchange.dao.FileDao;
-import com.exchange.dao.UserDao;
+import com.exchange.dao.*;
 import com.exchange.dao.file.FileWriter;
 import com.exchange.dto.FileCategoryDto;
+import com.exchange.dto.FolderStructureDto;
 import com.exchange.exception.InternalServerException;
 import com.exchange.exception.ValidationException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -34,6 +32,7 @@ public class FileServiceImpl implements FileService {
 
     private UserDao userDao;
     private FileDao fileDao;
+    private FolderDao folderDao;
     private CategoryDao categoryDao;
     private ServletContext servletContext;
     private FileWriter fileWriter;
@@ -61,15 +60,17 @@ public class FileServiceImpl implements FileService {
      *
      * @param userDao        the user dao
      * @param fileDao        the file dao
+     * @param folderDao      the folder dao
      * @param categoryDao    the category dao
      * @param servletContext the servlet context
      * @param fileWriter     the file writer
      * @param objectMapper   the object mapper
      */
     @Autowired
-    public FileServiceImpl(UserDao userDao, FileDao fileDao, CategoryDao categoryDao, ServletContext servletContext, FileWriter fileWriter, ObjectMapper objectMapper) {
+    public FileServiceImpl(UserDao userDao, FileDao fileDao, FolderDao folderDao, CategoryDao categoryDao, ServletContext servletContext, FileWriter fileWriter, ObjectMapper objectMapper) {
         this.userDao = userDao;
         this.fileDao = fileDao;
+        this.folderDao = folderDao;
         this.categoryDao = categoryDao;
         this.servletContext = servletContext;
         this.fileWriter = fileWriter;
@@ -169,5 +170,17 @@ public class FileServiceImpl implements FileService {
         if (fileDao.deleteFile(id) == 0) {
             throw new InternalServerException(deleteError);
         }
+    }
+
+    @Override
+    public List<FolderStructureDto> getAllFilesAndFoldersByFolderId(Authentication authentication, Long folderId) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        Long userId = userDetails.getUserId();
+//        List<FileStructureDto> files = fileDao.getAllFilesByUserIdAndFolderId(userId, folderId);
+//        List<FolderStructureDto> folders = folderDao.getAllFoldersByUserIdAndParentId(userId, folderId);
+//        List<Object> list = new ArrayList<>();
+//        list.addAll(files);
+//        list.addAll(folders);
+        return folderDao.getAllFoldersByUserIdAndParentId(userId, folderId);
     }
 }

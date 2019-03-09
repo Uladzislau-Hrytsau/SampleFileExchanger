@@ -2,7 +2,7 @@ package com.exchange.dao.jdbc;
 
 import com.exchange.dao.User;
 import com.exchange.dao.UserDao;
-import com.exchange.dao.jdbc.mapper.UserRowMapper;
+import com.exchange.dao.jdbc.mapper.model.UserRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;

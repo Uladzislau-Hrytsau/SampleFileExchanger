@@ -1,4 +1,4 @@
-package com.exchange.dao.jdbc.mapper;
+package com.exchange.dao.jdbc.mapper.dto;
 
 import com.exchange.dto.UserDetailsDto;
 import org.springframework.jdbc.core.RowMapper;
@@ -13,7 +13,7 @@ import java.util.Set;
  * The type User details row mapper.
  */
 @Component
-public class UserDetailsRowMapper implements RowMapper<UserDetailsDto> {
+public class UserDetailsDtoRowMapper implements RowMapper<UserDetailsDto> {
 
     @Override
     public UserDetailsDto mapRow(ResultSet rs, int rowNum) throws SQLException {

@@ -1,4 +1,4 @@
-package com.exchange.dao.jdbc.mapper;
+package com.exchange.dao.jdbc.mapper.model;
 
 import com.exchange.dao.File;
 import org.springframework.jdbc.core.RowMapper;

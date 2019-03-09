@@ -1,6 +1,7 @@
 package com.exchange.service;
 
 import com.exchange.dao.File;
+import com.exchange.dto.FolderStructureDto;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -59,4 +60,13 @@ public interface FileService {
      * @param id the id
      */
     void deleteFile(Long id);
+
+    /**
+     * Gets all files and folders by folder id.
+     *
+     * @param authentication the authentication
+     * @param folderId       the folder id
+     * @return the all files and folders by folder id
+     */
+    List<FolderStructureDto> getAllFilesAndFoldersByFolderId(Authentication authentication, Long folderId);
 }

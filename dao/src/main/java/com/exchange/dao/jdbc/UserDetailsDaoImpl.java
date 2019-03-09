@@ -1,7 +1,7 @@
 package com.exchange.dao.jdbc;
 
 import com.exchange.dao.UserDetailsDao;
-import com.exchange.dao.jdbc.mapper.UserDetailsRowMapper;
+import com.exchange.dao.jdbc.mapper.dto.UserDetailsDtoRowMapper;
 import com.exchange.dto.UserDetailsDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,23 +20,23 @@ public class UserDetailsDaoImpl implements UserDetailsDao {
     private String selectUserDetailsByLoginSql;
 
     private JdbcTemplate jdbcTemplate;
-    private UserDetailsRowMapper userDetailsRowMapper;
+    private UserDetailsDtoRowMapper userDetailsDtoRowMapper;
 
     /**
      * Instantiates a new User details dao.
      *
-     * @param dataSource           the data source
-     * @param userDetailsRowMapper the user details row mapper
+     * @param dataSource              the data source
+     * @param userDetailsDtoRowMapper the user details row mapper
      */
     @Autowired
-    public UserDetailsDaoImpl(DataSource dataSource, UserDetailsRowMapper userDetailsRowMapper) {
+    public UserDetailsDaoImpl(DataSource dataSource, UserDetailsDtoRowMapper userDetailsDtoRowMapper) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
-        this.userDetailsRowMapper = userDetailsRowMapper;
+        this.userDetailsDtoRowMapper = userDetailsDtoRowMapper;
     }
 
     @Override
     public UserDetailsDto getUserDetailsByLogin(String login) {
-        return jdbcTemplate.queryForObject(selectUserDetailsByLoginSql, userDetailsRowMapper, login);
+        return jdbcTemplate.queryForObject(selectUserDetailsByLoginSql, userDetailsDtoRowMapper, login);
     }
 
 }

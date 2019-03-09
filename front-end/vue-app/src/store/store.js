@@ -34,6 +34,7 @@ export const store = new Vuex.Store({
     username: '',
     users: [],
     files: [],
+    folders: [],
   },
 
   getters: {
@@ -78,7 +79,10 @@ export const store = new Vuex.Store({
     },
     destroyFileInformation(state) {
       state.file = null
-    }
+    },
+    getFolders(state, folders) {
+      state.folders = folders
+    },
   },
 
   actions: {
@@ -331,5 +335,25 @@ export const store = new Vuex.Store({
       }
     },
 
+    displayStructure(context, credentials) {
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token
+
+      if (context.getters.loggedIn && (context.getters.hasRoleAdmin || context.getters.hasRoleUser)) {
+        return new Promise(((resolve, reject) => {
+          axios
+            .get('structure/' + credentials.folderId)
+            .then(response => {
+              context.commit('getFolders', response.data)
+              resolve(response)
+            })
+            .catch(error => {
+              console.log(error)
+              reject(error)
+            })
+        }))
+      }
+
+    }
+
   }
-})
+});

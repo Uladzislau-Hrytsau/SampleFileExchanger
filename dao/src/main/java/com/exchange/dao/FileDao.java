@@ -1,5 +1,6 @@
 package com.exchange.dao;
 
+import com.exchange.dto.FileStructureDto;
 import org.springframework.dao.DataAccessException;
 
 import java.util.List;
@@ -93,4 +94,13 @@ public interface FileDao {
      * @return the boolean
      */
     boolean existsByEncodeName(String encodeName);
+
+    /**
+     * Gets all files by user id and folder id.
+     *
+     * @param userId   the user id
+     * @param folderId the folder id
+     * @return the all files by user id and folder id
+     */
+    List<FileStructureDto> getAllFilesByUserIdAndFolderId(Long userId, Long folderId);
 }

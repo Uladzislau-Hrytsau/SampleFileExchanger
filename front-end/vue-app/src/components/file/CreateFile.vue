@@ -122,7 +122,7 @@
       <mdb-row class="m-3">
         <mdb-btn-group>
           <mdb-btn outline="mdb-color" rounded>all</mdb-btn>
-          <mdb-btn v-for="value in values" outline="mdb-color" v-text="value" :key="value" rounded></mdb-btn>
+          <mdb-btn v-for="value in values" outline="mdb-color" v-text="value.name" :key="value" rounded></mdb-btn>
         </mdb-btn-group>
       </mdb-row>
     </div>
@@ -151,9 +151,9 @@
                   <!--<i class="far fa-edit"></i>-->
                 </button>
               </div>
-              <div class="mt-2">
+              <div class="mt-2" v-on:click="displayStructure(value.id)">
                 <h4 class="far fa-folder fa-5x"></h4>
-                <h4 class=" mt-2 card-title" v-text="value"></h4>
+                <h4 class=" mt-2 card-title" v-text="value.name"></h4>
               </div>
             </div>
           </div>
@@ -225,11 +225,7 @@
 
     data() {
       return {
-        values: [
-          'Cat', 'Dog', 'Parrot', 'some', 'come', 'home',
-          'Cat', 'Dog', 'Parrot', 'some', 'come', 'home',
-          'Cat', 'Dog', 'Parrot', 'some', 'come', 'home',
-          'Cat', 'Dog', 'Parrot', 'some', 'come', 'home'],
+        values: [],
         selected: 1,
         multipartFile: "",
         folderId: "",
@@ -241,6 +237,20 @@
     },
 
     methods: {
+
+      displayStructure(folderId) {
+        // folderId = 9;
+        this.$store.dispatch('displayStructure', {
+          folderId: folderId
+        })
+          .then(response => {
+            this.values = response.data
+          })
+          .catch(error => {
+            console.log(error )
+          })
+      },
+
       uploadFile() {
         let file = {
           folderId: this.folderId,
@@ -260,6 +270,10 @@
           })
       },
     },
+
+    mounted() {
+      this.displayStructure(0);
+    }
   };
 </script>
 

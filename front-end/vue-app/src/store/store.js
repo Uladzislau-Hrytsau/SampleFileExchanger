@@ -6,19 +6,8 @@ import axios from 'axios'
 import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.min.css'
 
-import VFolder from 'v-folder';
-Vue.use(VFolder);
-
 Vue.use(VueMaterial)
 Vue.use(Vuex)
-
-// import slVueTree from 'sl-vue-tree';
-// import 'sl-vue-tree/dist/sl-vue-tree-dark.css';
-// Vue.use(slVueTree);
-//
-// import 'vue-awesome/icons';
-// import Icon from 'vue-awesome/components/Icon';
-// Vue.use(Icon);
 
 axios.defaults.baseURL = 'http://localhost:8088'
 

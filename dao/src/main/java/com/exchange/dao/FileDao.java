@@ -22,10 +22,12 @@ public interface FileDao {
     /**
      * Gets all files.
      *
+     * @param limit  the limit
+     * @param offset the offset
      * @return the all files
      * @throws DataAccessException the data access exception
      */
-    List<File> getAllFiles();
+    List<File> getAllFiles(Integer limit, Integer offset);
 
     /**
      * Gets file by id.

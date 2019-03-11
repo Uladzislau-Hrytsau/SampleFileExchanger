@@ -43,6 +43,23 @@ public class User {
      * @param password    the password
      * @param gender      the gender
      * @param information the information
+     */
+    public User(Long id, String name, String password, Boolean gender, String information) {
+        this.id = id;
+        this.name = name;
+        this.password = password;
+        this.gender = gender;
+        this.information = information;
+    }
+
+    /**
+     * Instantiates a new User.
+     *
+     * @param id          the id
+     * @param name        the name
+     * @param password    the password
+     * @param gender      the gender
+     * @param information the information
      * @param birthDate   the birth date
      */
     public User(Long id, String name, String password, Boolean gender, String information, LocalDate birthDate) {

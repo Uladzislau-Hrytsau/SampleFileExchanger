@@ -12,10 +12,12 @@ public interface UserDao {
     /**
      * Gets all users.
      *
+     * @param limit  the limit
+     * @param offset the offset
      * @return the all users
      * @throws DataAccessException the data access exception
      */
-    List<User> getAllUsers();
+    List<User> getAllUsers(Integer limit, Integer offset);
 
     /**
      * Gets user by user id.

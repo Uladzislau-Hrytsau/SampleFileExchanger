@@ -12,9 +12,11 @@ public interface UserService {
     /**
      * Gets all users.
      *
+     * @param page the page
+     * @param size the size
      * @return the all users
      */
-    List<User> getAllUsers();
+    List<User> getAllUsers(Integer page, Integer size);
 
     /**
      * Gets user by user id.

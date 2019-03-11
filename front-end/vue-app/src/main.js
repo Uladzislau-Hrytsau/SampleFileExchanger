@@ -16,17 +16,6 @@ import {store} from './store/store'
 Vue.use(BootstrapVue);
 Vue.use(VueMaterial);
 
-// import VFolder from 'v-folder';
-// Vue.use(VFolder);
-
-// import slVueTree from 'sl-vue-tree';
-// import 'sl-vue-tree/dist/sl-vue-tree-dark.css';
-// Vue.use(slVueTree);
-//
-// import 'vue-awesome/icons';
-// import Icon from 'vue-awesome/components/Icon';
-// Vue.use(Icon);
-
 Vue.config.productionTip = false;
 
 router.beforeEach((to, from, next) => {

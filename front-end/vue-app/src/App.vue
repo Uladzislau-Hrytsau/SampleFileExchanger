@@ -25,8 +25,6 @@
   import VueMaterial from 'vue-material'
   import 'vue-material/dist/vue-material.min.css'
 
-
-
   export default {
     name: 'App',
 

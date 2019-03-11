@@ -4,7 +4,7 @@ import com.exchange.config.security.userdetails.UserDetails;
 import com.exchange.dao.*;
 import com.exchange.dao.file.FileWriter;
 import com.exchange.dto.FileCategoryDto;
-import com.exchange.dto.FolderStructureDto;
+import com.exchange.dto.StructureDto;
 import com.exchange.exception.InternalServerException;
 import com.exchange.exception.ValidationException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -78,8 +78,9 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public List<File> getAllFiles() {
-        return fileDao.getAllFiles();
+    public List<File> getAllFiles(Integer page, Integer size) {
+        Integer offset = size * (page - 1);
+        return fileDao.getAllFiles(size, offset);
     }
 
     @Override
@@ -106,7 +107,6 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public Long addFile(String jsonFile, MultipartFile multipartFile, Authentication authentication) throws IOException {
-        // TODO: checked exception?
         // TODO: clean-up
         File file = objectMapper.readValue(jsonFile, File.class);
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
@@ -119,19 +119,14 @@ public class FileServiceImpl implements FileService {
         }
         file.setUserId(userDetails.getUserId());
         file.setRealName(multipartFile.getOriginalFilename());
-        String encodeName;
-        do {
-            encodeName = UUID.randomUUID().toString();
-        } while (fileDao.existsByEncodeName(encodeName));
+        String encodeName = UUID.randomUUID().toString();
         file.setEncodeName(encodeName);
         file.setDate(LocalDate.now());
         String filePath = servletContext.getRealPath("WEB-INF/repo" + java.io.File.separator + encodeName);
         fileWriter.saveFile(multipartFile, filePath);
         Long fileId = fileDao.addFile(file);
-
         Set<FileCategoryDto> fileCategoryDtos = new HashSet<>(file.getCategories().size());
         Set<Long> fileCategories = file.getCategories();
-
         fileCategories.forEach(item -> {
             fileCategoryDtos.add(new FileCategoryDto(item, fileId));
         });
@@ -173,14 +168,11 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public List<FolderStructureDto> getAllFilesAndFoldersByFolderId(Authentication authentication, Long folderId) {
+    public StructureDto getAllFilesAndFoldersByFolderId(Authentication authentication, Long folderId) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         Long userId = userDetails.getUserId();
-//        List<FileStructureDto> files = fileDao.getAllFilesByUserIdAndFolderId(userId, folderId);
-//        List<FolderStructureDto> folders = folderDao.getAllFoldersByUserIdAndParentId(userId, folderId);
-//        List<Object> list = new ArrayList<>();
-//        list.addAll(files);
-//        list.addAll(folders);
-        return folderDao.getAllFoldersByUserIdAndParentId(userId, folderId);
+        return new StructureDto(
+                fileDao.getAllFilesByUserIdAndFolderId(userId, folderId),
+                folderDao.getAllFoldersByUserIdAndParentId(userId, folderId));
     }
 }

@@ -1,7 +1,7 @@
 package com.exchange.service;
 
 import com.exchange.dao.File;
-import com.exchange.dto.FolderStructureDto;
+import com.exchange.dto.StructureDto;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,9 +16,11 @@ public interface FileService {
     /**
      * Gets all files.
      *
+     * @param page the page
+     * @param size the size
      * @return the all files
      */
-    List<File> getAllFiles();
+    List<File> getAllFiles(Integer page, Integer size);
 
     /**
      * Gets all files by user id.
@@ -68,5 +70,5 @@ public interface FileService {
      * @param folderId       the folder id
      * @return the all files and folders by folder id
      */
-    List<FolderStructureDto> getAllFilesAndFoldersByFolderId(Authentication authentication, Long folderId);
+    StructureDto getAllFilesAndFoldersByFolderId(Authentication authentication, Long folderId);
 }

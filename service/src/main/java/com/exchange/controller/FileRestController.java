@@ -1,7 +1,7 @@
 package com.exchange.controller;
 
 import com.exchange.dao.File;
-import com.exchange.dto.FolderStructureDto;
+import com.exchange.dto.StructureDto;
 import com.exchange.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,13 +35,15 @@ public class FileRestController {
     /**
      * Gets all files.
      *
+     * @param page the page
+     * @param size the size
      * @return the all files
      */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @GetMapping("/files")
+    @GetMapping(value = "/files", params = {"page", "size"})
     @ResponseStatus(value = HttpStatus.OK)
-    public List<File> getAllFiles() {
-        return fileService.getAllFiles();
+    public List<File> getAllFiles(@RequestParam("page") Integer page, @RequestParam("size") Integer size) {
+        return fileService.getAllFiles(page, size);
     }
 
     /**
@@ -54,7 +56,7 @@ public class FileRestController {
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @GetMapping("/structure/{folderId}")
     @ResponseStatus(value = HttpStatus.OK)
-    public List<FolderStructureDto> getAllFoldersByFolderId(Authentication authentication, @PathVariable(value = "folderId") Long folderId) {
+    public StructureDto getAllFoldersByFolderId(Authentication authentication, @PathVariable(value = "folderId") Long folderId) {
         return fileService.getAllFilesAndFoldersByFolderId(authentication, folderId);
     }
 

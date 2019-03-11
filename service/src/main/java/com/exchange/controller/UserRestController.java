@@ -31,13 +31,15 @@ public class UserRestController {
     /**
      * Gets all users.
      *
+     * @param page the page
+     * @param size the size
      * @return the all users
      */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @GetMapping("/users")
+    @GetMapping(value = "/users", params = {"page", "size"})
     @ResponseStatus(value = HttpStatus.OK)
-    public List<User> getAllUsers() {
-        return userService.getAllUsers();
+    public List<User> getAllUsers(@RequestParam("page") Integer page, @RequestParam("size") Integer size) {
+        return userService.getAllUsers(page, size);
     }
 
     /**
@@ -60,9 +62,9 @@ public class UserRestController {
      * @return the user by login
      */
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    @GetMapping(value = "/user/login/{login}")
+    @GetMapping(value = "/user/login", params = {"login"})
     @ResponseStatus(value = HttpStatus.OK)
-    public User getUserByLogin(@PathVariable(value = "login") String login) {
+    public User getUserByLogin(@RequestParam("login") String login) {
         return userService.getUserByLogin(login);
     }
 

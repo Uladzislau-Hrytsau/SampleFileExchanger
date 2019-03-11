@@ -21,10 +21,10 @@ import java.util.List;
 @Transactional
 public class UserServiceImpl implements UserService {
 
-    private UserDao userDao;
-    private UserValidator userValidator;
     @Lazy
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private UserDao userDao;
+    private UserValidator userValidator;
 
     @Value("${userService.deleteError}")
     private String deleteError;
@@ -54,8 +54,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getAllUsers() {
-        return userDao.getAllUsers();
+    public List<User> getAllUsers(Integer page, Integer size) {
+        Integer offset = size * (page - 1);
+        return userDao.getAllUsers(size, offset);
     }
 
     @Override

@@ -54,6 +54,15 @@ public class FileDaoImpl implements FileDao {
      */
     public static final String ENCODE_NAME = "encode_name";
 
+    /**
+     * The constant LIMIT.
+     */
+    public static final String LIMIT = "limit";
+    /**
+     * The constant OFFSET.
+     */
+    public static final String OFFSET = "offset";
+
     @Value("${file.selectByUserIdAndCategory}")
     private String getAllFilesByUserIdAndCategorySql;
     @Value("${file.selectByUserIdAndDate}")
@@ -80,6 +89,8 @@ public class FileDaoImpl implements FileDao {
     private String existsByEncodeNameSql;
     @Value("${file.selectByUserIdAndFolderId}")
     private String selectByUserIdAndFolderIdSql;
+    @Value("${file.selectByLimitAndOffset}")
+    private String selectByLimitAndOffsetSql;
 
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
@@ -109,8 +120,11 @@ public class FileDaoImpl implements FileDao {
     }
 
     @Override
-    public List<File> getAllFiles() {
-        return jdbcTemplate.query(getAllFilesSql, fileRowMapper);
+    public List<File> getAllFiles(Integer limit, Integer offset) {
+        MapSqlParameterSource parameterSource = new MapSqlParameterSource();
+        parameterSource.addValue(LIMIT, limit);
+        parameterSource.addValue(OFFSET, offset);
+        return namedParameterJdbcTemplate.query(selectByLimitAndOffsetSql, parameterSource, fileRowMapper);
     }
 
     @Override

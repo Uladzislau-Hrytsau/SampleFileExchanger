@@ -9,7 +9,7 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static com.exchange.dao.jdbc.UserDaoImpl.USER_BIRTH_DATE;
+import static com.exchange.dao.jdbc.UserDaoImpl.*;
 
 /**
  * The type User row mapper.
@@ -18,13 +18,12 @@ import static com.exchange.dao.jdbc.UserDaoImpl.USER_BIRTH_DATE;
 public class UserRowMapper implements RowMapper<User> {
 
     public User mapRow(ResultSet rs, int rowNum) throws SQLException {
-        User user = new User(
-//                rs.getLong(USER_ID),
-//                rs.getString(USER_NAME),
-//                rs.getString(USER_PASSWORD),
-//                rs.getBoolean(USER_GENDER),
-//                rs.getString(USER_INFORMATION)
-        );
+        User user = new User();
+        user.setId(rs.getLong(ID));
+        user.setName(rs.getString(USER_NAME));
+        user.setPassword(rs.getString(USER_PASSWORD));
+        user.setGender(rs.getBoolean(USER_GENDER));
+        user.setInformation(rs.getString(USER_INFORMATION));
         Date date = rs.getDate(USER_BIRTH_DATE);
         if (date != null) {
             user.setBirthDate(date.toLocalDate());

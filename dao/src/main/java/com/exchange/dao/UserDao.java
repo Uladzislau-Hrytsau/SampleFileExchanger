@@ -96,4 +96,11 @@ public interface UserDao {
      */
     Long getUserIdByLogin(String login);
 
+    /**
+     * Gets users amount.
+     *
+     * @return the users amount
+     */
+    Integer getUsersAmount();
+
 }

@@ -64,4 +64,11 @@ public interface UserService {
      */
     void deleteUser(Long userId);
 
+    /**
+     * Gets users amount.
+     *
+     * @return the users amount
+     */
+    Integer getUsersAmount();
+
 }

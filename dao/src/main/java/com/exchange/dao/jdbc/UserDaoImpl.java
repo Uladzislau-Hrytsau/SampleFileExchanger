@@ -24,7 +24,7 @@ import java.util.Map;
 public class UserDaoImpl implements UserDao {
 
     /**
-     * The constant USER_ID.
+     * The constant ID.
      */
     public static final String ID = "id";
     /**
@@ -47,16 +47,8 @@ public class UserDaoImpl implements UserDao {
      * The constant USER_INFORMATION.
      */
     public static final String USER_INFORMATION = "user_information";
-
-    /**
-     * The constant LIMIT.
-     */
-    public static final String LIMIT = "limit";
-
-    /**
-     * The constant OFFSET.
-     */
-    public static final String OFFSET = "offset";
+    private static final String LIMIT = "limit";
+    private static final String OFFSET = "offset";
 
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
@@ -94,6 +86,9 @@ public class UserDaoImpl implements UserDao {
 
     @Value("${user.selectUserPasswordByUserName}")
     private String selectUserPasswordByUserNameSql;
+
+    @Value("${user.selectUsersCount}")
+    private String selectUsersCountSql;
 
     /**
      * Instantiates a new User dao.
@@ -184,6 +179,11 @@ public class UserDaoImpl implements UserDao {
     @Override
     public Long getUserIdByLogin(String login) {
         return jdbcTemplate.queryForObject(getUserIdByLoginSql, new String[]{login}, Long.class);
+    }
+
+    @Override
+    public Integer getUsersAmount() {
+        return jdbcTemplate.queryForObject(selectUsersCountSql, Integer.class);
     }
 
 }

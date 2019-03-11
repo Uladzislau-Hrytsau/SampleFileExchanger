@@ -36,10 +36,22 @@ public class UserRestController {
      * @return the all users
      */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @GetMapping(value = "/users", params = {"page", "size"})
+    @GetMapping(value = "/users/{page}/{size}")//, params = {"page", "size"})
     @ResponseStatus(value = HttpStatus.OK)
-    public List<User> getAllUsers(@RequestParam("page") Integer page, @RequestParam("size") Integer size) {
+    public List<User> getAllUsers(@PathVariable("page") Integer page, @PathVariable("size") Integer size) {
         return userService.getAllUsers(page, size);
+    }
+
+    /**
+     * Gets users amount.
+     *
+     * @return the users amount
+     */
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping(value = "/users/amount")
+    @ResponseStatus(value = HttpStatus.OK)
+    public Integer getUsersAmount() {
+        return userService.getUsersAmount();
     }
 
     /**
@@ -98,7 +110,7 @@ public class UserRestController {
      * @param userId the user id
      */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @DeleteMapping(value = "/user/{id}")
+    @DeleteMapping(value = "/user", params = {"id"})
     @ResponseStatus(value = HttpStatus.OK)
     public void deleteUser(@PathVariable(value = "id") Long userId) {
         userService.deleteUser(userId);

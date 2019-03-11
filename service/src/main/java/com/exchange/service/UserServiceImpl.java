@@ -109,4 +109,9 @@ public class UserServiceImpl implements UserService {
             throw new InternalServerException(deleteError);
     }
 
+    @Override
+    public Integer getUsersAmount() {
+        return userDao.getUsersAmount();
+    }
+
 }

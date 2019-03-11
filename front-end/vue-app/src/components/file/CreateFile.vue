@@ -146,11 +146,11 @@
           .then(response => {
             this.folders = response.data.folderStructureDtos;
             this.files = response.data.fileStructureDtos;
-            console.log(this.folders)
-            console.log(this.files)
+            console.log(this.folders);
+            console.log(this.files);
           })
           .catch(error => {
-            console.log(error)
+            console.log(error);
           })
       },
 

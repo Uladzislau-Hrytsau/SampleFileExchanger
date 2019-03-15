@@ -26,7 +26,7 @@ public class UserDetailsDaoImpl implements UserDetailsDao {
      * Instantiates a new User details dao.
      *
      * @param dataSource              the data source
-     * @param userDetailsDtoRowMapper the user details row mapper
+     * @param userDetailsDtoRowMapper the user details dto row mapper
      */
     @Autowired
     public UserDetailsDaoImpl(DataSource dataSource, UserDetailsDtoRowMapper userDetailsDtoRowMapper) {

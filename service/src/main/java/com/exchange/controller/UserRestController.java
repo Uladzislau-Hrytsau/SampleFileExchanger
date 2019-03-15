@@ -2,12 +2,11 @@ package com.exchange.controller;
 
 import com.exchange.dao.User;
 import com.exchange.service.UserService;
+import com.exchange.wrapper.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * The type User rest controller.
@@ -29,17 +28,19 @@ public class UserRestController {
     }
 
     /**
-     * Gets all users.
+     * Gets users by page and size.
      *
      * @param page the page
      * @param size the size
-     * @return the all users
+     * @return the users by page and size
      */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @GetMapping(value = "/users/{page}/{size}")//, params = {"page", "size"})
+    @GetMapping(value = "/users", params = {"page", "size"})
     @ResponseStatus(value = HttpStatus.OK)
-    public List<User> getAllUsers(@PathVariable("page") Integer page, @PathVariable("size") Integer size) {
-        return userService.getAllUsers(page, size);
+    public Response getUsersByPageAndSize(
+            @RequestParam(value = "page", required = false, defaultValue = "null") Integer page,
+            @RequestParam(value = "size", required = false, defaultValue = "null") Integer size) {
+        return userService.getUsersByPageAndSize(page, size);
     }
 
     /**
@@ -50,8 +51,8 @@ public class UserRestController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping(value = "/users/amount")
     @ResponseStatus(value = HttpStatus.OK)
-    public Integer getUsersAmount() {
-        return userService.getUsersAmount();
+    public Long getUsersAmount() {
+        return userService.getUserCount();
     }
 
     /**

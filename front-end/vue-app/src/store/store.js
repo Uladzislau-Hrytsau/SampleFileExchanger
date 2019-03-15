@@ -21,14 +21,15 @@ export const store = new Vuex.Store({
     user: JSON.parse(localStorage.getItem('user')) || null,
     file: JSON.parse(localStorage.getItem('file')) || null,
     username: '',
-    users: [],
-    files: [],
+    users: JSON.parse(localStorage.getItem('users')) || null,
+    files: JSON.parse(localStorage.getItem('files')) || null,
     folders: [],
-    // count of all record
-    recordAmount: 24,
-    // amount of record displayed on a pagination item
-    paginationSize: 10,
-    currentPagination: 1,
+
+    size: localStorage.getItem('size') || 10,
+    page: localStorage.getItem('page') || 1,
+    count: localStorage.getItem('count') || 0,
+    paginationItem: localStorage.getItem('paginationItem') || 1,
+
   },
 
   getters: {
@@ -44,17 +45,17 @@ export const store = new Vuex.Store({
     getUsers(state) {
       return state.users
     },
+    getSize(state) {
+      return state.size
+    },
     getPage(state) {
       return state.page
     },
-    getRecordAmount(state) {
-      return state.recordAmount
+    getCount(state) {
+      return state.count
     },
-    getPaginationSize(state) {
-      return state.paginationSize
-    },
-    getCurrentPagination(state) {
-      return state.currentPagination
+    getPaginationItem(state) {
+      return state.paginationItem
     }
   },
 
@@ -101,23 +102,29 @@ export const store = new Vuex.Store({
     destroyFolders(state) {
       state.folders = null
     },
-    setRecordAmount(state, recordAmount) {
-      state.recordAmount = recordAmount
+    setSize(state, size) {
+      state.size = size
     },
-    destroyRecordAmount(state) {
-      state.recordAmount = null
+    destroySize(state) {
+      state.size = null
     },
-    setPaginationSize(state, paginationSize) {
-      (paginationSize == null || paginationSize <= 0) ? state.paginationSize = 1 : state.paginationSize = paginationSize
+    setPage(state, page) {
+      state.page = page
     },
-    destroyPaginationSize(state) {
-      state.paginationSize = null
+    destroyPage(state) {
+      state.page = null
     },
-    setCurrentPagination(state, currentPagination) {
-      state.currentPagination = currentPagination
+    setCount(state, count) {
+      state.count = count
     },
-    getCurrentPagination(state) {
-      state.currentPagination = null
+    destroyCount(state) {
+      state.count = null
+    },
+    setPaginationItem(state, paginationItem) {
+      state.paginationItem = paginationItem
+    },
+    destroyPaginationItem(state) {
+      state.paginationItem = null
     },
   },
 
@@ -189,7 +196,7 @@ export const store = new Vuex.Store({
       if (context.getters.loggedIn && context.getters.hasRoleAdmin && context.getters.hasRoleUser) {
         return new Promise((resolve, reject) => {
           axios
-            .get('users/' + 1 + '/' + 10)
+            .get('users/?page=' + 1 + '&size=' + 10)
             .then(response => {
               context.commit('setUsers', response.data)
               resolve(response)
@@ -294,6 +301,7 @@ export const store = new Vuex.Store({
       localStorage.setItem('file', JSON.stringify(credentials.file))
       context.commit('setFileInformation', credentials.file)
     },
+
     updateFile(context, credentials) {
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token
       if (context.getters.loggedIn && (context.getters.hasRoleAdmin || context.getters.hasRoleUser)) {
@@ -376,14 +384,42 @@ export const store = new Vuex.Store({
 
     },
 
-    retrieveUsersSize(context) {
+    retrieveUsers(context) {
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
       if (context.getters.loggedIn && context.getters.hasRoleAdmin) {
         return new Promise((resolve, reject) => {
           axios
-            .get('/users/amount')
+            .get('/users', {
+              params: {
+                page: this.state.page,
+                size: this.state.size,
+              }
+            })
             .then(response => {
-              context.commit('setRecordAmount', response.data);
+              let count = response.data.pagination.count;
+              let size = this.state.size;
+              let paginationItem = 1;
+              if (count <= 0 && size <= 0) {
+                // context.commit('setPaginationItem', paginationItem);
+              }
+              if (count > 0 && size > 0) {
+                if (count % size === 0) {
+                  paginationItem = count / size;
+                } else {
+                  paginationItem = Math.floor((count / size)) + 1;
+                }
+                // context.commit('setPaginationItem', paginationItem);
+              }
+              localStorage.setItem('paginationItem', paginationItem);
+              context.commit('setPaginationItem', paginationItem);
+              context.commit('setCount', response.data.pagination.count);
+              context.commit('setUsers', response.data.data);
+              context.commit('setPage', this.state.page);
+              context.commit('setSize', this.state.size);
+              localStorage.setItem('count', response.data.pagination.count);
+              localStorage.setItem('users', JSON.stringify(response.data.data));
+              localStorage.setItem('page', this.state.page);
+              localStorage.setItem('size', this.state.size);
               resolve(response);
             })
             .catch(error => {
@@ -394,25 +430,6 @@ export const store = new Vuex.Store({
       }
 
     },
-
-    retrieveFilesSize(context) {
-      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
-      if (context.getters.loggedIn && context.getters.hasRoleAdmin) {
-        return new Promise((resolve, reject) => {
-          axios
-            .get('/files/amount')
-            .then(response => {
-              context.commit('setRecordAmount', response.data);
-              resolve(response);
-            })
-            .catch(error => {
-              console.log(error);
-              reject(error);
-            })
-        })
-      }
-
-    }
 
   }
 });

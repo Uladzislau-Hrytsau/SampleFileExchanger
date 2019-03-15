@@ -65,7 +65,6 @@
           birthDate: this.user.birthDate,
           information: this.user.information,
         };
-
         http
           .post("/user", data)
           .then(response => {

@@ -2,21 +2,20 @@ package com.exchange.service;
 
 
 import com.exchange.dao.User;
-
-import java.util.List;
+import com.exchange.wrapper.Response;
 
 /**
  * The interface User service.
  */
 public interface UserService {
     /**
-     * Gets all users.
+     * Gets users by page and size.
      *
      * @param page the page
      * @param size the size
-     * @return the all users
+     * @return the users by page and size
      */
-    List<User> getAllUsers(Integer page, Integer size);
+    Response getUsersAndCountByPageAndSize(Integer page, Integer size);
 
     /**
      * Gets user by user id.
@@ -65,10 +64,10 @@ public interface UserService {
     void deleteUser(Long userId);
 
     /**
-     * Gets users amount.
+     * Gets user count.
      *
-     * @return the users amount
+     * @return the user count
      */
-    Integer getUsersAmount();
+    Long getUserCount();
 
 }

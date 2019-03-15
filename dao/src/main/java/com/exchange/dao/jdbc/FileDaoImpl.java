@@ -53,7 +53,6 @@ public class FileDaoImpl implements FileDao {
      * The constant ENCODE_NAME.
      */
     public static final String ENCODE_NAME = "encode_name";
-
     /**
      * The constant LIMIT.
      */
@@ -91,6 +90,8 @@ public class FileDaoImpl implements FileDao {
     private String selectByUserIdAndFolderIdSql;
     @Value("${file.selectByLimitAndOffset}")
     private String selectByLimitAndOffsetSql;
+    @Value("${file.selectFilesCount}")
+    private String selectFilesCountSql;
 
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
@@ -150,7 +151,7 @@ public class FileDaoImpl implements FileDao {
     }
 
     @Override
-    public int updateFile(File file) {
+    public Integer updateFile(File file) {
         Map<String, Object> params = new HashMap<>();
         params.put(ID, file.getId());
         params.put(USER_ID, file.getUserId());
@@ -162,30 +163,30 @@ public class FileDaoImpl implements FileDao {
     }
 
     @Override
-    public int deleteFile(Long id) {
+    public Integer deleteFile(Long id) {
         Map<String, Object> params = new HashMap<>();
         params.put(ID, id);
         return namedParameterJdbcTemplate.update(deleteFileSql, params);
     }
 
     @Override
-    public boolean checkFileById(Long id) {
-        return jdbcTemplate.queryForObject(checkFileByIdSql, new Long[]{id}, boolean.class);
+    public Boolean checkFileById(Long id) {
+        return jdbcTemplate.queryForObject(checkFileByIdSql, new Long[]{id}, Boolean.class);
     }
 
     @Override
-    public boolean checkFileByUserId(Long userId) {
-        return jdbcTemplate.queryForObject(checkFileByUserIdSql, new Long[]{userId}, boolean.class);
+    public Boolean checkFileByUserId(Long userId) {
+        return jdbcTemplate.queryForObject(checkFileByUserIdSql, new Long[]{userId}, Boolean.class);
     }
 
     @Override
-    public boolean checkFileByUrl(String url) {
-        return jdbcTemplate.queryForObject(checkFileByUrlSql, new String[]{url}, boolean.class);
+    public Boolean checkFileByUrl(String url) {
+        return jdbcTemplate.queryForObject(checkFileByUrlSql, new String[]{url}, Boolean.class);
     }
 
     @Override
-    public boolean existsByEncodeName(String encodeName) {
-        return jdbcTemplate.queryForObject(existsByEncodeNameSql, new String[]{encodeName}, boolean.class);
+    public Boolean existsByEncodeName(String encodeName) {
+        return jdbcTemplate.queryForObject(existsByEncodeNameSql, new String[]{encodeName}, Boolean.class);
     }
 
     @Override
@@ -194,5 +195,10 @@ public class FileDaoImpl implements FileDao {
         parameterSource.addValue(FOLDER_ID, folderId);
         parameterSource.addValue(USER_ID, userId);
         return namedParameterJdbcTemplate.query(selectByUserIdAndFolderIdSql, parameterSource, fileStructureDtoRowMapper);
+    }
+
+    @Override
+    public Long getFileCount() {
+        return jdbcTemplate.queryForObject(selectFilesCountSql, Long.class);
     }
 }

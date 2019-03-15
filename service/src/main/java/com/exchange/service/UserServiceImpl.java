@@ -1,18 +1,18 @@
 package com.exchange.service;
 
+import com.exchange.dao.Pagination;
 import com.exchange.dao.User;
 import com.exchange.dao.UserDao;
 import com.exchange.exception.InternalServerException;
 import com.exchange.exception.ValidationException;
 import com.exchange.service.validator.UserValidator;
+import com.exchange.wrapper.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 /**
  * The type User service.
@@ -54,9 +54,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getAllUsers(Integer page, Integer size) {
-        Integer offset = size * (page - 1);
-        return userDao.getAllUsers(size, offset);
+    public Response getUsersAndCountByPageAndSize(Integer page, Integer size) {
+        // TODO: validate page and size
+        Integer offset = size * --page;
+        Response<User> response = new Response<>();
+        response.setData(userDao.getUsersByLimitAndOffset(size, offset));
+        response.setPagination(new Pagination(this.getUserCount()));
+        return response;
     }
 
     @Override
@@ -87,8 +91,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Long addUser(User user) {
+        userValidator.validateExistingLogin(user.getName(), userDao);
         userValidator.validatePassword(user.getPassword());
-//        userValidator.validateExistingLogin(user.getLogin(), userDao);
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         return userDao.addUser(user);
     }
@@ -110,8 +114,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Integer getUsersAmount() {
-        return userDao.getUsersAmount();
+    public Long getUserCount() {
+        return userDao.getUserCount();
     }
 
 }

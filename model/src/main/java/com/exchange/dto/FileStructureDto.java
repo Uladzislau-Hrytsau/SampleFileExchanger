@@ -3,7 +3,7 @@ package com.exchange.dto;
 import java.util.Objects;
 
 /**
- * The type File dto.
+ * The type File structure dto.
  */
 public class FileStructureDto {
 
@@ -12,13 +12,13 @@ public class FileStructureDto {
     private String realName;
 
     /**
-     * Instantiates a new File dto.
+     * Instantiates a new File structure dto.
      */
     public FileStructureDto() {
     }
 
     /**
-     * Instantiates a new File dto.
+     * Instantiates a new File structure dto.
      *
      * @param id       the id
      * @param folderId the folder id

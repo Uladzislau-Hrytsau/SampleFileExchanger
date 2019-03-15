@@ -14,10 +14,10 @@ import java.util.Set;
 public interface UserRoleService {
 
     /**
-     * Gets roles by user name.
+     * Gets roles by authentication.
      *
      * @param authentication the authentication
-     * @return the roles by user name
+     * @return the roles by authentication
      */
     Set<String> getRolesByAuthentication(Authentication authentication);
 

@@ -105,7 +105,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public List<User> getAllUsers(Integer limit, Integer offset) {
+    public List<User> getUsersByLimitAndOffset(Integer limit, Integer offset) {
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
         parameterSource.addValue(LIMIT, limit);
         parameterSource.addValue(OFFSET, offset);
@@ -182,8 +182,8 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public Integer getUsersAmount() {
-        return jdbcTemplate.queryForObject(selectUsersCountSql, Integer.class);
+    public Long getUserCount() {
+        return jdbcTemplate.queryForObject(selectUsersCountSql, Long.class);
     }
 
 }

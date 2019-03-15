@@ -34,7 +34,7 @@ public interface CategoryDao {
     boolean checkCategoryById(Long id);
 
     /**
-     * Exists by category boolean.
+     * Exists by categories boolean.
      *
      * @param categories the categories
      * @param userId     the user id
@@ -43,10 +43,10 @@ public interface CategoryDao {
     Boolean existsByCategories(Set<Long> categories, Long userId);
 
     /**
-     * Add file categories list.
+     * Add file categories int [ ].
      *
      * @param categories the categories
-     * @return the list
+     * @return the int [ ]
      */
     int[] addFileCategories(Set<FileCategoryDto> categories);
 

@@ -1,7 +1,6 @@
 package com.exchange.dao;
 
 import com.exchange.dto.FileStructureDto;
-import org.springframework.dao.DataAccessException;
 
 import java.util.List;
 
@@ -15,7 +14,6 @@ public interface FileDao {
      *
      * @param userId the user id
      * @return the all files by user id
-     * @throws DataAccessException the data access exception
      */
     List<File> getAllFilesByUserId(Long userId);
 
@@ -25,7 +23,6 @@ public interface FileDao {
      * @param limit  the limit
      * @param offset the offset
      * @return the all files
-     * @throws DataAccessException the data access exception
      */
     List<File> getAllFiles(Integer limit, Integer offset);
 
@@ -34,7 +31,6 @@ public interface FileDao {
      *
      * @param id the id
      * @return the file by id
-     * @throws DataAccessException the data access exception
      */
     File getFileById(Long id);
 
@@ -43,27 +39,24 @@ public interface FileDao {
      *
      * @param file the file
      * @return the long
-     * @throws DataAccessException the data access exception
      */
     Long addFile(File file);
 
     /**
-     * Update file int.
+     * Update file integer.
      *
      * @param file the file
-     * @return the int
-     * @throws DataAccessException the data access exception
+     * @return the integer
      */
-    int updateFile(File file);
+    Integer updateFile(File file);
 
     /**
-     * Delete file int.
+     * Delete file integer.
      *
      * @param id the id
-     * @return the int
-     * @throws DataAccessException the data access exception
+     * @return the integer
      */
-    int deleteFile(Long id);
+    Integer deleteFile(Long id);
 
     /**
      * Check file by id boolean.
@@ -71,7 +64,7 @@ public interface FileDao {
      * @param id the id
      * @return the boolean
      */
-    boolean checkFileById(Long id);
+    Boolean checkFileById(Long id);
 
     /**
      * Check file by user id boolean.
@@ -79,7 +72,7 @@ public interface FileDao {
      * @param userId the user id
      * @return the boolean
      */
-    boolean checkFileByUserId(Long userId);
+    Boolean checkFileByUserId(Long userId);
 
     /**
      * Check file by url boolean.
@@ -87,7 +80,7 @@ public interface FileDao {
      * @param url the url
      * @return the boolean
      */
-    boolean checkFileByUrl(String url);
+    Boolean checkFileByUrl(String url);
 
     /**
      * Exists by encode name boolean.
@@ -95,7 +88,7 @@ public interface FileDao {
      * @param encodeName the encode name
      * @return the boolean
      */
-    boolean existsByEncodeName(String encodeName);
+    Boolean existsByEncodeName(String encodeName);
 
     /**
      * Gets all files by user id and folder id.
@@ -105,4 +98,11 @@ public interface FileDao {
      * @return the all files by user id and folder id
      */
     List<FileStructureDto> getAllFilesByUserIdAndFolderId(Long userId, Long folderId);
+
+    /**
+     * Gets file count.
+     *
+     * @return the file count
+     */
+    Long getFileCount();
 }

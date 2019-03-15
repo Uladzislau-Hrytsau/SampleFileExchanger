@@ -1,7 +1,5 @@
 package com.exchange.dao;
 
-import org.springframework.dao.DataAccessException;
-
 import java.util.List;
 
 /**
@@ -10,21 +8,19 @@ import java.util.List;
 public interface UserDao {
 
     /**
-     * Gets all users.
+     * Gets users by limit and offset.
      *
      * @param limit  the limit
      * @param offset the offset
-     * @return the all users
-     * @throws DataAccessException the data access exception
+     * @return the users by limit and offset
      */
-    List<User> getAllUsers(Integer limit, Integer offset);
+    List<User> getUsersByLimitAndOffset(Integer limit, Integer offset);
 
     /**
      * Gets user by user id.
      *
      * @param userId the user id
      * @return the user by user id
-     * @throws DataAccessException the data access exception
      */
     User getUserByUserId(Long userId);
 
@@ -33,7 +29,6 @@ public interface UserDao {
      *
      * @param login the login
      * @return the user by login
-     * @throws DataAccessException the data access exception
      */
     User getUserByLogin(String login);
 
@@ -50,7 +45,6 @@ public interface UserDao {
      *
      * @param user the user
      * @return the long
-     * @throws DataAccessException the data access exception
      */
     Long addUser(User user);
 
@@ -59,7 +53,6 @@ public interface UserDao {
      *
      * @param user the user
      * @return the int
-     * @throws DataAccessException the data access exception
      */
     int updateUser(User user);
 
@@ -68,7 +61,6 @@ public interface UserDao {
      *
      * @param userId the user id
      * @return the int
-     * @throws DataAccessException the data access exception
      */
     int deleteUser(Long userId);
 
@@ -97,10 +89,10 @@ public interface UserDao {
     Long getUserIdByLogin(String login);
 
     /**
-     * Gets users amount.
+     * Gets user count.
      *
-     * @return the users amount
+     * @return the user count
      */
-    Integer getUsersAmount();
+    Long getUserCount();
 
 }

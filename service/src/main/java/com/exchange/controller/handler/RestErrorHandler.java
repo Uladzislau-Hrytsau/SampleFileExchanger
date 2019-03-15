@@ -16,6 +16,7 @@ import java.util.Collections;
  * The type Rest error handler.
  */
 @ControllerAdvice
+@ResponseBody
 public class RestErrorHandler {
 
     /**
@@ -26,8 +27,7 @@ public class RestErrorHandler {
      */
     @ExceptionHandler(DataAccessException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public @ResponseBody
-    Response handleDataAccessException(DataAccessException ex) {
+    public Response handleDataAccessException(DataAccessException ex) {
         Response response = new Response();
         response.setMessage(Collections.singletonList(ex.getMessage()));
         return response;
@@ -41,8 +41,7 @@ public class RestErrorHandler {
      */
     @ExceptionHandler(ValidationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public @ResponseBody
-    Response handleValidationException(ValidationException ex) {
+    public Response handleValidationException(ValidationException ex) {
         Response response = new Response();
         response.setMessage(Collections.singletonList(ex.getMessage()));
         return response;
@@ -54,13 +53,27 @@ public class RestErrorHandler {
      * @param ex the ex
      * @return the response
      */
-    @ExceptionHandler({InternalServerException.class})
+    @ExceptionHandler(InternalServerException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public @ResponseBody
-    Response handleInternalServerException(InternalServerException ex) {
+    public Response handleInternalServerException(InternalServerException ex) {
         Response response = new Response();
         response.setMessage(Collections.singletonList(ex.getMessage()));
         return response;
     }
+
+    /**
+     * Handle exception response.
+     *
+     * @param ex the ex
+     * @return the response
+     */
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Response handleException(Exception ex) {
+        Response response = new Response();
+        response.setMessage(Collections.singletonList(ex.getMessage()));
+        return response;
+    }
+
 
 }

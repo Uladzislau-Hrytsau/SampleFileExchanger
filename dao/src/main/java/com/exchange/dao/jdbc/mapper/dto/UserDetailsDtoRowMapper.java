@@ -10,7 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * The type User details row mapper.
+ * The type User details dto row mapper.
  */
 @Component
 public class UserDetailsDtoRowMapper implements RowMapper<UserDetailsDto> {

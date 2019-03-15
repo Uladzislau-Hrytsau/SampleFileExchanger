@@ -2,6 +2,7 @@ package com.exchange.service;
 
 import com.exchange.dao.File;
 import com.exchange.dto.StructureDto;
+import com.exchange.wrapper.Response;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,13 +15,13 @@ import java.util.List;
 public interface FileService {
 
     /**
-     * Gets all files.
+     * Gets files by page and size.
      *
      * @param page the page
      * @param size the size
-     * @return the all files
+     * @return the files by page and size
      */
-    List<File> getAllFiles(Integer page, Integer size);
+    Response getFilesAndCountByPageAndSize(Integer page, Integer size);
 
     /**
      * Gets all files by user id.
@@ -71,4 +72,11 @@ public interface FileService {
      * @return the all files and folders by folder id
      */
     StructureDto getAllFilesAndFoldersByFolderId(Authentication authentication, Long folderId);
+
+    /**
+     * Gets file count.
+     *
+     * @return the file count
+     */
+    Long getFileCount();
 }

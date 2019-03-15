@@ -7,6 +7,7 @@ import com.exchange.dto.FileCategoryDto;
 import com.exchange.dto.StructureDto;
 import com.exchange.exception.InternalServerException;
 import com.exchange.exception.ValidationException;
+import com.exchange.wrapper.Response;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -78,9 +79,13 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public List<File> getAllFiles(Integer page, Integer size) {
-        Integer offset = size * (page - 1);
-        return fileDao.getAllFiles(size, offset);
+    public Response getFilesAndCountByPageAndSize(Integer page, Integer size) {
+        // TODO: validate page and size
+        Integer offset = size * --page;
+        Response<File> response = new Response<>();
+        response.setData(fileDao.getAllFiles(size, offset));
+        response.setPagination(new Pagination(this.getFileCount()));
+        return response;
     }
 
     @Override
@@ -174,5 +179,10 @@ public class FileServiceImpl implements FileService {
         return new StructureDto(
                 fileDao.getAllFilesByUserIdAndFolderId(userId, folderId),
                 folderDao.getAllFoldersByUserIdAndParentId(userId, folderId));
+    }
+
+    @Override
+    public Long getFileCount() {
+        return fileDao.getFileCount();
     }
 }

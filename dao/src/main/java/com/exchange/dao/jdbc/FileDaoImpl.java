@@ -164,9 +164,9 @@ public class FileDaoImpl implements FileDao {
 
     @Override
     public Integer deleteFile(Long id) {
-        Map<String, Object> params = new HashMap<>();
-        params.put(ID, id);
-        return namedParameterJdbcTemplate.update(deleteFileSql, params);
+        MapSqlParameterSource parameterSource = new MapSqlParameterSource();
+        parameterSource.addValue(ID, id);
+        return namedParameterJdbcTemplate.update(deleteFileSql, parameterSource);
     }
 
     @Override

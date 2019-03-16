@@ -125,9 +125,9 @@ public class FileRestController {
      * @param id the id
      */
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    @DeleteMapping("/file/{id}")
+    @DeleteMapping(value = "/files", params = {"id"})
     @ResponseStatus(value = HttpStatus.OK)
-    public void deleteFile(@PathVariable(value = "id") Long id) {
+    public void deleteFile(@RequestParam(value = "id") Long id) {
         fileService.deleteFile(id);
     }
 

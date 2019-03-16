@@ -260,22 +260,6 @@ export const store = new Vuex.Store({
       }))
     },
 
-    deleteFile(context, credentials) {
-      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token
-      if (context.getters.loggedIn && context.getters.hasRoleAdmin && context.getters.hasRoleUser)
-        return new Promise((resolve, reject) => {
-          axios
-            .delete('file/' + credentials.id)
-            .then(response => {
-              resolve(response)
-            })
-            .catch(error => {
-              console.log(error)
-              reject(error)
-            })
-        })
-    },
-
     saveFileInformation(context, credentials) {
       localStorage.setItem('file', JSON.stringify(credentials.file))
       context.commit('setFileInformation', credentials.file)
@@ -470,6 +454,26 @@ export const store = new Vuex.Store({
             })
         })
       }
+    },
+
+    deleteFile(context, credentials) {
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token
+      if (context.getters.loggedIn && (context.getters.hasRoleUser || context.getters.hasRoleAdmin))
+        return new Promise((resolve, reject) => {
+          axios
+            .delete('/files', {
+              params: {
+                id: credentials
+              }
+            })
+            .then(response => {
+              resolve(response)
+            })
+            .catch(error => {
+              console.log(error)
+              reject(error)
+            })
+        })
     },
 
 

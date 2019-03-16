@@ -56,7 +56,7 @@
       ...mapMutations(['setPageUser']),
       ...mapActions(['retrieveUsers']),
       setCurrentPosition(position) {
-        if (position <= this.paginationItem && position >= 1) {
+        if (position <= this.paginationItem && position >= 1 && position !== this.pageUser) {
           this.setPageUser(position);
           this.retrieveUsers();
         }

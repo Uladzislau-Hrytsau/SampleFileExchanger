@@ -222,23 +222,6 @@ export const store = new Vuex.Store({
       }
     },
 
-    deleteUser(context, credentials) {
-      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token
-      if (context.getters.loggedIn && (context.getters.hasRoleAdmin || context.getters.hasRoleUser)) {
-        return new Promise((resolve, reject) => {
-          axios
-            .delete('user/' + credentials.userId)
-            .then(response => {
-              resolve(response)
-            })
-            .catch(error => {
-              console.log(error)
-              reject(error)
-            })
-        })
-      }
-    },
-
     saveUserInformation(context, credentials) {
       localStorage.setItem('user', JSON.stringify(credentials.user))
       context.commit('setUserInformation', credentials.user)
@@ -467,6 +450,28 @@ export const store = new Vuex.Store({
             })
         })
     },
+
+    deleteUser(context, credentials) {
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token
+      if (context.getters.loggedIn && (context.getters.hasRoleAdmin || context.getters.hasRoleUser)) {
+        return new Promise((resolve, reject) => {
+          axios
+            .delete('/users', {
+              params: {
+                id: credentials
+              }
+            })
+            .then(response => {
+              resolve(response)
+            })
+            .catch(error => {
+              console.log(error)
+              reject(error)
+            })
+        })
+      }
+    },
+
 
   }
 });

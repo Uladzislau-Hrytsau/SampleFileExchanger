@@ -108,13 +108,13 @@ public class UserRestController {
     /**
      * Delete user.
      *
-     * @param userId the user id
+     * @param id the id
      */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @DeleteMapping(value = "/user", params = {"id"})
+    @DeleteMapping(value = "/users", params = {"id"})
     @ResponseStatus(value = HttpStatus.OK)
-    public void deleteUser(@PathVariable(value = "id") Long userId) {
-        userService.deleteUser(userId);
+    public void deleteUser(@RequestParam(value = "id") Long id) {
+        userService.deleteUser(id);
     }
 
 }

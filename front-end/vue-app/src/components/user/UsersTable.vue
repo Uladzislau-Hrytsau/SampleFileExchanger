@@ -39,7 +39,7 @@
       return {};
     },
     computed: {
-      ...mapState(['users', 'page', 'size']),
+      ...mapState(['users', 'pageUser', 'size']),
     },
     methods: {
       ...mapActions(['retrieveUsers'])

@@ -26,7 +26,8 @@ export const store = new Vuex.Store({
     folders: [],
 
     size: localStorage.getItem('size') || 10,
-    page: localStorage.getItem('page') || 1,
+    pageUser: localStorage.getItem('pageUser') || 1,
+    pageFile: localStorage.getItem('pageFile') || 1,
     count: localStorage.getItem('count') || 0,
     paginationItem: localStorage.getItem('paginationItem') || 1,
 
@@ -45,11 +46,17 @@ export const store = new Vuex.Store({
     getUsers(state) {
       return state.users
     },
+    getFiles(state) {
+      return state.files
+    },
     getSize(state) {
       return state.size
     },
-    getPage(state) {
-      return state.page
+    getPageUser(state) {
+      return state.pageUser
+    },
+    getPageFile(state) {
+      return state.pageFile
     },
     getCount(state) {
       return state.count
@@ -108,11 +115,17 @@ export const store = new Vuex.Store({
     destroySize(state) {
       state.size = null
     },
-    setPage(state, page) {
-      state.page = page
+    setPageUser(state, pageUser) {
+      state.pageUser = pageUser
     },
-    destroyPage(state) {
-      state.page = null
+    destroyPageUser(state) {
+      state.pageUser = null
+    },
+    setPageFile(state, pageFile) {
+      state.pageFile = pageFile
+    },
+    destroyPageFile(state) {
+      state.pageFile = null
     },
     setCount(state, count) {
       state.count = count
@@ -264,23 +277,6 @@ export const store = new Vuex.Store({
       }))
     },
 
-    getFiles(context) {
-      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token
-      if (context.getters.loggedIn && context.getters.hasRoleAdmin && context.getters.hasRoleUser)
-        return new Promise((resolve, reject) => {
-          axios
-            .get('files')
-            .then(response => {
-              context.commit('setFiles', response.data)
-              resolve(response)
-            })
-            .catch(error => {
-              console.log(error)
-              reject(error)
-            })
-        })
-    },
-
     deleteFile(context, credentials) {
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token
       if (context.getters.loggedIn && context.getters.hasRoleAdmin && context.getters.hasRoleUser)
@@ -391,7 +387,7 @@ export const store = new Vuex.Store({
           axios
             .get('/users', {
               params: {
-                page: this.state.page,
+                page: this.state.pageUser,
                 size: this.state.size,
               }
             })
@@ -400,7 +396,6 @@ export const store = new Vuex.Store({
               let size = this.state.size;
               let paginationItem = 1;
               if (count <= 0 && size <= 0) {
-                // context.commit('setPaginationItem', paginationItem);
               }
               if (count > 0 && size > 0) {
                 if (count % size === 0) {
@@ -408,17 +403,16 @@ export const store = new Vuex.Store({
                 } else {
                   paginationItem = Math.floor((count / size)) + 1;
                 }
-                // context.commit('setPaginationItem', paginationItem);
               }
               localStorage.setItem('paginationItem', paginationItem);
               context.commit('setPaginationItem', paginationItem);
               context.commit('setCount', response.data.pagination.count);
               context.commit('setUsers', response.data.data);
-              context.commit('setPage', this.state.page);
+              context.commit('setPageUser', this.state.pageUser);
               context.commit('setSize', this.state.size);
               localStorage.setItem('count', response.data.pagination.count);
               localStorage.setItem('users', JSON.stringify(response.data.data));
-              localStorage.setItem('page', this.state.page);
+              localStorage.setItem('pageUser', this.state.pageUser);
               localStorage.setItem('size', this.state.size);
               resolve(response);
             })
@@ -429,6 +423,49 @@ export const store = new Vuex.Store({
         })
       }
 
+    },
+
+    retrieveFiles(context) {
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token
+      if (context.getters.loggedIn && context.getters.hasRoleAdmin && context.getters.hasRoleUser)
+        return new Promise((resolve, reject) => {
+          axios
+            .get('/files', {
+              params: {
+                page: this.state.pageFile,
+                size: this.state.size,
+              }
+            })
+            .then(response => {
+              let count = response.data.pagination.count;
+              let size = this.state.size;
+              let paginationItem = 1;
+              if (count <= 0 && size <= 0) {
+              }
+              if (count > 0 && size > 0) {
+                if (count % size === 0) {
+                  paginationItem = count / size;
+                } else {
+                  paginationItem = Math.floor((count / size)) + 1;
+                }
+              }
+              localStorage.setItem('paginationItem', paginationItem);
+              context.commit('setPaginationItem', paginationItem);
+              context.commit('setCount', response.data.pagination.count);
+              context.commit('setFiles', response.data.data);
+              context.commit('setPageFile', this.state.pageFile);
+              context.commit('setSize', this.state.size);
+              localStorage.setItem('count', response.data.pagination.count);
+              localStorage.setItem('files', JSON.stringify(response.data.data));
+              localStorage.setItem('pageFile', this.state.pageFile);
+              localStorage.setItem('size', this.state.size);
+              resolve(response);
+            })
+            .catch(error => {
+              console.log(error);
+              reject(error);
+            })
+        })
     },
 
   }

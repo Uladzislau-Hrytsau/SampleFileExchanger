@@ -15,11 +15,11 @@ import java.util.List;
 public interface FileService {
 
     /**
-     * Gets files by page and size.
+     * Gets files and count by page and size.
      *
      * @param page the page
      * @param size the size
-     * @return the files by page and size
+     * @return the files and count by page and size
      */
     Response getFilesAndCountByPageAndSize(Integer page, Integer size);
 

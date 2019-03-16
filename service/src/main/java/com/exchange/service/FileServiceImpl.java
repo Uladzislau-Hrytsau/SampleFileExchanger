@@ -83,7 +83,7 @@ public class FileServiceImpl implements FileService {
         // TODO: validate page and size
         Integer offset = size * --page;
         Response<File> response = new Response<>();
-        response.setData(fileDao.getAllFiles(size, offset));
+        response.setData(fileDao.getFilesByLimitAndOffset(size, offset));
         response.setPagination(new Pagination(this.getFileCount()));
         return response;
     }

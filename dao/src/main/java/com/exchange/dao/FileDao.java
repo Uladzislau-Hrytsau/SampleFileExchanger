@@ -18,13 +18,13 @@ public interface FileDao {
     List<File> getAllFilesByUserId(Long userId);
 
     /**
-     * Gets all files.
+     * Gets files by limit and offset.
      *
      * @param limit  the limit
      * @param offset the offset
-     * @return the all files
+     * @return the files by limit and offset
      */
-    List<File> getAllFiles(Integer limit, Integer offset);
+    List<File> getFilesByLimitAndOffset(Integer limit, Integer offset);
 
     /**
      * Gets file by id.

@@ -9,11 +9,11 @@ import com.exchange.wrapper.Response;
  */
 public interface UserService {
     /**
-     * Gets users by page and size.
+     * Gets users and count by page and size.
      *
      * @param page the page
      * @param size the size
-     * @return the users by page and size
+     * @return the users and count by page and size
      */
     Response getUsersAndCountByPageAndSize(Integer page, Integer size);
 

@@ -12,15 +12,15 @@
   import {mdbDatatable} from 'mdbvue';
   import Pagination from './Pagination';
   import UsersTable from './UsersTable'
-  import {mapState, mapMutations, mapActions} from 'vuex'
+  import {mapState, mapGetters, mapActions, mapMutations} from 'vuex'
 
   export default {
     name: "Users",
     components: {
       Pagination,
       UsersTable,
-      mdbDatatable,
-    },
+      mdbDatatable
+    }
   };
 </script>
 <style>

@@ -8,16 +8,16 @@
         </li>
 
         <li class="page-item">
-          <a class="page-link" aria-label="Previous" v-on:click="setCurrentPosition(parseInt(page) - 1)">
+          <a class="page-link" aria-label="Previous" v-on:click="setCurrentPosition(parseInt(pageUser) - 1)">
             <span aria-hidden="true">&laquo;</span>
             <span class="sr-only">Previous</span>
           </a>
         </li>
 
         <div v-for="item in paginationItem">
-          <div v-if="(parseInt(item) - 1) === parseInt(page) || parseInt(item) === parseInt(page) || (parseInt(item) + 1) === parseInt(page)">
+          <div v-if="(parseInt(item) - 1) === parseInt(pageUser) || parseInt(item) === parseInt(pageUser) || (parseInt(item) + 1) === parseInt(pageUser)">
 
-            <li v-if="parseInt(item) === parseInt(page)" class="page-item active">
+            <li v-if="parseInt(item) === parseInt(pageUser)" class="page-item active">
               <a class="page-link" v-text="item" v-on:click="setCurrentPosition(item)"></a>
             </li>
 
@@ -29,7 +29,7 @@
         </div>
 
         <li class="page-item">
-          <a class="page-link" aria-label="Next" v-on:click="setCurrentPosition(parseInt(page) + 1)">
+          <a class="page-link" aria-label="Next" v-on:click="setCurrentPosition(parseInt(pageUser) + 1)">
             <span aria-hidden="true">&raquo;</span>
             <span class="sr-only">Next</span>
           </a>
@@ -49,19 +49,15 @@
 
   export default {
     name: "Pagination",
-    data() {
-      return {
-      }
-    },
     computed: {
-      ...mapState(["paginationItem", "page"])
+      ...mapState(["paginationItem", "pageUser"])
     },
     methods: {
-      ...mapMutations(['setPage']),
+      ...mapMutations(['setPageUser']),
       ...mapActions(['retrieveUsers']),
       setCurrentPosition(position) {
         if (position <= this.paginationItem && position >= 1) {
-          this.setPage(position);
+          this.setPageUser(position);
           this.retrieveUsers();
         }
       },

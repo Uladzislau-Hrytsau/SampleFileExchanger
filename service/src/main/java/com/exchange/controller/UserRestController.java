@@ -40,7 +40,7 @@ public class UserRestController {
     public Response getUsersByPageAndSize(
             @RequestParam(value = "page", required = false, defaultValue = "null") Integer page,
             @RequestParam(value = "size", required = false, defaultValue = "null") Integer size) {
-        return userService.getUsersByPageAndSize(page, size);
+        return userService.getUsersAndCountByPageAndSize(page, size);
     }
 
     /**

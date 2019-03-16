@@ -121,7 +121,7 @@ public class FileDaoImpl implements FileDao {
     }
 
     @Override
-    public List<File> getAllFiles(Integer limit, Integer offset) {
+    public List<File> getFilesByLimitAndOffset(Integer limit, Integer offset) {
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
         parameterSource.addValue(LIMIT, limit);
         parameterSource.addValue(OFFSET, offset);

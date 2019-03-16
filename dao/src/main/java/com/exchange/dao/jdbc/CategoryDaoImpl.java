@@ -3,7 +3,7 @@ package com.exchange.dao.jdbc;
 import com.exchange.dao.Category;
 import com.exchange.dao.CategoryDao;
 import com.exchange.dao.jdbc.mapper.model.CategoryRowMapper;
-import com.exchange.dto.FileCategoryDto;
+import com.exchange.dto.file.FileCategoryDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -67,7 +67,7 @@ public class CategoryDaoImpl implements CategoryDao {
     }
 
     @Override
-    public boolean checkCategoryById(Long id) {
+    public Boolean checkCategoryById(Long id) {
         return jdbcTemplate.queryForObject(checkCategoryByIdSql, new Object[]{id}, boolean.class);
     }
 

@@ -1,6 +1,6 @@
 package com.exchange.dao;
 
-import com.exchange.dto.UserDetailsDto;
+import com.exchange.dto.security.UserDetailsDto;
 
 /**
  * The interface User details dao.

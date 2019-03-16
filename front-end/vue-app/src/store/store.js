@@ -18,18 +18,25 @@ export const store = new Vuex.Store({
   state: {
     token: localStorage.getItem('access_token') || null,
     user_role: localStorage.getItem('roles') || null,
-    user: JSON.parse(localStorage.getItem('user')) || null,
     file: JSON.parse(localStorage.getItem('file')) || null,
     username: '',
     users: JSON.parse(localStorage.getItem('users')) || null,
     files: JSON.parse(localStorage.getItem('files')) || null,
     folders: [],
 
+    id: '',
+
     size: localStorage.getItem('size') || 10,
     pageUser: localStorage.getItem('pageUser') || 1,
     pageFile: localStorage.getItem('pageFile') || 1,
     count: localStorage.getItem('count') || 0,
     paginationItem: localStorage.getItem('paginationItem') || 1,
+    enabledPagination: true,
+    enabledTableUsers: true,
+    enabledApprove: false,
+
+    user: [],
+    enabledUserUpdate: false,
 
   },
 
@@ -63,7 +70,16 @@ export const store = new Vuex.Store({
     },
     getPaginationItem(state) {
       return state.paginationItem
-    }
+    },
+    enabledPagination(state) {
+      return state.enabledPagination
+    },
+    enabledTableUsers(state) {
+      return state.enabledTableUsers
+    },
+    enabledApprove(state) {
+      return state.enabledApprove
+    },
   },
 
   mutations: {
@@ -139,6 +155,36 @@ export const store = new Vuex.Store({
     destroyPaginationItem(state) {
       state.paginationItem = null
     },
+    enablePagination(state) {
+      state.enabledPagination = true
+    },
+    disablePagination(state) {
+      state.enabledPagination = false
+    },
+    enableTableUsers(state) {
+      state.enabledTableUsers = true
+    },
+    disableTableUsers(state) {
+      state.enabledTableUsers = false
+    },
+    enableApprove(state) {
+      state.enabledApprove = true
+    },
+    disableApprove(state) {
+      state.enabledApprove = false
+    },
+    setId(state, id) {
+      state.id = id
+    },
+    setUser(state, user) {
+      state.user = user
+    },
+    enableUserUpdate(state) {
+      state.enabledUserUpdate = true
+    },
+    disableUserUpdate(state) {
+      state.enabledUserUpdate = false
+    }
   },
 
   actions: {
@@ -161,43 +207,43 @@ export const store = new Vuex.Store({
           config
         )
           .then(response => {
-            this.state.username = credentials.username
-            const token = response.data.access_token
-            localStorage.setItem('access_token', token)
-            context.commit('setToken', token)
-            console.log(token)
+            this.state.username = credentials.username;
+            const token = response.data.access_token;
+            localStorage.setItem('access_token', token);
+            context.commit('setToken', token);
+            console.log(token);
             resolve(response)
           })
           .catch(error => {
-            console.log(error)
+            console.log(error);
             reject(error)
           })
       })
     },
 
     destroyToken(context) {
-      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
       if (context.getters.loggedIn) {
         return new Promise((resolve, reject) => {
-          localStorage.removeItem('access_token')
+          localStorage.removeItem('access_token');
           context.commit('destroyToken')
         })
       }
     },
 
     retrieveUserRoles(context) {
-      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
       if (context.getters.loggedIn) {
         return new Promise((resolve, reject) => {
           axios
             .get('oauth/role')
             .then(response => {
-              context.commit('setUserRoles', response.data)
-              localStorage.setItem('roles', response.data)
+              context.commit('setUserRoles', response.data);
+              localStorage.setItem('roles', response.data);
               resolve(response)
             })
             .catch(error => {
-              console.log(error)
+              console.log(error);
               reject(error)
             })
         })
@@ -205,17 +251,17 @@ export const store = new Vuex.Store({
     },
 
     getUsers(context, credentials) {
-      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
       if (context.getters.loggedIn && context.getters.hasRoleAdmin && context.getters.hasRoleUser) {
         return new Promise((resolve, reject) => {
           axios
             .get('users/?page=' + 1 + '&size=' + 10)
             .then(response => {
-              context.commit('setUsers', response.data)
+              context.commit('setUsers', response.data);
               resolve(response)
             })
             .catch(error => {
-              console.log(error)
+              console.log(error);
               reject(error)
             })
         })
@@ -223,28 +269,11 @@ export const store = new Vuex.Store({
     },
 
     saveUserInformation(context, credentials) {
-      localStorage.setItem('user', JSON.stringify(credentials.user))
+      localStorage.setItem('user', JSON.stringify(credentials.user));
       context.commit('setUserInformation', credentials.user)
     },
 
-    updateUser(context, credentials) {
-      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token
-      if (context.getters.loggedIn && (context.getters.hasRoleAdmin || context.getters.hasRoleUser)) {
-        return new Promise(((resolve, reject) => {
-          axios
-            .put('user', credentials.data)
-            .then(response => {
-              context.commit('destroyUserInformation')
-              localStorage.removeItem('user')
-              resolve(response)
-            })
-            .catch(error => {
-              console.log(error)
-              reject(error)
-            })
-        }))
-      }
-    },
+
 
     createUser(context, credentials) {
       return new Promise(((resolve, reject) => {
@@ -254,30 +283,30 @@ export const store = new Vuex.Store({
             resolve(response)
           })
           .catch(error => {
-            console.log(error)
+            console.log(error);
             reject(error)
           })
       }))
     },
 
     saveFileInformation(context, credentials) {
-      localStorage.setItem('file', JSON.stringify(credentials.file))
+      localStorage.setItem('file', JSON.stringify(credentials.file));
       context.commit('setFileInformation', credentials.file)
     },
 
     updateFile(context, credentials) {
-      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
       if (context.getters.loggedIn && (context.getters.hasRoleAdmin || context.getters.hasRoleUser)) {
         return new Promise((resolve, reject) => {
           axios
             .put('file', credentials.data)
             .then(response => {
-              context.commit('destroyFileInformation')
-              localStorage.removeItem('file')
+              context.commit('destroyFileInformation');
+              localStorage.removeItem('file');
               resolve(response)
             })
             .catch(error => {
-              console.log(error)
+              console.log(error);
               reject(error)
             })
         })
@@ -285,18 +314,18 @@ export const store = new Vuex.Store({
     },
 
     getUserInformation(context) {
-      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
       if (context.getters.loggedIn && (context.getters.hasRoleAdmin || context.getters.hasRoleUser)) {
         return new Promise((resolve, reject) => {
           axios
             .get('oauth/user')
             .then(response => {
-              localStorage.setItem('user', JSON.stringify(response.data))
-              context.commit('setUserInformation', response.data)
+              localStorage.setItem('user', JSON.stringify(response.data));
+              context.commit('setUserInformation', response.data);
               resolve(response)
             })
             .catch(error => {
-              console.log(error)
+              console.log(error);
               reject(error)
             })
         })
@@ -304,10 +333,10 @@ export const store = new Vuex.Store({
     },
 
     uploadFile(context, credentials) {
-      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
       let multipartFile = new FormData();
-      multipartFile.append('file', JSON.stringify(credentials.file))
-      multipartFile.append('multipartFile', credentials.multipartFile)
+      multipartFile.append('file', JSON.stringify(credentials.file));
+      multipartFile.append('multipartFile', credentials.multipartFile);
       const config = {
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -321,7 +350,7 @@ export const store = new Vuex.Store({
               resolve(response)
             })
             .catch(error => {
-              console.log(error)
+              console.log(error);
               reject(error)
             })
         })
@@ -393,7 +422,7 @@ export const store = new Vuex.Store({
     },
 
     retrieveFiles(context) {
-      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
       if (context.getters.loggedIn && context.getters.hasRoleAdmin && context.getters.hasRoleUser)
         return new Promise((resolve, reject) => {
           axios
@@ -436,7 +465,7 @@ export const store = new Vuex.Store({
     },
 
     deleteUser(context, credentials) {
-      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
       if (context.getters.loggedIn && (context.getters.hasRoleAdmin || context.getters.hasRoleUser)) {
         return new Promise((resolve, reject) => {
           axios
@@ -449,7 +478,7 @@ export const store = new Vuex.Store({
               resolve(response)
             })
             .catch(error => {
-              console.log(error)
+              console.log(error);
               reject(error)
             })
         })
@@ -457,7 +486,7 @@ export const store = new Vuex.Store({
     },
 
     deleteFile(context, credentials) {
-      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
       if (context.getters.loggedIn && (context.getters.hasRoleUser || context.getters.hasRoleAdmin))
         return new Promise((resolve, reject) => {
           axios
@@ -470,12 +499,33 @@ export const store = new Vuex.Store({
               resolve(response)
             })
             .catch(error => {
-              console.log(error)
+              console.log(error);
               reject(error)
             })
         })
     },
 
+    updateUser(context, credentials) {
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
+      if (context.getters.loggedIn && (context.getters.hasRoleAdmin || context.getters.hasRoleUser)) {
+        return new Promise(((resolve, reject) => {
+          axios
+            .put('users', credentials)
+            .then(response => {
+                context.commit('destroyUserInformation');
+                context.commit('disableUserUpdate');
+                context.commit('enableTableUsers');
+                context.commit('enablePagination');
+                resolve(response)
+            })
+            .catch((error) => {
+
+              console.log(error.response.data.message);
+              reject(error)
+            })
+        }))
+      }
+    },
 
   }
 });

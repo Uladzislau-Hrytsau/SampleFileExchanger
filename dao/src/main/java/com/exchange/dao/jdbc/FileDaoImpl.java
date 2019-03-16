@@ -4,7 +4,7 @@ import com.exchange.dao.File;
 import com.exchange.dao.FileDao;
 import com.exchange.dao.jdbc.mapper.dto.FileStructureDtoRowMapper;
 import com.exchange.dao.jdbc.mapper.model.FileRowMapper;
-import com.exchange.dto.FileStructureDto;
+import com.exchange.dto.file.FileStructureDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;

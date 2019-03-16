@@ -1,5 +1,7 @@
 package com.exchange.dao;
 
+import com.exchange.dto.user.UserUpdatingDto;
+
 import java.util.List;
 
 /**
@@ -51,10 +53,10 @@ public interface UserDao {
     /**
      * Update user int.
      *
-     * @param user the user
+     * @param userUpdatingDto the user updating dto
      * @return the int
      */
-    int updateUser(User user);
+    Integer updateUser(UserUpdatingDto userUpdatingDto);
 
     /**
      * Delete user int.
@@ -62,7 +64,7 @@ public interface UserDao {
      * @param userId the user id
      * @return the int
      */
-    int deleteUser(Long userId);
+    Integer deleteUser(Long userId);
 
     /**
      * Check user by user id boolean.
@@ -70,7 +72,7 @@ public interface UserDao {
      * @param userId the user id
      * @return the boolean
      */
-    boolean checkUserByUserId(Long userId);
+    Boolean checkUserByUserId(Long userId);
 
     /**
      * Check user by login boolean.
@@ -78,7 +80,7 @@ public interface UserDao {
      * @param login the login
      * @return the boolean
      */
-    boolean checkUserByLogin(String login);
+    Boolean checkUserByLogin(String login);
 
     /**
      * Gets user id by login.

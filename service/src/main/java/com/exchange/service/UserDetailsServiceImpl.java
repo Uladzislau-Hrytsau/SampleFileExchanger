@@ -1,7 +1,7 @@
 package com.exchange.service;
 
 import com.exchange.dao.UserDetailsDao;
-import com.exchange.dto.UserDetailsDto;
+import com.exchange.dto.security.UserDetailsDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

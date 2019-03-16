@@ -30,14 +30,14 @@
 
     computed: {
       loggedIn() {
-        return this.$store.getters.loggedIn
+        return this.$store.getters.loggedIn;
       },
       hasRoleUser() {
-        console.log(this.$store.getters.hasRoleUser)
+        console.log(this.$store.getters.hasRoleUser);
         return this.$store.getters.hasRoleUser
       },
       hasRoleAdmin() {
-        console.log(this.$store.getters.hasRoleAdmin)
+        console.log(this.$store.getters.hasRoleAdmin);
         return this.$store.getters.hasRoleAdmin
       },
     }

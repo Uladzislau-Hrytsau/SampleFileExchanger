@@ -1,6 +1,6 @@
 package com.exchange.dao.jdbc.mapper.dto;
 
-import com.exchange.dto.UserDetailsDto;
+import com.exchange.dto.security.UserDetailsDto;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 

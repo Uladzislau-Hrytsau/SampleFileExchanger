@@ -1,6 +1,6 @@
 package com.exchange.dao;
 
-import com.exchange.dto.FolderStructureDto;
+import com.exchange.dto.folder.FolderStructureDto;
 
 import java.util.List;
 

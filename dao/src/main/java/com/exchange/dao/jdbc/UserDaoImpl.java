@@ -3,6 +3,7 @@ package com.exchange.dao.jdbc;
 import com.exchange.dao.User;
 import com.exchange.dao.UserDao;
 import com.exchange.dao.jdbc.mapper.model.UserRowMapper;
+import com.exchange.dto.user.UserUpdatingDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -13,6 +14,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,7 +49,13 @@ public class UserDaoImpl implements UserDao {
      * The constant USER_INFORMATION.
      */
     public static final String USER_INFORMATION = "user_information";
+    /**
+     * The constant LIMIT.
+     */
     private static final String LIMIT = "limit";
+    /**
+     * The constant OFFSET.
+     */
     private static final String OFFSET = "offset";
 
     private JdbcTemplate jdbcTemplate;
@@ -138,41 +146,57 @@ public class UserDaoImpl implements UserDao {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
         parameterSource.addValue(USER_NAME, user.getName());
-        parameterSource.addValue(USER_PASSWORD, user.getPassword());
-        parameterSource.addValue(USER_GENDER, user.getGender());
-        parameterSource.addValue(USER_BIRTH_DATE, user.getBirthDate());
-        parameterSource.addValue(USER_INFORMATION, user.getInformation());
+        this.fillParameterSourceByPasswordAndGenderAndBirthDateAndInformation(
+                parameterSource,
+                user.getPassword(),
+                user.getGender(),
+                user.getBirthDate(),
+                user.getInformation());
         namedParameterJdbcTemplate.update(
-                insertUserSql, parameterSource, keyHolder
-        );
+                insertUserSql,
+                parameterSource,
+                keyHolder);
         return keyHolder.getKey().longValue();
     }
 
-    @Override
-    public int updateUser(User user) {
-        Map<String, Object> params = new HashMap<>();
-        params.put(ID, user.getId());
-        params.put(USER_PASSWORD, user.getPassword());
-        params.put(USER_GENDER, user.getGender());
-        params.put(USER_BIRTH_DATE, user.getBirthDate());
-        params.put(USER_INFORMATION, user.getInformation());
-        return namedParameterJdbcTemplate.update(updateUserSql, params);
+    private void fillParameterSourceByPasswordAndGenderAndBirthDateAndInformation(
+            MapSqlParameterSource parameterSource,
+            String password,
+            Boolean gender,
+            LocalDate birthDate,
+            String information) {
+        parameterSource.addValue(USER_PASSWORD, password);
+        parameterSource.addValue(USER_GENDER, gender);
+        parameterSource.addValue(USER_BIRTH_DATE, birthDate);
+        parameterSource.addValue(USER_INFORMATION, information);
     }
 
     @Override
-    public int deleteUser(Long userId) {
+    public Integer updateUser(UserUpdatingDto userUpdatingDto) {
+        MapSqlParameterSource parameterSource = new MapSqlParameterSource();
+        parameterSource.addValue(ID, userUpdatingDto.getId());
+        this.fillParameterSourceByPasswordAndGenderAndBirthDateAndInformation(
+                parameterSource, userUpdatingDto.getPassword(),
+                userUpdatingDto.getGender(),
+                userUpdatingDto.getBirthDate(),
+                userUpdatingDto.getInformation());
+        return namedParameterJdbcTemplate.update(updateUserSql, parameterSource);
+    }
+
+    @Override
+    public Integer deleteUser(Long userId) {
         Map<String, Object> params = new HashMap<>();
         params.put(ID, userId);
         return namedParameterJdbcTemplate.update(deleteUserSql, params);
     }
 
     @Override
-    public boolean checkUserByLogin(String userName) {
+    public Boolean checkUserByLogin(String userName) {
         return jdbcTemplate.queryForObject(checkUserByLoginSql, new String[]{userName}, Boolean.class);
     }
 
     @Override
-    public boolean checkUserByUserId(Long userId) {
+    public Boolean checkUserByUserId(Long userId) {
         return jdbcTemplate.queryForObject(checkUserByUserIdSql, new Long[]{userId}, Boolean.class);
     }
 

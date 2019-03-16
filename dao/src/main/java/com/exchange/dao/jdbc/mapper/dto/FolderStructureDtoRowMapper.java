@@ -1,6 +1,6 @@
 package com.exchange.dao.jdbc.mapper.dto;
 
-import com.exchange.dto.FolderStructureDto;
+import com.exchange.dto.folder.FolderStructureDto;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 

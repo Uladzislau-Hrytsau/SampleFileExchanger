@@ -1,4 +1,4 @@
-package com.exchange.dto;
+package com.exchange.dto.security;
 
 import java.util.Objects;
 import java.util.Set;

@@ -3,6 +3,7 @@ package com.exchange.service;
 import com.exchange.dao.Pagination;
 import com.exchange.dao.User;
 import com.exchange.dao.UserDao;
+import com.exchange.dto.user.UserUpdatingDto;
 import com.exchange.exception.InternalServerException;
 import com.exchange.exception.ValidationException;
 import com.exchange.service.validator.UserValidator;
@@ -98,10 +99,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateUser(User user) {
-        userValidator.validatePassword(user.getPassword());
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        if (userDao.updateUser(user) == 0)
+    public void updateUser(UserUpdatingDto userUpdatingDto) {
+        userValidator.validatePassword(userUpdatingDto.getPassword());
+        userUpdatingDto.setPassword(bCryptPasswordEncoder.encode(userUpdatingDto.getPassword()));
+        if (userDao.updateUser(userUpdatingDto) == 0)
             throw new InternalServerException(updateError);
     }
 

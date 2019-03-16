@@ -2,7 +2,7 @@ package com.exchange.dao.jdbc;
 
 import com.exchange.dao.UserDetailsDao;
 import com.exchange.dao.jdbc.mapper.dto.UserDetailsDtoRowMapper;
-import com.exchange.dto.UserDetailsDto;
+import com.exchange.dto.security.UserDetailsDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;

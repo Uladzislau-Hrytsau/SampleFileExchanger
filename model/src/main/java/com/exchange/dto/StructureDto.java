@@ -1,5 +1,8 @@
 package com.exchange.dto;
 
+import com.exchange.dto.file.FileStructureDto;
+import com.exchange.dto.folder.FolderStructureDto;
+
 import java.util.List;
 import java.util.Objects;
 

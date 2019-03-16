@@ -1,4 +1,4 @@
-package com.exchange.dto;
+package com.exchange.dto.file;
 
 import java.util.Objects;
 

@@ -1,6 +1,6 @@
 package com.exchange.dao;
 
-import com.exchange.dto.FileCategoryDto;
+import com.exchange.dto.file.FileCategoryDto;
 
 import java.util.List;
 import java.util.Set;
@@ -31,7 +31,7 @@ public interface CategoryDao {
      * @param id the id
      * @return the boolean
      */
-    boolean checkCategoryById(Long id);
+    Boolean checkCategoryById(Long id);
 
     /**
      * Exists by categories boolean.

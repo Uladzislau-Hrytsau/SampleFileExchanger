@@ -2,6 +2,7 @@ package com.exchange.service;
 
 
 import com.exchange.dao.User;
+import com.exchange.dto.user.UserUpdatingDto;
 import com.exchange.wrapper.Response;
 
 /**
@@ -52,9 +53,9 @@ public interface UserService {
     /**
      * Update user.
      *
-     * @param user the user
+     * @param userUpdatingDto the user updating dto
      */
-    void updateUser(User user);
+    void updateUser(UserUpdatingDto userUpdatingDto);
 
     /**
      * Delete user.

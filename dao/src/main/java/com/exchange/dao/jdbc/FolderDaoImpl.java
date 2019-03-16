@@ -2,7 +2,7 @@ package com.exchange.dao.jdbc;
 
 import com.exchange.dao.FolderDao;
 import com.exchange.dao.jdbc.mapper.dto.FolderStructureDtoRowMapper;
-import com.exchange.dto.FolderStructureDto;
+import com.exchange.dto.folder.FolderStructureDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;

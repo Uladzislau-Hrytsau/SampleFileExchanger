@@ -1,6 +1,7 @@
 package com.exchange.controller;
 
 import com.exchange.dao.User;
+import com.exchange.dto.user.UserUpdatingDto;
 import com.exchange.service.UserService;
 import com.exchange.wrapper.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,13 +97,13 @@ public class UserRestController {
     /**
      * Update user.
      *
-     * @param user the user
+     * @param userUpdatingDto the user updating dto
      */
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    @PutMapping("/user")
+    @PutMapping("/users")
     @ResponseStatus(value = HttpStatus.OK)
-    public void updateUser(@RequestBody User user) {
-        userService.updateUser(user);
+    public void updateUser(@RequestBody UserUpdatingDto userUpdatingDto) {
+        userService.updateUser(userUpdatingDto);
     }
 
     /**

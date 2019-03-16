@@ -3,7 +3,6 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Main from '@/components/Main'
 import Users from '@/components/user/Users'
-import CreateUser from '@/components/user/CreateUser'
 import UpdateUser from '@/components/user/UpdateUser'
 import Files from '@/components/file/Files'
 import CreateFile from '@/components/file/CreateFile'
@@ -27,14 +26,6 @@ export default new Router({
       path: '/Users',
       name: 'Users',
       component: Users,
-      meta: {
-        requiresAuth: true,
-      }
-    },
-    {
-      path: '/CreateUser',
-      name: 'CreateUser',
-      component: CreateUser,
       meta: {
         requiresAuth: true,
       }

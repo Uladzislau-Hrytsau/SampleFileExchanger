@@ -30,6 +30,7 @@
         </tr>
       </mdb-tbl-body>
     </mdb-tbl>
+
   </div>
 </template>
 
@@ -80,15 +81,11 @@
       ]),
       enableUpdatingTemplate(user) {
         this.setUser(user);
-        this.disableTableUsers();
-        this.disablePagination();
         this.enableUserUpdate();
       },
       enableDeletingTemplate(id) {
         this.enableUserDelete();
         this.setId(id);
-        this.disableTableUsers();
-        this.disablePagination();
         this.enableApprove();
       },
     },

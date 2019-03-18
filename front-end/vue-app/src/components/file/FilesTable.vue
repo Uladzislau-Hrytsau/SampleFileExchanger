@@ -75,8 +75,6 @@
       enableDeletingTemplate(id) {
         this.enableFileDelete();
         this.setId(id);
-        this.disableTableFiles();
-        this.disablePagination();
         this.enableApprove();
       }
     },

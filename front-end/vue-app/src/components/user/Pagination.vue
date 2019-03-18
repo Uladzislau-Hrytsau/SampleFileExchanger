@@ -1,7 +1,7 @@
 <template>
   <div>
     <nav aria-label="Page navigation example">
-      <ul class="pagination pagination-circle pg-blue justify-content-center">
+      <ul class="pagination pagination-circle pg-dark justify-content-center">
 
         <li class="page-item">
           <a class="page-link" v-on:click="setCurrentPosition(1)">1</a>

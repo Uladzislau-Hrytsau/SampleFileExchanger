@@ -2,6 +2,7 @@ package com.exchange.controller;
 
 import com.exchange.dao.File;
 import com.exchange.dto.StructureDto;
+import com.exchange.dto.file.FileUpdatingDto;
 import com.exchange.service.FileService;
 import com.exchange.wrapper.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,20 +104,23 @@ public class FileRestController {
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @PostMapping(value = "/file", consumes = "multipart/form-data")
     @ResponseStatus(value = HttpStatus.CREATED)
-    public Long addFile(@RequestParam("file") String jsonFile, @RequestParam("multipartFile") MultipartFile multipartFile, Authentication authentication) throws IOException {
+    public Long addFile(
+            @RequestParam("file") String jsonFile,
+            @RequestParam("multipartFile") MultipartFile multipartFile,
+            Authentication authentication) throws IOException {
         return fileService.addFile(jsonFile, multipartFile, authentication);
     }
 
     /**
      * Update file.
      *
-     * @param file the file
+     * @param fileUpdatingDto the file updating dto
      */
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    @PutMapping("/file")
+    @PutMapping("/files")
     @ResponseStatus(value = HttpStatus.OK)
-    public void updateFile(@RequestBody File file) {
-        fileService.updateFile(file);
+    public void updateFile(@RequestBody FileUpdatingDto fileUpdatingDto) {
+        fileService.updateFile(fileUpdatingDto);
     }
 
     /**

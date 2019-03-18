@@ -1,21 +1,19 @@
 <template>
   <div class="container-fluid">
-    <div>
-      <mdb-container>
-        <mdb-modal v-if="enabledApprove" @close="cancel" size="sm" class="text-center" dark>
-          <mdb-modal-header center>
-            <p class="heading">Are you sure?</p>
-          </mdb-modal-header>
-          <mdb-modal-body>
-            <mdb-icon icon="trash-alt" size="4x" class="animated rotateIn"/>
-          </mdb-modal-body>
-          <mdb-modal-footer center>
-            <mdb-btn outline="dark" @click="approve">Yes</mdb-btn>
-            <mdb-btn color="dark" @click="cancel">No</mdb-btn>
-          </mdb-modal-footer>
-        </mdb-modal>
-      </mdb-container>
-    </div>
+    <mdb-container>
+      <mdb-modal v-if="enabledApprove" @close="cancel" size="sm" class="text-center" dark>
+        <mdb-modal-header center>
+          <p class="heading">Are you sure?</p>
+        </mdb-modal-header>
+        <mdb-modal-body>
+          <mdb-icon icon="trash-alt" size="4x" class="animated rotateIn"/>
+        </mdb-modal-body>
+        <mdb-modal-footer center>
+          <mdb-btn outline="dark" @click="approve">Yes</mdb-btn>
+          <mdb-btn color="dark" @click="cancel">No</mdb-btn>
+        </mdb-modal-footer>
+      </mdb-modal>
+    </mdb-container>
   </div>
 </template>
 

@@ -1,6 +1,7 @@
 package com.exchange.dao;
 
 import com.exchange.dto.file.FileStructureDto;
+import com.exchange.dto.file.FileUpdatingDto;
 
 import java.util.List;
 
@@ -45,10 +46,10 @@ public interface FileDao {
     /**
      * Update file integer.
      *
-     * @param file the file
+     * @param fileUpdatingDto the file updating dto
      * @return the integer
      */
-    Integer updateFile(File file);
+    Integer updateFile(FileUpdatingDto fileUpdatingDto);
 
     /**
      * Delete file integer.

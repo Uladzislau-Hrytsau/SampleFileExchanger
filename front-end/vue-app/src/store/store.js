@@ -38,6 +38,7 @@ export const store = new Vuex.Store({
 
     user: [],
     enabledUserUpdate: false,
+    enabledFileUpdate: false,
 
     isUserDelete: false,
     isFileDelete: false,
@@ -112,16 +113,10 @@ export const store = new Vuex.Store({
     destroyFiles(state) {
       state.files = null
     },
-    setUserInformation(state, user) {
-      state.user = user
-    },
-    destroyUserInformation(state) {
-      state.user = null
-    },
-    setFileInformation(state, file) {
+    setFile(state, file) {
       state.file = file
     },
-    destroyFileInformation(state) {
+    destroyFile(state) {
       state.file = null
     },
     setFolders(state, folders) {
@@ -193,6 +188,9 @@ export const store = new Vuex.Store({
     setUser(state, user) {
       state.user = user
     },
+    destroyUser(state) {
+      state.user = null
+    },
     enableUserUpdate(state) {
       state.enabledUserUpdate = true
     },
@@ -210,6 +208,12 @@ export const store = new Vuex.Store({
     },
     disableFileDelete(state) {
       state.isFileDelete = false
+    },
+    enableFileUpdate(state) {
+      state.enabledFileUpdate = true
+    },
+    disableFileUpdate(state) {
+      state.enabledFileUpdate = false
     }
   },
 
@@ -296,7 +300,7 @@ export const store = new Vuex.Store({
 
     saveUserInformation(context, credentials) {
       localStorage.setItem('user', JSON.stringify(credentials.user));
-      context.commit('setUserInformation', credentials.user)
+      context.commit('setUser', credentials.user)
     },
 
 
@@ -317,26 +321,7 @@ export const store = new Vuex.Store({
 
     saveFileInformation(context, credentials) {
       localStorage.setItem('file', JSON.stringify(credentials.file));
-      context.commit('setFileInformation', credentials.file)
-    },
-
-    updateFile(context, credentials) {
-      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
-      if (context.getters.loggedIn && (context.getters.hasRoleAdmin || context.getters.hasRoleUser)) {
-        return new Promise((resolve, reject) => {
-          axios
-            .put('file', credentials.data)
-            .then(response => {
-              context.commit('destroyFileInformation');
-              localStorage.removeItem('file');
-              resolve(response)
-            })
-            .catch(error => {
-              console.log(error);
-              reject(error)
-            })
-        })
-      }
+      context.commit('setFile', credentials.file)
     },
 
     getUserInformation(context) {
@@ -347,7 +332,7 @@ export const store = new Vuex.Store({
             .get('oauth/user')
             .then(response => {
               localStorage.setItem('user', JSON.stringify(response.data));
-              context.commit('setUserInformation', response.data);
+              context.commit('setUser', response.data);
               resolve(response)
             })
             .catch(error => {
@@ -538,10 +523,6 @@ export const store = new Vuex.Store({
           axios
             .put('users', credentials)
             .then(response => {
-                context.commit('destroyUserInformation');
-                context.commit('disableUserUpdate');
-                context.commit('enableTableUsers');
-                context.commit('enablePagination');
                 resolve(response)
             })
             .catch((error) => {
@@ -550,6 +531,23 @@ export const store = new Vuex.Store({
               reject(error)
             })
         }))
+      }
+    },
+
+    updateFile(context, credentials) {
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
+      if (context.getters.loggedIn && (context.getters.hasRoleAdmin || context.getters.hasRoleUser)) {
+        return new Promise((resolve, reject) => {
+          axios
+            .put('files', credentials)
+            .then(response => {
+              resolve(response)
+            })
+            .catch(error => {
+              console.log(error);
+              reject(error)
+            })
+        })
       }
     },
 

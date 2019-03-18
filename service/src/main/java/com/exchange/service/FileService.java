@@ -2,6 +2,7 @@ package com.exchange.service;
 
 import com.exchange.dao.File;
 import com.exchange.dto.StructureDto;
+import com.exchange.dto.file.FileUpdatingDto;
 import com.exchange.wrapper.Response;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.multipart.MultipartFile;
@@ -53,9 +54,9 @@ public interface FileService {
     /**
      * Update file.
      *
-     * @param file the file
+     * @param fileUpdatingDto the file updating dto
      */
-    void updateFile(File file);
+    void updateFile(FileUpdatingDto fileUpdatingDto);
 
     /**
      * Delete file.

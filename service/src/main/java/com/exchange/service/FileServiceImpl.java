@@ -5,6 +5,7 @@ import com.exchange.dao.*;
 import com.exchange.dao.file.FileWriter;
 import com.exchange.dto.StructureDto;
 import com.exchange.dto.file.FileCategoryDto;
+import com.exchange.dto.file.FileUpdatingDto;
 import com.exchange.exception.InternalServerException;
 import com.exchange.exception.ValidationException;
 import com.exchange.wrapper.Response;
@@ -51,6 +52,8 @@ public class FileServiceImpl implements FileService {
     private String incorrectCategory;
     @Value("${fileService.incorrectDescription}")
     private String incorrectDescription;
+    @Value("${fileService.incorrectRealName}")
+    private String incorrectFileName;
     @Value("${fileService.updateError}")
     private String updateError;
     @Value("${fileService.deleteError}")
@@ -140,25 +143,29 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public void updateFile(File file) {
+    public void updateFile(FileUpdatingDto fileUpdatingDto) {
+        Long id = fileUpdatingDto.getId();
+        String description = fileUpdatingDto.getDescription();
+        String realName = fileUpdatingDto.getRealName();
 
-        String description = file.getDescription();
-//        Long category = file.getCategoryId();
+        if (id == null || id < 0L) {
+            throw new ValidationException(incorrectId);
+        }
 
         if (description == null || description.isEmpty()) {
             throw new ValidationException(incorrectDescription);
         }
 
-//        if (category == null || category < 0L || !categoryDao.checkCategoryById(category)) {
-//            throw new ValidationException(incorrectCategory);
-//        }
-
-        if (fileDao.updateFile(file) == 0) {
-            throw new InternalServerException(updateError);
+        if (realName == null || realName.isEmpty()) {
+            throw new ValidationException(incorrectFileName);
         }
 
-        if (file.getDate() == null) {
-            file.setDate(LocalDate.now());
+        if (fileUpdatingDto.getDate() == null) {
+            fileUpdatingDto.setDate(LocalDate.now());
+        }
+
+        if (fileDao.updateFile(fileUpdatingDto) == 0) {
+            throw new InternalServerException(updateError);
         }
     }
 

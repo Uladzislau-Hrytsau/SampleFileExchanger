@@ -48,9 +48,7 @@
       mdbAlert,
     },
     data() {
-      return {
-
-      };
+      return {};
     },
     computed: {
       ...mapState([

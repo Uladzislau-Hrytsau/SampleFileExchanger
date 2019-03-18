@@ -5,6 +5,7 @@ import com.exchange.dao.FileDao;
 import com.exchange.dao.jdbc.mapper.dto.FileStructureDtoRowMapper;
 import com.exchange.dao.jdbc.mapper.model.FileRowMapper;
 import com.exchange.dto.file.FileStructureDto;
+import com.exchange.dto.file.FileUpdatingDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -15,9 +16,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * The type File dao.
@@ -151,15 +150,13 @@ public class FileDaoImpl implements FileDao {
     }
 
     @Override
-    public Integer updateFile(File file) {
-        Map<String, Object> params = new HashMap<>();
-        params.put(ID, file.getId());
-        params.put(USER_ID, file.getUserId());
-//        params.put(URL, file.getUrl());
-        params.put(DESCRIPTION, file.getDescription());
-        params.put(DATE, file.getDate());
-//        params.put(CATEGORY, file.getCategoryId());
-        return namedParameterJdbcTemplate.update(updateFileSql, params);
+    public Integer updateFile(FileUpdatingDto fileUpdatingDto) {
+        MapSqlParameterSource parameterSource = new MapSqlParameterSource();
+        parameterSource.addValue(ID, fileUpdatingDto.getId());
+        parameterSource.addValue(DESCRIPTION, fileUpdatingDto.getDescription());
+        parameterSource.addValue(REAL_NAME, fileUpdatingDto.getRealName());
+        parameterSource.addValue(DATE, fileUpdatingDto.getDate());
+        return namedParameterJdbcTemplate.update(updateFileSql, parameterSource);
     }
 
     @Override

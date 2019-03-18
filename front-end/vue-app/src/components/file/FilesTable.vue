@@ -22,7 +22,7 @@
           <td>{{ file.encodeName }}</td>
           <td>{{ file.date }}</td>
           <td>
-            <button class="btn fas fa-pencil-alt" v-on:click="enableUpdatingTemplate()"></button>
+            <button class="btn fas fa-pencil-alt" v-on:click="enableUpdatingTemplate(file)"></button>
           </td>
           <td>
             <button class="btn fas fa-trash-alt" v-on:click="enableDeletingTemplate(file.id)"></button>
@@ -67,10 +67,13 @@
         'setId',
         'disableTableFiles',
         'disablePagination',
-        'enableApprove'
+        'enableApprove',
+        'setFile',
+        'enableFileUpdate'
       ]),
-      enableUpdatingTemplate() {
-
+      enableUpdatingTemplate(file) {
+        this.setFile(file);
+        this.enableFileUpdate()
       },
       enableDeletingTemplate(id) {
         this.enableFileDelete();

@@ -16,24 +16,40 @@
       mdbBtn
     },
     computed: {
-      ...mapState(['id'])
+      ...mapState([
+        'id',
+        'isUserDelete',
+        'isFileDelete'
+      ])
     },
     methods: {
       ...mapActions([
         'deleteUser',
-        'retrieveUsers'
+        'retrieveUsers',
+        'deleteFile',
+        'retrieveFiles'
       ]),
       ...mapMutations([
         'enableTableUsers',
         'enablePagination',
-        'disableApprove'
+        'disableApprove',
+        'destroyId',
+        'enableTableFiles'
       ]),
       async approve() {
-        await this.deleteUser(this.id);
-        this.retrieveUsers();
-        this.enableTableUsers();
+        if (this.isUserDelete) {
+          await this.deleteUser(this.id);
+          this.retrieveUsers();
+          this.enableTableUsers();
+        }
+        if (this.isFileDelete) {
+          await this.deleteFile(this.id);
+          this.retrieveFiles();
+          this.enableTableFiles();
+        }
         this.enablePagination();
         this.disableApprove();
+        this.destroyId();
       },
       cancel() {
         this.enableTableUsers();

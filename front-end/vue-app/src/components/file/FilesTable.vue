@@ -1,11 +1,5 @@
 <template>
-  <div v-if="approved">
-    <mdb-alert color="primary">
-      <button class="btn" v-on:click="deleteAfterApprove(id)">approve</button>
-      <button class="btn" v-on:click="cancelApprove">cancel</button>
-    </mdb-alert>
-  </div>
-  <div v-else>
+  <div>
     <mdb-tbl>
       <mdb-tbl-head>
         <tr>
@@ -28,10 +22,10 @@
           <td>{{ file.encodeName }}</td>
           <td>{{ file.date }}</td>
           <td>
-            <button class="btn fas fa-pencil-alt"></button>
+            <button class="btn fas fa-pencil-alt" v-on:click="enableUpdatingTemplate()"></button>
           </td>
           <td>
-            <button class="btn fas fa-trash-alt" v-on:click="approve(file.id)"></button>
+            <button class="btn fas fa-trash-alt" v-on:click="enableDeletingTemplate(file.id)"></button>
           </td>
         </tr>
       </mdb-tbl-body>
@@ -53,32 +47,41 @@
     },
     data() {
       return {
-        approved: false,
-        id: '',
+
       };
     },
     computed: {
-      ...mapState(['files', 'pageFile', 'size']),
+      ...mapState([
+        'files',
+        'pageFile',
+        'size',
+      ]),
     },
     methods: {
-      ...mapActions(['retrieveFiles', 'deleteFile']),
-      approve(id) {
-        this.approved = true;
-        this.id = id
+      ...mapActions([
+        'retrieveFiles',
+        'deleteFile'
+      ]),
+      ...mapMutations([
+        'enableFileDelete',
+        'setId',
+        'disableTableFiles',
+        'disablePagination',
+        'enableApprove'
+      ]),
+      enableUpdatingTemplate() {
+
       },
-      cancelApprove() {
-        this.approved = false;
-      },
-      async deleteAfterApprove(id) {
-        await this.deleteFile(id);
-        this.approved = false;
-        await this.retrieveFiles();
-      },
+      enableDeletingTemplate(id) {
+        this.enableFileDelete();
+        this.setId(id);
+        this.disableTableFiles();
+        this.disablePagination();
+        this.enableApprove();
+      }
     },
     mounted() {
-      this.$store.dispatch('retrieveFiles').catch(error => {
-        console.log(error)
-      })
+      this.retrieveFiles();
     }
   }
 </script>

@@ -48,13 +48,24 @@
     },
     data() {
       return {
+
       };
     },
     computed: {
-      ...mapState(['users', 'pageUser', 'size', 'enabledApprove', 'isApproved', 'isCancelled']),
+      ...mapState([
+        'users',
+        'pageUser',
+        'size',
+        'enabledApprove',
+        'isApproved',
+        'isCancelled'
+      ]),
     },
     methods: {
-      ...mapActions(['retrieveUsers', 'deleteUser']),
+      ...mapActions([
+        'retrieveUsers',
+        'deleteUser'
+      ]),
       ...mapMutations([
         'enableTableUsers',
         'enablePagination',
@@ -64,7 +75,8 @@
         'disableApprove',
         'setId',
         'setUser',
-        'enableUserUpdate'
+        'enableUserUpdate',
+        'enableUserDelete'
       ]),
       enableUpdatingTemplate(user) {
         this.setUser(user);
@@ -73,6 +85,7 @@
         this.enableUserUpdate();
       },
       enableDeletingTemplate(id) {
+        this.enableUserDelete();
         this.setId(id);
         this.disableTableUsers();
         this.disablePagination();

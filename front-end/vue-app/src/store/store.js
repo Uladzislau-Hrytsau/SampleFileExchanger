@@ -33,10 +33,15 @@ export const store = new Vuex.Store({
     paginationItem: localStorage.getItem('paginationItem') || 1,
     enabledPagination: true,
     enabledTableUsers: true,
+    enabledTableFiles: true,
     enabledApprove: false,
 
     user: [],
     enabledUserUpdate: false,
+
+    isUserDelete: false,
+    isFileDelete: false,
+
 
   },
 
@@ -167,6 +172,12 @@ export const store = new Vuex.Store({
     disableTableUsers(state) {
       state.enabledTableUsers = false
     },
+    enableTableFiles(state) {
+      state.enabledTableFiles = true
+    },
+    disableTableFiles(state) {
+      state.enabledTableFiles = false
+    },
     enableApprove(state) {
       state.enabledApprove = true
     },
@@ -176,6 +187,9 @@ export const store = new Vuex.Store({
     setId(state, id) {
       state.id = id
     },
+    destroyId(state) {
+      state.id = null
+    },
     setUser(state, user) {
       state.user = user
     },
@@ -184,6 +198,18 @@ export const store = new Vuex.Store({
     },
     disableUserUpdate(state) {
       state.enabledUserUpdate = false
+    },
+    enableUserDelete(state) {
+      state.isUserDelete = true
+    },
+    disableUserDelete(state) {
+      state.isUserDelete = false
+    },
+    enableFileDelete(state) {
+      state.isFileDelete = true
+    },
+    disableFileDelete(state) {
+      state.isFileDelete = false
     }
   },
 

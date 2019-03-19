@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
@@ -61,30 +60,12 @@ public class FileDaoImpl implements FileDao {
      */
     public static final String OFFSET = "offset";
 
-    @Value("${file.selectByUserIdAndCategory}")
-    private String getAllFilesByUserIdAndCategorySql;
-    @Value("${file.selectByUserIdAndDate}")
-    private String getAllFilesByUserIdAndDateSql;
-    @Value("${file.selectByUserId}")
-    private String getAllFilesByUserIdSql;
-    @Value("${file.select}")
-    private String getAllFilesSql;
-    @Value("${file.selectById}")
-    private String getFileByIdSql;
     @Value("${file.insert}")
     private String addFileSql;
     @Value("${file.update}")
     private String updateFileSql;
     @Value("${file.delete}")
     private String deleteFileSql;
-    @Value("${file.checkFileById}")
-    private String checkFileByIdSql;
-    @Value("${file.checkFileByUserId}")
-    private String checkFileByUserIdSql;
-    @Value("${file.checkFileByUrl}")
-    private String checkFileByUrlSql;
-    @Value("${file.existsByEncodeName}")
-    private String existsByEncodeNameSql;
     @Value("${file.selectByUserIdAndFolderId}")
     private String selectByUserIdAndFolderIdSql;
     @Value("${file.selectByLimitAndOffset}")
@@ -92,10 +73,10 @@ public class FileDaoImpl implements FileDao {
     @Value("${file.selectFilesCount}")
     private String selectFilesCountSql;
 
-    private JdbcTemplate jdbcTemplate;
-    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-    private FileRowMapper fileRowMapper;
-    private FileStructureDtoRowMapper fileStructureDtoRowMapper;
+    private final JdbcTemplate jdbcTemplate;
+    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    private final FileRowMapper fileRowMapper;
+    private final FileStructureDtoRowMapper fileStructureDtoRowMapper;
 
     /**
      * Instantiates a new File dao.
@@ -113,25 +94,12 @@ public class FileDaoImpl implements FileDao {
         this.fileStructureDtoRowMapper = fileStructureDtoRowMapper;
     }
 
-
-    @Override
-    public List<File> getAllFilesByUserId(Long userId) {
-        return jdbcTemplate.query(getAllFilesByUserIdSql, fileRowMapper, userId);
-    }
-
     @Override
     public List<File> getFilesByLimitAndOffset(Integer limit, Integer offset) {
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
         parameterSource.addValue(LIMIT, limit);
         parameterSource.addValue(OFFSET, offset);
         return namedParameterJdbcTemplate.query(selectByLimitAndOffsetSql, parameterSource, fileRowMapper);
-    }
-
-    @Override
-    public File getFileById(Long id) {
-        SqlParameterSource namedParameters = new MapSqlParameterSource("p_id", id);
-        return namedParameterJdbcTemplate.queryForObject(
-                getFileByIdSql, namedParameters, fileRowMapper);
     }
 
     @Override
@@ -164,26 +132,6 @@ public class FileDaoImpl implements FileDao {
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
         parameterSource.addValue(ID, id);
         return namedParameterJdbcTemplate.update(deleteFileSql, parameterSource);
-    }
-
-    @Override
-    public Boolean checkFileById(Long id) {
-        return jdbcTemplate.queryForObject(checkFileByIdSql, new Long[]{id}, Boolean.class);
-    }
-
-    @Override
-    public Boolean checkFileByUserId(Long userId) {
-        return jdbcTemplate.queryForObject(checkFileByUserIdSql, new Long[]{userId}, Boolean.class);
-    }
-
-    @Override
-    public Boolean checkFileByUrl(String url) {
-        return jdbcTemplate.queryForObject(checkFileByUrlSql, new String[]{url}, Boolean.class);
-    }
-
-    @Override
-    public Boolean existsByEncodeName(String encodeName) {
-        return jdbcTemplate.queryForObject(existsByEncodeNameSql, new String[]{encodeName}, Boolean.class);
     }
 
     @Override

@@ -19,30 +19,6 @@ public interface UserDao {
     List<User> getUsersByLimitAndOffset(Integer limit, Integer offset);
 
     /**
-     * Gets user by user id.
-     *
-     * @param userId the user id
-     * @return the user by user id
-     */
-    User getUserByUserId(Long userId);
-
-    /**
-     * Gets user by login.
-     *
-     * @param login the login
-     * @return the user by login
-     */
-    User getUserByLogin(String login);
-
-    /**
-     * Gets user password by user name.
-     *
-     * @param userName the user name
-     * @return the user password by user name
-     */
-    String getUserPasswordByUserName(String userName);
-
-    /**
      * Add user long.
      *
      * @param user the user
@@ -67,28 +43,12 @@ public interface UserDao {
     Integer deleteUser(Long userId);
 
     /**
-     * Check user by user id boolean.
-     *
-     * @param userId the user id
-     * @return the boolean
-     */
-    Boolean checkUserByUserId(Long userId);
-
-    /**
      * Check user by login boolean.
      *
      * @param login the login
      * @return the boolean
      */
     Boolean checkUserByLogin(String login);
-
-    /**
-     * Gets user id by login.
-     *
-     * @param login the login
-     * @return the user id by login
-     */
-    Long getUserIdByLogin(String login);
 
     /**
      * Gets user count.

@@ -19,30 +19,6 @@ public interface UserService {
     Response getUsersAndCountByPageAndSize(Integer page, Integer size);
 
     /**
-     * Gets user by user id.
-     *
-     * @param userId the user id
-     * @return the user by user id
-     */
-    User getUserByUserId(Long userId);
-
-    /**
-     * Gets user by login.
-     *
-     * @param login the login
-     * @return the user by login
-     */
-    User getUserByLogin(String login);
-
-    /**
-     * Gets user password by user name.
-     *
-     * @param userName the user name
-     * @return the user password by user name
-     */
-    String getUserPasswordByUserName(String userName);
-
-    /**
      * Add user.
      *
      * @param user the user

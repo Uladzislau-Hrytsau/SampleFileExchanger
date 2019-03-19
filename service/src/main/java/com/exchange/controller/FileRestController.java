@@ -1,6 +1,5 @@
 package com.exchange.controller;
 
-import com.exchange.dao.File;
 import com.exchange.dto.StructureDto;
 import com.exchange.dto.file.FileUpdatingDto;
 import com.exchange.service.FileService;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.List;
 
 /**
  * The type File rest controller.
@@ -37,59 +35,35 @@ public class FileRestController {
     /**
      * Gets all files.
      *
-     * @param page the page
-     * @param size the size
+     * @param page           the page
+     * @param size           the size
+     * @param authentication the authentication
      * @return the all files
      */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping(value = "/files", params = {"page", "size"})
     @ResponseStatus(value = HttpStatus.OK)
-    public Response getAllFiles(
+    public Response getFilesByPageAndSize(
             @RequestParam(value = "page", required = false, defaultValue = "null") Integer page,
-            @RequestParam(value = "size", required = false, defaultValue = "null") Integer size) {
-        return fileService.getFilesAndCountByPageAndSize(page, size);
+            @RequestParam(value = "size", required = false, defaultValue = "null") Integer size,
+            Authentication authentication) {
+        return fileService.getFilesAndCountByPageAndSize(page, size, authentication);
     }
 
     /**
      * Gets all folders by folder id.
      *
-     * @param authentication the authentication
      * @param folderId       the folder id
+     * @param authentication the authentication
      * @return the all folders by folder id
      */
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    @GetMapping("/structure/{folderId}")
+    @GetMapping(value = "/structures", params = {"folderId"})
     @ResponseStatus(value = HttpStatus.OK)
-    public StructureDto getAllFoldersByFolderId(
-            Authentication authentication,
-            @PathVariable(value = "folderId") Long folderId) {
-        return fileService.getAllFilesAndFoldersByFolderId(authentication, folderId);
-    }
-
-    /**
-     * Gets file by id.
-     *
-     * @param id the id
-     * @return the file by id
-     */
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    @GetMapping("/file/{id}")
-    @ResponseStatus(value = HttpStatus.OK)
-    public File getFileById(@PathVariable(value = "id") Long id) {
-        return fileService.getFileById(id);
-    }
-
-    /**
-     * Gets all files by user id.
-     *
-     * @param userId the user id
-     * @return the all files by user id
-     */
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    @GetMapping("/files/{userId}")
-    @ResponseStatus(value = HttpStatus.OK)
-    public List<File> getAllFilesByUserId(@PathVariable(value = "userId") Long userId) {
-        return fileService.getAllFilesByUserId(userId);
+    public StructureDto getFoldersByFolderId(
+            @RequestParam(value = "folderId") Long folderId,
+            Authentication authentication) {
+        return fileService.getFilesAndFoldersByFolderId(authentication, folderId);
     }
 
     /**
@@ -102,7 +76,7 @@ public class FileRestController {
      * @throws IOException the io exception
      */
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    @PostMapping(value = "/file", consumes = "multipart/form-data")
+    @PostMapping(value = "/files", consumes = "multipart/form-data")
     @ResponseStatus(value = HttpStatus.CREATED)
     public Long addFile(
             @RequestParam("file") String jsonFile,

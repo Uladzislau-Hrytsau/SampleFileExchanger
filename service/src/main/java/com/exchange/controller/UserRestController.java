@@ -45,48 +45,9 @@ public class UserRestController {
     }
 
     /**
-     * Gets users amount.
-     *
-     * @return the users amount
-     */
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @GetMapping(value = "/users/amount")
-    @ResponseStatus(value = HttpStatus.OK)
-    public Long getUsersAmount() {
-        return userService.getUserCount();
-    }
-
-    /**
-     * Gets user by user id.
-     *
-     * @param userId the user id
-     * @return the user by user id
-     */
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    @GetMapping(value = "/user/{id}")
-    @ResponseStatus(value = HttpStatus.OK)
-    public User getUserByUserId(@PathVariable(value = "id") Long userId) {
-        return userService.getUserByUserId(userId);
-    }
-
-    /**
-     * Gets user by login.
-     *
-     * @param login the login
-     * @return the user by login
-     */
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    @GetMapping(value = "/user/login", params = {"login"})
-    @ResponseStatus(value = HttpStatus.OK)
-    public User getUserByLogin(@RequestParam("login") String login) {
-        return userService.getUserByLogin(login);
-    }
-
-    /**
-     * Add user long.
+     * Add user.
      *
      * @param user the user
-     * @return the long
      */
     @PostMapping("/users")
     @ResponseStatus(value = HttpStatus.CREATED)

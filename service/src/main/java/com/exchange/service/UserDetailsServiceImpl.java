@@ -20,7 +20,7 @@ import java.util.Set;
 @Transactional
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private UserDetailsDao userDetailsDao;
+    private final UserDetailsDao userDetailsDao;
 
     /**
      * Instantiates a new User details service.

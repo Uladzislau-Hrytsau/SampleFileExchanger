@@ -357,7 +357,11 @@ export const store = new Vuex.Store({
       if (context.getters.loggedIn && (context.getters.hasRoleAdmin || context.getters.hasRoleUser)) {
         return new Promise((resolve, reject) => {
           axios
-            .get('structure/' + credentials.folderId)
+            .get('/structures', {
+              params: {
+                folderId: credentials.folderId
+              }
+            })
             .then(response => {
               context.commit('setFolders', response.data);
               resolve(response);

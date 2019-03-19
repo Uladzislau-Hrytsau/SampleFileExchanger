@@ -1,6 +1,5 @@
 package com.exchange.service;
 
-import com.exchange.dao.File;
 import com.exchange.dto.StructureDto;
 import com.exchange.dto.file.FileUpdatingDto;
 import com.exchange.wrapper.Response;
@@ -8,7 +7,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.List;
 
 /**
  * The interface File service.
@@ -18,27 +16,12 @@ public interface FileService {
     /**
      * Gets files and count by page and size.
      *
-     * @param page the page
-     * @param size the size
+     * @param page           the page
+     * @param size           the size
+     * @param authentication the authentication
      * @return the files and count by page and size
      */
-    Response getFilesAndCountByPageAndSize(Integer page, Integer size);
-
-    /**
-     * Gets all files by user id.
-     *
-     * @param userId the user id
-     * @return the all files by user id
-     */
-    List<File> getAllFilesByUserId(Long userId);
-
-    /**
-     * Gets file by id.
-     *
-     * @param id the id
-     * @return the file by id
-     */
-    File getFileById(Long id);
+    Response getFilesAndCountByPageAndSize(Integer page, Integer size, Authentication authentication);
 
     /**
      * Add file long.
@@ -72,7 +55,7 @@ public interface FileService {
      * @param folderId       the folder id
      * @return the all files and folders by folder id
      */
-    StructureDto getAllFilesAndFoldersByFolderId(Authentication authentication, Long folderId);
+    StructureDto getFilesAndFoldersByFolderId(Authentication authentication, Long folderId);
 
     /**
      * Gets file count.

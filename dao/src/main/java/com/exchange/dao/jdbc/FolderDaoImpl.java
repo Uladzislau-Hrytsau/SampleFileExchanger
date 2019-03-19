@@ -37,8 +37,8 @@ public class FolderDaoImpl implements FolderDao {
     @Value("${folder.selectByUserIdAndParentId}")
     private String selectByUserIdAndParentIdSql;
 
-    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-    private FolderStructureDtoRowMapper folderStructureDtoRowMapper;
+    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    private final FolderStructureDtoRowMapper folderStructureDtoRowMapper;
 
     /**
      * Instantiates a new Folder dao.

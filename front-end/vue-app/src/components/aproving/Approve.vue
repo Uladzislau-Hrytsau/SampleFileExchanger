@@ -66,21 +66,31 @@
         'enablePagination',
         'disableApprove',
         'destroyId',
-        'enableTableFiles'
+        'enableTableFiles',
+        'disableUserDelete',
+        'disableFileDelete'
       ]),
       async approve() {
         if (this.isUserDelete) {
           await this.deleteUser(this.id);
           this.retrieveUsers();
+          this.disableUserDelete();
         }
         if (this.isFileDelete) {
           await this.deleteFile(this.id);
           this.retrieveFiles();
+          this.disableFileDelete();
         }
         this.disableApprove();
         this.destroyId();
       },
       cancel() {
+        if (this.isUserDelete) {
+          this.disableUserDelete();
+        }
+        if (this.isFileDelete) {
+          this.disableFileDelete();
+        }
         this.disableApprove();
       }
     }

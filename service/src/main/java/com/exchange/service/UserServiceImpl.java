@@ -24,10 +24,10 @@ public class UserServiceImpl implements UserService {
 
     private static final int USER_ROLE_ID = 1;
     @Lazy
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
-    private UserDao userDao;
-    private UserValidator userValidator;
-    private UserRoleService userRoleService;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final UserDao userDao;
+    private final UserValidator userValidator;
+    private final UserRoleService userRoleService;
 
     @Value("${userService.deleteError}")
     private String deleteError;
@@ -35,14 +35,8 @@ public class UserServiceImpl implements UserService {
     private String updateError;
     @Value("${userService.createError}")
     private String createError;
-    @Value("${userService.incorrectLogin}")
-    private String incorrectLogin;
     @Value("${userService.incorrectId}")
     private String incorrectId;
-    @Value("${userService.userDoesNotExist}")
-    private String userDoesNotExist;
-    @Value("${userRoleService.incorrectUserName}")
-    private String incorrectUserName;
 
     /**
      * Instantiates a new User service.
@@ -68,32 +62,6 @@ public class UserServiceImpl implements UserService {
         response.setData(userDao.getUsersByLimitAndOffset(size, offset));
         response.setPagination(new Pagination(this.getUserCount()));
         return response;
-    }
-
-    @Override
-    public User getUserByUserId(Long userId) {
-        if (userId == null || userId < 0L)
-            throw new ValidationException(incorrectId);
-        if (!userDao.checkUserByUserId(userId))
-            throw new ValidationException(userDoesNotExist);
-        return userDao.getUserByUserId(userId);
-    }
-
-    @Override
-    public User getUserByLogin(String login) {
-        if (login == null || login.isEmpty())
-            throw new ValidationException(incorrectLogin);
-        if (!userDao.checkUserByLogin(login))
-            throw new ValidationException(userDoesNotExist);
-        return userDao.getUserByLogin(login);
-    }
-
-    @Override
-    public String getUserPasswordByUserName(String userName) {
-        if (userName == null || userName.isEmpty()) {
-            throw new ValidationException(incorrectUserName);
-        }
-        return userDao.getUserPasswordByUserName(userName);
     }
 
     @Override

@@ -21,7 +21,6 @@ import javax.servlet.ServletContext;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -32,24 +31,15 @@ import java.util.UUID;
 @Transactional
 public class FileServiceImpl implements FileService {
 
-    private UserDao userDao;
-    private FileDao fileDao;
-    private FolderDao folderDao;
-    private CategoryDao categoryDao;
-    private ServletContext servletContext;
-    private FileWriter fileWriter;
-    private ObjectMapper objectMapper;
+    private final FileDao fileDao;
+    private final FolderDao folderDao;
+    private final CategoryDao categoryDao;
+    private final ServletContext servletContext;
+    private final FileWriter fileWriter;
+    private final ObjectMapper objectMapper;
 
     @Value("${fileService.incorrectId}")
     private String incorrectId;
-    @Value("${fileService.fileDoesNotExist}")
-    private String fileDoesNotExist;
-    @Value("${fileService.incorrectUrl}")
-    private String incorrectUrl;
-    @Value("${userService.userDoesNotExist}")
-    private String userDoesNotExist;
-    @Value("${fileService.incorrectCategory}")
-    private String incorrectCategory;
     @Value("${fileService.incorrectDescription}")
     private String incorrectDescription;
     @Value("${fileService.incorrectRealName}")
@@ -62,7 +52,6 @@ public class FileServiceImpl implements FileService {
     /**
      * Instantiates a new File service.
      *
-     * @param userDao        the user dao
      * @param fileDao        the file dao
      * @param folderDao      the folder dao
      * @param categoryDao    the category dao
@@ -71,8 +60,7 @@ public class FileServiceImpl implements FileService {
      * @param objectMapper   the object mapper
      */
     @Autowired
-    public FileServiceImpl(UserDao userDao, FileDao fileDao, FolderDao folderDao, CategoryDao categoryDao, ServletContext servletContext, FileWriter fileWriter, ObjectMapper objectMapper) {
-        this.userDao = userDao;
+    public FileServiceImpl(FileDao fileDao, FolderDao folderDao, CategoryDao categoryDao, ServletContext servletContext, FileWriter fileWriter, ObjectMapper objectMapper) {
         this.fileDao = fileDao;
         this.folderDao = folderDao;
         this.categoryDao = categoryDao;
@@ -82,35 +70,14 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public Response getFilesAndCountByPageAndSize(Integer page, Integer size) {
+    public Response getFilesAndCountByPageAndSize(Integer page, Integer size, Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         // TODO: validate page and size
         Integer offset = size * --page;
         Response<File> response = new Response<>();
         response.setData(fileDao.getFilesByLimitAndOffset(size, offset));
         response.setPagination(new Pagination(this.getFileCount()));
         return response;
-    }
-
-    @Override
-    public List<File> getAllFilesByUserId(Long userId) {
-        if (userId == null || userId < 0L)
-            throw new ValidationException(incorrectId);
-        if (!fileDao.checkFileByUserId(userId))
-            throw new ValidationException(fileDoesNotExist);
-        return fileDao.getAllFilesByUserId(userId);
-    }
-
-    @Override
-    public File getFileById(Long id) {
-
-        if (id == null || id < 0L) {
-            throw new ValidationException(incorrectId);
-        }
-
-        if (!fileDao.checkFileById(id)) {
-            throw new ValidationException(fileDoesNotExist);
-        }
-        return fileDao.getFileById(id);
     }
 
     @Override
@@ -147,23 +114,18 @@ public class FileServiceImpl implements FileService {
         Long id = fileUpdatingDto.getId();
         String description = fileUpdatingDto.getDescription();
         String realName = fileUpdatingDto.getRealName();
-
         if (id == null || id < 0L) {
             throw new ValidationException(incorrectId);
         }
-
         if (description == null || description.isEmpty()) {
             throw new ValidationException(incorrectDescription);
         }
-
         if (realName == null || realName.isEmpty()) {
             throw new ValidationException(incorrectFileName);
         }
-
         if (fileUpdatingDto.getDate() == null) {
             fileUpdatingDto.setDate(LocalDate.now());
         }
-
         if (fileDao.updateFile(fileUpdatingDto) == 0) {
             throw new InternalServerException(updateError);
         }
@@ -180,7 +142,7 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public StructureDto getAllFilesAndFoldersByFolderId(Authentication authentication, Long folderId) {
+    public StructureDto getFilesAndFoldersByFolderId(Authentication authentication, Long folderId) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         Long userId = userDetails.getUserId();
         return new StructureDto(

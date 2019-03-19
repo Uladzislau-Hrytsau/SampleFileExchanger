@@ -6,9 +6,12 @@
           <p class="heading">Are you sure you want to update information about the user?</p>
         </mdb-modal-header>
         <mdb-modal-body>
-          <mdb-input size="sm" icon="key" group type="password" required v-model="newUser.password" v-bind:label="user.password"/>
-          <mdb-input size="sm" icon="fas fa-birthday-cake" group type="date" required v-model="newUser.birthDate" v-bind:label="user.birthDate"/>
-          <mdb-input size="sm" icon="fas fa-info" group type="text" required v-model="newUser.information" v-bind:label="user.information"/>
+          <mdb-input size="sm" icon="key" group type="password" required v-model="newUser.password"
+                     v-bind:label="user.password"/>
+          <mdb-input size="sm" icon="fas fa-birthday-cake" group type="date" required v-model="newUser.birthDate"
+                     v-bind:label="user.birthDate"/>
+          <mdb-input size="sm" icon="fas fa-info" group type="text" required v-model="newUser.information"
+                     v-bind:label="user.information"/>
           <b-form-group v-bind:label="user.gender ? 'Male' : 'Female'">
             <b-form-radio-group size="sm" v-model="newUser.gender"
                                 :options="genders"
@@ -97,6 +100,9 @@
           birthDate: this.newUser.birthDate || this.user.birthDate,
           information: this.newUser.information || this.user.information,
         };
+        console.log(data.gender);
+        console.log(this.user.gender);
+        console.log(this.newUser.gender);
         await this.updateUser(data);
         this.retrieveUsers();
         this.destroyUser();

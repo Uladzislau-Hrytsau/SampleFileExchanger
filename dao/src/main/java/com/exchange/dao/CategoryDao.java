@@ -2,36 +2,12 @@ package com.exchange.dao;
 
 import com.exchange.dto.file.FileCategoryDto;
 
-import java.util.List;
 import java.util.Set;
 
 /**
  * The interface Category dao.
  */
 public interface CategoryDao {
-
-    /**
-     * Gets all categories.
-     *
-     * @return the all categories
-     */
-    List<Category> getAllCategories();
-
-    /**
-     * Gets category by id.
-     *
-     * @param id the id
-     * @return the category by id
-     */
-    Category getCategoryById(Long id);
-
-    /**
-     * Check category by id boolean.
-     *
-     * @param id the id
-     * @return the boolean
-     */
-    Boolean checkCategoryById(Long id);
 
     /**
      * Exists by categories boolean.
@@ -49,5 +25,6 @@ public interface CategoryDao {
      * @return the int [ ]
      */
     int[] addFileCategories(Set<FileCategoryDto> categories);
+
 
 }

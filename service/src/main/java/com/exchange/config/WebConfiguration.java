@@ -48,7 +48,7 @@ public class WebConfiguration {
     }
 
     /**
-     * Request mapping handler adapter request mapping handler adapter.
+     * Request mapping handler adapter.
      *
      * @return the request mapping handler adapter
      */

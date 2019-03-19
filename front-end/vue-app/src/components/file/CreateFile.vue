@@ -146,8 +146,6 @@
           .then(response => {
             this.folders = response.data.folderStructureDtos;
             this.files = response.data.fileStructureDtos;
-            console.log(this.folders);
-            console.log(this.files);
           })
           .catch(error => {
             console.log(error);
@@ -165,7 +163,6 @@
           multipartFile: this.multipartFile
         })
           .then(response => {
-            console.log("----- successfully -----")
             this.$router.push('/Main');
           })
           .catch(error => {

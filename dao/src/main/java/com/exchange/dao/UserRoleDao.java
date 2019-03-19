@@ -1,18 +1,17 @@
 package com.exchange.dao;
 
-import java.util.List;
-
 /**
  * The interface User role dao.
  */
 public interface UserRoleDao {
 
     /**
-     * Gets roles by user name.
+     * Add user role.
      *
-     * @param userName the user name
-     * @return the roles by user name
+     * @param userId the user id
+     * @param roleId the role id
+     * @return the integer
      */
-    List<String> getRolesByUserName(String userName);
+    Integer addUserRole(Long userId, Integer roleId);
 
 }

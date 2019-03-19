@@ -88,10 +88,10 @@ public class UserRestController {
      * @param user the user
      * @return the long
      */
-    @PostMapping("/user")
+    @PostMapping("/users")
     @ResponseStatus(value = HttpStatus.CREATED)
-    public Long addUser(@RequestBody User user) {
-        return userService.addUser(user);
+    public void addUser(@RequestBody User user) {
+        userService.addUser(user);
     }
 
     /**

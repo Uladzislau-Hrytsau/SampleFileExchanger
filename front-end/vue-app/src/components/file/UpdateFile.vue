@@ -1,26 +1,4 @@
 <template>
-  <!--<div>-->
-  <!--<mdb-container>-->
-  <!--<mdb-row>-->
-  <!--<mdb-col size="12" class="text-center mb-5">-->
-  <!--<mdb-modal-body class="grey-text">-->
-  <!--<mdb-input size="sm" label="Description" icon="far fa-comment-alt" group type="text" validate error="wrong"-->
-  <!--success="right" required v-model="fileNew.description"/>-->
-  <!--<label>-->
-  <!--<select v-model="fileNew.categoryId" class="browser-default custom-select">-->
-  <!--<option selected value="1">Default</option>-->
-  <!--<option value="2">Work</option>-->
-  <!--<option value="3">Entertainment</option>-->
-  <!--</select>-->
-  <!--</label>-->
-  <!--</mdb-modal-body>-->
-  <!--<mdb-modal-footer>-->
-  <!--<mdb-btn color="primary" v-on:click="saveFile">update</mdb-btn>-->
-  <!--</mdb-modal-footer>-->
-  <!--</mdb-col>-->
-  <!--</mdb-row>-->
-  <!--</mdb-container>-->
-  <!--</div>-->
 
   <div class="container-fluid">
     <mdb-container>
@@ -32,11 +10,11 @@
 
         <mdb-modal-body>
 
-          <mdb-input size="sm" icon="fas fa-birthday-cake" group type="text" required v-model="newFile.realName"
+          <mdb-input size="sm" icon="fas fa-file-signature" required group type="text" v-model="newFile.realName"
                      v-bind:label="file.realName"/>
-          <mdb-input size="sm" icon="key" group type="text" required v-model="newFile.description"
+          <mdb-input size="sm" icon="fas fa-info" required group type="text" v-model="newFile.description"
                      v-bind:label="file.description"/>
-          <mdb-input size="sm" icon="fas fa-info" group type="date" required v-model="newFile.date"
+          <mdb-input size="sm" icon="fas fa-clock" required group type="date" v-model="newFile.date"
                      v-bind:label="file.date"/>
 
         </mdb-modal-body>
@@ -114,9 +92,9 @@
       async approve() {
         let data = {
           id: this.file.id,
-          realName: this.newFile.realName,
-          description: this.newFile.description,
-          date: this.newFile.date,
+          realName: this.newFile.realName || this.file.realName,
+          description: this.newFile.description || this.file.description,
+          date: this.newFile.date || this.file.date,
         };
         await this.updateFile(data);
         this.retrieveFiles();

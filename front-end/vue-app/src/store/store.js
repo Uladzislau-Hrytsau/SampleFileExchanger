@@ -303,22 +303,6 @@ export const store = new Vuex.Store({
       context.commit('setUser', credentials.user)
     },
 
-
-
-    createUser(context, credentials) {
-      return new Promise(((resolve, reject) => {
-        axios
-          .post('user', credentials.data)
-          .then(response => {
-            resolve(response)
-          })
-          .catch(error => {
-            console.log(error);
-            reject(error)
-          })
-      }))
-    },
-
     saveFileInformation(context, credentials) {
       localStorage.setItem('file', JSON.stringify(credentials.file));
       context.commit('setFile', credentials.file)
@@ -549,6 +533,20 @@ export const store = new Vuex.Store({
             })
         })
       }
+    },
+
+    createUser(context, credentials) {
+      return new Promise(((resolve, reject) => {
+        axios
+          .post('users', credentials)
+          .then(response => {
+            resolve(response)
+          })
+          .catch(error => {
+            console.log(error);
+            reject(error)
+          })
+      }))
     },
 
   }

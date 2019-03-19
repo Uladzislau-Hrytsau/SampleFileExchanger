@@ -17,7 +17,7 @@ public class ResourceServerOAuth2Config
         extends ResourceServerConfigurerAdapter {
 
     private static final String OAUTH_TOKEN_ENDPOINT = "/oauth/token";
-    private static final String USER_ENDPOINT = "/user";
+    private static final String USER_ENDPOINT = "/users";
     private static final String ALL_ENDPOINTS = "/**";
     private static final String HAS_ROLE_ADMIN_OR_HAS_ROLE_USER = "hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')";
 

@@ -22,22 +22,26 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class UserServiceImpl implements UserService {
 
+    private static final int USER_ROLE_ID = 1;
     @Lazy
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     private UserDao userDao;
     private UserValidator userValidator;
+    private UserRoleService userRoleService;
 
     @Value("${userService.deleteError}")
     private String deleteError;
     @Value("${userService.updateError}")
     private String updateError;
+    @Value("${userService.createError}")
+    private String createError;
     @Value("${userService.incorrectLogin}")
     private String incorrectLogin;
     @Value("${userService.incorrectId}")
     private String incorrectId;
     @Value("${userService.userDoesNotExist}")
     private String userDoesNotExist;
-    @Value("${userRileService.incorrectUserName}")
+    @Value("${userRoleService.incorrectUserName}")
     private String incorrectUserName;
 
     /**
@@ -46,12 +50,14 @@ public class UserServiceImpl implements UserService {
      * @param userDao               the user dao
      * @param userValidator         the user validator
      * @param bCryptPasswordEncoder the b crypt password encoder
+     * @param userRoleService       the user role service
      */
     @Autowired
-    public UserServiceImpl(UserDao userDao, UserValidator userValidator, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public UserServiceImpl(UserDao userDao, UserValidator userValidator, BCryptPasswordEncoder bCryptPasswordEncoder, UserRoleService userRoleService) {
         this.userDao = userDao;
         this.userValidator = userValidator;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.userRoleService = userRoleService;
     }
 
     @Override
@@ -91,11 +97,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Long addUser(User user) {
+    public void addUser(User user) {
         userValidator.validateExistingLogin(user.getName(), userDao);
         userValidator.validatePassword(user.getPassword());
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        return userDao.addUser(user);
+        Long userId = userDao.addUser(user);
+        if (userId == null) {
+            throw new InternalServerException(createError);
+        }
+        userRoleService.addUserRole(userId, USER_ROLE_ID);
     }
 
     @Override

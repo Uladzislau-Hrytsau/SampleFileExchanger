@@ -43,12 +43,11 @@ public interface UserService {
     String getUserPasswordByUserName(String userName);
 
     /**
-     * Add user long.
+     * Add user.
      *
      * @param user the user
-     * @return the long
      */
-    Long addUser(User user);
+    void addUser(User user);
 
     /**
      * Update user.

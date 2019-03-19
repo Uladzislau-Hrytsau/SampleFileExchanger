@@ -2,6 +2,7 @@ package com.exchange.service;
 
 import com.exchange.config.security.userdetails.UserDetails;
 import com.exchange.dao.UserRoleDao;
+import com.exchange.exception.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
@@ -20,10 +21,10 @@ import java.util.Set;
 @Transactional
 public class UserRoleServiceImpl implements UserRoleService {
 
-    private UserRoleDao userRoleDao;
+    private final UserRoleDao userRoleDao;
 
-    @Value("${userRileService.incorrectUserName}")
-    private String incorrectUserName;
+    @Value("${userRoleService.roleDoesNotAdd}")
+    private String roleDoesNotAdd;
 
     /**
      * Instantiates a new User role service.
@@ -42,6 +43,13 @@ public class UserRoleServiceImpl implements UserRoleService {
         Set<String> roles = new HashSet<>(collection.size());
         collection.forEach(item -> roles.add(item.getAuthority()));
         return roles;
+    }
+
+    @Override
+    public void addUserRole(Long userId, Integer roleId) {
+        if (userRoleDao.addUserRole(userId, roleId) == 0) {
+            throw new ValidationException(roleDoesNotAdd);
+        }
     }
 
 }

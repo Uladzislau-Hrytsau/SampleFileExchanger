@@ -21,4 +21,12 @@ public interface UserRoleService {
      */
     Set<String> getRolesByAuthentication(Authentication authentication);
 
+    /**
+     * Add user role.
+     *
+     * @param userId the user id
+     * @param roleId the role id
+     */
+    void addUserRole(Long userId, Integer roleId);
+
 }

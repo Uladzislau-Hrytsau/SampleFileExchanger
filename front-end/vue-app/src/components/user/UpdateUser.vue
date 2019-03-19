@@ -28,8 +28,8 @@
   import {mapState, mapGetters, mapMutations, mapActions} from 'vuex'
   import 'bootstrap-css-only/css/bootstrap.min.css';
   import 'mdbvue/build/css/mdb.css';
-  import VueMaterial from 'vue-material'
-  import 'vue-material/dist/vue-material.min.css'
+  import VueMaterial from 'vue-material';
+  import 'vue-material/dist/vue-material.min.css';
 
   import {
     mdbContainer,
@@ -92,10 +92,10 @@
       async approve() {
         let data = {
           id: this.user.id,
-          password: this.newUser.password,
-          gender: this.newUser.gender,
-          birthDate: this.newUser.birthDate,
-          information: this.newUser.information,
+          password: this.newUser.password || this.user.password,
+          gender: this.newUser.gender || this.user.gender,
+          birthDate: this.newUser.birthDate || this.user.birthDate,
+          information: this.newUser.information || this.user.information,
         };
         await this.updateUser(data);
         this.retrieveUsers();

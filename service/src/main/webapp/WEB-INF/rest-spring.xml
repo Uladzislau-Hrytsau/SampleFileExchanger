@@ -43,24 +43,6 @@
         <constructor-arg name="dataSource" ref="dataSource"/>
     </bean>
 
-    <bean id="userDao" class="com.exchange.dao.jdbc.UserDaoImpl">
-        <constructor-arg ref="jdbcTemplate" index="0"/>
-        <constructor-arg ref="namedParameterJdbcTemplate" index="1"/>
-        <constructor-arg ref="userRowMapper" index="2"/>
-    </bean>
-
-    <bean id="fileDao" class="com.exchange.dao.jdbc.FileDaoImpl">
-        <constructor-arg ref="jdbcTemplate" index="0"/>
-        <constructor-arg ref="namedParameterJdbcTemplate" index="1"/>
-        <constructor-arg ref="fileRowMapper" index="2"/>
-    </bean>
-
-    <bean id="categoryDao" class="com.exchange.dao.jdbc.CategoryDaoImpl">
-        <constructor-arg ref="jdbcTemplate" index="0"/>
-        <constructor-arg ref="namedParameterJdbcTemplate" index="1"/>
-        <constructor-arg ref="categoryRowMapper" index="2"/>
-    </bean>
-
     <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
         <property name="messageConverters">
             <list>

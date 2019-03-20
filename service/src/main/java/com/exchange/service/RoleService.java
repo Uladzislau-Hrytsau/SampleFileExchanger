@@ -11,7 +11,7 @@ import java.util.Set;
  */
 @Service
 @Transactional
-public interface UserRoleService {
+public interface RoleService {
 
     /**
      * Gets roles by authentication.

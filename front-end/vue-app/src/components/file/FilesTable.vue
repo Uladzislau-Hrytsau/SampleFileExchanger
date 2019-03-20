@@ -18,7 +18,7 @@
           <th>{{ file.userId }}</th>
           <td>{{ file.folderId }}</td>
           <td>{{ file.description }}</td>
-          <td>{{ file.realName }}</td>
+          <td>{{ file.name }}</td>
           <td>{{ file.encodeName }}</td>
           <td>{{ file.date }}</td>
           <td>

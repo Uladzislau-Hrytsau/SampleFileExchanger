@@ -20,7 +20,7 @@ public class FileStructureDtoRowMapper implements RowMapper<FileStructureDto> {
         FileStructureDto fileStructureDto = new FileStructureDto();
         fileStructureDto.setId(rs.getLong(ID));
         fileStructureDto.setFolderId(rs.getLong(FOLDER_ID));
-        fileStructureDto.setRealName(rs.getString(REAL_NAME));
+        fileStructureDto.setName(rs.getString(REAL_NAME));
         return fileStructureDto;
     }
 

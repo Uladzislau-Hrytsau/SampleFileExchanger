@@ -36,6 +36,10 @@ public class FolderDaoImpl implements FolderDao {
 
     @Value("${folder.selectByUserIdAndParentId}")
     private String selectByUserIdAndParentIdSql;
+    @Value("${folder.insert}")
+    private String insertSql;
+    @Value("${folder.existsIdByUserId}")
+    private String existsIdByUserIdSql;
 
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private final FolderStructureDtoRowMapper folderStructureDtoRowMapper;
@@ -53,11 +57,28 @@ public class FolderDaoImpl implements FolderDao {
     }
 
     @Override
-    public List<FolderStructureDto> getAllFoldersByUserIdAndParentId(Long userId, Long parentId) {
+    public List<FolderStructureDto> getFoldersByUserIdAndParentId(Long userId, Long parentId) {
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
         parameterSource.addValue(PARENT_ID, parentId);
         parameterSource.addValue(USER_ID, userId);
         return namedParameterJdbcTemplate.query(selectByUserIdAndParentIdSql, parameterSource, folderStructureDtoRowMapper);
+    }
+
+    @Override
+    public Integer addFolder(FolderStructureDto folderStructureDto, Long userId) {
+        MapSqlParameterSource parameterSource = new MapSqlParameterSource();
+        parameterSource.addValue(NAME, folderStructureDto.getName());
+        parameterSource.addValue(USER_ID, userId);
+        parameterSource.addValue(PARENT_ID, folderStructureDto.getId());
+        return namedParameterJdbcTemplate.update(insertSql, parameterSource);
+    }
+
+    @Override
+    public Boolean existsParentIdByUserId(Long parentId, Long userId) {
+        MapSqlParameterSource parameterSource = new MapSqlParameterSource();
+        parameterSource.addValue(USER_ID, userId);
+        parameterSource.addValue(ID, parentId);
+        return namedParameterJdbcTemplate.queryForObject(existsIdByUserIdSql, parameterSource, Boolean.class);
     }
 
 }

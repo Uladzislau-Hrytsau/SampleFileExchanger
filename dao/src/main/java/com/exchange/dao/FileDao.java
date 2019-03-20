@@ -1,5 +1,6 @@
 package com.exchange.dao;
 
+import com.exchange.dto.file.FileDto;
 import com.exchange.dto.file.FileStructureDto;
 import com.exchange.dto.file.FileUpdatingDto;
 
@@ -22,10 +23,10 @@ public interface FileDao {
     /**
      * Add file long.
      *
-     * @param file the file
+     * @param fileDto the file dto
      * @return the long
      */
-    Long addFile(File file);
+    Long addFile(FileDto fileDto);
 
     /**
      * Update file integer.
@@ -44,13 +45,13 @@ public interface FileDao {
     Integer deleteFile(Long id);
 
     /**
-     * Gets all files by user id and folder id.
+     * Gets files by user id and folder id.
      *
      * @param userId   the user id
      * @param folderId the folder id
-     * @return the all files by user id and folder id
+     * @return the files by user id and folder id
      */
-    List<FileStructureDto> getAllFilesByUserIdAndFolderId(Long userId, Long folderId);
+    List<FileStructureDto> getFilesByUserIdAndFolderId(Long userId, Long folderId);
 
     /**
      * Gets file count.

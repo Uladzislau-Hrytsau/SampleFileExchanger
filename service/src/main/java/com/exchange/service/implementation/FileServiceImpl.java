@@ -1,13 +1,17 @@
-package com.exchange.service;
+package com.exchange.service.implementation;
 
 import com.exchange.config.security.userdetails.UserDetails;
-import com.exchange.dao.*;
+import com.exchange.dao.CategoryDao;
+import com.exchange.dao.File;
+import com.exchange.dao.FileDao;
+import com.exchange.dao.Pagination;
 import com.exchange.dao.file.FileWriter;
-import com.exchange.dto.StructureDto;
 import com.exchange.dto.file.FileCategoryDto;
+import com.exchange.dto.file.FileDto;
 import com.exchange.dto.file.FileUpdatingDto;
 import com.exchange.exception.InternalServerException;
 import com.exchange.exception.ValidationException;
+import com.exchange.service.FileService;
 import com.exchange.wrapper.Response;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +36,6 @@ import java.util.UUID;
 public class FileServiceImpl implements FileService {
 
     private final FileDao fileDao;
-    private final FolderDao folderDao;
     private final CategoryDao categoryDao;
     private final ServletContext servletContext;
     private final FileWriter fileWriter;
@@ -53,16 +56,14 @@ public class FileServiceImpl implements FileService {
      * Instantiates a new File service.
      *
      * @param fileDao        the file dao
-     * @param folderDao      the folder dao
      * @param categoryDao    the category dao
      * @param servletContext the servlet context
      * @param fileWriter     the file writer
      * @param objectMapper   the object mapper
      */
     @Autowired
-    public FileServiceImpl(FileDao fileDao, FolderDao folderDao, CategoryDao categoryDao, ServletContext servletContext, FileWriter fileWriter, ObjectMapper objectMapper) {
+    public FileServiceImpl(FileDao fileDao, CategoryDao categoryDao, ServletContext servletContext, FileWriter fileWriter, ObjectMapper objectMapper) {
         this.fileDao = fileDao;
-        this.folderDao = folderDao;
         this.categoryDao = categoryDao;
         this.servletContext = servletContext;
         this.fileWriter = fileWriter;
@@ -83,25 +84,25 @@ public class FileServiceImpl implements FileService {
     @Override
     public Long addFile(String jsonFile, MultipartFile multipartFile, Authentication authentication) throws IOException {
         // TODO: clean-up
-        File file = objectMapper.readValue(jsonFile, File.class);
+        FileDto fileDto = objectMapper.readValue(jsonFile, FileDto.class);
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        String description = file.getDescription();
+        String description = fileDto.getDescription();
         if (description == null || description.isEmpty()) {
             throw new ValidationException();
         }
-        if (!categoryDao.existsByCategories(file.getCategories(), userDetails.getUserId())) {
+        if (!categoryDao.existsByCategories(fileDto.getCategories(), userDetails.getUserId())) {
             throw new ValidationException();
         }
-        file.setUserId(userDetails.getUserId());
-        file.setRealName(multipartFile.getOriginalFilename());
+        fileDto.setUserId(userDetails.getUserId());
+        fileDto.setRealName(multipartFile.getOriginalFilename());
         String encodeName = UUID.randomUUID().toString();
-        file.setEncodeName(encodeName);
-        file.setDate(LocalDate.now());
+        fileDto.setEncodeName(encodeName);
+        fileDto.setDate(LocalDate.now());
         String filePath = servletContext.getRealPath("WEB-INF/repo" + java.io.File.separator + encodeName);
         fileWriter.saveFile(multipartFile, filePath);
-        Long fileId = fileDao.addFile(file);
-        Set<FileCategoryDto> fileCategoryDtos = new HashSet<>(file.getCategories().size());
-        Set<Long> fileCategories = file.getCategories();
+        Long fileId = fileDao.addFile(fileDto);
+        Set<FileCategoryDto> fileCategoryDtos = new HashSet<>(fileDto.getCategories().size());
+        Set<Long> fileCategories = fileDto.getCategories();
         fileCategories.forEach(item -> {
             fileCategoryDtos.add(new FileCategoryDto(item, fileId));
         });
@@ -139,15 +140,6 @@ public class FileServiceImpl implements FileService {
         if (fileDao.deleteFile(id) == 0) {
             throw new InternalServerException(deleteError);
         }
-    }
-
-    @Override
-    public StructureDto getFilesAndFoldersByFolderId(Authentication authentication, Long folderId) {
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        Long userId = userDetails.getUserId();
-        return new StructureDto(
-                fileDao.getAllFilesByUserIdAndFolderId(userId, folderId),
-                folderDao.getAllFoldersByUserIdAndParentId(userId, folderId));
     }
 
     @Override

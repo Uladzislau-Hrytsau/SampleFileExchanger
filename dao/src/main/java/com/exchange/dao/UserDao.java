@@ -27,18 +27,18 @@ public interface UserDao {
     Long addUser(User user);
 
     /**
-     * Update user int.
+     * Update user integer.
      *
      * @param userUpdatingDto the user updating dto
-     * @return the int
+     * @return the integer
      */
     Integer updateUser(UserUpdatingDto userUpdatingDto);
 
     /**
-     * Delete user int.
+     * Delete user integer.
      *
      * @param userId the user id
-     * @return the int
+     * @return the integer
      */
     Integer deleteUser(Long userId);
 

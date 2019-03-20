@@ -9,7 +9,7 @@ package com.exchange.dao;
 public class UserRoleDaoImplTest {
 
 //    @Autowired
-//    private UserRoleDao userRoleDao;
+//    private RoleDao userRoleDao;
 
 //    private static final String USERNAME = "userLogin1";
 

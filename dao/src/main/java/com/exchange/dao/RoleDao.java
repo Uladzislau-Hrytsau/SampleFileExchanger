@@ -1,12 +1,12 @@
 package com.exchange.dao;
 
 /**
- * The interface User role dao.
+ * The interface Role dao.
  */
-public interface UserRoleDao {
+public interface RoleDao {
 
     /**
-     * Add user role.
+     * Add user role integer.
      *
      * @param userId the user id
      * @param roleId the role id

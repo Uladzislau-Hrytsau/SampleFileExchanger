@@ -1,5 +1,6 @@
-package com.exchange.dto;
+package com.exchange.dto.structure;
 
+import com.exchange.dto.category.CategoryDto;
 import com.exchange.dto.file.FileStructureDto;
 import com.exchange.dto.folder.FolderStructureDto;
 
@@ -13,6 +14,7 @@ public class StructureDto {
 
     private List<FileStructureDto> fileStructureDtos;
     private List<FolderStructureDto> folderStructureDtos;
+    private List<CategoryDto> categoryDtos;
 
     /**
      * Instantiates a new Structure dto.
@@ -25,10 +27,12 @@ public class StructureDto {
      *
      * @param fileStructureDtos   the file structure dtos
      * @param folderStructureDtos the folder structure dtos
+     * @param categoryDtos        the category dtos
      */
-    public StructureDto(List<FileStructureDto> fileStructureDtos, List<FolderStructureDto> folderStructureDtos) {
+    public StructureDto(List<FileStructureDto> fileStructureDtos, List<FolderStructureDto> folderStructureDtos, List<CategoryDto> categoryDtos) {
         this.fileStructureDtos = fileStructureDtos;
         this.folderStructureDtos = folderStructureDtos;
+        this.categoryDtos = categoryDtos;
     }
 
     /**
@@ -67,18 +71,37 @@ public class StructureDto {
         this.folderStructureDtos = folderStructureDtos;
     }
 
+    /**
+     * Gets category dtos.
+     *
+     * @return the category dtos
+     */
+    public List<CategoryDto> getCategoryDtos() {
+        return categoryDtos;
+    }
+
+    /**
+     * Sets category dtos.
+     *
+     * @param categoryDtos the category dtos
+     */
+    public void setCategoryDtos(List<CategoryDto> categoryDtos) {
+        this.categoryDtos = categoryDtos;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         StructureDto that = (StructureDto) o;
         return Objects.equals(fileStructureDtos, that.fileStructureDtos) &&
-                Objects.equals(folderStructureDtos, that.folderStructureDtos);
+                Objects.equals(folderStructureDtos, that.folderStructureDtos) &&
+                Objects.equals(categoryDtos, that.categoryDtos);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(fileStructureDtos, folderStructureDtos);
+        return Objects.hash(fileStructureDtos, folderStructureDtos, categoryDtos);
     }
 
     @Override
@@ -86,6 +109,7 @@ public class StructureDto {
         return "StructureDto{" +
                 "fileStructureDtos=" + fileStructureDtos +
                 ", folderStructureDtos=" + folderStructureDtos +
+                ", categoryDtos=" + categoryDtos +
                 '}';
     }
 }

@@ -1,6 +1,5 @@
 package com.exchange.service;
 
-import com.exchange.dto.StructureDto;
 import com.exchange.dto.file.FileUpdatingDto;
 import com.exchange.wrapper.Response;
 import org.springframework.security.core.Authentication;
@@ -47,15 +46,6 @@ public interface FileService {
      * @param id the id
      */
     void deleteFile(Long id);
-
-    /**
-     * Gets all files and folders by folder id.
-     *
-     * @param authentication the authentication
-     * @param folderId       the folder id
-     * @return the all files and folders by folder id
-     */
-    StructureDto getFilesAndFoldersByFolderId(Authentication authentication, Long folderId);
 
     /**
      * Gets file count.

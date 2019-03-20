@@ -1,16 +1,16 @@
-package com.exchange.dao;
+package com.exchange.dto.file;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.LocalDate;
 import java.util.Objects;
+import java.util.Set;
 
 /**
- * The type File.
+ * The type File dto.
  */
-public class File {
+public class FileDto {
 
-    private Long id;
     private Long userId;
     private Long folderId;
     private String description;
@@ -18,50 +18,33 @@ public class File {
     private String encodeName;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate date;
+    private Set<Long> categories;
 
     /**
-     * Instantiates a new File.
+     * Instantiates a new File dto.
      */
-    public File() {
+    public FileDto() {
     }
 
     /**
-     * Instantiates a new File.
+     * Instantiates a new File dto.
      *
-     * @param id          the id
      * @param userId      the user id
      * @param folderId    the folder id
      * @param description the description
      * @param realName    the real name
      * @param encodeName  the encode name
      * @param date        the date
+     * @param categories  the categories
      */
-    public File(Long id, Long userId, Long folderId, String description, String realName, String encodeName, LocalDate date) {
-        this.id = id;
+    public FileDto(Long userId, Long folderId, String description, String realName, String encodeName, LocalDate date, Set<Long> categories) {
         this.userId = userId;
         this.folderId = folderId;
         this.description = description;
         this.realName = realName;
         this.encodeName = encodeName;
         this.date = date;
-    }
-
-    /**
-     * Gets id.
-     *
-     * @return the id
-     */
-    public Long getId() {
-        return id;
-    }
-
-    /**
-     * Sets id.
-     *
-     * @param id the id
-     */
-    public void setId(Long id) {
-        this.id = id;
+        this.categories = categories;
     }
 
     /**
@@ -172,35 +155,53 @@ public class File {
         this.date = date;
     }
 
+    /**
+     * Gets categories.
+     *
+     * @return the categories
+     */
+    public Set<Long> getCategories() {
+        return categories;
+    }
+
+    /**
+     * Sets categories.
+     *
+     * @param categories the categories
+     */
+    public void setCategories(Set<Long> categories) {
+        this.categories = categories;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        File file = (File) o;
-        return Objects.equals(id, file.id) &&
-                Objects.equals(userId, file.userId) &&
-                Objects.equals(folderId, file.folderId) &&
-                Objects.equals(description, file.description) &&
-                Objects.equals(realName, file.realName) &&
-                Objects.equals(encodeName, file.encodeName) &&
-                Objects.equals(date, file.date);
+        FileDto fileDto = (FileDto) o;
+        return Objects.equals(userId, fileDto.userId) &&
+                Objects.equals(folderId, fileDto.folderId) &&
+                Objects.equals(description, fileDto.description) &&
+                Objects.equals(realName, fileDto.realName) &&
+                Objects.equals(encodeName, fileDto.encodeName) &&
+                Objects.equals(date, fileDto.date) &&
+                Objects.equals(categories, fileDto.categories);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userId, folderId, description, realName, encodeName, date);
+        return Objects.hash(userId, folderId, description, realName, encodeName, date, categories);
     }
 
     @Override
     public String toString() {
-        return "File{" +
-                "id=" + id +
-                ", userId=" + userId +
+        return "FileDto{" +
+                "userId=" + userId +
                 ", folderId=" + folderId +
                 ", description='" + description + '\'' +
                 ", realName='" + realName + '\'' +
                 ", encodeName='" + encodeName + '\'' +
                 ", date=" + date +
+                ", categories=" + categories +
                 '}';
     }
 }

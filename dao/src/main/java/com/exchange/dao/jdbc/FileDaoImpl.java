@@ -4,6 +4,7 @@ import com.exchange.dao.File;
 import com.exchange.dao.FileDao;
 import com.exchange.dao.jdbc.mapper.dto.FileStructureDtoRowMapper;
 import com.exchange.dao.jdbc.mapper.model.FileRowMapper;
+import com.exchange.dto.file.FileDto;
 import com.exchange.dto.file.FileStructureDto;
 import com.exchange.dto.file.FileUpdatingDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,16 +104,15 @@ public class FileDaoImpl implements FileDao {
     }
 
     @Override
-    public Long addFile(File file) {
+    public Long addFile(FileDto fileDto) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
-        parameterSource.addValue(ID, file.getId());
-        parameterSource.addValue(USER_ID, file.getUserId());
-        parameterSource.addValue(FOLDER_ID, file.getFolderId());
-        parameterSource.addValue(DESCRIPTION, file.getDescription());
-        parameterSource.addValue(REAL_NAME, file.getRealName());
-        parameterSource.addValue(ENCODE_NAME, file.getEncodeName());
-        parameterSource.addValue(DATE, file.getDate());
+        parameterSource.addValue(USER_ID, fileDto.getUserId());
+        parameterSource.addValue(FOLDER_ID, fileDto.getFolderId());
+        parameterSource.addValue(DESCRIPTION, fileDto.getDescription());
+        parameterSource.addValue(REAL_NAME, fileDto.getRealName());
+        parameterSource.addValue(ENCODE_NAME, fileDto.getEncodeName());
+        parameterSource.addValue(DATE, fileDto.getDate());
         namedParameterJdbcTemplate.update(addFileSql, parameterSource, keyHolder);
         return keyHolder.getKey().longValue();
     }
@@ -135,7 +135,7 @@ public class FileDaoImpl implements FileDao {
     }
 
     @Override
-    public List<FileStructureDto> getAllFilesByUserIdAndFolderId(Long userId, Long folderId) {
+    public List<FileStructureDto> getFilesByUserIdAndFolderId(Long userId, Long folderId) {
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
         parameterSource.addValue(FOLDER_ID, folderId);
         parameterSource.addValue(USER_ID, userId);

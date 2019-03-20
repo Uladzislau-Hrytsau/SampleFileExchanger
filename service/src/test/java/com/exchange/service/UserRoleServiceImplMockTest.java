@@ -13,7 +13,7 @@ public class UserRoleServiceImplMockTest {
 //    private static final int ONE = 1;
 //
 //    @Mock
-//    private UserRoleDao userRoleDaoMock;
+//    private RoleDao userRoleDaoMock;
 //    @InjectMocks
 //    private UserRoleServiceImpl userRoleService;
 

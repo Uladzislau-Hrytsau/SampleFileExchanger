@@ -1,6 +1,5 @@
 package com.exchange.controller;
 
-import com.exchange.dto.StructureDto;
 import com.exchange.dto.file.FileUpdatingDto;
 import com.exchange.service.FileService;
 import com.exchange.wrapper.Response;
@@ -48,22 +47,6 @@ public class FileRestController {
             @RequestParam(value = "size", required = false, defaultValue = "null") Integer size,
             Authentication authentication) {
         return fileService.getFilesAndCountByPageAndSize(page, size, authentication);
-    }
-
-    /**
-     * Gets all folders by folder id.
-     *
-     * @param folderId       the folder id
-     * @param authentication the authentication
-     * @return the all folders by folder id
-     */
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    @GetMapping(value = "/structures", params = {"folderId"})
-    @ResponseStatus(value = HttpStatus.OK)
-    public StructureDto getFoldersByFolderId(
-            @RequestParam(value = "folderId") Long folderId,
-            Authentication authentication) {
-        return fileService.getFilesAndFoldersByFolderId(authentication, folderId);
     }
 
     /**

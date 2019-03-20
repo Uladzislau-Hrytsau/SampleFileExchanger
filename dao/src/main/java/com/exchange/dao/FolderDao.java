@@ -10,12 +10,30 @@ import java.util.List;
 public interface FolderDao {
 
     /**
-     * Gets all folders by user id and parent id.
+     * Gets folders by user id and parent id.
      *
      * @param userId   the user id
      * @param parentId the parent id
-     * @return the all folders by user id and parent id
+     * @return the folders by user id and parent id
      */
-    List<FolderStructureDto> getAllFoldersByUserIdAndParentId(Long userId, Long parentId);
+    List<FolderStructureDto> getFoldersByUserIdAndParentId(Long userId, Long parentId);
+
+    /**
+     * Add folder integer.
+     *
+     * @param folderStructureDto the folder structure dto
+     * @param userId             the user id
+     * @return the integer
+     */
+    Integer addFolder(FolderStructureDto folderStructureDto, Long userId);
+
+    /**
+     * Exists parent id by user id boolean.
+     *
+     * @param parentId the parent id
+     * @param userId   the user id
+     * @return the boolean
+     */
+    Boolean existsParentIdByUserId(Long parentId, Long userId);
 
 }

@@ -1,4 +1,4 @@
-package com.exchange.service;
+package com.exchange.service.implementation;
 
 import com.exchange.dao.UserDetailsDao;
 import com.exchange.dto.security.UserDetailsDto;

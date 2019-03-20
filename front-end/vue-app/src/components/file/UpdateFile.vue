@@ -10,8 +10,8 @@
 
         <mdb-modal-body>
 
-          <mdb-input size="sm" icon="fas fa-file-signature" required group type="text" v-model="newFile.realName"
-                     v-bind:label="file.realName"/>
+          <mdb-input size="sm" icon="fas fa-file-signature" required group type="text" v-model="newFile.name"
+                     v-bind:label="file.name"/>
           <mdb-input size="sm" icon="fas fa-info" required group type="text" v-model="newFile.description"
                      v-bind:label="file.description"/>
           <mdb-input size="sm" icon="fas fa-clock" required group type="date" v-model="newFile.date"
@@ -68,7 +68,7 @@
     data() {
       return {
         newFile: {
-          realName: '',
+          name: '',
           description: '',
           date: ''
         },
@@ -92,7 +92,7 @@
       async approve() {
         let data = {
           id: this.file.id,
-          realName: this.newFile.realName || this.file.realName,
+          name: this.newFile.name || this.file.name,
           description: this.newFile.description || this.file.description,
           date: this.newFile.date || this.file.date,
         };

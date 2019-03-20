@@ -9,7 +9,7 @@ public class FileStructureDto {
 
     private Long id;
     private Long folderId;
-    private String realName;
+    private String name;
 
     /**
      * Instantiates a new File structure dto.
@@ -22,12 +22,12 @@ public class FileStructureDto {
      *
      * @param id       the id
      * @param folderId the folder id
-     * @param realName the real name
+     * @param name     the name
      */
-    public FileStructureDto(Long id, Long folderId, String realName) {
+    public FileStructureDto(Long id, Long folderId, String name) {
         this.id = id;
         this.folderId = folderId;
-        this.realName = realName;
+        this.name = name;
     }
 
     /**
@@ -67,21 +67,21 @@ public class FileStructureDto {
     }
 
     /**
-     * Gets real name.
+     * Gets name.
      *
-     * @return the real name
+     * @return the name
      */
-    public String getRealName() {
-        return realName;
+    public String getName() {
+        return name;
     }
 
     /**
-     * Sets real name.
+     * Sets name.
      *
-     * @param realName the real name
+     * @param name the name
      */
-    public void setRealName(String realName) {
-        this.realName = realName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
@@ -91,12 +91,12 @@ public class FileStructureDto {
         FileStructureDto fileDto = (FileStructureDto) o;
         return Objects.equals(id, fileDto.id) &&
                 Objects.equals(folderId, fileDto.folderId) &&
-                Objects.equals(realName, fileDto.realName);
+                Objects.equals(name, fileDto.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, folderId, realName);
+        return Objects.hash(id, folderId, name);
     }
 
     @Override
@@ -104,7 +104,7 @@ public class FileStructureDto {
         return "FileStructureDto{" +
                 "id=" + id +
                 ", folderId=" + folderId +
-                ", realName='" + realName + '\'' +
+                ", name='" + name + '\'' +
                 '}';
     }
 }

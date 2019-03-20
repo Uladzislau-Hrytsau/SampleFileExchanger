@@ -1,7 +1,9 @@
 package com.exchange.dao;
 
+import com.exchange.dto.category.CategoryDto;
 import com.exchange.dto.file.FileCategoryDto;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -26,5 +28,12 @@ public interface CategoryDao {
      */
     int[] addFileCategories(Set<FileCategoryDto> categories);
 
+    /**
+     * Gets categories by user id.
+     *
+     * @param userId the user id
+     * @return the categories by user id
+     */
+    List<CategoryDto> getCategoriesByUserId(Long userId);
 
 }

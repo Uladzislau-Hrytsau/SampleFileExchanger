@@ -1,7 +1,5 @@
 package com.exchange.dao;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 /**
  * The type Category dao impl test.
  */
@@ -10,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 //@Transactional
 public class CategoryDaoImplTest {
 
-    @Autowired
-    private CategoryDao categoryDao;
 
     /**
      * Test.

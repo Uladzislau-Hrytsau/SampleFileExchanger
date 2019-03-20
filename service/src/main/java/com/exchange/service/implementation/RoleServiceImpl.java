@@ -1,8 +1,9 @@
-package com.exchange.service;
+package com.exchange.service.implementation;
 
 import com.exchange.config.security.userdetails.UserDetails;
-import com.exchange.dao.UserRoleDao;
+import com.exchange.dao.RoleDao;
 import com.exchange.exception.ValidationException;
+import com.exchange.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
@@ -19,9 +20,9 @@ import java.util.Set;
  */
 @Service
 @Transactional
-public class UserRoleServiceImpl implements UserRoleService {
+public class RoleServiceImpl implements RoleService {
 
-    private final UserRoleDao userRoleDao;
+    private final RoleDao roleDao;
 
     @Value("${userRoleService.roleDoesNotAdd}")
     private String roleDoesNotAdd;
@@ -29,11 +30,11 @@ public class UserRoleServiceImpl implements UserRoleService {
     /**
      * Instantiates a new User role service.
      *
-     * @param userRoleDao the user role dao
+     * @param roleDao the user role dao
      */
     @Autowired
-    public UserRoleServiceImpl(UserRoleDao userRoleDao) {
-        this.userRoleDao = userRoleDao;
+    public RoleServiceImpl(RoleDao roleDao) {
+        this.roleDao = roleDao;
     }
 
     @Override
@@ -47,7 +48,7 @@ public class UserRoleServiceImpl implements UserRoleService {
 
     @Override
     public void addUserRole(Long userId, Integer roleId) {
-        if (userRoleDao.addUserRole(userId, roleId) == 0) {
+        if (roleDao.addUserRole(userId, roleId) == 0) {
             throw new ValidationException(roleDoesNotAdd);
         }
     }

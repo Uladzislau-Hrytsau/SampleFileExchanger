@@ -1,4 +1,4 @@
-package com.exchange.service;
+package com.exchange.service.implementation;
 
 import com.exchange.dao.Pagination;
 import com.exchange.dao.User;
@@ -6,6 +6,8 @@ import com.exchange.dao.UserDao;
 import com.exchange.dto.user.UserUpdatingDto;
 import com.exchange.exception.InternalServerException;
 import com.exchange.exception.ValidationException;
+import com.exchange.service.RoleService;
+import com.exchange.service.UserService;
 import com.exchange.service.validator.UserValidator;
 import com.exchange.wrapper.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +29,7 @@ public class UserServiceImpl implements UserService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final UserDao userDao;
     private final UserValidator userValidator;
-    private final UserRoleService userRoleService;
+    private final RoleService roleService;
 
     @Value("${userService.deleteError}")
     private String deleteError;
@@ -44,14 +46,14 @@ public class UserServiceImpl implements UserService {
      * @param userDao               the user dao
      * @param userValidator         the user validator
      * @param bCryptPasswordEncoder the b crypt password encoder
-     * @param userRoleService       the user role service
+     * @param roleService           the user role service
      */
     @Autowired
-    public UserServiceImpl(UserDao userDao, UserValidator userValidator, BCryptPasswordEncoder bCryptPasswordEncoder, UserRoleService userRoleService) {
+    public UserServiceImpl(UserDao userDao, UserValidator userValidator, BCryptPasswordEncoder bCryptPasswordEncoder, RoleService roleService) {
         this.userDao = userDao;
         this.userValidator = userValidator;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-        this.userRoleService = userRoleService;
+        this.roleService = roleService;
     }
 
     @Override
@@ -73,7 +75,7 @@ public class UserServiceImpl implements UserService {
         if (userId == null) {
             throw new InternalServerException(createError);
         }
-        userRoleService.addUserRole(userId, USER_ROLE_ID);
+        roleService.addUserRole(userId, USER_ROLE_ID);
     }
 
     @Override
@@ -86,8 +88,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(Long userId) {
-        if (userId == null || userId < 0L)
+        // TODO: delete file_category by file_id
+
+        // TODO: delete user_has_category by user_id
+        // TODO: delete file by user_id
+        // TODO: delete folder by user_id
+        // TODO: delete user_role by user_id
+        if (userId == null || userId < 0L) {
             throw new ValidationException(incorrectId);
+        }
+
+
         if (userDao.deleteUser(userId) == 0)
             throw new InternalServerException(deleteError);
     }

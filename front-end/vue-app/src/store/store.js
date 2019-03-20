@@ -43,6 +43,13 @@ export const store = new Vuex.Store({
     isUserDelete: false,
     isFileDelete: false,
 
+    folderId: localStorage.getItem('folderId') || 0,
+    fileStructure: null,
+    folderStructure: null,
+    categories: null,
+
+    enabledFolderCreate: false,
+
 
   },
 
@@ -90,130 +97,163 @@ export const store = new Vuex.Store({
 
   mutations: {
     setToken(state, token) {
-      state.token = token
+      state.token = token;
     },
     destroyToken(state) {
-      state.token = null
+      state.token = null;
+      localStorage.removeItem('access_token');
     },
     setUserRoles(state, userRole) {
       state.user_role = userRole;
     },
     destroyUserRoles(state) {
-      state.userRole = null
+      state.userRole = null;
+      localStorage.removeItem('roles');
     },
     setUsers(state, users) {
-      state.users = users
+      state.users = users;
     },
     destroyUsers(state) {
-      state.users = null
+      state.users = null;
     },
     setFiles(state, files) {
-      state.files = files
+      state.files = files;
     },
     destroyFiles(state) {
-      state.files = null
+      state.files = null;
     },
     setFile(state, file) {
-      state.file = file
+      state.file = file;
     },
     destroyFile(state) {
-      state.file = null
+      state.file = null;
     },
     setFolders(state, folders) {
-      state.folders = folders
+      state.folders = folders;
     },
     destroyFolders(state) {
-      state.folders = null
+      state.folders = null;
     },
     setSize(state, size) {
-      state.size = size
+      state.size = size;
     },
     destroySize(state) {
-      state.size = null
+      state.size = null;
     },
     setPageUser(state, pageUser) {
-      state.pageUser = pageUser
+      state.pageUser = pageUser;
     },
     destroyPageUser(state) {
-      state.pageUser = null
+      state.pageUser = null;
     },
     setPageFile(state, pageFile) {
-      state.pageFile = pageFile
+      state.pageFile = pageFile;
     },
     destroyPageFile(state) {
-      state.pageFile = null
+      state.pageFile = null;
     },
     setCount(state, count) {
-      state.count = count
+      state.count = count;
     },
     destroyCount(state) {
-      state.count = null
+      state.count = null;
     },
     setPaginationItem(state, paginationItem) {
-      state.paginationItem = paginationItem
+      state.paginationItem = paginationItem;
     },
     destroyPaginationItem(state) {
-      state.paginationItem = null
+      state.paginationItem = null;
     },
     enablePagination(state) {
-      state.enabledPagination = true
+      state.enabledPagination = true;
     },
     disablePagination(state) {
-      state.enabledPagination = false
+      state.enabledPagination = false;
     },
     enableTableUsers(state) {
-      state.enabledTableUsers = true
+      state.enabledTableUsers = true;
     },
     disableTableUsers(state) {
-      state.enabledTableUsers = false
+      state.enabledTableUsers = false;
     },
     enableTableFiles(state) {
-      state.enabledTableFiles = true
+      state.enabledTableFiles = true;
     },
     disableTableFiles(state) {
-      state.enabledTableFiles = false
+      state.enabledTableFiles = false;
     },
     enableApprove(state) {
-      state.enabledApprove = true
+      state.enabledApprove = true;
     },
     disableApprove(state) {
-      state.enabledApprove = false
+      state.enabledApprove = false;
     },
     setId(state, id) {
-      state.id = id
+      state.id = id;
     },
     destroyId(state) {
-      state.id = null
+      state.id = null;
     },
     setUser(state, user) {
-      state.user = user
+      state.user = user;
     },
     destroyUser(state) {
-      state.user = null
+      state.user = null;
     },
     enableUserUpdate(state) {
-      state.enabledUserUpdate = true
+      state.enabledUserUpdate = true;
     },
     disableUserUpdate(state) {
-      state.enabledUserUpdate = false
+      state.enabledUserUpdate = false;
     },
     enableUserDelete(state) {
-      state.isUserDelete = true
+      state.isUserDelete = true;
     },
     disableUserDelete(state) {
-      state.isUserDelete = false
+      state.isUserDelete = false;
     },
     enableFileDelete(state) {
-      state.isFileDelete = true
+      state.isFileDelete = true;
     },
     disableFileDelete(state) {
-      state.isFileDelete = false
+      state.isFileDelete = false;
     },
     enableFileUpdate(state) {
-      state.enabledFileUpdate = true
+      state.enabledFileUpdate = true;
     },
     disableFileUpdate(state) {
-      state.enabledFileUpdate = false
+      state.enabledFileUpdate = false;
+    },
+    setFolderId(state, folderId) {
+      state.folderId = folderId;
+    },
+    destroyFolderId(state) {
+      state.folderId = null;
+      localStorage.removeItem('folderId');
+    },
+    setFileStructure(state, fileStructure) {
+      state.fileStructure = fileStructure;
+    },
+    destroyFileStructure(state) {
+      state.fileStructure = null;
+    },
+    setFolderStructure(state, folderStructure) {
+      state.folderStructure = folderStructure;
+    },
+    destroyFolderStructure(state) {
+      state.folderStructure = null;
+    },
+    setCategories(state, categories) {
+      state.categories = categories;
+    },
+    destroyCategories(state) {
+      state.categories = null;
+    },
+    enableFolderCreate(state) {
+      state.enabledFolderCreate = true;
+    },
+    disableFolderCreate(state) {
+      state.enabledFolderCreate = false;
     }
   },
 
@@ -352,18 +392,20 @@ export const store = new Vuex.Store({
       }
     },
 
-    displayStructure(context, credentials) {
+    retrieveStructureAndCategories(context) {
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
       if (context.getters.loggedIn && (context.getters.hasRoleAdmin || context.getters.hasRoleUser)) {
         return new Promise((resolve, reject) => {
           axios
             .get('/structures', {
               params: {
-                folderId: credentials.folderId
+                folderId: this.state.folderId
               }
             })
             .then(response => {
-              context.commit('setFolders', response.data);
+              context.commit('setFileStructure', response.data.fileStructureDtos);
+              context.commit('setFolderStructure', response.data.folderStructureDtos);
+              context.commit('setCategories', response.data.categoryDtos);
               resolve(response);
             })
             .catch(error => {
@@ -511,7 +553,7 @@ export const store = new Vuex.Store({
           axios
             .put('users', credentials)
             .then(response => {
-                resolve(response)
+              resolve(response)
             })
             .catch((error) => {
 
@@ -552,6 +594,26 @@ export const store = new Vuex.Store({
           })
       }))
     },
+
+    createFolder(context, credentials) {
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
+      if (context.getters.loggedIn && (context.getters.hasRoleAdmin || context.getters.hasRoleUser)) {
+        return new Promise((resolve, reject) => {
+          console.log(credentials);
+          console.log(credentials);
+          console.log(credentials);
+          axios
+            .post('folders', credentials)
+            .then(response => {
+              resolve(response)
+            })
+            .catch(error => {
+              console.log(error);
+              reject(error)
+            })
+        })
+      }
+    }
 
   }
 });

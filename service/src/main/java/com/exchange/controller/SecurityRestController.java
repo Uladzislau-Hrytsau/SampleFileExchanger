@@ -1,6 +1,6 @@
 package com.exchange.controller;
 
-import com.exchange.service.UserRoleService;
+import com.exchange.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -18,16 +18,16 @@ import java.util.Set;
 @RestController
 public class SecurityRestController {
 
-    private UserRoleService userRoleService;
+    private RoleService roleService;
 
     /**
      * Instantiates a new Security rest controller.
      *
-     * @param userRoleService the user role service
+     * @param roleService the user role service
      */
     @Autowired
-    public SecurityRestController(UserRoleService userRoleService) {
-        this.userRoleService = userRoleService;
+    public SecurityRestController(RoleService roleService) {
+        this.roleService = roleService;
     }
 
     /**
@@ -39,7 +39,7 @@ public class SecurityRestController {
     @GetMapping(value = "/oauth/role")
     @ResponseStatus(value = HttpStatus.OK)
     public Set<String> getUserRole(Authentication authentication) {
-        return userRoleService.getRolesByAuthentication(authentication);
+        return roleService.getRolesByAuthentication(authentication);
     }
 
 }

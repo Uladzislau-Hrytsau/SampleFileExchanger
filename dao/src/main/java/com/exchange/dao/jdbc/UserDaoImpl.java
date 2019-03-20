@@ -46,13 +46,7 @@ public class UserDaoImpl implements UserDao {
      * The constant USER_INFORMATION.
      */
     public static final String USER_INFORMATION = "user_information";
-    /**
-     * The constant LIMIT.
-     */
     private static final String LIMIT = "limit";
-    /**
-     * The constant OFFSET.
-     */
     private static final String OFFSET = "offset";
 
     private final JdbcTemplate jdbcTemplate;

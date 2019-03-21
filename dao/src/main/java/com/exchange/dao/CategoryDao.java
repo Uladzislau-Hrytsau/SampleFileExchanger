@@ -12,21 +12,21 @@ import java.util.Set;
 public interface CategoryDao {
 
     /**
-     * Exists by categories boolean.
+     * Exists categories by user id boolean.
      *
      * @param categories the categories
      * @param userId     the user id
      * @return the boolean
      */
-    Boolean existsByCategories(Set<Long> categories, Long userId);
+    Boolean existsCategoriesByUserId(Set<Long> categories, Long userId);
 
     /**
      * Add file categories int [ ].
      *
-     * @param categories the categories
+     * @param categoryDto the category dto
      * @return the int [ ]
      */
-    int[] addFileCategories(Set<FileCategoryDto> categories);
+    int[] addFileCategories(Set<FileCategoryDto> categoryDto);
 
     /**
      * Gets categories by user id.

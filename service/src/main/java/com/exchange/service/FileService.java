@@ -1,11 +1,10 @@
 package com.exchange.service;
 
+import com.exchange.dto.file.FileDto;
 import com.exchange.dto.file.FileUpdatingDto;
 import com.exchange.wrapper.Response;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
 
 /**
  * The interface File service.
@@ -25,13 +24,12 @@ public interface FileService {
     /**
      * Add file long.
      *
-     * @param jsonFile       the json file
+     * @param fileDto        the file dto
      * @param multipartFile  the multipart file
      * @param authentication the authentication
      * @return the long
-     * @throws IOException the io exception
      */
-    Long addFile(String jsonFile, MultipartFile multipartFile, Authentication authentication) throws IOException;
+    Long addFile(FileDto fileDto, MultipartFile multipartFile, Authentication authentication);
 
     /**
      * Update file.

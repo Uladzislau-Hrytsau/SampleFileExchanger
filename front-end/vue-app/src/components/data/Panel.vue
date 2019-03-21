@@ -5,7 +5,7 @@
         <mdb-btn class="col-12 btn btn-outline-black waves-effect" v-on:click="addFolder">add folder</mdb-btn>
       </div>
       <div class="col-6">
-        <mdb-btn class="col-12 btn btn-outline-black waves-effect">add file</mdb-btn>
+        <mdb-btn class="col-12 btn btn-outline-black waves-effect" v-on:click="addFile">add file</mdb-btn>
       </div>
     </div>
   </div>
@@ -28,10 +28,14 @@
     },
     methods: {
       ...mapMutations([
-        'enableFolderCreate'
+        'enableFolderCreate',
+        'enableFileCreate'
       ]),
       addFolder() {
         this.enableFolderCreate();
+      },
+      addFile() {
+        this.enableFileCreate();
       }
     }
   }

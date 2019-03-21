@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid">
     <mdb-container>
-      <mdb-modal @close="cancel" size="sm" class="text-center" dark>
+      <mdb-modal @close="cancel" size="sl" class="text-center" dark>
 
         <mdb-modal-header center>
           <p class="heading">Are you sure you want to create new folder?</p>

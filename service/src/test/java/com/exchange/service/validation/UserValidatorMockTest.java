@@ -1,4 +1,4 @@
-package com.exchange.service.validator;
+package com.exchange.service.validation;
 
 /**
  * The type User validator mock test.

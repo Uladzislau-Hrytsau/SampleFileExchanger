@@ -41,17 +41,6 @@ public class FolderServiceImpl implements FolderService {
     @Override
     public void addFolder(FolderStructureDto folderStructureDto, Authentication authentication) {
         String name = folderStructureDto.getName();
-        System.out.println(name);
-        System.out.println(name);
-        System.out.println(name);
-        System.out.println(name);
-        System.out.println(name);
-        System.out.println(name);
-        System.out.println(name);
-        System.out.println(name);
-        System.out.println(name);
-        System.out.println(name);
-        System.out.println(name);
         if (name == null || name.isEmpty()) {
             throw new ValidationException(incorrectFolderName);
         }

@@ -47,7 +47,7 @@ public class CategoryDaoImpl implements CategoryDao {
     }
 
     @Override
-    public Boolean existsByCategories(Set<Long> categories, Long userId) {
+    public Boolean existsCategoriesByUserId(Set<Long> categories, Long userId) {
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
         parameterSource.addValue(USER_ID, userId);
         parameterSource.addValue(CATEGORY_ID, categories);
@@ -55,8 +55,8 @@ public class CategoryDaoImpl implements CategoryDao {
     }
 
     @Override
-    public int[] addFileCategories(Set<FileCategoryDto> categories) {
-        SqlParameterSource[] batch = SqlParameterSourceUtils.createBatch(categories);
+    public int[] addFileCategories(Set<FileCategoryDto> fileCategoryDtos) {
+        SqlParameterSource[] batch = SqlParameterSourceUtils.createBatch(fileCategoryDtos);
         return namedParameterJdbcTemplate.batchUpdate(insertFileCategoriesSql, batch);
     }
 

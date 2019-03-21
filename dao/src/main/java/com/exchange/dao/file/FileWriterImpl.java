@@ -24,6 +24,8 @@ public class FileWriterImpl implements FileWriter {
 
             file = new File(filePath);
             file.createNewFile();
+            // TODO: try with the transferTo() method
+//            multipartFile.transferTo(file);
 
             try {
                 fileOutputStream = new FileOutputStream(file);

@@ -49,7 +49,8 @@ export const store = new Vuex.Store({
     categories: null,
 
     enabledFolderCreate: false,
-
+    enabledFileCreate: false,
+    enabledPointSpinner: false,
 
   },
 
@@ -254,6 +255,18 @@ export const store = new Vuex.Store({
     },
     disableFolderCreate(state) {
       state.enabledFolderCreate = false;
+    },
+    enableFileCreate(state) {
+      state.enabledFileCreate = true;
+    },
+    disableFileCreate(state) {
+      state.enabledFileCreate = false;
+    },
+    enablePointSpinner(state) {
+      state.enabledPointSpinner = true;
+    },
+    disablePointSpinner(state) {
+      state.enabledPointSpinner = false;
     }
   },
 
@@ -369,18 +382,28 @@ export const store = new Vuex.Store({
 
     uploadFile(context, credentials) {
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
+
       let multipartFile = new FormData();
-      multipartFile.append('file', JSON.stringify(credentials.file));
-      multipartFile.append('multipartFile', credentials.multipartFile);
-      const config = {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        }
-      };
+
+      multipartFile.append('multipartFile', credentials.file);
+      multipartFile.append('metaData', new Blob([JSON.stringify({
+        "folderId": this.state.folderId,
+        "description": credentials.description,
+        "categories": credentials.selectedCategories
+      })], {
+        type: "application/json"
+      }));
+      // multipartFile.append('metaData', JSON.stringify(credentials.file));
+      // const config = {
+      //   headers: {
+      //     'Content-Type': 'multipart/form-data',
+      //   }
+      // };
+
       if (context.getters.loggedIn && (context.getters.hasRoleAdmin || context.getters.hasRoleUser)) {
         return new Promise((resolve, reject) => {
           axios
-            .post('file', multipartFile, config)
+            .post('files', multipartFile)
             .then(response => {
               resolve(response)
             })
@@ -564,23 +587,6 @@ export const store = new Vuex.Store({
       }
     },
 
-    updateFile(context, credentials) {
-      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
-      if (context.getters.loggedIn && (context.getters.hasRoleAdmin || context.getters.hasRoleUser)) {
-        return new Promise((resolve, reject) => {
-          axios
-            .put('files', credentials)
-            .then(response => {
-              resolve(response)
-            })
-            .catch(error => {
-              console.log(error);
-              reject(error)
-            })
-        })
-      }
-    },
-
     createUser(context, credentials) {
       return new Promise(((resolve, reject) => {
         axios
@@ -599,9 +605,6 @@ export const store = new Vuex.Store({
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
       if (context.getters.loggedIn && (context.getters.hasRoleAdmin || context.getters.hasRoleUser)) {
         return new Promise((resolve, reject) => {
-          console.log(credentials);
-          console.log(credentials);
-          console.log(credentials);
           axios
             .post('folders', credentials)
             .then(response => {
@@ -613,7 +616,25 @@ export const store = new Vuex.Store({
             })
         })
       }
-    }
+    },
+
+    updateFile(context, credentials) {
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
+      if (context.getters.loggedIn && (context.getters.hasRoleAdmin || context.getters.hasRoleUser)) {
+        return new Promise((resolve, reject) => {
+          axios
+            .put('files', credentials)
+            .then(response => {
+              resolve(response)
+            })
+            .catch(error => {
+              console.log(error);
+              reject(error)
+            })
+        })
+      }
+    },
+
 
   }
 });

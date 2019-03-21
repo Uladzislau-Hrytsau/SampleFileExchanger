@@ -8,7 +8,7 @@ import com.exchange.exception.InternalServerException;
 import com.exchange.exception.ValidationException;
 import com.exchange.service.RoleService;
 import com.exchange.service.UserService;
-import com.exchange.service.validator.UserValidator;
+import com.exchange.service.validation.UserValidator;
 import com.exchange.wrapper.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

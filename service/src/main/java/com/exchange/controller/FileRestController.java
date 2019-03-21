@@ -1,5 +1,6 @@
 package com.exchange.controller;
 
+import com.exchange.dto.file.FileDto;
 import com.exchange.dto.file.FileUpdatingDto;
 import com.exchange.service.FileService;
 import com.exchange.wrapper.Response;
@@ -9,8 +10,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
 
 /**
  * The type File rest controller.
@@ -52,20 +51,19 @@ public class FileRestController {
     /**
      * Add file long.
      *
-     * @param jsonFile       the json file
      * @param multipartFile  the multipart file
+     * @param fileDto        the file dto
      * @param authentication the authentication
      * @return the long
-     * @throws IOException the io exception
      */
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @PostMapping(value = "/files", consumes = "multipart/form-data")
     @ResponseStatus(value = HttpStatus.CREATED)
     public Long addFile(
-            @RequestParam("file") String jsonFile,
-            @RequestParam("multipartFile") MultipartFile multipartFile,
-            Authentication authentication) throws IOException {
-        return fileService.addFile(jsonFile, multipartFile, authentication);
+            @RequestPart("multipartFile") MultipartFile multipartFile,
+            @RequestPart("metaData") FileDto fileDto,
+            Authentication authentication) {
+        return fileService.addFile(fileDto, multipartFile, authentication);
     }
 
     /**

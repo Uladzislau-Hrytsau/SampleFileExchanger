@@ -92,9 +92,9 @@
       async approve() {
         let data = {
           id: this.file.id,
-          name: this.newFile.name || this.file.name,
-          description: this.newFile.description || this.file.description,
-          date: this.newFile.date || this.file.date,
+          name: this.newFile.name ? this.newFile.name : this.file.name,
+          description: this.newFile.description ? this.newFile.description : this.file.description,
+          date: this.newFile.date ? this.newFile.date : this.file.date,
         };
         await this.updateFile(data);
         this.retrieveFiles();

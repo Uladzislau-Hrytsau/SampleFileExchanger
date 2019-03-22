@@ -16,4 +16,11 @@ public interface FolderService {
      */
     void addFolder(FolderStructureDto folderStructureDto, Authentication authentication);
 
+    /**
+     * Delete by folder id and authentication.
+     *
+     * @param folderId       the folder id
+     * @param authentication the authentication
+     */
+    void deleteByFolderIdAndAuthentication(Long folderId, Authentication authentication);
 }

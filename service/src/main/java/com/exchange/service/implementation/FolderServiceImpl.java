@@ -6,6 +6,7 @@ import com.exchange.dto.folder.FolderStructureDto;
 import com.exchange.exception.InternalServerException;
 import com.exchange.exception.ValidationException;
 import com.exchange.service.FolderService;
+import com.exchange.service.validation.folder.FolderValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
@@ -20,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class FolderServiceImpl implements FolderService {
 
     private final FolderDao folderDao;
+    private final FolderValidator folderValidator;
 
     @Value("${folderService.incorrectFolderName}")
     private String incorrectFolderName;
@@ -27,15 +29,21 @@ public class FolderServiceImpl implements FolderService {
     private String folderDoesNotExist;
     @Value("${folderService.createError}")
     private String createError;
+    @Value("${folderService.deleteError}")
+    private String deleteError;
 
     /**
      * Instantiates a new Folder service.
      *
-     * @param folderDao the folder dao
+     * @param folderDao       the folder dao
+     * @param folderValidator the folder validator
      */
     @Autowired
-    public FolderServiceImpl(FolderDao folderDao) {
+    public FolderServiceImpl(
+            FolderDao folderDao,
+            FolderValidator folderValidator) {
         this.folderDao = folderDao;
+        this.folderValidator = folderValidator;
     }
 
     @Override
@@ -51,6 +59,17 @@ public class FolderServiceImpl implements FolderService {
         }
         if (folderDao.addFolder(folderStructureDto, userId) == 0) {
             throw new InternalServerException(createError);
+        }
+    }
+
+    @Override
+    public void deleteByFolderIdAndAuthentication(Long folderId, Authentication authentication) {
+        // TODO: remove real files from all child directory
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        Long userId = userDetails.getUserId();
+        folderValidator.validateFolderByUserId(folderId, userId);
+        if (folderDao.deleteByFolderIdAndUserId(folderId, userId) == 0) {
+            throw new InternalServerException(deleteError);
         }
     }
 }

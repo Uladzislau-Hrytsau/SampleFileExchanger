@@ -39,10 +39,11 @@ public interface FileDao {
     /**
      * Delete file integer.
      *
-     * @param id the id
+     * @param fileId the file id
+     * @param userId the user id
      * @return the integer
      */
-    Integer deleteFile(Long id);
+    Integer deleteFile(Long fileId, Long userId);
 
     /**
      * Gets files by user id and folder id.

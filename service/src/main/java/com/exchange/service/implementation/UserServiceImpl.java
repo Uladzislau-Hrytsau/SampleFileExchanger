@@ -8,7 +8,7 @@ import com.exchange.exception.InternalServerException;
 import com.exchange.exception.ValidationException;
 import com.exchange.service.RoleService;
 import com.exchange.service.UserService;
-import com.exchange.service.validation.UserValidator;
+import com.exchange.service.validation.user.UserValidator;
 import com.exchange.wrapper.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
      * @param userDao               the user dao
      * @param userValidator         the user validator
      * @param bCryptPasswordEncoder the b crypt password encoder
-     * @param roleService           the user role service
+     * @param roleService           the role service
      */
     @Autowired
     public UserServiceImpl(UserDao userDao, UserValidator userValidator, BCryptPasswordEncoder bCryptPasswordEncoder, RoleService roleService) {

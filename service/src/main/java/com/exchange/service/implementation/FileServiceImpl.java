@@ -7,11 +7,10 @@ import com.exchange.dao.Pagination;
 import com.exchange.dto.file.FileDto;
 import com.exchange.dto.file.FileUpdatingDto;
 import com.exchange.exception.InternalServerException;
-import com.exchange.exception.ValidationException;
 import com.exchange.service.CategoryService;
 import com.exchange.service.FileService;
 import com.exchange.service.FileWriterService;
-import com.exchange.service.validation.FileValidator;
+import com.exchange.service.validation.file.FileValidator;
 import com.exchange.wrapper.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -95,18 +94,9 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public void updateFile(FileUpdatingDto fileUpdatingDto) {
-        Long id = fileUpdatingDto.getId();
-        String description = fileUpdatingDto.getDescription();
-        String realName = fileUpdatingDto.getRealName();
-        if (id == null || id < 0L) {
-            throw new ValidationException(incorrectId);
-        }
-        if (description == null || description.isEmpty()) {
-            throw new ValidationException(incorrectDescription);
-        }
-        if (realName == null || realName.isEmpty()) {
-            throw new ValidationException(incorrectFileName);
-        }
+        fileValidator.validateFileId(fileUpdatingDto.getId());
+        fileValidator.validateDescription(fileUpdatingDto.getDescription());
+        fileValidator.validateRealName(fileUpdatingDto.getRealName());
         if (fileUpdatingDto.getDate() == null) {
             fileUpdatingDto.setDate(LocalDate.now());
         }
@@ -116,11 +106,11 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public void deleteFile(Long id) {
-        if (id == null || id < 0L) {
-            throw new ValidationException(incorrectId);
-        }
-        if (fileDao.deleteFile(id) == 0) {
+    public void deleteFile(Long id, Authentication authentication) {
+        // TODO: remove real files from all child directory
+        fileValidator.validateFileId(id);
+        Long userId = this.getUserIdByAuthentication(authentication);
+        if (fileDao.deleteFile(id, userId) == 0) {
             throw new InternalServerException(deleteError);
         }
     }
@@ -128,5 +118,11 @@ public class FileServiceImpl implements FileService {
     @Override
     public Long getFileCount() {
         return fileDao.getFileCount();
+    }
+
+    // TODO: to do common method
+    private Long getUserIdByAuthentication(Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        return userDetails.getUserId();
     }
 }

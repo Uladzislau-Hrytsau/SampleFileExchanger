@@ -7,11 +7,11 @@
             <div>
               <button class="btn fas fa-download animated tada infinite"></button>
               <button class="btn fas fa-info animated tada infinite"></button>
-              <button class="btn far fa-trash-alt animated tada infinite"></button>
+              <button class="btn far fa-trash-alt animated tada infinite" v-on:click="deleleFileByFolderId(file.id)"></button>
             </div>
             <div class="mt-2">
               <h4 class="far fa-file fa-5x"></h4>
-              <h4 class=" mt-2 card-title" v-text="file.name"></h4>
+              <h4 class=" mt-2 card-title" v-text="(file.name.length > 10) ? file.name.slice(0,7) : (file.name + '...')"></h4>
             </div>
           </div>
         </div>
@@ -42,6 +42,16 @@
         'fileStructure',
       ])
     },
+    methods: {
+      ...mapActions([
+        'deleteFile',
+        'retrieveStructureAndCategories'
+      ]),
+      async deleleFileByFolderId(fileId) {
+        await this.deleteFile(fileId);
+        this.retrieveStructureAndCategories();
+      }
+    }
   }
 </script>
 

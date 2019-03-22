@@ -307,7 +307,7 @@ export const store = new Vuex.Store({
     destroyToken(context) {
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
       if (context.getters.loggedIn) {
-        return new Promise((resolve, reject) => {
+        return new Promise(() => {
           localStorage.removeItem('access_token');
           context.commit('destroyToken')
         })
@@ -333,7 +333,7 @@ export const store = new Vuex.Store({
       }
     },
 
-    getUsers(context, credentials) {
+    getUsers(context) {
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
       if (context.getters.loggedIn && context.getters.hasRoleAdmin && context.getters.hasRoleUser) {
         return new Promise((resolve, reject) => {
@@ -393,12 +393,6 @@ export const store = new Vuex.Store({
       })], {
         type: "application/json"
       }));
-      // multipartFile.append('metaData', JSON.stringify(credentials.file));
-      // const config = {
-      //   headers: {
-      //     'Content-Type': 'multipart/form-data',
-      //   }
-      // };
 
       if (context.getters.loggedIn && (context.getters.hasRoleAdmin || context.getters.hasRoleUser)) {
         return new Promise((resolve, reject) => {
@@ -466,14 +460,13 @@ export const store = new Vuex.Store({
               }
               localStorage.setItem('paginationItem', paginationItem);
               context.commit('setPaginationItem', paginationItem);
-              context.commit('setCount', response.data.pagination.count);
+              context.commit('setCount', count);
               context.commit('setUsers', response.data.data);
               context.commit('setPageUser', this.state.pageUser);
-              context.commit('setSize', this.state.size);
-              localStorage.setItem('count', response.data.pagination.count);
-              localStorage.setItem('users', JSON.stringify(response.data.data));
+              context.commit('setSize', size);
+              localStorage.setItem('count', count);
               localStorage.setItem('pageUser', this.state.pageUser);
-              localStorage.setItem('size', this.state.size);
+              localStorage.setItem('size', size);
               resolve(response);
             })
             .catch(error => {
@@ -511,14 +504,13 @@ export const store = new Vuex.Store({
               }
               localStorage.setItem('paginationItem', paginationItem);
               context.commit('setPaginationItem', paginationItem);
-              context.commit('setCount', response.data.pagination.count);
+              context.commit('setCount', count);
               context.commit('setFiles', response.data.data);
               context.commit('setPageFile', this.state.pageFile);
-              context.commit('setSize', this.state.size);
-              localStorage.setItem('count', response.data.pagination.count);
-              localStorage.setItem('files', JSON.stringify(response.data.data));
+              context.commit('setSize', size);
+              localStorage.setItem('count', count);
               localStorage.setItem('pageFile', this.state.pageFile);
-              localStorage.setItem('size', this.state.size);
+              localStorage.setItem('size', size);
               resolve(response);
             })
             .catch(error => {
@@ -636,5 +628,29 @@ export const store = new Vuex.Store({
     },
 
 
+    deleteFolder(context, credentials) {
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
+      if (context.getters.loggedIn && (context.getters.hasRoleAdmin || context.getters.hasRoleUser)) {
+        return new Promise((resolve, reject) => {
+          axios
+            .delete('folders', {
+              params: {
+                "folderId": credentials,
+              }
+        })
+          .then(response => {
+            resolve(response)
+          })
+          .catch(error => {
+            console.log(error);
+            reject(error)
+          })
+      }
+    )
   }
-});
+},
+
+
+}
+})
+;

@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Set;
 
 /**
- * The interface User role service.
+ * The interface Role service.
  */
 @Service
 @Transactional

@@ -36,4 +36,12 @@ public interface FolderDao {
      */
     Boolean existsParentIdByUserId(Long parentId, Long userId);
 
+    /**
+     * Delete by folder id and user id integer.
+     *
+     * @param folderId the folder id
+     * @param userId   the user id
+     * @return the integer
+     */
+    Integer deleteByFolderIdAndUserId(Long folderId, Long userId);
 }

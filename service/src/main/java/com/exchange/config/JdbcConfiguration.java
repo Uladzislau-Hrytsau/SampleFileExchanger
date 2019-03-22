@@ -31,7 +31,7 @@ public class JdbcConfiguration {
     private String password;
 
     /**
-     * Data source.
+     * Data source data source.
      *
      * @return the data source
      */
@@ -46,7 +46,7 @@ public class JdbcConfiguration {
     }
 
     /**
-     * Jdbc template.
+     * Jdbc template jdbc template.
      *
      * @param dataSource the data source
      * @return the jdbc template
@@ -57,7 +57,7 @@ public class JdbcConfiguration {
     }
 
     /**
-     * Named parameter jdbc template.
+     * Named parameter jdbc template named parameter jdbc template.
      *
      * @param dataSource the data source
      * @return the named parameter jdbc template
@@ -68,7 +68,7 @@ public class JdbcConfiguration {
     }
 
     /**
-     * Data source transaction manager.
+     * Data source transaction manager data source transaction manager.
      *
      * @return the data source transaction manager
      */

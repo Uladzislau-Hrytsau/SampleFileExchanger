@@ -31,12 +31,12 @@ public class FileRestController {
     }
 
     /**
-     * Gets all files.
+     * Gets files by page and size.
      *
      * @param page           the page
      * @param size           the size
      * @param authentication the authentication
-     * @return the all files
+     * @return the files by page and size
      */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping(value = "/files", params = {"page", "size"})
@@ -81,13 +81,16 @@ public class FileRestController {
     /**
      * Delete file.
      *
-     * @param id the id
+     * @param id             the id
+     * @param authentication the authentication
      */
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @DeleteMapping(value = "/files", params = {"id"})
     @ResponseStatus(value = HttpStatus.OK)
-    public void deleteFile(@RequestParam(value = "id") Long id) {
-        fileService.deleteFile(id);
+    public void deleteFile(
+            @RequestParam(value = "id") Long id,
+            Authentication authentication) {
+        fileService.deleteFile(id, authentication);
     }
 
 }

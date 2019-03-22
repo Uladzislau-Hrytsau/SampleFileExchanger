@@ -1,4 +1,4 @@
-package com.exchange.service.validation;
+package com.exchange.service.validation.category;
 
 import com.exchange.dao.CategoryDao;
 import com.exchange.exception.ValidationException;

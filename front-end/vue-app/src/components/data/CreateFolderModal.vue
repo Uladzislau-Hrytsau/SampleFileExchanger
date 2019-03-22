@@ -72,7 +72,7 @@
       async approve() {
         let data = {
           id: this.folderId,
-          name: this.name
+          name: this.name ? this.name : "new folder"
         };
         await this.createFolder(data);
         this.retrieveStructureAndCategories();

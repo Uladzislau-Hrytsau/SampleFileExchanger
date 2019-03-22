@@ -13,7 +13,7 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 import java.util.Collections;
 
 /**
- * The type Config.
+ * The type Web configuration.
  */
 @Configuration
 @EnableWebMvc
@@ -48,7 +48,7 @@ public class WebConfiguration {
     }
 
     /**
-     * Request mapping handler adapter.
+     * Request mapping handler adapter request mapping handler adapter.
      *
      * @return the request mapping handler adapter
      */

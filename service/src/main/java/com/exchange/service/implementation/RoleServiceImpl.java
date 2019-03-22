@@ -16,7 +16,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * The type User role service.
+ * The type Role service.
  */
 @Service
 @Transactional
@@ -28,9 +28,9 @@ public class RoleServiceImpl implements RoleService {
     private String roleDoesNotAdd;
 
     /**
-     * Instantiates a new User role service.
+     * Instantiates a new Role service.
      *
-     * @param roleDao the user role dao
+     * @param roleDao the role dao
      */
     @Autowired
     public RoleServiceImpl(RoleDao roleDao) {

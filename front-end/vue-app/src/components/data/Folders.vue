@@ -7,11 +7,14 @@
             <div>
               <button class="btn fas fa-download animated tada infinite"></button>
               <button class="btn fas fa-info animated tada infinite"></button>
-              <button class="btn far fa-trash-alt animated tada infinite"></button>
+              <button class="btn far fa-trash-alt animated tada infinite"
+                      v-on:click="deleleFolderByFolderId(folder.id)"></button>
             </div>
             <div class="mt-2">
               <h4 class="far fa-folder fa-5x" v-on:click="getStructure(folder.id)"></h4>
-              <h4 class=" mt-2 card-title" v-text="folder.name" v-on:click="getStructure(folder.id)"></h4>
+              <h4 class=" mt-2 card-title"
+                  v-text="(folder.name.length > 12) ? folder.name.slice(0,10) : (folder.name + '...')"
+                  v-on:click="getStructure(folder.id)"></h4>
             </div>
           </div>
         </div>
@@ -47,12 +50,17 @@
         'setFolderId'
       ]),
       ...mapActions([
-        'retrieveStructureAndCategories'
+        'retrieveStructureAndCategories',
+        'deleteFolder'
       ]),
       getStructure(id) {
         this.setFolderId(id);
         this.retrieveStructureAndCategories();
-      }
+      },
+      async deleleFolderByFolderId(folderId) {
+        await this.deleteFolder(folderId);
+        this.retrieveStructureAndCategories();
+      },
     }
   }
 </script>

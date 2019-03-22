@@ -38,8 +38,10 @@ public class FolderDaoImpl implements FolderDao {
     private String selectByUserIdAndParentIdSql;
     @Value("${folder.insert}")
     private String insertSql;
-    @Value("${folder.existsIdByUserId}")
+    @Value("${folder.existsByUserId}")
     private String existsIdByUserIdSql;
+    @Value("${folder.deleteByUserIdAndFolderId}")
+    private String deleteByUserIdAndFolderIdSql;
 
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private final FolderStructureDtoRowMapper folderStructureDtoRowMapper;
@@ -79,6 +81,14 @@ public class FolderDaoImpl implements FolderDao {
         parameterSource.addValue(USER_ID, userId);
         parameterSource.addValue(ID, parentId);
         return namedParameterJdbcTemplate.queryForObject(existsIdByUserIdSql, parameterSource, Boolean.class);
+    }
+
+    @Override
+    public Integer deleteByFolderIdAndUserId(Long folderId, Long userId) {
+        MapSqlParameterSource parameterSource = new MapSqlParameterSource();
+        parameterSource.addValue(USER_ID, userId);
+        parameterSource.addValue(ID, folderId);
+        return namedParameterJdbcTemplate.update(deleteByUserIdAndFolderIdSql, parameterSource);
     }
 
 }

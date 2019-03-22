@@ -12,12 +12,14 @@
                      v-bind:label="user.birthDate"/>
           <mdb-input size="sm" icon="fas fa-info" group type="text" required v-model="newUser.information"
                      v-bind:label="user.information"/>
-          <b-form-group v-bind:label="user.gender ? 'Male' : 'Female'">
-            <b-form-radio-group size="sm" v-model="newUser.gender"
-                                :options="genders"
-                                name="radioInline">
-            </b-form-radio-group>
-          </b-form-group>
+          <div>
+            <b-form-group v-bind:label="user.gender ? 'Male' : 'Female'">
+              <b-form-radio-group size="sm" v-model="newUser.gender"
+                                  :options="genders"
+                                  name="radioInline">
+              </b-form-radio-group>
+            </b-form-group>
+          </div>
         </mdb-modal-body>
         <mdb-modal-footer center>
           <mdb-btn outline="dark" @click="approve">Yes</mdb-btn>
@@ -71,6 +73,7 @@
           birthDate: '',
           information: '',
         },
+        gender: '',
         genders: [
           {text: 'Male', value: true},
           {text: 'Female', value: false},
@@ -95,14 +98,11 @@
       async approve() {
         let data = {
           id: this.user.id,
-          password: this.newUser.password || this.user.password,
-          gender: this.newUser.gender || this.user.gender,
-          birthDate: this.newUser.birthDate || this.user.birthDate,
-          information: this.newUser.information || this.user.information,
+          password: this.newUser.password.toString ? this.newUser.password : this.user.password,
+          gender: this.newUser.gender.toString ? this.newUser.gender : this.user.gender,
+          birthDate: this.newUser.birthDate.toString ? this.newUser.birthDate : this.user.birthDate,
+          information: this.newUser.information.toString ? this.newUser.information : this.user.information,
         };
-        console.log(data.gender);
-        console.log(this.user.gender);
-        console.log(this.newUser.gender);
         await this.updateUser(data);
         this.retrieveUsers();
         this.destroyUser();

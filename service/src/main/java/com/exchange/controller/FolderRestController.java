@@ -39,13 +39,22 @@ public class FolderRestController {
     public void addFolder(
             @RequestBody FolderStructureDto folderStructureDto,
             Authentication authentication) {
-        System.out.println(folderStructureDto);
-        System.out.println(folderStructureDto);
-        System.out.println(folderStructureDto);
-        System.out.println(folderStructureDto);
-        System.out.println(folderStructureDto);
-        System.out.println(folderStructureDto);
         folderService.addFolder(folderStructureDto, authentication);
+    }
+
+    /**
+     * Delete folder.
+     *
+     * @param folderId       the folder id
+     * @param authentication the authentication
+     */
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    @DeleteMapping(value = "/folders", params = {"folderId"})
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteFolder(
+            @RequestParam("folderId") Long folderId,
+            Authentication authentication) {
+        folderService.deleteByFolderIdAndAuthentication(folderId, authentication);
     }
 
 }

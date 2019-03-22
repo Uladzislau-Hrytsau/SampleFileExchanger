@@ -1,4 +1,4 @@
-package com.exchange.service.validation;
+package com.exchange.service.validation.user;
 
 import com.exchange.dao.UserDao;
 import com.exchange.exception.ValidationException;

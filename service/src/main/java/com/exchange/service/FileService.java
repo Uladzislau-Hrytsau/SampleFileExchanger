@@ -41,9 +41,10 @@ public interface FileService {
     /**
      * Delete file.
      *
-     * @param id the id
+     * @param id             the id
+     * @param authentication the authentication
      */
-    void deleteFile(Long id);
+    void deleteFile(Long id, Authentication authentication);
 
     /**
      * Gets file count.

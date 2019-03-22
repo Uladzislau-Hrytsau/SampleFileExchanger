@@ -23,7 +23,7 @@ public class SecurityRestController {
     /**
      * Instantiates a new Security rest controller.
      *
-     * @param roleService the user role service
+     * @param roleService the role service
      */
     @Autowired
     public SecurityRestController(RoleService roleService) {

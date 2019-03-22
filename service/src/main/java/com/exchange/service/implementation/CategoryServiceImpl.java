@@ -3,7 +3,7 @@ package com.exchange.service.implementation;
 import com.exchange.dao.CategoryDao;
 import com.exchange.dto.file.FileCategoryDto;
 import com.exchange.service.CategoryService;
-import com.exchange.service.validation.CategoryValidator;
+import com.exchange.service.validation.category.CategoryValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

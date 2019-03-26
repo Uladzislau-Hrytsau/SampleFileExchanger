@@ -83,11 +83,4 @@ public class FileValidator {
         }
     }
 
-    /**
-     * Has user id file id.
-     */
-    public void hasUserIdFileId() {
-
-    }
-
 }

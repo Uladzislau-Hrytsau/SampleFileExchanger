@@ -6,6 +6,10 @@ import com.exchange.wrapper.Response;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.net.MalformedURLException;
+
 /**
  * The interface File service.
  */
@@ -37,6 +41,8 @@ public interface FileService {
      * @param fileUpdatingDto the file updating dto
      */
     void updateFile(FileUpdatingDto fileUpdatingDto);
+
+    File downloadFileByFileIdAndAuthentication(Long fileId, Authentication authentication) throws MalformedURLException, FileNotFoundException;
 
     /**
      * Delete file.

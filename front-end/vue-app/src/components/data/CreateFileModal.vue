@@ -105,7 +105,6 @@
           selectedCategories: categories
         };
         await this.uploadFile(data);
-        // TODO: do i need to get only files or structure and categories
         this.retrieveStructureAndCategories();
         this.disableFileCreate();
         this.disablePointSpinner();

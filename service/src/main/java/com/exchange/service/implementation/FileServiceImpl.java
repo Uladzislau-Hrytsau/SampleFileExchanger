@@ -19,6 +19,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileNotFoundException;
+import java.net.MalformedURLException;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -37,7 +39,7 @@ public class FileServiceImpl implements FileService {
     @Value("${fileService.incorrectId}")
     private String incorrectId;
     @Value("${fileService.incorrectDescription}")
-    private String incorrectDescription;
+    private String izncorrectDescription;
     @Value("${fileService.incorrectRealName}")
     private String incorrectFileName;
     @Value("${fileService.updateError}")
@@ -106,7 +108,15 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public void deleteFile(Long id, Authentication authentication) {
+    public java.io.File downloadFileByFileIdAndAuthentication(Long fileId, Authentication authentication) throws MalformedURLException, FileNotFoundException {
+        // TODO: get encode name by file id
+        String fileName = "10628559-1489-43d1-bbc4-a391ac1fc4e3";
+        return fileWriterService.getFileByName(fileName);
+    }
+
+    @Override
+    public void
+    deleteFile(Long id, Authentication authentication) {
         // TODO: remove real files from all child directory
         fileValidator.validateFileId(id);
         Long userId = this.getUserIdByAuthentication(authentication);

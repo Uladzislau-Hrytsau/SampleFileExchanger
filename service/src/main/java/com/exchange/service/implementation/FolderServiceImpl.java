@@ -4,7 +4,6 @@ import com.exchange.config.security.userdetails.UserDetails;
 import com.exchange.dao.FolderDao;
 import com.exchange.dto.folder.FolderStructureDto;
 import com.exchange.exception.InternalServerException;
-import com.exchange.exception.ValidationException;
 import com.exchange.service.FolderService;
 import com.exchange.service.validation.folder.FolderValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,16 +47,8 @@ public class FolderServiceImpl implements FolderService {
 
     @Override
     public void addFolder(FolderStructureDto folderStructureDto, Authentication authentication) {
-        String name = folderStructureDto.getName();
-        if (name == null || name.isEmpty()) {
-            throw new ValidationException(incorrectFolderName);
-        }
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        Long userId = userDetails.getUserId();
-        if (!folderDao.existsParentIdByUserId(folderStructureDto.getId(), userId)) {
-            throw new ValidationException(folderDoesNotExist);
-        }
-        if (folderDao.addFolder(folderStructureDto, userId) == 0) {
+        folderValidator.validateFolderName(folderStructureDto.getName());
+        if (folderDao.addFolder(folderStructureDto, ((UserDetails) authentication.getPrincipal()).getUserId()) == 0) {
             throw new InternalServerException(createError);
         }
     }
@@ -65,8 +56,7 @@ public class FolderServiceImpl implements FolderService {
     @Override
     public void deleteByFolderIdAndAuthentication(Long folderId, Authentication authentication) {
         // TODO: remove real files from all child directory
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        Long userId = userDetails.getUserId();
+        Long userId = ((UserDetails) authentication.getPrincipal()).getUserId();
         folderValidator.validateFolderByUserId(folderId, userId);
         if (folderDao.deleteByFolderIdAndUserId(folderId, userId) == 0) {
             throw new InternalServerException(deleteError);

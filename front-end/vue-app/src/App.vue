@@ -8,10 +8,10 @@
           <b-nav-item v-show="loggedIn && hasRoleUser && hasRoleAdmin" :to="{ name : 'Users' }">users</b-nav-item>
           <b-nav-item v-show="loggedIn && hasRoleAdmin" :to="{ name : 'Files' }">files</b-nav-item>
           <b-nav-item v-show="loggedIn && (hasRoleUser || hasRoleAdmin)" :to="{ name : 'Structure' }">data</b-nav-item>
-          <b-nav-item v-show="!loggedIn" :to="{ name : 'Registration' }">sing up</b-nav-item>
-          <b-nav-item v-show="!loggedIn" :to="{ name : 'Authorization' }">sing in</b-nav-item>
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto">
+          <b-nav-item v-show="!loggedIn" :to="{ name : 'Registration' }">sing up</b-nav-item>
+          <b-nav-item v-show="!loggedIn" :to="{ name : 'Authorization' }">sing in</b-nav-item>
           <b-nav-item-dropdown right v-show="loggedIn && (hasRoleUser || hasRoleAdmin)">
             <template slot="button-content"><em>User</em></template>
             <b-dropdown-item >Profile</b-dropdown-item>

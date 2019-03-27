@@ -14,6 +14,7 @@ import com.exchange.service.validation.file.FileValidator;
 import com.exchange.wrapper.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -122,29 +123,28 @@ public class FileServiceImpl implements FileService {
         FileCopyUtils.copy(inputStream, response.getOutputStream());
     }
 
-    private HttpServletResponse buildFileDownloadResponse(HttpServletResponse response, String fileName, Integer fileSize) {
-        String mimeType = this.getFileTypeByFileName(fileName);
-        response.setContentType(mimeType);
-        response.setHeader("Content-Disposition", String.format("inline; filename=\"{}\"", fileName));
+    private void buildFileDownloadResponse(HttpServletResponse response, String fileName, Integer fileSize) {
+        response.setContentType(this.getFileTypeByFileName(fileName));
+        response.setHeader("Content-Disposition", String.format("attachment; filename=\"" + fileName + "\""));
         response.setContentLength(fileSize);
-        return response;
     }
 
     private String getFileTypeByFileName(String fileName) {
         String mimeType = URLConnection.guessContentTypeFromName(fileName);
         if (mimeType == null) {
-            mimeType = "application/octet-stream";
+            mimeType = MediaType.APPLICATION_OCTET_STREAM_VALUE;
         }
         return mimeType;
     }
 
-
     @Override
-    public void
-    deleteFile(Long id, Authentication authentication) {
-        // TODO: remove real files from all child directory
+    public void deleteFile(Long id, Authentication authentication) {
+        // TODO: remove real file
         fileValidator.validateFileId(id);
         Long userId = this.getUserIdByAuthentication(authentication);
+        if (!fileWriterService.deleteFileByName(fileDao.getFileNameByFileIdAndUserId(id, userId))) {
+            throw new InternalServerException(deleteError);
+        }
         if (fileDao.deleteFile(id, userId) == 0) {
             throw new InternalServerException(deleteError);
         }

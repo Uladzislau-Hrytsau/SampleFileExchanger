@@ -23,4 +23,12 @@ public interface FileWriterService {
      */
     java.io.File getFileByName(String fileName);
 
+    /**
+     * Delete file by name boolean.
+     *
+     * @param fileName the file name
+     * @return the boolean
+     */
+    Boolean deleteFileByName(String fileName);
+
 }

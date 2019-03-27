@@ -19,6 +19,8 @@ public class FolderValidator {
     private String incorrectFolderId;
     @Value("${folderService.folderDoesNotExist}")
     private String folderDoesNotExist;
+    @Value("${folderService.incorrectFolderName}")
+    private String incorrectFolderName;
 
     /**
      * Instantiates a new Folder validator.
@@ -45,15 +47,37 @@ public class FolderValidator {
         this.existsByUserId(folderId, userId);
     }
 
-    private void validateFolderId(Long folderId) {
+    /**
+     * Validate folder id.
+     *
+     * @param folderId the folder id
+     */
+    public void validateFolderId(Long folderId) {
         if (!commonValidator.isValidIdentifier(folderId)) {
             throw new ValidationException(incorrectFolderId);
         }
     }
 
-    private void existsByUserId(Long folderId, Long userId) {
+    /**
+     * Exists by user id.
+     *
+     * @param folderId the folder id
+     * @param userId   the user id
+     */
+    public void existsByUserId(Long folderId, Long userId) {
         if (!folderDao.existsParentIdByUserId(folderId, userId)) {
             throw new ValidationException(folderDoesNotExist);
+        }
+    }
+
+    /**
+     * Validate folder name.
+     *
+     * @param name the name
+     */
+    public void validateFolderName(String name) {
+        if (name == null || name.isEmpty()) {
+            throw new ValidationException(incorrectFolderName);
         }
     }
 }

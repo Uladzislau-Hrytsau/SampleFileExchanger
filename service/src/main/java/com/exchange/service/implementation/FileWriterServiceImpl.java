@@ -47,6 +47,12 @@ public class FileWriterServiceImpl implements FileWriterService {
         return new java.io.File(this.getFilePath(fileName));
     }
 
+    @Override
+    public Boolean deleteFileByName(String fileName) {
+        File file = new File(this.getFilePath(fileName));
+        return file.delete();
+    }
+
 
     private String getFilePath(String encodeName) {
         return servletContext.getRealPath(REPOSITORY_PATH + java.io.File.separator + encodeName);

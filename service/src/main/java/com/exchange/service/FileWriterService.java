@@ -2,10 +2,6 @@ package com.exchange.service;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.net.MalformedURLException;
-
 /**
  * The interface File writer service.
  */
@@ -19,6 +15,12 @@ public interface FileWriterService {
      */
     void saveFile(MultipartFile multipartFile, String encodeName);
 
-    File getFileByName(String fileName) throws MalformedURLException, FileNotFoundException;
+    /**
+     * Gets file by name.
+     *
+     * @param fileName the file name
+     * @return the file by name
+     */
+    java.io.File getFileByName(String fileName);
 
 }

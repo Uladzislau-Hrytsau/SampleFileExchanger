@@ -33,7 +33,8 @@ public class FolderDaoImpl implements FolderDao {
      * The constant NAME.
      */
     public static final String NAME = "name";
-
+    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    private final FolderStructureDtoRowMapper folderStructureDtoRowMapper;
     @Value("${folder.selectByUserIdAndParentId}")
     private String selectByUserIdAndParentIdSql;
     @Value("${folder.insert}")
@@ -42,9 +43,6 @@ public class FolderDaoImpl implements FolderDao {
     private String existsIdByUserIdSql;
     @Value("${folder.deleteByUserIdAndFolderId}")
     private String deleteByUserIdAndFolderIdSql;
-
-    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-    private final FolderStructureDtoRowMapper folderStructureDtoRowMapper;
 
     /**
      * Instantiates a new Folder dao.

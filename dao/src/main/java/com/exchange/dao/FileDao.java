@@ -60,4 +60,13 @@ public interface FileDao {
      * @return the file count
      */
     Long getFileCount();
+
+    /**
+     * Gets file name by file id and user id.
+     *
+     * @param fileId the file id
+     * @param userId the user id
+     * @return the file name by file id and user id
+     */
+    String getFileNameByFileIdAndUserId(Long fileId, Long userId);
 }

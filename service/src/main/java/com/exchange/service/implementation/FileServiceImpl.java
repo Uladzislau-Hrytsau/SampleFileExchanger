@@ -17,10 +17,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.FileNotFoundException;
-import java.net.MalformedURLException;
+import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URLConnection;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -108,11 +113,31 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public java.io.File downloadFileByFileIdAndAuthentication(Long fileId, Authentication authentication) throws MalformedURLException, FileNotFoundException {
-        // TODO: get encode name by file id
-        String fileName = "10628559-1489-43d1-bbc4-a391ac1fc4e3";
-        return fileWriterService.getFileByName(fileName);
+    public void downloadFileByFileIdAndAuthentication(Long fileId, String fileName, Authentication authentication, HttpServletResponse response) throws IOException {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        String encodedFileName = fileDao.getFileNameByFileIdAndUserId(fileId, userDetails.getUserId());
+        java.io.File file = fileWriterService.getFileByName(encodedFileName);
+        this.buildFileDownloadResponse(response, fileName, (int) file.length());
+        InputStream inputStream = new BufferedInputStream(new FileInputStream(file));
+        FileCopyUtils.copy(inputStream, response.getOutputStream());
     }
+
+    private HttpServletResponse buildFileDownloadResponse(HttpServletResponse response, String fileName, Integer fileSize) {
+        String mimeType = this.getFileTypeByFileName(fileName);
+        response.setContentType(mimeType);
+        response.setHeader("Content-Disposition", String.format("inline; filename=\"{}\"", fileName));
+        response.setContentLength(fileSize);
+        return response;
+    }
+
+    private String getFileTypeByFileName(String fileName) {
+        String mimeType = URLConnection.guessContentTypeFromName(fileName);
+        if (mimeType == null) {
+            mimeType = "application/octet-stream";
+        }
+        return mimeType;
+    }
+
 
     @Override
     public void

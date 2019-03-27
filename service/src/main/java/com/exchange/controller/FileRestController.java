@@ -4,23 +4,16 @@ import com.exchange.dto.file.FileDto;
 import com.exchange.dto.file.FileUpdatingDto;
 import com.exchange.service.FileService;
 import com.exchange.wrapper.Response;
-import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletContext;
-import java.io.File;
-import java.io.FileInputStream;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.InputStream;
-
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 /**
  * The type File rest controller.
@@ -35,7 +28,8 @@ public class FileRestController {
     /**
      * Instantiates a new File rest controller.
      *
-     * @param fileService the file service
+     * @param fileService    the file service
+     * @param servletContext the servlet context
      */
     @Autowired
     public FileRestController(FileService fileService, ServletContext servletContext) {
@@ -91,19 +85,22 @@ public class FileRestController {
         fileService.updateFile(fileUpdatingDto);
     }
 
-
-    @RequestMapping(method = GET, path = "/files", params = {"fileId"})
-    public ResponseEntity<byte[]> downloadFile(
+    /**
+     * Download file.
+     *
+     * @param fileId         the file id
+     * @param fileName       the file name
+     * @param authentication the authentication
+     * @param response       the response
+     * @throws IOException the io exception
+     */
+    @GetMapping(value = "/files", params = {"fileId", "fileName"})
+    public void downloadFile(
             @RequestParam("fileId") Long fileId,
-            Authentication authentication
-    ) throws IOException {
-        File file = new File(servletContext.getRealPath("WEB-INF/repo" + java.io.File.separator + "http1.1.pdf"));
-        InputStream inputStream = new FileInputStream(file);
-        HttpHeaders headers = new HttpHeaders();
-        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachement; filename=\"" + file.getName() + "\"");
-        return ResponseEntity.ok()
-                .headers(headers)
-                .body(IOUtils.toByteArray(inputStream));
+            @RequestParam("fileName") String fileName,
+            Authentication authentication,
+            HttpServletResponse response) throws IOException {
+        fileService.downloadFileByFileIdAndAuthentication(fileId, fileName, authentication, response);
     }
 
     /**

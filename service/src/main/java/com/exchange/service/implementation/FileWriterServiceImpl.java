@@ -9,7 +9,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletContext;
 import java.io.File;
-import java.io.FileNotFoundException;
 
 /**
  * The type File writer service.
@@ -44,19 +43,10 @@ public class FileWriterServiceImpl implements FileWriterService {
     }
 
     @Override
-    public File getFileByName(String fileName) throws FileNotFoundException {
-        File file = null;
-        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        file = new File(this.getFilePath(fileName));
-        if (!file.exists()) {
-            System.out.println("file does not exist");
-            System.out.println("file does not exist");
-            System.out.println("file does not exist");
-            System.out.println("file does not exist");
-        }
-        return file;
-
+    public File getFileByName(String fileName) {
+        return new java.io.File(this.getFilePath(fileName));
     }
+
 
     private String getFilePath(String encodeName) {
         return servletContext.getRealPath(REPOSITORY_PATH + java.io.File.separator + encodeName);

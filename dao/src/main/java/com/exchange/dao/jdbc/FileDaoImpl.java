@@ -60,7 +60,10 @@ public class FileDaoImpl implements FileDao {
      * The constant OFFSET.
      */
     public static final String OFFSET = "offset";
-
+    private final JdbcTemplate jdbcTemplate;
+    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    private final FileRowMapper fileRowMapper;
+    private final FileStructureDtoRowMapper fileStructureDtoRowMapper;
     @Value("${file.insert}")
     private String addFileSql;
     @Value("${file.update}")
@@ -73,11 +76,8 @@ public class FileDaoImpl implements FileDao {
     private String selectByLimitAndOffsetSql;
     @Value("${file.selectFilesCount}")
     private String selectFilesCountSql;
-
-    private final JdbcTemplate jdbcTemplate;
-    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-    private final FileRowMapper fileRowMapper;
-    private final FileStructureDtoRowMapper fileStructureDtoRowMapper;
+    @Value("${file.getFileNameByFileIdAndUserId}")
+    private String getFileNameByFileIdAndUserIdSql;
 
     /**
      * Instantiates a new File dao.
@@ -146,5 +146,13 @@ public class FileDaoImpl implements FileDao {
     @Override
     public Long getFileCount() {
         return jdbcTemplate.queryForObject(selectFilesCountSql, Long.class);
+    }
+
+    @Override
+    public String getFileNameByFileIdAndUserId(Long fileId, Long userId) {
+        MapSqlParameterSource parameterSource = new MapSqlParameterSource();
+        parameterSource.addValue(ID, fileId);
+        parameterSource.addValue(USER_ID, userId);
+        return namedParameterJdbcTemplate.queryForObject(getFileNameByFileIdAndUserIdSql, parameterSource, String.class);
     }
 }

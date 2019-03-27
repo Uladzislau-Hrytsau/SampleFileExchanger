@@ -654,20 +654,22 @@ export const store = new Vuex.Store({
         }
       },
 
-      downloadFile(context) {
+      downloadFile(context, credentials) {
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
         if (context.getters.loggedIn && (context.getters.hasRoleAdmin || context.getters.hasRoleUser)) {
           return new Promise((resolve, reject) => {
               axios
-                .get('/files', {
-                  responseType: "blob",
-                })
+                .get('/files?fileId='+credentials.id+'&fileName='+credentials.name,
+                  {
+                    responseType: "blob",
+                  }
+                )
                 .then(response => {
                   console.log(response.data);
                   const url = window.URL.createObjectURL(new Blob([response.data]));
                   const link = document.createElement('a');
                   link.href = url;
-                  link.setAttribute('download', 'file.pdf'); //or any other extension
+                  link.setAttribute('download', credentials.name);
                   document.body.appendChild(link);
                   link.click();
                 })

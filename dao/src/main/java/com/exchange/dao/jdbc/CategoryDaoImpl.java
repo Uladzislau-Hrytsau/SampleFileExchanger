@@ -23,16 +23,14 @@ public class CategoryDaoImpl implements CategoryDao {
 
     private static final String USER_ID = "user_id";
     private static final String CATEGORY_ID = "category_id";
-
+    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    private final CategoryDtoRowMapper categoryDtoRowMapper;
     @Value("${category.existsByUserIdAndCategoryId}")
     private String existsByUserIdAndCategoryIdSql;
     @Value("${category.insertFileCategories}")
     private String insertFileCategoriesSql;
     @Value("${category.getCategoriesByUserId}")
     private String getCategoriesByUserIdSql;
-
-    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-    private final CategoryDtoRowMapper categoryDtoRowMapper;
 
     /**
      * Instantiates a new Category dao.

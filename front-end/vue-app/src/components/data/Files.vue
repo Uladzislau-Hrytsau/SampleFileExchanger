@@ -5,7 +5,7 @@
         <div class="card testimonial-ca rd autocomplete" v-for="file in fileStructure">
           <div class="card-body">
             <div>
-              <button class="btn fas fa-download animated tada infinite" v-on:click="download"></button>
+              <button class="btn fas fa-download animated tada infinite" v-on:click="download(file)"></button>
               <button class="btn fas fa-info animated tada infinite"></button>
               <button class="btn far fa-trash-alt animated tada infinite" v-on:click="deleleFileByFolderId(file.id)"></button>
             </div>
@@ -52,8 +52,8 @@
         await this.deleteFile(fileId);
         this.retrieveStructureAndCategories();
       },
-      download() {
-        this.downloadFile();
+      download(file) {
+        this.downloadFile(file);
       }
     }
   }

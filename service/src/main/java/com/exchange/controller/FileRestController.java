@@ -95,6 +95,7 @@ public class FileRestController {
      * @throws IOException the io exception
      */
     @GetMapping(value = "/files", params = {"fileId", "fileName"})
+    @ResponseStatus(value = HttpStatus.OK)
     public void downloadFile(
             @RequestParam("fileId") Long fileId,
             @RequestParam("fileName") String fileName,

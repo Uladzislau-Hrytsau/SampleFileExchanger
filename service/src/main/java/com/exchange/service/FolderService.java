@@ -23,4 +23,12 @@ public interface FolderService {
      * @param authentication the authentication
      */
     void deleteByFolderIdAndAuthentication(Long folderId, Authentication authentication);
+
+    /**
+     * Update folder.
+     *
+     * @param folderStructureDto the folder structure dto
+     * @param authentication     the authentication
+     */
+    void updateFolder(FolderStructureDto folderStructureDto, Authentication authentication);
 }

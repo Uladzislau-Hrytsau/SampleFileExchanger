@@ -33,6 +33,7 @@ public class FolderDaoImpl implements FolderDao {
      * The constant NAME.
      */
     public static final String NAME = "name";
+
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private final FolderStructureDtoRowMapper folderStructureDtoRowMapper;
     @Value("${folder.selectByUserIdAndParentId}")
@@ -43,6 +44,8 @@ public class FolderDaoImpl implements FolderDao {
     private String existsIdByUserIdSql;
     @Value("${folder.deleteByUserIdAndFolderId}")
     private String deleteByUserIdAndFolderIdSql;
+    @Value("${folder.updateFolderNameByFolderIdAndUserId}")
+    private String updateFolderNameByFolderIdAndUserIdSql;
 
     /**
      * Instantiates a new Folder dao.
@@ -84,9 +87,21 @@ public class FolderDaoImpl implements FolderDao {
     @Override
     public Integer deleteByFolderIdAndUserId(Long folderId, Long userId) {
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
-        parameterSource.addValue(USER_ID, userId);
-        parameterSource.addValue(ID, folderId);
+        this.fillFolderIdAndUserId(parameterSource, folderId, userId);
         return namedParameterJdbcTemplate.update(deleteByUserIdAndFolderIdSql, parameterSource);
+    }
+
+    @Override
+    public Integer updateFolderNameByFolderIdAndUserId(FolderStructureDto folderStructureDto, Long userId) {
+        MapSqlParameterSource parameterSource = new MapSqlParameterSource();
+        parameterSource.addValue(NAME, folderStructureDto.getName());
+        this.fillFolderIdAndUserId(parameterSource, folderStructureDto.getId(), userId);
+        return namedParameterJdbcTemplate.update(updateFolderNameByFolderIdAndUserIdSql, parameterSource);
+    }
+
+    private void fillFolderIdAndUserId(MapSqlParameterSource parameterSource, Long id, Long userId) {
+        parameterSource.addValue(ID, id);
+        parameterSource.addValue(USER_ID, userId);
     }
 
 }

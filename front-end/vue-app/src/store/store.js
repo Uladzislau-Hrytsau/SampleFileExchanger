@@ -49,8 +49,12 @@ export const store = new Vuex.Store({
       categories: null,
 
       enabledFolderCreate: false,
+      enabledFolderUpdate: false,
       enabledFileCreate: false,
+
       enabledPointSpinner: false,
+
+      folder: []
 
     },
 
@@ -256,6 +260,12 @@ export const store = new Vuex.Store({
       disableFolderCreate(state) {
         state.enabledFolderCreate = false;
       },
+      enableFolderUpdate(state) {
+        state.enabledFolderUpdate = true;
+      },
+      disableFolderUpdate(state) {
+        state.enabledFolderUpdate = false;
+      },
       enableFileCreate(state) {
         state.enabledFileCreate = true;
       },
@@ -267,6 +277,12 @@ export const store = new Vuex.Store({
       },
       disablePointSpinner(state) {
         state.enabledPointSpinner = false;
+      },
+      setFolder(state, folder) {
+        state.folder = folder;
+      },
+      disableFolder(state) {
+        state.folder = null;
       }
     },
 
@@ -680,8 +696,30 @@ export const store = new Vuex.Store({
             }
           )
         }
-      }
+      },
 
+      updateFolder(context, credentials) {
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
+        if (context.getters.loggedIn && (context.getters.hasRoleAdmin || context.getters.hasRoleUser)) {
+          return new Promise((resolve, reject) => {
+              axios
+                .put('/folders', {
+                    id: this.state.folder.id,
+                    name: credentials
+                })
+                .then(response => {
+                  this.state.folder = null;
+                  console.log(response);
+                  resolve(response);
+                })
+                .catch(error => {
+                  console.log(error);
+                  reject(error)
+                })
+            }
+          )
+        }
+      },
 
     }
   })

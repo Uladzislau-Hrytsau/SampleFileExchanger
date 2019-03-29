@@ -34,6 +34,8 @@ public class FolderServiceImpl implements FolderService {
     private String createError;
     @Value("${folderService.deleteError}")
     private String deleteError;
+    @Value("${folderService.updateError}")
+    private String updateError;
 
     /**
      * Instantiates a new Folder service.
@@ -70,6 +72,14 @@ public class FolderServiceImpl implements FolderService {
         fileWriterService.deleteFilesByNames(fileDao.getFileNamesByFolderIdAndUserId(folderId, userId));
         if (folderDao.deleteByFolderIdAndUserId(folderId, userId) == 0) {
             throw new InternalServerException(deleteError);
+        }
+    }
+
+    @Override
+    public void updateFolder(FolderStructureDto folderStructureDto, Authentication authentication) {
+        folderValidator.validateFolderName(folderStructureDto.getName());
+        if (folderDao.updateFolderNameByFolderIdAndUserId(folderStructureDto, ((UserDetails) authentication.getPrincipal()).getUserId()) == 0) {
+            throw new InternalServerException(updateError);
         }
     }
 }

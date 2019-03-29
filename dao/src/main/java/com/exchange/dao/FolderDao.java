@@ -45,4 +45,12 @@ public interface FolderDao {
      */
     Integer deleteByFolderIdAndUserId(Long folderId, Long userId);
 
+    /**
+     * Update folder name by folder id and user id integer.
+     *
+     * @param folderStructureDto the folder structure dto
+     * @param userId             the user id
+     * @return the integer
+     */
+    Integer updateFolderNameByFolderIdAndUserId(FolderStructureDto folderStructureDto, Long userId);
 }

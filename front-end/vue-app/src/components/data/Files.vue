@@ -1,5 +1,5 @@
 <template>
-  <div class="container col-12 mt-3">
+  <div class="container col-8 mt-4">
     <mdb-container>
       <mdb-row>
         <div class="card testimonial-ca rd autocomplete" v-for="file in fileStructure">
@@ -11,7 +11,7 @@
             </div>
             <div class="mt-2">
               <h4 class="far fa-file fa-5x"></h4>
-              <h4 class=" mt-2 card-title" v-text="(file.name.length > 10) ? file.name.slice(0,7) : (file.name + '...')"></h4>
+              <h4 class=" mt-2 card-title" v-text="file.name.slice(0,8).concat('...')"></h4>
             </div>
           </div>
         </div>

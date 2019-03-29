@@ -2,6 +2,7 @@
   <div class="container col-12 mt-3">
     <CreateFolderModal v-if="enabledFolderCreate"></CreateFolderModal>
     <CreateFileModal v-if="enabledFileCreate"></CreateFileModal>
+    <UpdateFolderModal v-if="enabledFolderUpdate"></UpdateFolderModal>
     <Category></Category>
     <Panel></Panel>
     <Folders></Folders>
@@ -21,6 +22,7 @@
   import Files from './Files';
   import CreateFolderModal from './CreateFolderModal';
   import CreateFileModal from './CreateFileModal';
+  import UpdateFolderModal from './UpdateFolderModal';
   import {
     mdbContainer,
     mdbRow,
@@ -80,7 +82,8 @@
       Folders,
       Files,
       CreateFolderModal,
-      CreateFileModal
+      CreateFileModal,
+      UpdateFolderModal
     },
 
     data() {
@@ -89,7 +92,8 @@
     computed: {
       ...mapState([
         'enabledFolderCreate',
-        'enabledFileCreate'
+        'enabledFileCreate',
+        'enabledFolderUpdate'
       ])
     },
     methods: {

@@ -43,6 +43,21 @@ public class FolderRestController {
     }
 
     /**
+     * Update folder name.
+     *
+     * @param folderStructureDto the folder structure dto
+     * @param authentication     the authentication
+     */
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    @PutMapping("/folders")
+    @ResponseStatus(value = HttpStatus.OK)
+    public void updateFolderName(
+            @RequestBody FolderStructureDto folderStructureDto,
+            Authentication authentication) {
+        folderService.updateFolder(folderStructureDto, authentication);
+    }
+
+    /**
      * Delete folder.
      *
      * @param folderId       the folder id

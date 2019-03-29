@@ -69,11 +69,13 @@
         'disablePagination',
         'enableApprove',
         'setFile',
-        'enableFileUpdate'
+        'enableFileUpdate',
+        'enableAdminSide'
       ]),
       enableUpdatingTemplate(file) {
         this.setFile(file);
-        this.enableFileUpdate()
+        this.enableAdminSide();
+        this.enableFileUpdate();
       },
       enableDeletingTemplate(id) {
         this.enableFileDelete();

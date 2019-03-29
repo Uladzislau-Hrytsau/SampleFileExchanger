@@ -6,8 +6,6 @@ import com.exchange.service.FileService;
 import com.exchange.wrapper.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
 /**
  * The type File rest controller.
@@ -25,18 +22,15 @@ import java.util.List;
 public class FileRestController {
 
     private final FileService fileService;
-    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     /**
      * Instantiates a new File rest controller.
      *
-     * @param fileService                the file service
-     * @param namedParameterJdbcTemplate the named parameter jdbc template
+     * @param fileService the file service
      */
     @Autowired
-    public FileRestController(FileService fileService, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+    public FileRestController(FileService fileService) {
         this.fileService = fileService;
-        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
 
     }
 
@@ -124,28 +118,19 @@ public class FileRestController {
     }
 
     /**
-     * Check list.
+     * Gets file information by file id.
      *
-     * @param number the number
-     * @return the list
+     * @param fileId         the file id
+     * @param authentication the authentication
+     * @return the file information by file id
      */
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    @GetMapping(value = "/check", params = {"number"})
+    @GetMapping(value = "/files", params = {"fileId"})
     @ResponseStatus(value = HttpStatus.OK)
-    public List<String> check(
-            @RequestParam(value = "number") Long number) {
-        MapSqlParameterSource parameterSource = new MapSqlParameterSource();
-        parameterSource.addValue("number", number);
-        return namedParameterJdbcTemplate.queryForList(" select encode_name from\n" +
-                " file inner join\n" +
-                "(select  id \n" +
-                "from    (select * from folder\n" +
-                "         order by parent_id, id) products_sorted,\n" +
-                "        (select @pv := :number) initialisation\n" +
-                " where find_in_set(parent_id, @pv)\n" +
-                " and length(@pv := concat(@pv, ',', id))\n" +
-                " or id = :number) as tab\n" +
-                " on file.folder_id = tab.id", parameterSource, String.class);
+    public FileUpdatingDto getFileInformationByFileId(
+            @RequestParam(value = "fileId") Long fileId,
+            Authentication authentication) {
+        return fileService.getFileInformationByFileIdAndAuthentication(fileId, authentication);
     }
 
 }

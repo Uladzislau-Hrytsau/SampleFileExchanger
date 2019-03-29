@@ -16,6 +16,8 @@ const qs = require('query-string');
 export const store = new Vuex.Store({
 
     state: {
+      adminSide: false,
+      userSide: false,
       token: localStorage.getItem('access_token') || null,
       user_role: localStorage.getItem('roles') || null,
       file: JSON.parse(localStorage.getItem('file')) || null,
@@ -101,6 +103,18 @@ export const store = new Vuex.Store({
     },
 
     mutations: {
+      enableAdminSide(state) {
+        state.adminSide = true;
+      },
+      disableAdminSide(state) {
+        state.adminSide = false;
+      },
+      enableUserSide(state) {
+        state.userSide = true;
+      },
+      disableUserSide(state) {
+        state.userSide = false;
+      },
       setToken(state, token) {
         state.token = token;
       },
@@ -710,6 +724,30 @@ export const store = new Vuex.Store({
                 .then(response => {
                   this.state.folder = null;
                   console.log(response);
+                  resolve(response);
+                })
+                .catch(error => {
+                  console.log(error);
+                  reject(error)
+                })
+            }
+          )
+        }
+      },
+
+      getFileInformationByFileId(context, credentials) {
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
+        if (context.getters.loggedIn && (context.getters.hasRoleAdmin || context.getters.hasRoleUser)) {
+          return new Promise((resolve, reject) => {
+              axios
+                .get('/files', {
+                  params: {
+                    fileId: credentials
+                  }
+                })
+                .then(response => {
+                  console.log(response);
+                  context.commit('setFile', response.data);
                   resolve(response);
                 })
                 .catch(error => {

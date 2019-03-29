@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <div class="row">
       <Approve v-if="enabledApprove"></Approve>
-      <UpdateFile v-if="enabledFileUpdate"></UpdateFile>
+      <UpdateFileModal v-if="enabledFileUpdate"></UpdateFileModal>
       <FilesTable class="cols-8 offset-2" v-if="enabledTableFiles"></FilesTable>
       <Pagination class="col-6 offset-3" v-if="enabledPagination"></Pagination>
     </div>
@@ -15,7 +15,7 @@
   import Pagination from './Pagination';
   import FilesTable from './FilesTable';
   import Approve from '../aproving/Approve';
-  import UpdateFile from './UpdateFile';
+  import UpdateFileModal from './UpdateFileModal';
   import {mapState, mapGetters, mapActions, mapMutations} from 'vuex';
 
   export default {
@@ -24,7 +24,7 @@
       Pagination,
       FilesTable,
       Approve,
-      UpdateFile,
+      UpdateFileModal,
       mdbDatatable
     },
     computed: {

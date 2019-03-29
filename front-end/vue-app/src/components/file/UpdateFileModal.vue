@@ -9,11 +9,13 @@
         </mdb-modal-header>
 
         <mdb-modal-body>
-
-          <mdb-input size="sm" icon="fas fa-file-signature" required group type="text" v-model="newFile.name"
-                     v-bind:label="file.name"/>
+          <p>name:</p>
+          <mdb-input size="sm" icon="fas fa-file-signature" required group type="text" v-model="newFile.realName"
+                     v-bind:label="file.realName"/>
+          <p>description:</p>
           <mdb-input size="sm" icon="fas fa-info" required group type="text" v-model="newFile.description"
                      v-bind:label="file.description"/>
+          <p>date:</p>
           <mdb-input size="sm" icon="fas fa-clock" required group type="date" v-model="newFile.date"
                      v-bind:label="file.date"/>
 
@@ -68,7 +70,7 @@
     data() {
       return {
         newFile: {
-          name: '',
+          realName: '',
           description: '',
           date: ''
         },
@@ -77,27 +79,32 @@
     computed: {
       ...mapState([
         'enabledFileUpdate',
-        'file'
+        'file',
+        'userSide',
+        'adminSide'
       ]),
     },
     methods: {
       ...mapMutations([
         'destroyFile',
-        'disableFileUpdate'
+        'disableFileUpdate',
+        'disableUserSide',
+        'disableAdminSide'
       ]),
       ...mapActions([
         'updateFile',
-        'retrieveFiles'
+        'retrieveFiles',
+        'retrieveStructureAndCategories'
       ]),
       async approve() {
         let data = {
           id: this.file.id,
-          name: this.newFile.name ? this.newFile.name : this.file.name,
+          realName: this.newFile.realName ? this.newFile.realName : this.file.realName,
           description: this.newFile.description ? this.newFile.description : this.file.description,
           date: this.newFile.date ? this.newFile.date : this.file.date,
         };
         await this.updateFile(data);
-        this.retrieveFiles();
+        this.retrieveInformation();
         this.destroyFile();
         this.disableFileUpdate();
       },
@@ -105,6 +112,16 @@
         this.destroyFile();
         this.disableFileUpdate();
       },
+      retrieveInformation() {
+        if (this.userSide) {
+          this.retrieveStructureAndCategories();
+          this.disableUserSide();
+        }
+        if (this.adminSide) {
+          this.retrieveFiles();
+          this.disableAdminSide();
+        }
+      }
     }
   };
 </script>

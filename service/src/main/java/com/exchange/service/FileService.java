@@ -67,4 +67,13 @@ public interface FileService {
      * @return the file count
      */
     Long getFileCount();
+
+    /**
+     * Gets file information by file id and authentication.
+     *
+     * @param fileId         the file id
+     * @param authentication the authentication
+     * @return the file information by file id and authentication
+     */
+    FileUpdatingDto getFileInformationByFileIdAndAuthentication(Long fileId, Authentication authentication);
 }

@@ -152,6 +152,12 @@ public class FileServiceImpl implements FileService {
         return fileDao.getFileCount();
     }
 
+    @Override
+    public FileUpdatingDto getFileInformationByFileIdAndAuthentication(Long fileId, Authentication authentication) {
+        fileValidator.validateFileId(fileId);
+        return fileDao.getFileInformationByFileIdAndUserId(fileId, this.getUserIdByAuthentication(authentication));
+    }
+
     // TODO: to do common method
     private Long getUserIdByAuthentication(Authentication authentication) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();

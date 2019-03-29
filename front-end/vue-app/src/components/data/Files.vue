@@ -6,8 +6,8 @@
           <div class="card-body">
             <div>
               <button class="btn fas fa-download animated tada infinite" v-on:click="download(file)"></button>
-              <button class="btn fas fa-info animated tada infinite"></button>
-              <button class="btn far fa-trash-alt animated tada infinite" v-on:click="deleleFileByFolderId(file.id)"></button>
+              <button class="btn fas fa-info animated tada infinite" v-on:click="enableUpdatingTemplate(file.id)"></button>
+              <button class="btn far fa-trash-alt animated tada infinite" v-on:click="deleteFileByFolderId(file.id)"></button>
             </div>
             <div class="mt-2">
               <h4 class="far fa-file fa-5x"></h4>
@@ -43,12 +43,23 @@
       ])
     },
     methods: {
+      ...mapMutations([
+        'setFile',
+        'enableFileUpdate',
+        'enableUserSide'
+      ]),
       ...mapActions([
         'deleteFile',
         'retrieveStructureAndCategories',
-        'downloadFile'
+        'downloadFile',
+        'getFileInformationByFileId'
       ]),
-      async deleleFileByFolderId(fileId) {
+      async enableUpdatingTemplate(id) {
+        await this.getFileInformationByFileId(id);
+        this.enableUserSide();
+        this.enableFileUpdate()
+      },
+      async deleteFileByFolderId(fileId) {
         await this.deleteFile(fileId);
         this.retrieveStructureAndCategories();
       },

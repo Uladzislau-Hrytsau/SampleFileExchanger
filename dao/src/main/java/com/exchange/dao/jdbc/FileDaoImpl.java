@@ -3,6 +3,7 @@ package com.exchange.dao.jdbc;
 import com.exchange.dao.File;
 import com.exchange.dao.FileDao;
 import com.exchange.dao.jdbc.mapper.dto.FileStructureDtoRowMapper;
+import com.exchange.dao.jdbc.mapper.dto.FileUpdatingDtoRowMapper;
 import com.exchange.dao.jdbc.mapper.model.FileRowMapper;
 import com.exchange.dto.file.FileDto;
 import com.exchange.dto.file.FileStructureDto;
@@ -64,6 +65,7 @@ public class FileDaoImpl implements FileDao {
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private final FileRowMapper fileRowMapper;
     private final FileStructureDtoRowMapper fileStructureDtoRowMapper;
+    private final FileUpdatingDtoRowMapper fileUpdatingDtoRowMapper;
     @Value("${file.insert}")
     private String addFileSql;
     @Value("${file.update}")
@@ -80,6 +82,8 @@ public class FileDaoImpl implements FileDao {
     private String getFileNameByFileIdAndUserIdSql;
     @Value("${file.getFileNamesByFolderIdAndUserId}")
     private String getFileNamesByFolderIdAndUserIdSql;
+    @Value("${file.getFileByFileIdAndUserId}")
+    private String getGetFileNameByFileIdAndUserIdSql;
 
     /**
      * Instantiates a new File dao.
@@ -88,13 +92,20 @@ public class FileDaoImpl implements FileDao {
      * @param namedParameterJdbcTemplate the named parameter jdbc template
      * @param fileRowMapper              the file row mapper
      * @param fileStructureDtoRowMapper  the file structure dto row mapper
+     * @param fileUpdatingDtoRowMapper   the file updating dto row mapper
      */
     @Autowired
-    public FileDaoImpl(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate, FileRowMapper fileRowMapper, FileStructureDtoRowMapper fileStructureDtoRowMapper) {
+    public FileDaoImpl(
+            JdbcTemplate jdbcTemplate,
+            NamedParameterJdbcTemplate namedParameterJdbcTemplate,
+            FileRowMapper fileRowMapper,
+            FileStructureDtoRowMapper fileStructureDtoRowMapper,
+            FileUpdatingDtoRowMapper fileUpdatingDtoRowMapper) {
         this.jdbcTemplate = jdbcTemplate;
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
         this.fileRowMapper = fileRowMapper;
         this.fileStructureDtoRowMapper = fileStructureDtoRowMapper;
+        this.fileUpdatingDtoRowMapper = fileUpdatingDtoRowMapper;
     }
 
     @Override
@@ -164,5 +175,13 @@ public class FileDaoImpl implements FileDao {
         parameterSource.addValue(USER_ID, userId);
         parameterSource.addValue(ID, folderId);
         return namedParameterJdbcTemplate.queryForList(getFileNamesByFolderIdAndUserIdSql, parameterSource, String.class);
+    }
+
+    @Override
+    public FileUpdatingDto getFileInformationByFileIdAndUserId(Long fileId, Long userId) {
+        MapSqlParameterSource parameterSource = new MapSqlParameterSource();
+        parameterSource.addValue(ID, fileId);
+        parameterSource.addValue(USER_ID, userId);
+        return namedParameterJdbcTemplate.queryForObject(getGetFileNameByFileIdAndUserIdSql, parameterSource, fileUpdatingDtoRowMapper);
     }
 }

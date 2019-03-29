@@ -1,14 +1,18 @@
 package com.exchange.service.implementation;
 
 import com.exchange.dao.file.FileWriter;
+import com.exchange.exception.InternalServerException;
 import com.exchange.service.FileWriterService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletContext;
 import java.io.File;
+import java.io.IOException;
+import java.util.List;
 
 /**
  * The type File writer service.
@@ -22,6 +26,9 @@ public class FileWriterServiceImpl implements FileWriterService {
 
     private final FileWriter fileWriter;
     private final ServletContext servletContext;
+
+    @Value("${fileService.deleteError}")
+    private String deleteError;
 
     /**
      * Instantiates a new File writer service.
@@ -38,7 +45,7 @@ public class FileWriterServiceImpl implements FileWriterService {
     }
 
     @Override
-    public void saveFile(MultipartFile multipartFile, String encodeName) {
+    public void saveFile(MultipartFile multipartFile, String encodeName) throws IOException {
         fileWriter.saveFile(multipartFile, this.getFilePath(encodeName));
     }
 
@@ -48,11 +55,16 @@ public class FileWriterServiceImpl implements FileWriterService {
     }
 
     @Override
-    public Boolean deleteFileByName(String fileName) {
-        File file = new File(this.getFilePath(fileName));
-        return file.delete();
+    public void deleteFileByName(String fileName) {
+        if (!fileWriter.deleteFileByPath(this.getFilePath(fileName))) {
+            throw new InternalServerException(deleteError);
+        }
     }
 
+    @Override
+    public void deleteFilesByNames(List<String> fileNames) {
+        fileNames.forEach(this::deleteFileByName);
+    }
 
     private String getFilePath(String encodeName) {
         return servletContext.getRealPath(REPOSITORY_PATH + java.io.File.separator + encodeName);

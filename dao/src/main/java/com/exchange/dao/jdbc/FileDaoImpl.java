@@ -78,6 +78,8 @@ public class FileDaoImpl implements FileDao {
     private String selectFilesCountSql;
     @Value("${file.getFileNameByFileIdAndUserId}")
     private String getFileNameByFileIdAndUserIdSql;
+    @Value("${file.getFileNamesByFolderIdAndUserId}")
+    private String getFileNamesByFolderIdAndUserIdSql;
 
     /**
      * Instantiates a new File dao.
@@ -154,5 +156,13 @@ public class FileDaoImpl implements FileDao {
         parameterSource.addValue(ID, fileId);
         parameterSource.addValue(USER_ID, userId);
         return namedParameterJdbcTemplate.queryForObject(getFileNameByFileIdAndUserIdSql, parameterSource, String.class);
+    }
+
+    @Override
+    public List<String> getFileNamesByFolderIdAndUserId(Long folderId, Long userId) {
+        MapSqlParameterSource parameterSource = new MapSqlParameterSource();
+        parameterSource.addValue(USER_ID, userId);
+        parameterSource.addValue(ID, folderId);
+        return namedParameterJdbcTemplate.queryForList(getFileNamesByFolderIdAndUserIdSql, parameterSource, String.class);
     }
 }

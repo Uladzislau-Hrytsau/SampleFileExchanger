@@ -69,4 +69,13 @@ public interface FileDao {
      * @return the file name by file id and user id
      */
     String getFileNameByFileIdAndUserId(Long fileId, Long userId);
+
+    /**
+     * Gets file names by folder id and user id.
+     *
+     * @param folderId the folder id
+     * @param userId   the user id
+     * @return the file names by folder id and user id
+     */
+    List<String> getFileNamesByFolderIdAndUserId(Long folderId, Long userId);
 }

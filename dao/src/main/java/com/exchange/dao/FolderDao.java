@@ -44,4 +44,5 @@ public interface FolderDao {
      * @return the integer
      */
     Integer deleteByFolderIdAndUserId(Long folderId, Long userId);
+
 }

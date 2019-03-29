@@ -1,9 +1,11 @@
 package com.exchange.service.implementation;
 
 import com.exchange.config.security.userdetails.UserDetails;
+import com.exchange.dao.FileDao;
 import com.exchange.dao.FolderDao;
 import com.exchange.dto.folder.FolderStructureDto;
 import com.exchange.exception.InternalServerException;
+import com.exchange.service.FileWriterService;
 import com.exchange.service.FolderService;
 import com.exchange.service.validation.folder.FolderValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class FolderServiceImpl implements FolderService {
 
     private final FolderDao folderDao;
+    private final FileWriterService fileWriterService;
+    private final FileDao fileDao;
     private final FolderValidator folderValidator;
 
     @Value("${folderService.incorrectFolderName}")
@@ -34,14 +38,20 @@ public class FolderServiceImpl implements FolderService {
     /**
      * Instantiates a new Folder service.
      *
-     * @param folderDao       the folder dao
-     * @param folderValidator the folder validator
+     * @param folderDao         the folder dao
+     * @param fileWriterService the file writer service
+     * @param fileDao           the file dao
+     * @param folderValidator   the folder validator
      */
     @Autowired
     public FolderServiceImpl(
             FolderDao folderDao,
+            FileWriterService fileWriterService,
+            FileDao fileDao,
             FolderValidator folderValidator) {
         this.folderDao = folderDao;
+        this.fileWriterService = fileWriterService;
+        this.fileDao = fileDao;
         this.folderValidator = folderValidator;
     }
 
@@ -55,9 +65,9 @@ public class FolderServiceImpl implements FolderService {
 
     @Override
     public void deleteByFolderIdAndAuthentication(Long folderId, Authentication authentication) {
-        // TODO: remove real files from all child directory
         Long userId = ((UserDetails) authentication.getPrincipal()).getUserId();
         folderValidator.validateFolderByUserId(folderId, userId);
+        fileWriterService.deleteFilesByNames(fileDao.getFileNamesByFolderIdAndUserId(folderId, userId));
         if (folderDao.deleteByFolderIdAndUserId(folderId, userId) == 0) {
             throw new InternalServerException(deleteError);
         }

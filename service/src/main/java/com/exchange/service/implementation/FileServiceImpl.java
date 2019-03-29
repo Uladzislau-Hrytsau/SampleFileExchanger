@@ -45,7 +45,7 @@ public class FileServiceImpl implements FileService {
     @Value("${fileService.incorrectId}")
     private String incorrectId;
     @Value("${fileService.incorrectDescription}")
-    private String izncorrectDescription;
+    private String incorrectDescription;
     @Value("${fileService.incorrectRealName}")
     private String incorrectFileName;
     @Value("${fileService.updateError}")
@@ -85,7 +85,7 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public Long addFile(FileDto fileDto, MultipartFile multipartFile, Authentication authentication) {
+    public Long addFile(FileDto fileDto, MultipartFile multipartFile, Authentication authentication) throws IOException {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         fileValidator.validateSize(multipartFile);
         fileValidator.validateDescription(fileDto.getDescription());
@@ -125,7 +125,7 @@ public class FileServiceImpl implements FileService {
 
     private void buildFileDownloadResponse(HttpServletResponse response, String fileName, Integer fileSize) {
         response.setContentType(this.getFileTypeByFileName(fileName));
-        response.setHeader("Content-Disposition", String.format("attachment; filename=\"" + fileName + "\""));
+        response.setHeader("Content-Disposition", String.format("attachment; filename=\"%s\"", fileName));
         response.setContentLength(fileSize);
     }
 
@@ -139,12 +139,9 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public void deleteFile(Long id, Authentication authentication) {
-        // TODO: remove real file
-        fileValidator.validateFileId(id);
         Long userId = this.getUserIdByAuthentication(authentication);
-        if (!fileWriterService.deleteFileByName(fileDao.getFileNameByFileIdAndUserId(id, userId))) {
-            throw new InternalServerException(deleteError);
-        }
+        fileValidator.validateFileId(id);
+        fileWriterService.deleteFileByName(fileDao.getFileNameByFileIdAndUserId(id, userId));
         if (fileDao.deleteFile(id, userId) == 0) {
             throw new InternalServerException(deleteError);
         }

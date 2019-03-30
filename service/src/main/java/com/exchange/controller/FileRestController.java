@@ -37,9 +37,8 @@ public class FileRestController {
     /**
      * Gets files by page and size.
      *
-     * @param page           the page
-     * @param size           the size
-     * @param authentication the authentication
+     * @param page the page
+     * @param size the size
      * @return the files by page and size
      */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -47,9 +46,8 @@ public class FileRestController {
     @ResponseStatus(value = HttpStatus.OK)
     public Response getFilesByPageAndSize(
             @RequestParam(value = "page", required = false, defaultValue = "null") Integer page,
-            @RequestParam(value = "size", required = false, defaultValue = "null") Integer size,
-            Authentication authentication) {
-        return fileService.getFilesAndCountByPageAndSize(page, size, authentication);
+            @RequestParam(value = "size", required = false, defaultValue = "null") Integer size) {
+        return fileService.getFilesAndCountByPageAndSize(page, size);
     }
 
     /**
@@ -86,10 +84,9 @@ public class FileRestController {
     /**
      * Download file.
      *
-     * @param fileId         the file id
-     * @param fileName       the file name
-     * @param authentication the authentication
-     * @param response       the response
+     * @param fileId   the file id
+     * @param fileName the file name
+     * @param response the response
      * @throws IOException the io exception
      */
     @GetMapping(value = "/files", params = {"fileId", "fileName"})
@@ -97,24 +94,21 @@ public class FileRestController {
     public void downloadFile(
             @RequestParam("fileId") Long fileId,
             @RequestParam("fileName") String fileName,
-            Authentication authentication,
             HttpServletResponse response) throws IOException {
-        fileService.downloadFileByFileIdAndAuthentication(fileId, fileName, authentication, response);
+        fileService.downloadFileByFileId(fileId, fileName, response);
     }
 
     /**
      * Delete file.
      *
-     * @param id             the id
-     * @param authentication the authentication
+     * @param id the id
      */
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @DeleteMapping(value = "/files", params = {"id"})
     @ResponseStatus(value = HttpStatus.OK)
     public void deleteFile(
-            @RequestParam(value = "id") Long id,
-            Authentication authentication) {
-        fileService.deleteFile(id, authentication);
+            @RequestParam(value = "id") Long id) {
+        fileService.deleteFile(id);
     }
 
     /**

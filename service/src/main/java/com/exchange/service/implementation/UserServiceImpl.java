@@ -5,9 +5,11 @@ import com.exchange.dao.User;
 import com.exchange.dao.UserDao;
 import com.exchange.dto.user.UserUpdatingDto;
 import com.exchange.exception.InternalServerException;
-import com.exchange.exception.ValidationException;
+import com.exchange.service.FileService;
+import com.exchange.service.FileWriterService;
 import com.exchange.service.RoleService;
 import com.exchange.service.UserService;
+import com.exchange.service.validation.CommonValidator;
 import com.exchange.service.validation.user.UserValidator;
 import com.exchange.wrapper.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,10 @@ public class UserServiceImpl implements UserService {
     private final UserDao userDao;
     private final UserValidator userValidator;
     private final RoleService roleService;
+    private final CommonService commonService;
+    private final CommonValidator commonValidator;
+    private final FileService fileService;
+    private final FileWriterService fileWriterService;
 
     @Value("${userService.deleteError}")
     private String deleteError;
@@ -47,21 +53,36 @@ public class UserServiceImpl implements UserService {
      * @param userValidator         the user validator
      * @param bCryptPasswordEncoder the b crypt password encoder
      * @param roleService           the role service
+     * @param commonService         the common service
+     * @param commonValidator       the common validator
+     * @param fileService           the file service
+     * @param fileWriterService     the file writer service
      */
     @Autowired
-    public UserServiceImpl(UserDao userDao, UserValidator userValidator, BCryptPasswordEncoder bCryptPasswordEncoder, RoleService roleService) {
+    public UserServiceImpl(
+            UserDao userDao,
+            UserValidator userValidator,
+            BCryptPasswordEncoder bCryptPasswordEncoder,
+            RoleService roleService,
+            CommonService commonService,
+            CommonValidator commonValidator,
+            FileService fileService,
+            FileWriterService fileWriterService) {
         this.userDao = userDao;
         this.userValidator = userValidator;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.roleService = roleService;
+        this.commonService = commonService;
+        this.commonValidator = commonValidator;
+        this.fileService = fileService;
+        this.fileWriterService = fileWriterService;
     }
 
     @Override
     public Response getUsersAndCountByPageAndSize(Integer page, Integer size) {
-        // TODO: validate page and size
-        Integer offset = size * --page;
+        commonValidator.validatePageAndSize(page, size);
         Response<User> response = new Response<>();
-        response.setData(userDao.getUsersByLimitAndOffset(size, offset));
+        response.setData(userDao.getUsersByLimitAndOffset(size, commonService.getOffsetBySizeAndPage(size, page)));
         response.setPagination(new Pagination(this.getUserCount()));
         return response;
     }
@@ -81,6 +102,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateUser(UserUpdatingDto userUpdatingDto) {
         userValidator.validatePassword(userUpdatingDto.getPassword());
+        userValidator.validateInformation(userUpdatingDto.getInformation());
+        commonValidator.validateDate(userUpdatingDto.getBirthDate());
         userUpdatingDto.setPassword(bCryptPasswordEncoder.encode(userUpdatingDto.getPassword()));
         if (userDao.updateUser(userUpdatingDto) == 0)
             throw new InternalServerException(updateError);
@@ -88,17 +111,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(Long userId) {
-        // TODO: delete file_category by file_id
-
-        // TODO: delete user_has_category by user_id
-        // TODO: delete file by user_id
-        // TODO: delete folder by user_id
-        // TODO: delete user_role by user_id
-        if (userId == null || userId < 0L) {
-            throw new ValidationException(incorrectId);
-        }
-
-
+        userValidator.validateUserId(userId);
+        fileWriterService.deleteFilesByNames(fileService.getFileNamesByUserId(userId));
         if (userDao.deleteUser(userId) == 0)
             throw new InternalServerException(deleteError);
     }

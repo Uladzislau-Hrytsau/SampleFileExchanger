@@ -8,7 +8,7 @@ import java.util.Objects;
 /**
  * The type File.
  */
-public class File {
+public class File extends Object {
 
     private Long id;
     private Long userId;

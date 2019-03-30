@@ -40,10 +40,9 @@ public interface FileDao {
      * Delete file integer.
      *
      * @param fileId the file id
-     * @param userId the user id
      * @return the integer
      */
-    Integer deleteFile(Long fileId, Long userId);
+    Integer deleteFile(Long fileId);
 
     /**
      * Gets files by user id and folder id.
@@ -62,13 +61,12 @@ public interface FileDao {
     Long getFileCount();
 
     /**
-     * Gets file name by file id and user id.
+     * Gets file name by file id.
      *
      * @param fileId the file id
-     * @param userId the user id
-     * @return the file name by file id and user id
+     * @return the file name by file id
      */
-    String getFileNameByFileIdAndUserId(Long fileId, Long userId);
+    String getFileNameByFileId(Long fileId);
 
     /**
      * Gets file names by folder id and user id.
@@ -87,4 +85,12 @@ public interface FileDao {
      * @return the file information by file id and user id
      */
     FileUpdatingDto getFileInformationByFileIdAndUserId(Long fileId, Long userId);
+
+    /**
+     * Gets file names by user id.
+     *
+     * @param userId the user id
+     * @return the file names by user id
+     */
+    List<String> getFileNamesByUserId(Long userId);
 }

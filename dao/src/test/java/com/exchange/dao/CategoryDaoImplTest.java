@@ -8,7 +8,6 @@ package com.exchange.dao;
 //@Transactional
 public class CategoryDaoImplTest {
 
-
     /**
      * Test.
      */

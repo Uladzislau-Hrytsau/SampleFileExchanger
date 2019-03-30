@@ -1,6 +1,5 @@
 package com.exchange.service.implementation;
 
-import com.exchange.config.security.userdetails.UserDetails;
 import com.exchange.dao.RoleDao;
 import com.exchange.exception.ValidationException;
 import com.exchange.service.RoleService;
@@ -23,6 +22,7 @@ import java.util.Set;
 public class RoleServiceImpl implements RoleService {
 
     private final RoleDao roleDao;
+    private final CommonService commonService;
 
     @Value("${userRoleService.roleDoesNotAdd}")
     private String roleDoesNotAdd;
@@ -30,20 +30,20 @@ public class RoleServiceImpl implements RoleService {
     /**
      * Instantiates a new Role service.
      *
-     * @param roleDao the role dao
+     * @param roleDao       the role dao
+     * @param commonService the common service
      */
     @Autowired
-    public RoleServiceImpl(RoleDao roleDao) {
+    public RoleServiceImpl(
+            RoleDao roleDao,
+            CommonService commonService) {
         this.roleDao = roleDao;
+        this.commonService = commonService;
     }
 
     @Override
     public Set<String> getRolesByAuthentication(Authentication authentication) {
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        Collection<GrantedAuthority> collection = userDetails.getAuthorities();
-        Set<String> roles = new HashSet<>(collection.size());
-        collection.forEach(item -> roles.add(item.getAuthority()));
-        return roles;
+        return this.getRolesByGrantedAuthorities(commonService.getAuthoritiesByAuthentication(authentication));
     }
 
     @Override
@@ -51,6 +51,18 @@ public class RoleServiceImpl implements RoleService {
         if (roleDao.addUserRole(userId, roleId) == 0) {
             throw new ValidationException(roleDoesNotAdd);
         }
+    }
+
+    /**
+     * Gets roles by granted authorities.
+     *
+     * @param grantedAuthorities the granted authorities
+     * @return the roles by granted authorities
+     */
+    public Set<String> getRolesByGrantedAuthorities(Collection<GrantedAuthority> grantedAuthorities) {
+        Set<String> roles = new HashSet<>(grantedAuthorities.size());
+        grantedAuthorities.forEach(item -> roles.add(item.getAuthority()));
+        return roles;
     }
 
 }

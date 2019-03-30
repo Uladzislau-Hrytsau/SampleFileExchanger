@@ -1,7 +1,7 @@
 package com.exchange.service.implementation;
 
 import com.exchange.dao.file.FileWriter;
-import com.exchange.exception.InternalServerException;
+import com.exchange.exception.FileNotDeletedException;
 import com.exchange.service.FileWriterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,7 +21,6 @@ import java.util.List;
 @Transactional
 public class FileWriterServiceImpl implements FileWriterService {
 
-    // TODO: take it from the config
     private static final String REPOSITORY_PATH = "WEB-INF/repo";
 
     private final FileWriter fileWriter;
@@ -57,7 +56,7 @@ public class FileWriterServiceImpl implements FileWriterService {
     @Override
     public void deleteFileByName(String fileName) {
         if (!fileWriter.deleteFileByPath(this.getFilePath(fileName))) {
-            throw new InternalServerException(deleteError);
+            throw new FileNotDeletedException(deleteError);
         }
     }
 

@@ -1,6 +1,5 @@
 package com.exchange.service.implementation;
 
-import com.exchange.config.security.userdetails.UserDetails;
 import com.exchange.dao.File;
 import com.exchange.dao.FileDao;
 import com.exchange.dao.Pagination;
@@ -10,6 +9,7 @@ import com.exchange.exception.InternalServerException;
 import com.exchange.service.CategoryService;
 import com.exchange.service.FileService;
 import com.exchange.service.FileWriterService;
+import com.exchange.service.validation.CommonValidator;
 import com.exchange.service.validation.file.FileValidator;
 import com.exchange.wrapper.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLConnection;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -41,6 +42,8 @@ public class FileServiceImpl implements FileService {
     private final FileValidator fileValidator;
     private final CategoryService categoryService;
     private final FileWriterService fileWriterService;
+    private final CommonService commonService;
+    private final CommonValidator commonValidator;
 
     @Value("${fileService.incorrectId}")
     private String incorrectId;
@@ -60,42 +63,47 @@ public class FileServiceImpl implements FileService {
      * @param fileValidator     the file validator
      * @param categoryService   the category service
      * @param fileWriterService the file writer service
+     * @param commonService     the common service
+     * @param commonValidator   the common validator
      */
     @Autowired
     public FileServiceImpl(
             FileDao fileDao,
             FileValidator fileValidator,
             CategoryService categoryService,
-            FileWriterService fileWriterService) {
+            FileWriterService fileWriterService,
+            CommonService commonService,
+            CommonValidator commonValidator) {
         this.fileDao = fileDao;
         this.fileValidator = fileValidator;
         this.categoryService = categoryService;
         this.fileWriterService = fileWriterService;
+        this.commonService = commonService;
+        this.commonValidator = commonValidator;
     }
 
     @Override
-    public Response getFilesAndCountByPageAndSize(Integer page, Integer size, Authentication authentication) {
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        // TODO: validate page and size
-        Integer offset = size * --page;
+    public Response getFilesAndCountByPageAndSize(Integer page, Integer size) {
+        commonValidator.validatePageAndSize(page, size);
         Response<File> response = new Response<>();
-        response.setData(fileDao.getFilesByLimitAndOffset(size, offset));
+        response.setData(
+                fileDao.getFilesByLimitAndOffset(size, commonService.getOffsetBySizeAndPage(size, page)));
         response.setPagination(new Pagination(this.getFileCount()));
         return response;
     }
 
     @Override
     public Long addFile(FileDto fileDto, MultipartFile multipartFile, Authentication authentication) throws IOException {
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        Long userId = commonService.getUserIdByAuthentication(authentication);
         fileValidator.validateSize(multipartFile);
         fileValidator.validateDescription(fileDto.getDescription());
         String encodeName = UUID.randomUUID().toString();
-        fileDto.setUserId(userDetails.getUserId());
+        fileDto.setUserId(userId);
         fileDto.setRealName(multipartFile.getOriginalFilename());
         fileDto.setDate(LocalDate.now());
         fileDto.setEncodeName(encodeName);
         Long fileId = fileDao.addFile(fileDto);
-        categoryService.addFileCategories(fileDto.getCategories(), fileId, userDetails.getUserId());
+        categoryService.addFileCategories(fileDto.getCategories(), fileId, userId);
         fileWriterService.saveFile(multipartFile, encodeName);
         return fileId;
     }
@@ -104,7 +112,7 @@ public class FileServiceImpl implements FileService {
     public void updateFile(FileUpdatingDto fileUpdatingDto) {
         fileValidator.validateFileId(fileUpdatingDto.getId());
         fileValidator.validateDescription(fileUpdatingDto.getDescription());
-        fileValidator.validateRealName(fileUpdatingDto.getRealName());
+        fileValidator.validateName(fileUpdatingDto.getRealName());
         if (fileUpdatingDto.getDate() == null) {
             fileUpdatingDto.setDate(LocalDate.now());
         }
@@ -114,35 +122,21 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public void downloadFileByFileIdAndAuthentication(Long fileId, String fileName, Authentication authentication, HttpServletResponse response) throws IOException {
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        String encodedFileName = fileDao.getFileNameByFileIdAndUserId(fileId, userDetails.getUserId());
+    public void downloadFileByFileId(Long fileId, String fileName, HttpServletResponse response) throws IOException {
+        fileValidator.validateName(fileName);
+        fileValidator.validateFileId(fileId);
+        String encodedFileName = fileDao.getFileNameByFileId(fileId);
         java.io.File file = fileWriterService.getFileByName(encodedFileName);
         this.buildFileDownloadResponse(response, fileName, (int) file.length());
         InputStream inputStream = new BufferedInputStream(new FileInputStream(file));
         FileCopyUtils.copy(inputStream, response.getOutputStream());
     }
 
-    private void buildFileDownloadResponse(HttpServletResponse response, String fileName, Integer fileSize) {
-        response.setContentType(this.getFileTypeByFileName(fileName));
-        response.setHeader("Content-Disposition", String.format("attachment; filename=\"%s\"", fileName));
-        response.setContentLength(fileSize);
-    }
-
-    private String getFileTypeByFileName(String fileName) {
-        String mimeType = URLConnection.guessContentTypeFromName(fileName);
-        if (mimeType == null) {
-            mimeType = MediaType.APPLICATION_OCTET_STREAM_VALUE;
-        }
-        return mimeType;
-    }
-
     @Override
-    public void deleteFile(Long id, Authentication authentication) {
-        Long userId = this.getUserIdByAuthentication(authentication);
-        fileValidator.validateFileId(id);
-        fileWriterService.deleteFileByName(fileDao.getFileNameByFileIdAndUserId(id, userId));
-        if (fileDao.deleteFile(id, userId) == 0) {
+    public void deleteFile(Long fileId) {
+        fileValidator.validateFileId(fileId);
+        fileWriterService.deleteFileByName(fileDao.getFileNameByFileId(fileId));
+        if (fileDao.deleteFile(fileId) == 0) {
             throw new InternalServerException(deleteError);
         }
     }
@@ -155,12 +149,39 @@ public class FileServiceImpl implements FileService {
     @Override
     public FileUpdatingDto getFileInformationByFileIdAndAuthentication(Long fileId, Authentication authentication) {
         fileValidator.validateFileId(fileId);
-        return fileDao.getFileInformationByFileIdAndUserId(fileId, this.getUserIdByAuthentication(authentication));
+        return fileDao.getFileInformationByFileIdAndUserId(fileId, commonService.getUserIdByAuthentication(authentication));
     }
 
-    // TODO: to do common method
-    private Long getUserIdByAuthentication(Authentication authentication) {
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        return userDetails.getUserId();
+    @Override
+    public List<String> getFileNamesByUserId(Long userId) {
+        return fileDao.getFileNamesByUserId(userId);
     }
+
+    /**
+     * Build file download response.
+     *
+     * @param response the response
+     * @param fileName the file name
+     * @param fileSize the file size
+     */
+    public void buildFileDownloadResponse(HttpServletResponse response, String fileName, Integer fileSize) {
+        response.setContentType(this.getFileTypeByFileName(fileName));
+        response.setHeader("Content-Disposition", String.format("attachment; filename=\"%s\"", fileName));
+        response.setContentLength(fileSize);
+    }
+
+    /**
+     * Gets file type by file name.
+     *
+     * @param fileName the file name
+     * @return the file type by file name
+     */
+    public String getFileTypeByFileName(String fileName) {
+        String mimeType = URLConnection.guessContentTypeFromName(fileName);
+        if (mimeType == null) {
+            mimeType = MediaType.APPLICATION_OCTET_STREAM_VALUE;
+        }
+        return mimeType;
+    }
+
 }

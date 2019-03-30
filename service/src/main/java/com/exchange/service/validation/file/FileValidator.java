@@ -73,11 +73,11 @@ public class FileValidator {
     }
 
     /**
-     * Validate real name.
+     * Validate name.
      *
      * @param realName the real name
      */
-    public void validateRealName(String realName) {
+    public void validateName(String realName) {
         if (!commonValidator.isValidString(realName)) {
             throw new ValidationException(incorrectFileName);
         }

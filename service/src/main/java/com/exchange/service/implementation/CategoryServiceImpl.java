@@ -38,8 +38,20 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void addFileCategories(Set<Long> categories, Long fileId, Long userId) {
         categoryValidator.validateCategoriesByUserId(categories, userId);
+        categoryDao.addFileCategories(this.getFileCategoryDtosByCategoriesAndFileId(categories, fileId));
+    }
+
+    /**
+     * Gets file category dtos by categories and file id.
+     *
+     * @param categories the categories
+     * @param fileId     the file id
+     * @return the file category dtos by categories and file id
+     */
+    public Set<FileCategoryDto> getFileCategoryDtosByCategoriesAndFileId(Set<Long> categories, Long fileId) {
         Set<FileCategoryDto> fileCategoryDtos = new HashSet<>(categories.size());
         categories.forEach(item -> fileCategoryDtos.add(new FileCategoryDto(item, fileId)));
-        categoryDao.addFileCategories(fileCategoryDtos);
+        return fileCategoryDtos;
     }
+
 }

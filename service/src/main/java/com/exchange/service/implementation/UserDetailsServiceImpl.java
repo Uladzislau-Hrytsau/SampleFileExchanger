@@ -35,9 +35,20 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String login) {
         UserDetailsDto userDetailsDto = userDetailsDao.getUserDetailsByLogin(login);
+        return new com.exchange.config.security.userdetails.UserDetails(
+                userDetailsDto.getUserId(), userDetailsDto.getUserName(), userDetailsDto.getUserPassword(), this.getGrantedAuthoritiesByUserDetailsDto(userDetailsDto));
+    }
+
+    /**
+     * Gets granted authorities by user details dto.
+     *
+     * @param userDetailsDto the user details dto
+     * @return the granted authorities by user details dto
+     */
+    public Set<GrantedAuthority> getGrantedAuthoritiesByUserDetailsDto(UserDetailsDto userDetailsDto) {
         Set<GrantedAuthority> roles = new HashSet<>();
         userDetailsDto.getRoles().forEach(item -> roles.add(new SimpleGrantedAuthority(item)));
-        return new com.exchange.config.security.userdetails.UserDetails(userDetailsDto.getUserId(), userDetailsDto.getUserName(), userDetailsDto.getUserPassword(), roles);
+        return roles;
     }
 
 }

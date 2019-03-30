@@ -78,12 +78,14 @@ public class FileDaoImpl implements FileDao {
     private String selectByLimitAndOffsetSql;
     @Value("${file.selectFilesCount}")
     private String selectFilesCountSql;
-    @Value("${file.getFileNameByFileIdAndUserId}")
-    private String getFileNameByFileIdAndUserIdSql;
+    @Value("${file.getFileNameByFileId}")
+    private String getFileNameByFileIdSql;
     @Value("${file.getFileNamesByFolderIdAndUserId}")
     private String getFileNamesByFolderIdAndUserIdSql;
     @Value("${file.getFileByFileIdAndUserId}")
     private String getGetFileNameByFileIdAndUserIdSql;
+    @Value("${file.fetFileNamesByUserId}")
+    private String fetFileNamesByUserIdSql;
 
     /**
      * Instantiates a new File dao.
@@ -141,10 +143,9 @@ public class FileDaoImpl implements FileDao {
     }
 
     @Override
-    public Integer deleteFile(Long fileId, Long userId) {
+    public Integer deleteFile(Long fileId) {
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
         parameterSource.addValue(ID, fileId);
-        parameterSource.addValue(USER_ID, userId);
         return namedParameterJdbcTemplate.update(deleteFileSql, parameterSource);
     }
 
@@ -162,11 +163,10 @@ public class FileDaoImpl implements FileDao {
     }
 
     @Override
-    public String getFileNameByFileIdAndUserId(Long fileId, Long userId) {
+    public String getFileNameByFileId(Long fileId) {
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
         parameterSource.addValue(ID, fileId);
-        parameterSource.addValue(USER_ID, userId);
-        return namedParameterJdbcTemplate.queryForObject(getFileNameByFileIdAndUserIdSql, parameterSource, String.class);
+        return namedParameterJdbcTemplate.queryForObject(getFileNameByFileIdSql, parameterSource, String.class);
     }
 
     @Override
@@ -183,5 +183,12 @@ public class FileDaoImpl implements FileDao {
         parameterSource.addValue(ID, fileId);
         parameterSource.addValue(USER_ID, userId);
         return namedParameterJdbcTemplate.queryForObject(getGetFileNameByFileIdAndUserIdSql, parameterSource, fileUpdatingDtoRowMapper);
+    }
+
+    @Override
+    public List<String> getFileNamesByUserId(Long userId) {
+        MapSqlParameterSource parameterSource = new MapSqlParameterSource();
+        parameterSource.addValue(USER_ID, userId);
+        return namedParameterJdbcTemplate.queryForList(fetFileNamesByUserIdSql, parameterSource, String.class);
     }
 }

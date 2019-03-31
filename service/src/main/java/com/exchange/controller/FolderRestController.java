@@ -23,7 +23,7 @@ public class FolderRestController {
      * @param folderService the folder service
      */
     @Autowired
-    public FolderRestController(FolderService folderService) {
+    public FolderRestController(final FolderService folderService) {
         this.folderService = folderService;
     }
 
@@ -37,8 +37,8 @@ public class FolderRestController {
     @PostMapping("/folders")
     @ResponseStatus(HttpStatus.CREATED)
     public void addFolder(
-            @RequestBody FolderStructureDto folderStructureDto,
-            Authentication authentication) {
+            @RequestBody final FolderStructureDto folderStructureDto,
+            final Authentication authentication) {
         folderService.addFolder(folderStructureDto, authentication);
     }
 
@@ -52,8 +52,8 @@ public class FolderRestController {
     @PutMapping("/folders")
     @ResponseStatus(value = HttpStatus.OK)
     public void updateFolderName(
-            @RequestBody FolderStructureDto folderStructureDto,
-            Authentication authentication) {
+            @RequestBody final FolderStructureDto folderStructureDto,
+            final Authentication authentication) {
         folderService.updateFolder(folderStructureDto, authentication);
     }
 
@@ -67,8 +67,8 @@ public class FolderRestController {
     @DeleteMapping(value = "/folders", params = {"folderId"})
     @ResponseStatus(HttpStatus.OK)
     public void deleteFolder(
-            @RequestParam("folderId") Long folderId,
-            Authentication authentication) {
+            @RequestParam("folderId") final Long folderId,
+            final Authentication authentication) {
         folderService.deleteByFolderIdAndAuthentication(folderId, authentication);
     }
 

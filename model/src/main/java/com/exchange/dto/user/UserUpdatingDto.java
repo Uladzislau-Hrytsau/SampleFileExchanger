@@ -32,7 +32,12 @@ public class UserUpdatingDto {
      * @param information the information
      * @param birthDate   the birth date
      */
-    public UserUpdatingDto(Long id, String password, Boolean gender, String information, LocalDate birthDate) {
+    public UserUpdatingDto(
+            final Long id,
+            final String password,
+            final Boolean gender,
+            final String information,
+            final LocalDate birthDate) {
         this.id = id;
         this.password = password;
         this.gender = gender;
@@ -54,7 +59,7 @@ public class UserUpdatingDto {
      *
      * @param id the id
      */
-    public void setId(Long id) {
+    public void setId(final Long id) {
         this.id = id;
     }
 
@@ -72,7 +77,7 @@ public class UserUpdatingDto {
      *
      * @param password the password
      */
-    public void setPassword(String password) {
+    public void setPassword(final String password) {
         this.password = password;
     }
 
@@ -90,7 +95,7 @@ public class UserUpdatingDto {
      *
      * @param gender the gender
      */
-    public void setGender(Boolean gender) {
+    public void setGender(final Boolean gender) {
         this.gender = gender;
     }
 
@@ -108,7 +113,7 @@ public class UserUpdatingDto {
      *
      * @param information the information
      */
-    public void setInformation(String information) {
+    public void setInformation(final String information) {
         this.information = information;
     }
 
@@ -126,7 +131,7 @@ public class UserUpdatingDto {
      *
      * @param birthDate the birth date
      */
-    public void setBirthDate(LocalDate birthDate) {
+    public void setBirthDate(final LocalDate birthDate) {
         this.birthDate = birthDate;
     }
 
@@ -136,7 +141,7 @@ public class UserUpdatingDto {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserUpdatingDto that = (UserUpdatingDto) o;

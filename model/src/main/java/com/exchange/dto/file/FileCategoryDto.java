@@ -22,7 +22,9 @@ public class FileCategoryDto {
      * @param categoryId the category id
      * @param fileId     the file id
      */
-    public FileCategoryDto(Long categoryId, Long fileId) {
+    public FileCategoryDto(
+            final Long categoryId,
+            final Long fileId) {
         this.categoryId = categoryId;
         this.fileId = fileId;
     }
@@ -41,7 +43,7 @@ public class FileCategoryDto {
      *
      * @param categoryId the category id
      */
-    public void setCategoryId(Long categoryId) {
+    public void setCategoryId(final Long categoryId) {
         this.categoryId = categoryId;
     }
 
@@ -59,12 +61,12 @@ public class FileCategoryDto {
      *
      * @param fileId the file id
      */
-    public void setFileId(Long fileId) {
+    public void setFileId(final Long fileId) {
         this.fileId = fileId;
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         FileCategoryDto that = (FileCategoryDto) o;

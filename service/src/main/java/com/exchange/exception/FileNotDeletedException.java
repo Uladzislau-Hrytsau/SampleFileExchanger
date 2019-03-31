@@ -21,7 +21,8 @@ public class FileNotDeletedException extends RuntimeException {
      *
      * @param message the message
      */
-    public FileNotDeletedException(String message) {
+    public FileNotDeletedException(final String message) {
         super(message);
+        LOGGER.error(message);
     }
 }

@@ -24,7 +24,10 @@ public class FileStructureDto {
      * @param folderId the folder id
      * @param name     the name
      */
-    public FileStructureDto(Long id, Long folderId, String name) {
+    public FileStructureDto(
+            final Long id,
+            final Long folderId,
+            final String name) {
         this.id = id;
         this.folderId = folderId;
         this.name = name;
@@ -44,7 +47,7 @@ public class FileStructureDto {
      *
      * @param id the id
      */
-    public void setId(Long id) {
+    public void setId(final Long id) {
         this.id = id;
     }
 
@@ -62,7 +65,7 @@ public class FileStructureDto {
      *
      * @param folderId the folder id
      */
-    public void setFolderId(Long folderId) {
+    public void setFolderId(final Long folderId) {
         this.folderId = folderId;
     }
 
@@ -80,12 +83,12 @@ public class FileStructureDto {
      *
      * @param name the name
      */
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         FileStructureDto fileDto = (FileStructureDto) o;

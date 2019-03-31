@@ -27,20 +27,20 @@ public interface UserDao {
     Long addUser(User user);
 
     /**
-     * Update user integer.
+     * Update user boolean.
      *
      * @param userUpdatingDto the user updating dto
-     * @return the integer
+     * @return the boolean
      */
-    Integer updateUser(UserUpdatingDto userUpdatingDto);
+    Boolean updateUser(UserUpdatingDto userUpdatingDto);
 
     /**
-     * Delete user integer.
+     * Delete user boolean.
      *
      * @param userId the user id
-     * @return the integer
+     * @return the boolean
      */
-    Integer deleteUser(Long userId);
+    Boolean deleteUser(Long userId);
 
     /**
      * Check user by login boolean.

@@ -30,7 +30,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private static final String OAUTH_TOKEN_ENDPOINT = "/oauth/token";
     private static final String ALL_ENDPOINTS = "/**";
     private static final int ENCODE_SIZE = 10;
-    private UserDetailsService userDetailsService;
+    private final UserDetailsService userDetailsService;
 
     /**
      * Instantiates a new Security configuration.
@@ -38,12 +38,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
      * @param userDetailsService the user details service
      */
     @Autowired
-    public SecurityConfiguration(UserDetailsService userDetailsService) {
+    public SecurityConfiguration(final UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    protected void configure(final HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
                 .sessionManagement()
@@ -55,7 +55,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    public void configure(WebSecurity web) {
+    public void configure(final WebSecurity web) {
         web.ignoring()
                 .antMatchers(HttpMethod.OPTIONS, OAUTH_TOKEN_ENDPOINT)
                 .antMatchers(HttpMethod.OPTIONS, ALL_ENDPOINTS);
@@ -79,7 +79,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) {
+    protected void configure(final AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(authenticationProvider());
     }
 
@@ -104,7 +104,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
      */
     @Bean
     @Autowired
-    public ApprovalStore approvalStore(TokenStore tokenStore) {
+    public ApprovalStore approvalStore(final TokenStore tokenStore) {
         TokenApprovalStore store = new TokenApprovalStore();
         store.setTokenStore(tokenStore);
         return store;

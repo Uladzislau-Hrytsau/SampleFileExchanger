@@ -19,7 +19,7 @@ public class CommonService {
      * @param authentication the authentication
      * @return the user id by authentication
      */
-    public Long getUserIdByAuthentication(Authentication authentication) {
+    public Long getUserIdByAuthentication(final Authentication authentication) {
         return ((UserDetails) authentication.getPrincipal()).getUserId();
     }
 
@@ -29,7 +29,7 @@ public class CommonService {
      * @param authentication the authentication
      * @return the authorities by authentication
      */
-    public Collection<GrantedAuthority> getAuthoritiesByAuthentication(Authentication authentication) {
+    public Collection<GrantedAuthority> getAuthoritiesByAuthentication(final Authentication authentication) {
         return ((UserDetails) authentication.getPrincipal()).getAuthorities();
     }
 
@@ -40,8 +40,25 @@ public class CommonService {
      * @param page the page
      * @return the offset by size and page
      */
-    public Integer getOffsetBySizeAndPage(Integer size, Integer page) {
+    public Integer getOffsetBySizeAndPage(
+            final Integer size,
+            final Integer page) {
         return size * (page - 1);
+    }
+
+    /**
+     * Check batch result boolean.
+     *
+     * @param batchResult the batch result
+     * @return the boolean
+     */
+    public Boolean checkBatchResult(final int[] batchResult) {
+        for (int result : batchResult) {
+            if (result == 0) {
+                return false;
+            }
+        }
+        return true;
     }
 
 }

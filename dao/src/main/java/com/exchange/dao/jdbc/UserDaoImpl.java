@@ -11,7 +11,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * The type User dao.
  */
-@Component
+@Repository
 public class UserDaoImpl implements UserDao {
 
     /**
@@ -74,14 +74,17 @@ public class UserDaoImpl implements UserDao {
      * @param userRowMapper              the user row mapper
      */
     @Autowired
-    public UserDaoImpl(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate, UserRowMapper userRowMapper) {
+    public UserDaoImpl(
+            final JdbcTemplate jdbcTemplate,
+            final NamedParameterJdbcTemplate namedParameterJdbcTemplate,
+            final UserRowMapper userRowMapper) {
         this.jdbcTemplate = jdbcTemplate;
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
         this.userRowMapper = userRowMapper;
     }
 
     @Override
-    public List<User> getUsersByLimitAndOffset(Integer limit, Integer offset) {
+    public List<User> getUsersByLimitAndOffset(final Integer limit, final Integer offset) {
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
         parameterSource.addValue(LIMIT, limit);
         parameterSource.addValue(OFFSET, offset);
@@ -89,7 +92,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public Long addUser(User user) {
+    public Long addUser(final User user) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
         parameterSource.addValue(USER_NAME, user.getName());
@@ -107,11 +110,11 @@ public class UserDaoImpl implements UserDao {
     }
 
     private void fillParameterSourceByPasswordAndGenderAndBirthDateAndInformation(
-            MapSqlParameterSource parameterSource,
-            String password,
-            Boolean gender,
-            LocalDate birthDate,
-            String information) {
+            final MapSqlParameterSource parameterSource,
+            final String password,
+            final Boolean gender,
+            final LocalDate birthDate,
+            final String information) {
         parameterSource.addValue(USER_PASSWORD, password);
         parameterSource.addValue(USER_GENDER, gender);
         parameterSource.addValue(USER_BIRTH_DATE, birthDate);
@@ -119,7 +122,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public Integer updateUser(UserUpdatingDto userUpdatingDto) {
+    public Boolean updateUser(final UserUpdatingDto userUpdatingDto) {
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
         parameterSource.addValue(ID, userUpdatingDto.getId());
         this.fillParameterSourceByPasswordAndGenderAndBirthDateAndInformation(
@@ -127,18 +130,18 @@ public class UserDaoImpl implements UserDao {
                 userUpdatingDto.getGender(),
                 userUpdatingDto.getBirthDate(),
                 userUpdatingDto.getInformation());
-        return namedParameterJdbcTemplate.update(updateUserSql, parameterSource);
+        return namedParameterJdbcTemplate.update(updateUserSql, parameterSource) == 1;
     }
 
     @Override
-    public Integer deleteUser(Long userId) {
+    public Boolean deleteUser(final Long userId) {
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
         parameterSource.addValue(ID, userId);
-        return namedParameterJdbcTemplate.update(deleteUserSql, parameterSource);
+        return namedParameterJdbcTemplate.update(deleteUserSql, parameterSource) == 1;
     }
 
     @Override
-    public Boolean checkUserByLogin(String userName) {
+    public Boolean checkUserByLogin(final String userName) {
         return jdbcTemplate.queryForObject(checkUserByLoginSql, new String[]{userName}, Boolean.class);
     }
 

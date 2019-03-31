@@ -32,7 +32,7 @@ public class UserValidator {
      * @param commonValidator the common validator
      */
     @Autowired
-    public UserValidator(CommonValidator commonValidator) {
+    public UserValidator(final CommonValidator commonValidator) {
         this.commonValidator = commonValidator;
     }
 
@@ -41,7 +41,7 @@ public class UserValidator {
      *
      * @param userId the user id
      */
-    public void validateUserId(Long userId) {
+    public void validateUserId(final Long userId) {
         if (!commonValidator.isValidIdentifier(userId)) {
             throw new ValidationException(incorrectId);
         }
@@ -53,7 +53,9 @@ public class UserValidator {
      * @param login   the login
      * @param userDao the user dao
      */
-    public void validateExistingLogin(String login, UserDao userDao) {
+    public void validateExistingLogin(
+            final String login,
+            final UserDao userDao) {
         if (!commonValidator.isValidString(login)) {
             throw new ValidationException(incorrectLogin);
         }
@@ -67,7 +69,7 @@ public class UserValidator {
      *
      * @param password the password
      */
-    public void validatePassword(String password) {
+    public void validatePassword(final String password) {
         if (!commonValidator.isValidString(password)) {
             throw new ValidationException(incorrectPassword);
         }
@@ -78,7 +80,7 @@ public class UserValidator {
      *
      * @param information the information
      */
-    public void validateInformation(String information) {
+    public void validateInformation(final String information) {
         if (!commonValidator.isValidString(information)) {
             throw new ValidationException(incorrectInformation);
         }

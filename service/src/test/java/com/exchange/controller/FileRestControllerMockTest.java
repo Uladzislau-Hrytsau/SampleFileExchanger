@@ -1,8 +1,5 @@
 package com.exchange.controller;
 
-/**
- * The type File rest controller mock test.
- */
 //@RunWith(MockitoJUnitRunner.class)
 public class FileRestControllerMockTest {
 //    private static final String FILES_URL_QUERY = "/files";

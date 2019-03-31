@@ -29,7 +29,10 @@ public class StructureDto {
      * @param folderStructureDtos the folder structure dtos
      * @param categoryDtos        the category dtos
      */
-    public StructureDto(List<FileStructureDto> fileStructureDtos, List<FolderStructureDto> folderStructureDtos, List<CategoryDto> categoryDtos) {
+    public StructureDto(
+            final List<FileStructureDto> fileStructureDtos,
+            final List<FolderStructureDto> folderStructureDtos,
+            final List<CategoryDto> categoryDtos) {
         this.fileStructureDtos = fileStructureDtos;
         this.folderStructureDtos = folderStructureDtos;
         this.categoryDtos = categoryDtos;
@@ -49,7 +52,7 @@ public class StructureDto {
      *
      * @param fileStructureDtos the file structure dtos
      */
-    public void setFileStructureDtos(List<FileStructureDto> fileStructureDtos) {
+    public void setFileStructureDtos(final List<FileStructureDto> fileStructureDtos) {
         this.fileStructureDtos = fileStructureDtos;
     }
 
@@ -67,7 +70,7 @@ public class StructureDto {
      *
      * @param folderStructureDtos the folder structure dtos
      */
-    public void setFolderStructureDtos(List<FolderStructureDto> folderStructureDtos) {
+    public void setFolderStructureDtos(final List<FolderStructureDto> folderStructureDtos) {
         this.folderStructureDtos = folderStructureDtos;
     }
 
@@ -85,12 +88,12 @@ public class StructureDto {
      *
      * @param categoryDtos the category dtos
      */
-    public void setCategoryDtos(List<CategoryDto> categoryDtos) {
+    public void setCategoryDtos(final List<CategoryDto> categoryDtos) {
         this.categoryDtos = categoryDtos;
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         StructureDto that = (StructureDto) o;

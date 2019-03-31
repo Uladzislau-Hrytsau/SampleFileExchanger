@@ -17,7 +17,7 @@ import static com.exchange.dao.jdbc.FileDaoImpl.*;
 public class FileUpdatingDtoRowMapper implements RowMapper<FileUpdatingDto> {
 
     @Override
-    public FileUpdatingDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+    public FileUpdatingDto mapRow(final ResultSet rs, final int rowNum) throws SQLException {
         FileUpdatingDto fileUpdatingDto = new FileUpdatingDto();
         fileUpdatingDto.setId(rs.getLong(ID));
         fileUpdatingDto.setDescription(rs.getString(DESCRIPTION));

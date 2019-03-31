@@ -24,7 +24,7 @@ public class UserRestController {
      * @param userService the user service
      */
     @Autowired
-    public UserRestController(UserService userService) {
+    public UserRestController(final UserService userService) {
         this.userService = userService;
     }
 
@@ -39,8 +39,8 @@ public class UserRestController {
     @GetMapping(value = "/users", params = {"page", "size"})
     @ResponseStatus(value = HttpStatus.OK)
     public Response getUsersByPageAndSize(
-            @RequestParam(value = "page", required = false, defaultValue = "null") Integer page,
-            @RequestParam(value = "size", required = false, defaultValue = "null") Integer size) {
+            @RequestParam(value = "page", required = false, defaultValue = "null") final Integer page,
+            @RequestParam(value = "size", required = false, defaultValue = "null") final Integer size) {
         return userService.getUsersAndCountByPageAndSize(page, size);
     }
 
@@ -51,7 +51,7 @@ public class UserRestController {
      */
     @PostMapping("/users")
     @ResponseStatus(value = HttpStatus.CREATED)
-    public void addUser(@RequestBody User user) {
+    public void addUser(@RequestBody final User user) {
         userService.addUser(user);
     }
 
@@ -63,7 +63,7 @@ public class UserRestController {
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @PutMapping("/users")
     @ResponseStatus(value = HttpStatus.OK)
-    public void updateUser(@RequestBody UserUpdatingDto userUpdatingDto) {
+    public void updateUser(@RequestBody final UserUpdatingDto userUpdatingDto) {
         userService.updateUser(userUpdatingDto);
     }
 
@@ -75,7 +75,7 @@ public class UserRestController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping(value = "/users", params = {"id"})
     @ResponseStatus(value = HttpStatus.OK)
-    public void deleteUser(@RequestParam(value = "id") Long id) {
+    public void deleteUser(@RequestParam(value = "id") final Long id) {
         userService.deleteUser(id);
     }
 

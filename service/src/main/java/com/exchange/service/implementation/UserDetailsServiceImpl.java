@@ -28,12 +28,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
      * @param userDetailsDao the user details dao
      */
     @Autowired
-    public UserDetailsServiceImpl(UserDetailsDao userDetailsDao) {
+    public UserDetailsServiceImpl(final UserDetailsDao userDetailsDao) {
         this.userDetailsDao = userDetailsDao;
     }
 
     @Override
-    public UserDetails loadUserByUsername(String login) {
+    public UserDetails loadUserByUsername(final String login) {
         UserDetailsDto userDetailsDto = userDetailsDao.getUserDetailsByLogin(login);
         return new com.exchange.config.security.userdetails.UserDetails(
                 userDetailsDto.getUserId(), userDetailsDto.getUserName(), userDetailsDto.getUserPassword(), this.getGrantedAuthoritiesByUserDetailsDto(userDetailsDto));
@@ -45,7 +45,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
      * @param userDetailsDto the user details dto
      * @return the granted authorities by user details dto
      */
-    public Set<GrantedAuthority> getGrantedAuthoritiesByUserDetailsDto(UserDetailsDto userDetailsDto) {
+    public Set<GrantedAuthority> getGrantedAuthoritiesByUserDetailsDto(final UserDetailsDto userDetailsDto) {
         Set<GrantedAuthority> roles = new HashSet<>();
         userDetailsDto.getRoles().forEach(item -> roles.add(new SimpleGrantedAuthority(item)));
         return roles;

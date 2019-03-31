@@ -14,9 +14,9 @@ public class ValidationException extends RuntimeException {
     /**
      * Instantiates a new Validation exception.
      *
-     * @param msg the msg
+     * @param message the message
      */
-    public ValidationException(String msg) {
-        super(msg);
+    public ValidationException(final String message) {
+        super(message);
     }
 }

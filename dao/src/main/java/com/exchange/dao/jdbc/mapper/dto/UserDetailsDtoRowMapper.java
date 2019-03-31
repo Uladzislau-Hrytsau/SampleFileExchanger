@@ -16,7 +16,7 @@ import java.util.Set;
 public class UserDetailsDtoRowMapper implements RowMapper<UserDetailsDto> {
 
     @Override
-    public UserDetailsDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+    public UserDetailsDto mapRow(final ResultSet rs, final int rowNum) throws SQLException {
         UserDetailsDto userDetailsDto = new UserDetailsDto();
         userDetailsDto.setUserId(rs.getLong("id"));
         userDetailsDto.setUserName(rs.getString("user_name"));

@@ -16,7 +16,7 @@ import static com.exchange.dao.jdbc.FileDaoImpl.*;
 public class FileStructureDtoRowMapper implements RowMapper<FileStructureDto> {
 
     @Override
-    public FileStructureDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+    public FileStructureDto mapRow(final ResultSet rs, final int rowNum) throws SQLException {
         FileStructureDto fileStructureDto = new FileStructureDto();
         fileStructureDto.setId(rs.getLong(ID));
         fileStructureDto.setFolderId(rs.getLong(FOLDER_ID));

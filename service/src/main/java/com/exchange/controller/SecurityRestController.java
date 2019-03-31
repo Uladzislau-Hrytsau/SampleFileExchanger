@@ -18,7 +18,7 @@ import java.util.Set;
 @RestController
 public class SecurityRestController {
 
-    private RoleService roleService;
+    private final RoleService roleService;
 
     /**
      * Instantiates a new Security rest controller.
@@ -26,7 +26,7 @@ public class SecurityRestController {
      * @param roleService the role service
      */
     @Autowired
-    public SecurityRestController(RoleService roleService) {
+    public SecurityRestController(final RoleService roleService) {
         this.roleService = roleService;
     }
 
@@ -38,7 +38,7 @@ public class SecurityRestController {
      */
     @GetMapping(value = "/oauth/role")
     @ResponseStatus(value = HttpStatus.OK)
-    public Set<String> getUserRole(Authentication authentication) {
+    public Set<String> getUserRole(final Authentication authentication) {
         return roleService.getRolesByAuthentication(authentication);
     }
 

@@ -27,7 +27,9 @@ public class Response<T> {
      * @param data       the data
      * @param pagination the pagination
      */
-    public Response(List<T> data, Pagination pagination) {
+    public Response(
+            final List<T> data,
+            final Pagination pagination) {
         this.data = data;
         this.pagination = pagination;
     }
@@ -46,7 +48,7 @@ public class Response<T> {
      *
      * @param data the data
      */
-    public void setData(List<T> data) {
+    public void setData(final List<T> data) {
         this.data = data;
     }
 
@@ -64,12 +66,12 @@ public class Response<T> {
      *
      * @param pagination the pagination
      */
-    public void setPagination(Pagination pagination) {
+    public void setPagination(final Pagination pagination) {
         this.pagination = pagination;
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Response<?> response = (Response<?>) o;

@@ -29,20 +29,20 @@ public interface FileDao {
     Long addFile(FileDto fileDto);
 
     /**
-     * Update file integer.
+     * Update file boolean.
      *
      * @param fileUpdatingDto the file updating dto
-     * @return the integer
+     * @return the boolean
      */
-    Integer updateFile(FileUpdatingDto fileUpdatingDto);
+    Boolean updateFile(FileUpdatingDto fileUpdatingDto);
 
     /**
-     * Delete file integer.
+     * Delete file boolean.
      *
      * @param fileId the file id
-     * @return the integer
+     * @return the boolean
      */
-    Integer deleteFile(Long fileId);
+    Boolean deleteFile(Long fileId);
 
     /**
      * Gets files by user id and folder id.

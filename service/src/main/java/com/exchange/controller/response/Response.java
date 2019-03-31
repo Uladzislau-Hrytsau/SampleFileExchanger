@@ -20,7 +20,7 @@ public class Response {
      *
      * @param message the message
      */
-    public Response(List<String> message) {
+    public Response(final List<String> message) {
         this.message = message;
     }
 
@@ -38,7 +38,7 @@ public class Response {
      *
      * @param message the message
      */
-    public void setMessage(List<String> message) {
+    public void setMessage(final List<String> message) {
         this.message = message;
     }
 }

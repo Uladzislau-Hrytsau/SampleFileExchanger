@@ -36,7 +36,14 @@ public class File extends Object {
      * @param encodeName  the encode name
      * @param date        the date
      */
-    public File(Long id, Long userId, Long folderId, String description, String realName, String encodeName, LocalDate date) {
+    public File(
+            final Long id,
+            final Long userId,
+            final Long folderId,
+            final String description,
+            final String realName,
+            final String encodeName,
+            final LocalDate date) {
         this.id = id;
         this.userId = userId;
         this.folderId = folderId;
@@ -60,7 +67,7 @@ public class File extends Object {
      *
      * @param id the id
      */
-    public void setId(Long id) {
+    public void setId(final Long id) {
         this.id = id;
     }
 
@@ -78,7 +85,7 @@ public class File extends Object {
      *
      * @param userId the user id
      */
-    public void setUserId(Long userId) {
+    public void setUserId(final Long userId) {
         this.userId = userId;
     }
 
@@ -96,7 +103,7 @@ public class File extends Object {
      *
      * @param folderId the folder id
      */
-    public void setFolderId(Long folderId) {
+    public void setFolderId(final Long folderId) {
         this.folderId = folderId;
     }
 
@@ -114,7 +121,7 @@ public class File extends Object {
      *
      * @param description the description
      */
-    public void setDescription(String description) {
+    public void setDescription(final String description) {
         this.description = description;
     }
 
@@ -132,7 +139,7 @@ public class File extends Object {
      *
      * @param realName the real name
      */
-    public void setRealName(String realName) {
+    public void setRealName(final String realName) {
         this.realName = realName;
     }
 
@@ -150,7 +157,7 @@ public class File extends Object {
      *
      * @param encodeName the encode name
      */
-    public void setEncodeName(String encodeName) {
+    public void setEncodeName(final String encodeName) {
         this.encodeName = encodeName;
     }
 
@@ -168,12 +175,12 @@ public class File extends Object {
      *
      * @param date the date
      */
-    public void setDate(LocalDate date) {
+    public void setDate(final LocalDate date) {
         this.date = date;
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         File file = (File) o;

@@ -37,35 +37,37 @@ public class FileWriterServiceImpl implements FileWriterService {
      */
     @Autowired
     public FileWriterServiceImpl(
-            FileWriter fileWriter,
-            ServletContext servletContext) {
+            final FileWriter fileWriter,
+            final ServletContext servletContext) {
         this.fileWriter = fileWriter;
         this.servletContext = servletContext;
     }
 
     @Override
-    public void saveFile(MultipartFile multipartFile, String encodeName) throws IOException {
+    public void saveFile(
+            final MultipartFile multipartFile,
+            final String encodeName) throws IOException {
         fileWriter.saveFile(multipartFile, this.getFilePath(encodeName));
     }
 
     @Override
-    public File getFileByName(String fileName) {
+    public File getFileByName(final String fileName) {
         return new java.io.File(this.getFilePath(fileName));
     }
 
     @Override
-    public void deleteFileByName(String fileName) {
+    public void deleteFileByName(final String fileName) {
         if (!fileWriter.deleteFileByPath(this.getFilePath(fileName))) {
             throw new FileNotDeletedException(deleteError);
         }
     }
 
     @Override
-    public void deleteFilesByNames(List<String> fileNames) {
+    public void deleteFilesByNames(final List<String> fileNames) {
         fileNames.forEach(this::deleteFileByName);
     }
 
-    private String getFilePath(String encodeName) {
+    private String getFilePath(final String encodeName) {
         return servletContext.getRealPath(REPOSITORY_PATH + java.io.File.separator + encodeName);
     }
 }

@@ -19,10 +19,10 @@ public class InternalServerException extends RuntimeException {
     /**
      * Instantiates a new Internal server exception.
      *
-     * @param msg the msg
+     * @param message the message
      */
-    public InternalServerException(String msg) {
-        super(msg);
-        LOGGER.error(msg);
+    public InternalServerException(final String message) {
+        super(message);
+        LOGGER.error(message);
     }
 }

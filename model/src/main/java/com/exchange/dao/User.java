@@ -30,7 +30,9 @@ public class User {
      * @param name     the name
      * @param password the password
      */
-    public User(String name, String password) {
+    public User(
+            final String name,
+            final String password) {
         this.name = name;
         this.password = password;
     }
@@ -44,7 +46,12 @@ public class User {
      * @param gender      the gender
      * @param information the information
      */
-    public User(Long id, String name, String password, Boolean gender, String information) {
+    public User(
+            final Long id,
+            final String name,
+            final String password,
+            final Boolean gender,
+            final String information) {
         this.id = id;
         this.name = name;
         this.password = password;
@@ -62,7 +69,13 @@ public class User {
      * @param information the information
      * @param birthDate   the birth date
      */
-    public User(Long id, String name, String password, Boolean gender, String information, LocalDate birthDate) {
+    public User(
+            final Long id,
+            final String name,
+            final String password,
+            final Boolean gender,
+            final String information,
+            final LocalDate birthDate) {
         this.id = id;
         this.name = name;
         this.password = password;
@@ -85,7 +98,7 @@ public class User {
      *
      * @param id the id
      */
-    public void setId(Long id) {
+    public void setId(final Long id) {
         this.id = id;
     }
 
@@ -103,7 +116,7 @@ public class User {
      *
      * @param name the name
      */
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -121,7 +134,7 @@ public class User {
      *
      * @param password the password
      */
-    public void setPassword(String password) {
+    public void setPassword(final String password) {
         this.password = password;
     }
 
@@ -139,7 +152,7 @@ public class User {
      *
      * @param gender the gender
      */
-    public void setGender(Boolean gender) {
+    public void setGender(final Boolean gender) {
         this.gender = gender;
     }
 
@@ -157,7 +170,7 @@ public class User {
      *
      * @param information the information
      */
-    public void setInformation(String information) {
+    public void setInformation(final String information) {
         this.information = information;
     }
 
@@ -175,12 +188,12 @@ public class User {
      *
      * @param birthDate the birth date
      */
-    public void setBirthDate(LocalDate birthDate) {
+    public void setBirthDate(final LocalDate birthDate) {
         this.birthDate = birthDate;
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;

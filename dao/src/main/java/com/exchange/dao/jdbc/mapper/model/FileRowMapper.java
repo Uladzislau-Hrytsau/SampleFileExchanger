@@ -14,7 +14,7 @@ import static com.exchange.dao.jdbc.FileDaoImpl.*;
  */
 @Component
 public class FileRowMapper implements RowMapper<File> {
-    public File mapRow(ResultSet rs, int rowNum) throws SQLException {
+    public File mapRow(final ResultSet rs, final int rowNum) throws SQLException {
         File file = new File();
         file.setId(rs.getLong(ID));
         file.setUserId(rs.getLong(USER_ID));

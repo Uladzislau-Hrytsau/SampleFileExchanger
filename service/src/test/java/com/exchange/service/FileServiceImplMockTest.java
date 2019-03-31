@@ -1,8 +1,5 @@
 package com.exchange.service;
 
-/**
- * The type File service impl mock test.
- */
 //@RunWith(MockitoJUnitRunner.class)
 public class FileServiceImplMockTest {
 

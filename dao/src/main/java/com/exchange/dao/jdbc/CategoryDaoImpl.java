@@ -10,7 +10,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSourceUtils;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Set;
@@ -18,7 +18,7 @@ import java.util.Set;
 /**
  * The type Category dao.
  */
-@Component
+@Repository
 public class CategoryDaoImpl implements CategoryDao {
 
     private static final String USER_ID = "user_id";
@@ -39,13 +39,13 @@ public class CategoryDaoImpl implements CategoryDao {
      * @param categoryDtoRowMapper       the category dto row mapper
      */
     @Autowired
-    public CategoryDaoImpl(NamedParameterJdbcTemplate namedParameterJdbcTemplate, CategoryDtoRowMapper categoryDtoRowMapper) {
+    public CategoryDaoImpl(final NamedParameterJdbcTemplate namedParameterJdbcTemplate, final CategoryDtoRowMapper categoryDtoRowMapper) {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
         this.categoryDtoRowMapper = categoryDtoRowMapper;
     }
 
     @Override
-    public Boolean existsCategoriesByUserId(Set<Long> categories, Long userId) {
+    public Boolean existsCategoriesByUserId(final Set<Long> categories, final Long userId) {
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
         parameterSource.addValue(USER_ID, userId);
         parameterSource.addValue(CATEGORY_ID, categories);
@@ -53,13 +53,13 @@ public class CategoryDaoImpl implements CategoryDao {
     }
 
     @Override
-    public int[] addFileCategories(Set<FileCategoryDto> fileCategoryDtos) {
+    public int[] addFileCategories(final Set<FileCategoryDto> fileCategoryDtos) {
         SqlParameterSource[] batch = SqlParameterSourceUtils.createBatch(fileCategoryDtos);
         return namedParameterJdbcTemplate.batchUpdate(insertFileCategoriesSql, batch);
     }
 
     @Override
-    public List<CategoryDto> getCategoriesByUserId(Long userId) {
+    public List<CategoryDto> getCategoriesByUserId(final Long userId) {
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
         parameterSource.addValue(USER_ID, userId);
         return namedParameterJdbcTemplate.query(getCategoriesByUserIdSql, parameterSource, categoryDtoRowMapper);

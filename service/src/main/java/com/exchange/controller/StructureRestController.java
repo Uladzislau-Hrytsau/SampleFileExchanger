@@ -23,7 +23,7 @@ public class StructureRestController {
      * @param structureService the structure service
      */
     @Autowired
-    public StructureRestController(StructureService structureService) {
+    public StructureRestController(final StructureService structureService) {
         this.structureService = structureService;
     }
 
@@ -38,8 +38,8 @@ public class StructureRestController {
     @GetMapping(value = "/structures", params = {"folderId"})
     @ResponseStatus(value = HttpStatus.OK)
     public StructureDto getStructureByFolderIdAndCategories(
-            @RequestParam(value = "folderId") Long folderId,
-            Authentication authentication) {
+            @RequestParam(value = "folderId") final Long folderId,
+            final Authentication authentication) {
         return structureService.getStructureAndCategoriesByFolderIdAndAuthentication(folderId, authentication);
     }
 

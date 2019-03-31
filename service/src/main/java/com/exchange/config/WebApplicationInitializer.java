@@ -7,6 +7,8 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
  */
 public class WebApplicationInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
+    private static final String URL_MAPPING = "/";
+
     @Override
     protected Class<?>[] getRootConfigClasses() {
         return new Class<?>[]{WebConfiguration.class};
@@ -19,6 +21,6 @@ public class WebApplicationInitializer extends AbstractAnnotationConfigDispatche
 
     @Override
     protected String[] getServletMappings() {
-        return new String[]{"/"};
+        return new String[]{URL_MAPPING};
     }
 }

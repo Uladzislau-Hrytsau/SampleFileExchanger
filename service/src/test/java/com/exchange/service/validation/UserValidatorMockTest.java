@@ -1,8 +1,5 @@
 package com.exchange.service.validation;
 
-/**
- * The type User validator mock test.
- */
 //@RunWith(MockitoJUnitRunner.class)
 public class UserValidatorMockTest {
 

@@ -37,7 +37,14 @@ public class FileDto {
      * @param date        the date
      * @param categories  the categories
      */
-    public FileDto(Long userId, Long folderId, String description, String realName, String encodeName, LocalDate date, Set<Long> categories) {
+    public FileDto(
+            final Long userId,
+            final Long folderId,
+            final String description,
+            final String realName,
+            final String encodeName,
+            final LocalDate date,
+            final Set<Long> categories) {
         this.userId = userId;
         this.folderId = folderId;
         this.description = description;
@@ -61,7 +68,7 @@ public class FileDto {
      *
      * @param userId the user id
      */
-    public void setUserId(Long userId) {
+    public void setUserId(final Long userId) {
         this.userId = userId;
     }
 
@@ -79,7 +86,7 @@ public class FileDto {
      *
      * @param folderId the folder id
      */
-    public void setFolderId(Long folderId) {
+    public void setFolderId(final Long folderId) {
         this.folderId = folderId;
     }
 
@@ -97,7 +104,7 @@ public class FileDto {
      *
      * @param description the description
      */
-    public void setDescription(String description) {
+    public void setDescription(final String description) {
         this.description = description;
     }
 
@@ -115,7 +122,7 @@ public class FileDto {
      *
      * @param realName the real name
      */
-    public void setRealName(String realName) {
+    public void setRealName(final String realName) {
         this.realName = realName;
     }
 
@@ -133,7 +140,7 @@ public class FileDto {
      *
      * @param encodeName the encode name
      */
-    public void setEncodeName(String encodeName) {
+    public void setEncodeName(final String encodeName) {
         this.encodeName = encodeName;
     }
 
@@ -151,7 +158,7 @@ public class FileDto {
      *
      * @param date the date
      */
-    public void setDate(LocalDate date) {
+    public void setDate(final LocalDate date) {
         this.date = date;
     }
 
@@ -169,12 +176,12 @@ public class FileDto {
      *
      * @param categories the categories
      */
-    public void setCategories(Set<Long> categories) {
+    public void setCategories(final Set<Long> categories) {
         this.categories = categories;
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         FileDto fileDto = (FileDto) o;

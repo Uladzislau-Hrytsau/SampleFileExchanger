@@ -17,7 +17,7 @@ import static com.exchange.dao.jdbc.FolderDaoImpl.NAME;
 public class FolderStructureDtoRowMapper implements RowMapper<FolderStructureDto> {
 
     @Override
-    public FolderStructureDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+    public FolderStructureDto mapRow(final ResultSet rs, final int rowNum) throws SQLException {
         FolderStructureDto folderStructureDto = new FolderStructureDto();
         folderStructureDto.setId(rs.getLong(ID));
         folderStructureDto.setName(rs.getString(NAME));

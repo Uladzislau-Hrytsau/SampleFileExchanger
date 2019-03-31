@@ -68,12 +68,12 @@ public class FileServiceImpl implements FileService {
      */
     @Autowired
     public FileServiceImpl(
-            FileDao fileDao,
-            FileValidator fileValidator,
-            CategoryService categoryService,
-            FileWriterService fileWriterService,
-            CommonService commonService,
-            CommonValidator commonValidator) {
+            final FileDao fileDao,
+            final FileValidator fileValidator,
+            final CategoryService categoryService,
+            final FileWriterService fileWriterService,
+            final CommonService commonService,
+            final CommonValidator commonValidator) {
         this.fileDao = fileDao;
         this.fileValidator = fileValidator;
         this.categoryService = categoryService;
@@ -83,7 +83,9 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public Response getFilesAndCountByPageAndSize(Integer page, Integer size) {
+    public Response getFilesAndCountByPageAndSize(
+            final Integer page,
+            final Integer size) {
         commonValidator.validatePageAndSize(page, size);
         Response<File> response = new Response<>();
         response.setData(
@@ -93,7 +95,10 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public Long addFile(FileDto fileDto, MultipartFile multipartFile, Authentication authentication) throws IOException {
+    public Long addFile(
+            final FileDto fileDto,
+            final MultipartFile multipartFile,
+            final Authentication authentication) throws IOException {
         Long userId = commonService.getUserIdByAuthentication(authentication);
         fileValidator.validateSize(multipartFile);
         fileValidator.validateDescription(fileDto.getDescription());
@@ -109,20 +114,24 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public void updateFile(FileUpdatingDto fileUpdatingDto) {
+    public void updateFile(
+            final FileUpdatingDto fileUpdatingDto) {
         fileValidator.validateFileId(fileUpdatingDto.getId());
         fileValidator.validateDescription(fileUpdatingDto.getDescription());
         fileValidator.validateName(fileUpdatingDto.getRealName());
         if (fileUpdatingDto.getDate() == null) {
             fileUpdatingDto.setDate(LocalDate.now());
         }
-        if (fileDao.updateFile(fileUpdatingDto) == 0) {
+        if (!fileDao.updateFile(fileUpdatingDto)) {
             throw new InternalServerException(updateError);
         }
     }
 
     @Override
-    public void downloadFileByFileId(Long fileId, String fileName, HttpServletResponse response) throws IOException {
+    public void downloadFileByFileId(
+            final Long fileId,
+            final String fileName,
+            final HttpServletResponse response) throws IOException {
         fileValidator.validateName(fileName);
         fileValidator.validateFileId(fileId);
         String encodedFileName = fileDao.getFileNameByFileId(fileId);
@@ -133,10 +142,10 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public void deleteFile(Long fileId) {
+    public void deleteFile(final Long fileId) {
         fileValidator.validateFileId(fileId);
         fileWriterService.deleteFileByName(fileDao.getFileNameByFileId(fileId));
-        if (fileDao.deleteFile(fileId) == 0) {
+        if (!fileDao.deleteFile(fileId)) {
             throw new InternalServerException(deleteError);
         }
     }
@@ -147,13 +156,13 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public FileUpdatingDto getFileInformationByFileIdAndAuthentication(Long fileId, Authentication authentication) {
+    public FileUpdatingDto getFileInformationByFileIdAndAuthentication(final Long fileId, final Authentication authentication) {
         fileValidator.validateFileId(fileId);
         return fileDao.getFileInformationByFileIdAndUserId(fileId, commonService.getUserIdByAuthentication(authentication));
     }
 
     @Override
-    public List<String> getFileNamesByUserId(Long userId) {
+    public List<String> getFileNamesByUserId(final Long userId) {
         return fileDao.getFileNamesByUserId(userId);
     }
 
@@ -164,7 +173,7 @@ public class FileServiceImpl implements FileService {
      * @param fileName the file name
      * @param fileSize the file size
      */
-    public void buildFileDownloadResponse(HttpServletResponse response, String fileName, Integer fileSize) {
+    public void buildFileDownloadResponse(final HttpServletResponse response, final String fileName, final Integer fileSize) {
         response.setContentType(this.getFileTypeByFileName(fileName));
         response.setHeader("Content-Disposition", String.format("attachment; filename=\"%s\"", fileName));
         response.setContentLength(fileSize);
@@ -176,7 +185,7 @@ public class FileServiceImpl implements FileService {
      * @param fileName the file name
      * @return the file type by file name
      */
-    public String getFileTypeByFileName(String fileName) {
+    public String getFileTypeByFileName(final String fileName) {
         String mimeType = URLConnection.guessContentTypeFromName(fileName);
         if (mimeType == null) {
             mimeType = MediaType.APPLICATION_OCTET_STREAM_VALUE;

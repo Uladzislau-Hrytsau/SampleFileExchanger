@@ -7,14 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.stereotype.Component;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
  * The type Folder dao.
  */
-@Component
+@Repository
 public class FolderDaoImpl implements FolderDao {
 
     /**
@@ -54,13 +56,15 @@ public class FolderDaoImpl implements FolderDao {
      * @param folderStructureDtoRowMapper the folder structure dto row mapper
      */
     @Autowired
-    public FolderDaoImpl(NamedParameterJdbcTemplate namedParameterJdbcTemplate, FolderStructureDtoRowMapper folderStructureDtoRowMapper) {
+    public FolderDaoImpl(
+            final NamedParameterJdbcTemplate namedParameterJdbcTemplate,
+            final FolderStructureDtoRowMapper folderStructureDtoRowMapper) {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
         this.folderStructureDtoRowMapper = folderStructureDtoRowMapper;
     }
 
     @Override
-    public List<FolderStructureDto> getFoldersByUserIdAndParentId(Long userId, Long parentId) {
+    public List<FolderStructureDto> getFoldersByUserIdAndParentId(final Long userId, final Long parentId) {
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
         parameterSource.addValue(PARENT_ID, parentId);
         parameterSource.addValue(USER_ID, userId);
@@ -68,16 +72,18 @@ public class FolderDaoImpl implements FolderDao {
     }
 
     @Override
-    public Integer addFolder(FolderStructureDto folderStructureDto, Long userId) {
+    public Long addFolder(final FolderStructureDto folderStructureDto, final Long userId) {
+        KeyHolder keyHolder = new GeneratedKeyHolder();
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
         parameterSource.addValue(NAME, folderStructureDto.getName());
         parameterSource.addValue(USER_ID, userId);
         parameterSource.addValue(PARENT_ID, folderStructureDto.getId());
-        return namedParameterJdbcTemplate.update(insertSql, parameterSource);
+        namedParameterJdbcTemplate.update(insertSql, parameterSource, keyHolder);
+        return keyHolder.getKey().longValue();
     }
 
     @Override
-    public Boolean existsParentIdByUserId(Long parentId, Long userId) {
+    public Boolean existsParentIdByUserId(final Long parentId, final Long userId) {
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
         parameterSource.addValue(USER_ID, userId);
         parameterSource.addValue(ID, parentId);
@@ -85,21 +91,21 @@ public class FolderDaoImpl implements FolderDao {
     }
 
     @Override
-    public Integer deleteByFolderIdAndUserId(Long folderId, Long userId) {
+    public Boolean deleteByFolderIdAndUserId(final Long folderId, final Long userId) {
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
         this.fillFolderIdAndUserId(parameterSource, folderId, userId);
-        return namedParameterJdbcTemplate.update(deleteByUserIdAndFolderIdSql, parameterSource);
+        return namedParameterJdbcTemplate.update(deleteByUserIdAndFolderIdSql, parameterSource) == 1;
     }
 
     @Override
-    public Integer updateFolderNameByFolderIdAndUserId(FolderStructureDto folderStructureDto, Long userId) {
+    public Boolean updateFolderNameByFolderIdAndUserId(final FolderStructureDto folderStructureDto, final Long userId) {
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
         parameterSource.addValue(NAME, folderStructureDto.getName());
         this.fillFolderIdAndUserId(parameterSource, folderStructureDto.getId(), userId);
-        return namedParameterJdbcTemplate.update(updateFolderNameByFolderIdAndUserIdSql, parameterSource);
+        return namedParameterJdbcTemplate.update(updateFolderNameByFolderIdAndUserIdSql, parameterSource) == 1;
     }
 
-    private void fillFolderIdAndUserId(MapSqlParameterSource parameterSource, Long id, Long userId) {
+    private void fillFolderIdAndUserId(final MapSqlParameterSource parameterSource, final Long id, final Long userId) {
         parameterSource.addValue(ID, id);
         parameterSource.addValue(USER_ID, userId);
     }

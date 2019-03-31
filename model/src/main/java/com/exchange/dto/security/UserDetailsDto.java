@@ -30,7 +30,11 @@ public class UserDetailsDto {
      * @param userPassword the user password
      * @param roles        the roles
      */
-    public UserDetailsDto(Long userId, String userName, String userPassword, Set<String> roles) {
+    public UserDetailsDto(
+            final Long userId,
+            final String userName,
+            final String userPassword,
+            final Set<String> roles) {
         this.userId = userId;
         this.userName = userName;
         this.userPassword = userPassword;
@@ -51,7 +55,7 @@ public class UserDetailsDto {
      *
      * @param userId the user id
      */
-    public void setUserId(Long userId) {
+    public void setUserId(final Long userId) {
         this.userId = userId;
     }
 
@@ -69,7 +73,7 @@ public class UserDetailsDto {
      *
      * @param userName the user name
      */
-    public void setUserName(String userName) {
+    public void setUserName(final String userName) {
         this.userName = userName;
     }
 
@@ -87,7 +91,7 @@ public class UserDetailsDto {
      *
      * @param userPassword the user password
      */
-    public void setUserPassword(String userPassword) {
+    public void setUserPassword(final String userPassword) {
         this.userPassword = userPassword;
     }
 
@@ -105,12 +109,12 @@ public class UserDetailsDto {
      *
      * @param roles the roles
      */
-    public void setRoles(Set<String> roles) {
+    public void setRoles(final Set<String> roles) {
         this.roles = roles;
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserDetailsDto that = (UserDetailsDto) o;

@@ -17,7 +17,7 @@ public class CategoryDtoRowMapper implements RowMapper<CategoryDto> {
     private static final String CATEGORY = "category";
 
     @Override
-    public CategoryDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+    public CategoryDto mapRow(final ResultSet rs, final int rowNum) throws SQLException {
         CategoryDto categoryDto = new CategoryDto();
         categoryDto.setId(rs.getLong(ID));
         categoryDto.setName(rs.getString(CATEGORY));

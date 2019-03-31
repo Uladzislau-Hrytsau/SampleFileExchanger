@@ -4,12 +4,12 @@ import com.exchange.dao.RoleDao;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 /**
  * The type Role dao.
  */
-@Component
+@Repository
 public class RoleDaoImpl implements RoleDao {
 
     private static final String USER_ID = "user_id";
@@ -24,12 +24,12 @@ public class RoleDaoImpl implements RoleDao {
      *
      * @param namedParameterJdbcTemplate the named parameter jdbc template
      */
-    public RoleDaoImpl(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+    public RoleDaoImpl(final NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
 
     @Override
-    public Integer addUserRole(Long userId, Integer roleId) {
+    public Integer addUserRole(final Long userId, final Integer roleId) {
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
         parameterSource.addValue(USER_ID, userId);
         parameterSource.addValue(ROLE_ID, roleId);

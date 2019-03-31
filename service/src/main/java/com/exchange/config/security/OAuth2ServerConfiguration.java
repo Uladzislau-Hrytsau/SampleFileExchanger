@@ -32,8 +32,8 @@ class OAuth2ServerConfiguration extends AuthorizationServerConfigurerAdapter {
     private static final String WRITE_SCOPE = "write";
     private static final boolean AUTO_APPROVE = true;
 
-    private AuthenticationManager authenticationManager;
-    private UserDetailsService userDetailsService;
+    private final AuthenticationManager authenticationManager;
+    private final UserDetailsService userDetailsService;
 
     /**
      * Instantiates a new O auth 2 server configuration.
@@ -42,21 +42,23 @@ class OAuth2ServerConfiguration extends AuthorizationServerConfigurerAdapter {
      * @param userDetailsService    the user details service
      */
     @Autowired
-    public OAuth2ServerConfiguration(@Qualifier("authenticationManagerBean") AuthenticationManager authenticationManager, UserDetailsService userDetailsService) {
+    public OAuth2ServerConfiguration(
+            @Qualifier("authenticationManagerBean") final AuthenticationManager authenticationManager,
+            final UserDetailsService userDetailsService) {
         this.authenticationManager = authenticationManager;
         this.userDetailsService = userDetailsService;
     }
 
     @Override
     public void configure(
-            AuthorizationServerSecurityConfigurer oauthServer) {
+            final AuthorizationServerSecurityConfigurer oauthServer) {
         oauthServer
                 .tokenKeyAccess(PERMIT_ALL)
                 .checkTokenAccess(IS_AUTHENTICATED);
     }
 
     @Override
-    public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
+    public void configure(final ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
                 .withClient(CLIENT_ID_PASSWORD)
                 .secret(SECRET)
@@ -66,7 +68,7 @@ class OAuth2ServerConfiguration extends AuthorizationServerConfigurerAdapter {
     }
 
     @Override
-    public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
+    public void configure(final AuthorizationServerEndpointsConfigurer endpoints) {
         endpoints
                 .tokenStore(tokenStore())
                 .authenticationManager(authenticationManager)

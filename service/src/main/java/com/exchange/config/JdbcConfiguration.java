@@ -52,7 +52,7 @@ public class JdbcConfiguration {
      * @return the jdbc template
      */
     @Bean
-    public JdbcTemplate jdbcTemplate(@Autowired DataSource dataSource) {
+    public JdbcTemplate jdbcTemplate(@Autowired final DataSource dataSource) {
         return new JdbcTemplate(dataSource);
     }
 
@@ -63,7 +63,7 @@ public class JdbcConfiguration {
      * @return the named parameter jdbc template
      */
     @Bean
-    public NamedParameterJdbcTemplate namedParameterJdbcTemplate(@Autowired DataSource dataSource) {
+    public NamedParameterJdbcTemplate namedParameterJdbcTemplate(@Autowired final DataSource dataSource) {
         return new NamedParameterJdbcTemplate(dataSource);
     }
 

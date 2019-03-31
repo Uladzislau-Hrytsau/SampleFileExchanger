@@ -15,14 +15,14 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
  * The type File dao.
  */
-@Component
+@Repository
 public class FileDaoImpl implements FileDao {
 
     /**
@@ -98,11 +98,11 @@ public class FileDaoImpl implements FileDao {
      */
     @Autowired
     public FileDaoImpl(
-            JdbcTemplate jdbcTemplate,
-            NamedParameterJdbcTemplate namedParameterJdbcTemplate,
-            FileRowMapper fileRowMapper,
-            FileStructureDtoRowMapper fileStructureDtoRowMapper,
-            FileUpdatingDtoRowMapper fileUpdatingDtoRowMapper) {
+            final JdbcTemplate jdbcTemplate,
+            final NamedParameterJdbcTemplate namedParameterJdbcTemplate,
+            final FileRowMapper fileRowMapper,
+            final FileStructureDtoRowMapper fileStructureDtoRowMapper,
+            final FileUpdatingDtoRowMapper fileUpdatingDtoRowMapper) {
         this.jdbcTemplate = jdbcTemplate;
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
         this.fileRowMapper = fileRowMapper;
@@ -111,7 +111,7 @@ public class FileDaoImpl implements FileDao {
     }
 
     @Override
-    public List<File> getFilesByLimitAndOffset(Integer limit, Integer offset) {
+    public List<File> getFilesByLimitAndOffset(final Integer limit, final Integer offset) {
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
         parameterSource.addValue(LIMIT, limit);
         parameterSource.addValue(OFFSET, offset);
@@ -119,7 +119,7 @@ public class FileDaoImpl implements FileDao {
     }
 
     @Override
-    public Long addFile(FileDto fileDto) {
+    public Long addFile(final FileDto fileDto) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
         parameterSource.addValue(USER_ID, fileDto.getUserId());
@@ -133,24 +133,24 @@ public class FileDaoImpl implements FileDao {
     }
 
     @Override
-    public Integer updateFile(FileUpdatingDto fileUpdatingDto) {
+    public Boolean updateFile(final FileUpdatingDto fileUpdatingDto) {
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
         parameterSource.addValue(ID, fileUpdatingDto.getId());
         parameterSource.addValue(DESCRIPTION, fileUpdatingDto.getDescription());
         parameterSource.addValue(REAL_NAME, fileUpdatingDto.getRealName());
         parameterSource.addValue(DATE, fileUpdatingDto.getDate());
-        return namedParameterJdbcTemplate.update(updateFileSql, parameterSource);
+        return namedParameterJdbcTemplate.update(updateFileSql, parameterSource) == 1;
     }
 
     @Override
-    public Integer deleteFile(Long fileId) {
+    public Boolean deleteFile(final Long fileId) {
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
         parameterSource.addValue(ID, fileId);
-        return namedParameterJdbcTemplate.update(deleteFileSql, parameterSource);
+        return namedParameterJdbcTemplate.update(deleteFileSql, parameterSource) == 1;
     }
 
     @Override
-    public List<FileStructureDto> getFilesByUserIdAndFolderId(Long userId, Long folderId) {
+    public List<FileStructureDto> getFilesByUserIdAndFolderId(final Long userId, final Long folderId) {
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
         parameterSource.addValue(FOLDER_ID, folderId);
         parameterSource.addValue(USER_ID, userId);
@@ -163,14 +163,14 @@ public class FileDaoImpl implements FileDao {
     }
 
     @Override
-    public String getFileNameByFileId(Long fileId) {
+    public String getFileNameByFileId(final Long fileId) {
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
         parameterSource.addValue(ID, fileId);
         return namedParameterJdbcTemplate.queryForObject(getFileNameByFileIdSql, parameterSource, String.class);
     }
 
     @Override
-    public List<String> getFileNamesByFolderIdAndUserId(Long folderId, Long userId) {
+    public List<String> getFileNamesByFolderIdAndUserId(final Long folderId, final Long userId) {
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
         parameterSource.addValue(USER_ID, userId);
         parameterSource.addValue(ID, folderId);
@@ -178,7 +178,7 @@ public class FileDaoImpl implements FileDao {
     }
 
     @Override
-    public FileUpdatingDto getFileInformationByFileIdAndUserId(Long fileId, Long userId) {
+    public FileUpdatingDto getFileInformationByFileIdAndUserId(final Long fileId, final Long userId) {
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
         parameterSource.addValue(ID, fileId);
         parameterSource.addValue(USER_ID, userId);
@@ -186,7 +186,7 @@ public class FileDaoImpl implements FileDao {
     }
 
     @Override
-    public List<String> getFileNamesByUserId(Long userId) {
+    public List<String> getFileNamesByUserId(final Long userId) {
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
         parameterSource.addValue(USER_ID, userId);
         return namedParameterJdbcTemplate.queryForList(fetFileNamesByUserIdSql, parameterSource, String.class);

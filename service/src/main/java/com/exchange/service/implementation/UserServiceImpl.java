@@ -60,14 +60,14 @@ public class UserServiceImpl implements UserService {
      */
     @Autowired
     public UserServiceImpl(
-            UserDao userDao,
-            UserValidator userValidator,
-            BCryptPasswordEncoder bCryptPasswordEncoder,
-            RoleService roleService,
-            CommonService commonService,
-            CommonValidator commonValidator,
-            FileService fileService,
-            FileWriterService fileWriterService) {
+            final UserDao userDao,
+            final UserValidator userValidator,
+            final BCryptPasswordEncoder bCryptPasswordEncoder,
+            final RoleService roleService,
+            final CommonService commonService,
+            final CommonValidator commonValidator,
+            final FileService fileService,
+            final FileWriterService fileWriterService) {
         this.userDao = userDao;
         this.userValidator = userValidator;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
@@ -79,7 +79,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Response getUsersAndCountByPageAndSize(Integer page, Integer size) {
+    public Response getUsersAndCountByPageAndSize(
+            final Integer page,
+            final Integer size) {
         commonValidator.validatePageAndSize(page, size);
         Response<User> response = new Response<>();
         response.setData(userDao.getUsersByLimitAndOffset(size, commonService.getOffsetBySizeAndPage(size, page)));
@@ -88,7 +90,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addUser(User user) {
+    public void addUser(final User user) {
         userValidator.validateExistingLogin(user.getName(), userDao);
         userValidator.validatePassword(user.getPassword());
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
@@ -100,20 +102,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateUser(UserUpdatingDto userUpdatingDto) {
+    public void updateUser(final UserUpdatingDto userUpdatingDto) {
         userValidator.validatePassword(userUpdatingDto.getPassword());
         userValidator.validateInformation(userUpdatingDto.getInformation());
         commonValidator.validateDate(userUpdatingDto.getBirthDate());
         userUpdatingDto.setPassword(bCryptPasswordEncoder.encode(userUpdatingDto.getPassword()));
-        if (userDao.updateUser(userUpdatingDto) == 0)
+        if (!userDao.updateUser(userUpdatingDto))
             throw new InternalServerException(updateError);
     }
 
     @Override
-    public void deleteUser(Long userId) {
+    public void deleteUser(final Long userId) {
         userValidator.validateUserId(userId);
         fileWriterService.deleteFilesByNames(fileService.getFileNamesByUserId(userId));
-        if (userDao.deleteUser(userId) == 0)
+        if (!userDao.deleteUser(userId))
             throw new InternalServerException(deleteError);
     }
 

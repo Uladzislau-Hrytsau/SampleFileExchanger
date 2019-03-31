@@ -19,13 +19,13 @@ public interface FolderDao {
     List<FolderStructureDto> getFoldersByUserIdAndParentId(Long userId, Long parentId);
 
     /**
-     * Add folder integer.
+     * Add folder long.
      *
      * @param folderStructureDto the folder structure dto
      * @param userId             the user id
-     * @return the integer
+     * @return the long
      */
-    Integer addFolder(FolderStructureDto folderStructureDto, Long userId);
+    Long addFolder(FolderStructureDto folderStructureDto, Long userId);
 
     /**
      * Exists parent id by user id boolean.
@@ -37,20 +37,20 @@ public interface FolderDao {
     Boolean existsParentIdByUserId(Long parentId, Long userId);
 
     /**
-     * Delete by folder id and user id integer.
+     * Delete by folder id and user id boolean.
      *
      * @param folderId the folder id
      * @param userId   the user id
-     * @return the integer
+     * @return the boolean
      */
-    Integer deleteByFolderIdAndUserId(Long folderId, Long userId);
+    Boolean deleteByFolderIdAndUserId(Long folderId, Long userId);
 
     /**
-     * Update folder name by folder id and user id integer.
+     * Update folder name by folder id and user id boolean.
      *
      * @param folderStructureDto the folder structure dto
      * @param userId             the user id
-     * @return the integer
+     * @return the boolean
      */
-    Integer updateFolderNameByFolderIdAndUserId(FolderStructureDto folderStructureDto, Long userId);
+    Boolean updateFolderNameByFolderIdAndUserId(FolderStructureDto folderStructureDto, Long userId);
 }

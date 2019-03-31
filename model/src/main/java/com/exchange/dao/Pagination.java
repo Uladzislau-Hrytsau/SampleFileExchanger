@@ -20,7 +20,7 @@ public class Pagination {
      *
      * @param count the count
      */
-    public Pagination(Long count) {
+    public Pagination(final Long count) {
         this.count = count;
     }
 
@@ -38,12 +38,12 @@ public class Pagination {
      *
      * @param count the count
      */
-    public void setCount(Long count) {
+    public void setCount(final Long count) {
         this.count = count;
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Pagination that = (Pagination) o;

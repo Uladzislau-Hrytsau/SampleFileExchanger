@@ -30,8 +30,8 @@ public class FolderValidator {
      */
     @Autowired
     public FolderValidator(
-            CommonValidator commonValidator,
-            FolderDao folderDao) {
+            final CommonValidator commonValidator,
+            final FolderDao folderDao) {
         this.commonValidator = commonValidator;
         this.folderDao = folderDao;
     }
@@ -42,7 +42,9 @@ public class FolderValidator {
      * @param folderId the folder id
      * @param userId   the user id
      */
-    public void validateFolderByUserId(Long folderId, Long userId) {
+    public void validateFolderByUserId(
+            final Long folderId,
+            final Long userId) {
         this.validateFolderId(folderId);
         this.existsByUserId(folderId, userId);
     }
@@ -52,7 +54,7 @@ public class FolderValidator {
      *
      * @param folderId the folder id
      */
-    public void validateFolderId(Long folderId) {
+    public void validateFolderId(final Long folderId) {
         if (!commonValidator.isValidIdentifier(folderId)) {
             throw new ValidationException(incorrectFolderId);
         }
@@ -64,7 +66,9 @@ public class FolderValidator {
      * @param folderId the folder id
      * @param userId   the user id
      */
-    public void existsByUserId(Long folderId, Long userId) {
+    public void existsByUserId(
+            final Long folderId,
+            final Long userId) {
         if (!folderDao.existsParentIdByUserId(folderId, userId)) {
             throw new ValidationException(folderDoesNotExist);
         }
@@ -75,7 +79,7 @@ public class FolderValidator {
      *
      * @param name the name
      */
-    public void validateFolderName(String name) {
+    public void validateFolderName(final String name) {
         if (name == null || name.isEmpty()) {
             throw new ValidationException(incorrectFolderName);
         }

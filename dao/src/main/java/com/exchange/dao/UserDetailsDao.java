@@ -14,5 +14,4 @@ public interface UserDetailsDao {
      * @return the user details by login
      */
     UserDetailsDto getUserDetailsByLogin(String login);
-
 }

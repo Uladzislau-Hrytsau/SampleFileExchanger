@@ -37,12 +37,14 @@ public class SimpleCorsFilter implements Filter {
     }
 
     @Override
-    public void init(FilterConfig fc) {
+    public void init(final FilterConfig fc) {
     }
 
     @Override
-    public void doFilter(ServletRequest req, ServletResponse resp,
-                         FilterChain chain) throws IOException, ServletException {
+    public void doFilter(
+            final ServletRequest req,
+            final ServletResponse resp,
+            final FilterChain chain) throws IOException, ServletException {
         HttpServletResponse response = (HttpServletResponse) resp;
         HttpServletRequest request = (HttpServletRequest) req;
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ASTERISK);

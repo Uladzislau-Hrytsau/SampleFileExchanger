@@ -50,7 +50,7 @@ public interface FileService {
      * @param response the response
      * @throws IOException the io exception
      */
-    void downloadFileByFileId(Long fileId, String fileName, HttpServletResponse response) throws IOException;
+    void downloadFileByFileId(Long fileId, String fileName, final HttpServletResponse response) throws IOException;
 
     /**
      * Delete file.

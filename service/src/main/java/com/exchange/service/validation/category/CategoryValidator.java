@@ -21,7 +21,7 @@ public class CategoryValidator {
      * @param categoryDao the category dao
      */
     @Autowired
-    public CategoryValidator(CategoryDao categoryDao) {
+    public CategoryValidator(final CategoryDao categoryDao) {
         this.categoryDao = categoryDao;
     }
 
@@ -31,7 +31,9 @@ public class CategoryValidator {
      * @param categories the categories
      * @param userId     the user id
      */
-    public void validateCategoriesByUserId(Set<Long> categories, Long userId) {
+    public void validateCategoriesByUserId(
+            final Set<Long> categories,
+            final Long userId) {
         categories.forEach(item -> {
             if (item == null || item < 0L) {
                 throw new ValidationException();

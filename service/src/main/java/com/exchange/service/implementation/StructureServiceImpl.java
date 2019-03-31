@@ -35,11 +35,11 @@ public class StructureServiceImpl implements StructureService {
      */
     @Autowired
     public StructureServiceImpl(
-            FileDao fileDao,
-            FolderDao folderDao,
-            CategoryDao categoryDao,
-            CommonService commonService,
-            FolderValidator folderValidator) {
+            final FileDao fileDao,
+            final FolderDao folderDao,
+            final CategoryDao categoryDao,
+            final CommonService commonService,
+            final FolderValidator folderValidator) {
         this.fileDao = fileDao;
         this.folderDao = folderDao;
         this.categoryDao = categoryDao;
@@ -48,7 +48,9 @@ public class StructureServiceImpl implements StructureService {
     }
 
     @Override
-    public StructureDto getStructureAndCategoriesByFolderIdAndAuthentication(Long folderId, Authentication authentication) {
+    public StructureDto getStructureAndCategoriesByFolderIdAndAuthentication(
+            final Long folderId,
+            final Authentication authentication) {
         folderValidator.validateFolderId(folderId);
         Long userId = commonService.getUserIdByAuthentication(authentication);
         StructureDto structureDto = new StructureDto();

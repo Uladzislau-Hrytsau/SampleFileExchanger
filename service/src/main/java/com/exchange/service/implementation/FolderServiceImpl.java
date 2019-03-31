@@ -1,12 +1,12 @@
 package com.exchange.service.implementation;
 
-import com.exchange.config.security.userdetails.UserDetails;
 import com.exchange.dao.FileDao;
 import com.exchange.dao.FolderDao;
 import com.exchange.dto.folder.FolderStructureDto;
 import com.exchange.exception.InternalServerException;
 import com.exchange.service.FileWriterService;
 import com.exchange.service.FolderService;
+import com.exchange.service.validation.CommonValidator;
 import com.exchange.service.validation.folder.FolderValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,6 +26,7 @@ public class FolderServiceImpl implements FolderService {
     private final FileDao fileDao;
     private final FolderValidator folderValidator;
     private final CommonService commonService;
+    private final CommonValidator commonValidator;
 
     @Value("${folderService.incorrectFolderName}")
     private String incorrectFolderName;
@@ -46,44 +47,54 @@ public class FolderServiceImpl implements FolderService {
      * @param fileDao           the file dao
      * @param folderValidator   the folder validator
      * @param commonService     the common service
+     * @param commonValidator   the common validator
      */
     @Autowired
     public FolderServiceImpl(
-            FolderDao folderDao,
-            FileWriterService fileWriterService,
-            FileDao fileDao,
-            FolderValidator folderValidator,
-            CommonService commonService) {
+            final FolderDao folderDao,
+            final FileWriterService fileWriterService,
+            final FileDao fileDao,
+            final FolderValidator folderValidator,
+            final CommonService commonService,
+            final CommonValidator commonValidator) {
         this.folderDao = folderDao;
         this.fileWriterService = fileWriterService;
         this.fileDao = fileDao;
         this.folderValidator = folderValidator;
         this.commonService = commonService;
+        this.commonValidator = commonValidator;
     }
 
     @Override
-    public void addFolder(FolderStructureDto folderStructureDto, Authentication authentication) {
+    public void addFolder(
+            final FolderStructureDto folderStructureDto,
+            final Authentication authentication) {
         folderValidator.validateFolderName(folderStructureDto.getName());
-        if (folderDao.addFolder(folderStructureDto, ((UserDetails) authentication.getPrincipal()).getUserId()) == 0) {
+        Long folderId = folderDao.addFolder(folderStructureDto, commonService.getUserIdByAuthentication(authentication));
+        if (!commonValidator.isValidIdentifier(folderId)) {
             throw new InternalServerException(createError);
         }
     }
 
     @Override
-    public void deleteByFolderIdAndAuthentication(Long folderId, Authentication authentication) {
+    public void deleteByFolderIdAndAuthentication(
+            final Long folderId,
+            final Authentication authentication) {
         Long userId = commonService.getUserIdByAuthentication(authentication);
         folderValidator.validateFolderByUserId(folderId, userId);
         fileWriterService.deleteFilesByNames(fileDao.getFileNamesByFolderIdAndUserId(folderId, userId));
-        if (folderDao.deleteByFolderIdAndUserId(folderId, userId) == 0) {
+        if (!folderDao.deleteByFolderIdAndUserId(folderId, userId)) {
             throw new InternalServerException(deleteError);
         }
     }
 
     @Override
-    public void updateFolder(FolderStructureDto folderStructureDto, Authentication authentication) {
+    public void updateFolder(
+            final FolderStructureDto folderStructureDto,
+            final Authentication authentication) {
         folderValidator.validateFolderName(folderStructureDto.getName());
         folderValidator.validateFolderId(folderStructureDto.getId());
-        if (folderDao.updateFolderNameByFolderIdAndUserId(folderStructureDto, commonService.getUserIdByAuthentication(authentication)) == 0) {
+        if (!folderDao.updateFolderNameByFolderIdAndUserId(folderStructureDto, commonService.getUserIdByAuthentication(authentication))) {
             throw new InternalServerException(updateError);
         }
     }

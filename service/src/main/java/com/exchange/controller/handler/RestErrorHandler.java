@@ -29,7 +29,7 @@ public class RestErrorHandler {
      */
     @ExceptionHandler(DataAccessException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public Response handleDataAccessException(DataAccessException ex) {
+    public Response handleDataAccessException(final DataAccessException ex) {
         Response response = new Response();
         response.setMessage(Collections.singletonList(ex.getMessage()));
         return response;
@@ -43,7 +43,7 @@ public class RestErrorHandler {
      */
     @ExceptionHandler(ValidationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Response handleValidationException(ValidationException ex) {
+    public Response handleValidationException(final ValidationException ex) {
         Response response = new Response();
         response.setMessage(Collections.singletonList(ex.getMessage()));
         return response;
@@ -57,7 +57,7 @@ public class RestErrorHandler {
      */
     @ExceptionHandler(InternalServerException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public Response handleInternalServerException(InternalServerException ex) {
+    public Response handleInternalServerException(final InternalServerException ex) {
         Response response = new Response();
         response.setMessage(Collections.singletonList(ex.getMessage()));
         return response;
@@ -71,7 +71,7 @@ public class RestErrorHandler {
      */
     @ExceptionHandler(FileNotFoundException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public Response handleFileNotFoundException(FileNotFoundException ex) {
+    public Response handleFileNotFoundException(final FileNotFoundException ex) {
         Response response = new Response();
         response.setMessage(Collections.singletonList(ex.getMessage()));
         return response;
@@ -85,7 +85,7 @@ public class RestErrorHandler {
      */
     @ExceptionHandler(IOException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public Response handleFileNotFoundException(IOException ex) {
+    public Response handleFileNotFoundException(final IOException ex) {
         Response response = new Response();
         response.setMessage(Collections.singletonList(ex.getMessage()));
         return response;
@@ -99,7 +99,7 @@ public class RestErrorHandler {
      */
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public Response handleException(Exception ex) {
+    public Response handleException(final Exception ex) {
         Response response = new Response();
         response.setMessage(Collections.singletonList(ex.getMessage()));
         return response;

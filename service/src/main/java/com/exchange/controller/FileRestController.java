@@ -29,7 +29,7 @@ public class FileRestController {
      * @param fileService the file service
      */
     @Autowired
-    public FileRestController(FileService fileService) {
+    public FileRestController(final FileService fileService) {
         this.fileService = fileService;
 
     }
@@ -45,8 +45,8 @@ public class FileRestController {
     @GetMapping(value = "/files", params = {"page", "size"})
     @ResponseStatus(value = HttpStatus.OK)
     public Response getFilesByPageAndSize(
-            @RequestParam(value = "page", required = false, defaultValue = "null") Integer page,
-            @RequestParam(value = "size", required = false, defaultValue = "null") Integer size) {
+            @RequestParam(value = "page", required = false, defaultValue = "null") final Integer page,
+            @RequestParam(value = "size", required = false, defaultValue = "null") final Integer size) {
         return fileService.getFilesAndCountByPageAndSize(page, size);
     }
 
@@ -63,9 +63,9 @@ public class FileRestController {
     @PostMapping(value = "/files", consumes = "multipart/form-data")
     @ResponseStatus(value = HttpStatus.CREATED)
     public Long addFile(
-            @RequestPart("multipartFile") MultipartFile multipartFile,
-            @RequestPart("metaData") FileDto fileDto,
-            Authentication authentication) throws IOException {
+            @RequestPart("multipartFile") final MultipartFile multipartFile,
+            @RequestPart("metaData") final FileDto fileDto,
+            final Authentication authentication) throws IOException {
         return fileService.addFile(fileDto, multipartFile, authentication);
     }
 
@@ -77,7 +77,7 @@ public class FileRestController {
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @PutMapping("/files")
     @ResponseStatus(value = HttpStatus.OK)
-    public void updateFile(@RequestBody FileUpdatingDto fileUpdatingDto) {
+    public void updateFile(@RequestBody final FileUpdatingDto fileUpdatingDto) {
         fileService.updateFile(fileUpdatingDto);
     }
 
@@ -92,9 +92,9 @@ public class FileRestController {
     @GetMapping(value = "/files", params = {"fileId", "fileName"})
     @ResponseStatus(value = HttpStatus.OK)
     public void downloadFile(
-            @RequestParam("fileId") Long fileId,
-            @RequestParam("fileName") String fileName,
-            HttpServletResponse response) throws IOException {
+            @RequestParam("fileId") final Long fileId,
+            @RequestParam("fileName") final String fileName,
+            final HttpServletResponse response) throws IOException {
         fileService.downloadFileByFileId(fileId, fileName, response);
     }
 
@@ -107,7 +107,7 @@ public class FileRestController {
     @DeleteMapping(value = "/files", params = {"id"})
     @ResponseStatus(value = HttpStatus.OK)
     public void deleteFile(
-            @RequestParam(value = "id") Long id) {
+            @RequestParam(value = "id") final Long id) {
         fileService.deleteFile(id);
     }
 
@@ -122,8 +122,8 @@ public class FileRestController {
     @GetMapping(value = "/files", params = {"fileId"})
     @ResponseStatus(value = HttpStatus.OK)
     public FileUpdatingDto getFileInformationByFileId(
-            @RequestParam(value = "fileId") Long fileId,
-            Authentication authentication) {
+            @RequestParam(value = "fileId") final Long fileId,
+            final Authentication authentication) {
         return fileService.getFileInformationByFileIdAndAuthentication(fileId, authentication);
     }
 

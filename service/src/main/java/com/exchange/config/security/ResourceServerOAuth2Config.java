@@ -22,7 +22,7 @@ public class ResourceServerOAuth2Config
     private static final String HAS_ROLE_ADMIN_OR_HAS_ROLE_USER = "hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')";
 
     @Override
-    public void configure(HttpSecurity http) throws Exception {
+    public void configure(final HttpSecurity http) throws Exception {
         http
                 .anonymous().and()
                 .csrf().disable()

@@ -32,7 +32,7 @@ public class FileValidator {
      * @param commonValidator the common validator
      */
     @Autowired
-    public FileValidator(CommonValidator commonValidator) {
+    public FileValidator(final CommonValidator commonValidator) {
         this.commonValidator = commonValidator;
     }
 
@@ -41,7 +41,7 @@ public class FileValidator {
      *
      * @param multipartFile the multipart file
      */
-    public void validateSize(MultipartFile multipartFile) {
+    public void validateSize(final MultipartFile multipartFile) {
         if (multipartFile == null) {
             throw new ValidationException(fileNotPresented);
         }
@@ -55,7 +55,7 @@ public class FileValidator {
      *
      * @param fileId the file id
      */
-    public void validateFileId(Long fileId) {
+    public void validateFileId(final Long fileId) {
         if (!commonValidator.isValidIdentifier(fileId)) {
             throw new ValidationException(incorrectId);
         }
@@ -66,7 +66,7 @@ public class FileValidator {
      *
      * @param description the description
      */
-    public void validateDescription(String description) {
+    public void validateDescription(final String description) {
         if (!commonValidator.isValidString(description)) {
             throw new ValidationException(incorrectDescription);
         }
@@ -77,7 +77,7 @@ public class FileValidator {
      *
      * @param realName the real name
      */
-    public void validateName(String realName) {
+    public void validateName(final String realName) {
         if (!commonValidator.isValidString(realName)) {
             throw new ValidationException(incorrectFileName);
         }

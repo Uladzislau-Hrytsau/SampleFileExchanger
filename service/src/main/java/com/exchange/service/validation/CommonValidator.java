@@ -24,7 +24,7 @@ public class CommonValidator {
      * @param identifier the identifier
      * @return the boolean
      */
-    public Boolean isValidIdentifier(Long identifier) {
+    public Boolean isValidIdentifier(final Long identifier) {
         return identifier != null && identifier >= 0;
     }
 
@@ -34,7 +34,7 @@ public class CommonValidator {
      * @param string the string
      * @return the boolean
      */
-    public Boolean isValidString(String string) {
+    public Boolean isValidString(final String string) {
         return string != null && !string.isEmpty();
     }
 
@@ -44,7 +44,9 @@ public class CommonValidator {
      * @param page the page
      * @param size the size
      */
-    public void validatePageAndSize(Integer page, Integer size) {
+    public void validatePageAndSize(
+            final Integer page,
+            final Integer size) {
         if (page == null || page < 0) {
             throw new ValidationException(incorrectPage);
         }
@@ -59,7 +61,7 @@ public class CommonValidator {
      * @param localDate the local date
      * @return the local date
      */
-    public LocalDate validateDate(LocalDate localDate) {
+    public LocalDate validateDate(final LocalDate localDate) {
         return localDate == null ? LocalDate.now() : localDate;
     }
 

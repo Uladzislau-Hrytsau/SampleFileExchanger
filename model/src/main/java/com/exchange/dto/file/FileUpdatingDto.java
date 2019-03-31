@@ -30,7 +30,11 @@ public class FileUpdatingDto {
      * @param realName    the real name
      * @param date        the date
      */
-    public FileUpdatingDto(Long id, String description, String realName, LocalDate date) {
+    public FileUpdatingDto(
+            final Long id,
+            final String description,
+            final String realName,
+            final LocalDate date) {
         this.id = id;
         this.description = description;
         this.realName = realName;
@@ -51,7 +55,7 @@ public class FileUpdatingDto {
      *
      * @param id the id
      */
-    public void setId(Long id) {
+    public void setId(final Long id) {
         this.id = id;
     }
 
@@ -69,7 +73,7 @@ public class FileUpdatingDto {
      *
      * @param description the description
      */
-    public void setDescription(String description) {
+    public void setDescription(final String description) {
         this.description = description;
     }
 
@@ -87,7 +91,7 @@ public class FileUpdatingDto {
      *
      * @param realName the real name
      */
-    public void setRealName(String realName) {
+    public void setRealName(final String realName) {
         this.realName = realName;
     }
 
@@ -105,12 +109,12 @@ public class FileUpdatingDto {
      *
      * @param date the date
      */
-    public void setDate(LocalDate date) {
+    public void setDate(final LocalDate date) {
         this.date = date;
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         FileUpdatingDto that = (FileUpdatingDto) o;

@@ -5,6 +5,7 @@ import com.exchange.dao.TestSpringDaoConfiguration;
 import com.exchange.dto.category.CategoryDto;
 import com.exchange.dto.file.FileCategoryDto;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ import static org.junit.Assert.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestSpringDaoConfiguration.class)
 @Rollback
-public class CategoryDaoImplTests {
+public class CategoryDaoImplTest {
 
     private static final Long CORRECT_USER_ID_ONE = 1L;
     private static final Long CORRECT_USER_ID_TWO = 2L;

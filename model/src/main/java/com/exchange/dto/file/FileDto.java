@@ -35,6 +35,25 @@ public class FileDto {
      * @param realName    the real name
      * @param encodeName  the encode name
      * @param date        the date
+     */
+    public FileDto(Long userId, Long folderId, String description, String realName, String encodeName, LocalDate date) {
+        this.userId = userId;
+        this.folderId = folderId;
+        this.description = description;
+        this.realName = realName;
+        this.encodeName = encodeName;
+        this.date = date;
+    }
+
+    /**
+     * Instantiates a new File dto.
+     *
+     * @param userId      the user id
+     * @param folderId    the folder id
+     * @param description the description
+     * @param realName    the real name
+     * @param encodeName  the encode name
+     * @param date        the date
      * @param categories  the categories
      */
     public FileDto(

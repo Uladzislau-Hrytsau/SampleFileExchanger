@@ -4,12 +4,15 @@ import com.exchange.dao.File;
 import com.exchange.dao.FileDao;
 import com.exchange.dao.TestSpringDaoConfiguration;
 import com.exchange.dto.file.FileDto;
+import com.exchange.dto.file.FileStructureDto;
 import com.exchange.dto.file.FileUpdatingDto;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.test.annotation.Repeat;
@@ -40,6 +43,10 @@ public class FileDaoImplTest {
     private static final int LIMIT_THREE = 3;
     private static final Long CORRECT_FILE_ID = 1L;
     private static final Long INCORRECT_FILE_ID = -1L;
+    private static final Long CORRECT_USER_ID = 1L;
+    private static final Long INCORRECT_USER_ID = -1L;
+    private static final Long CORRECT_FOLDER_ID = 1L;
+    private static final Long INCORRECT_FOLDER_ID = -1L;
 
     private static final FileDto STILL_NOT_CREATED_FILE_DTO = new FileDto(
             1L,
@@ -159,16 +166,7 @@ public class FileDaoImplTest {
     @Test(expected = DuplicateKeyException.class)
     @Repeat(value = REPEATABLE)
     public void addFile_incorrectFileDto_CountNotChangedAndDuplicateKeyExceptionReturned() {
-        Long beforeAdding = fileDao.getFileCount();
-        Long fileId = fileDao.addFile(ALREADY_CREATED_FILE_DTO);
-        Long afterAdding = fileDao.getFileCount();
-        File actualFile = this.getFileById(fileId);
-        assertNotNull(fileId);
-        assertNotNull(beforeAdding);
-        assertNotNull(afterAdding);
-        assertEquals(beforeAdding, afterAdding);
-        assertNotNull(actualFile);
-        assertFalse(this.assertFiles(ALREADY_CREATED_FILE_DTO, actualFile));
+        fileDao.addFile(ALREADY_CREATED_FILE_DTO);
     }
 
     /**
@@ -177,16 +175,7 @@ public class FileDaoImplTest {
     @Test(expected = NullPointerException.class)
     @Repeat(value = REPEATABLE)
     public void addFile_incorrectFileDto__CountNotChangedAndNullPointerExceptionReturned() {
-        Long beforeAdding = fileDao.getFileCount();
-        Long fileId = fileDao.addFile(null);
-        Long afterAdding = fileDao.getFileCount();
-        File actualFile = this.getFileById(fileId);
-        assertNotNull(fileId);
-        assertNotNull(beforeAdding);
-        assertNotNull(afterAdding);
-        assertEquals(beforeAdding, afterAdding);
-        assertNotNull(actualFile);
-        assertFalse(this.assertFiles(ALREADY_CREATED_FILE_DTO, actualFile));
+        fileDao.addFile(null);
     }
 
     /**
@@ -282,6 +271,164 @@ public class FileDaoImplTest {
         assertFalse(actualDeleteFileResult);
         assertNotNull(countAfterDeleteFile);
         assertEquals(countBeforeDeleteFile, countAfterDeleteFile);
+    }
+
+    @Test
+    @Repeat(value = REPEATABLE)
+    public void getFilesByUserIdAndFolderId_correctUserIdAndFolderId_correctFileStructureDtoReturned() {
+        List<FileStructureDto> fileStructureDtoBeforeAdding = fileDao.getFilesByUserIdAndFolderId(CORRECT_USER_ID, CORRECT_FOLDER_ID);
+        fileDao.addFile(STILL_NOT_CREATED_FILE_DTO);
+        List<FileStructureDto> fileStructureDtoAfterAdding = fileDao.getFilesByUserIdAndFolderId(CORRECT_USER_ID, CORRECT_FOLDER_ID);
+        assertNotNull(fileStructureDtoBeforeAdding);
+        assertNotNull(fileStructureDtoAfterAdding);
+        Integer countBeforeAdding = fileStructureDtoBeforeAdding.size();
+        Integer countAfterAdding = fileStructureDtoAfterAdding.size();
+        assertEquals(++countBeforeAdding, countAfterAdding);
+    }
+
+    @Test
+    @Repeat(value = REPEATABLE)
+    public void getFilesByUserIdAndFolderId_incorrectUserIdAndCorrectFolderId_correctFileStructureDtoReturned() {
+        List<FileStructureDto> fileStructureDtoBeforeAdding = fileDao.getFilesByUserIdAndFolderId(INCORRECT_USER_ID, CORRECT_FOLDER_ID);
+        fileDao.addFile(STILL_NOT_CREATED_FILE_DTO);
+        List<FileStructureDto> fileStructureDtoAfterAdding = fileDao.getFilesByUserIdAndFolderId(INCORRECT_USER_ID, CORRECT_FOLDER_ID);
+        assertNotNull(fileStructureDtoBeforeAdding);
+        assertNotNull(fileStructureDtoAfterAdding);
+        Integer countBeforeAdding = fileStructureDtoBeforeAdding.size();
+        Integer countAfterAdding = fileStructureDtoAfterAdding.size();
+        assertEquals(countBeforeAdding, countAfterAdding);
+    }
+
+    @Test
+    @Repeat(value = REPEATABLE)
+    public void getFilesByUserIdAndFolderId_correctUserIdAndIncorrectFolderId_correctFileStructureDtoReturned() {
+        List<FileStructureDto> fileStructureDtoBeforeAdding = fileDao.getFilesByUserIdAndFolderId(CORRECT_FILE_ID, INCORRECT_FOLDER_ID);
+        fileDao.addFile(STILL_NOT_CREATED_FILE_DTO);
+        List<FileStructureDto> fileStructureDtoAfterAdding = fileDao.getFilesByUserIdAndFolderId(CORRECT_FILE_ID, INCORRECT_FOLDER_ID);
+        assertNotNull(fileStructureDtoBeforeAdding);
+        assertNotNull(fileStructureDtoAfterAdding);
+        Integer countBeforeAdding = fileStructureDtoBeforeAdding.size();
+        Integer countAfterAdding = fileStructureDtoAfterAdding.size();
+        assertEquals(countBeforeAdding, countAfterAdding);
+    }
+
+    @Test
+    @Repeat(value = REPEATABLE)
+    public void getFilesByUserIdAndFolderId_nullUserIdAndFolderId_correctFileStructureDtoReturned() {
+        List<FileStructureDto> fileStructureDtoBeforeAdding = fileDao.getFilesByUserIdAndFolderId(null, null);
+        fileDao.addFile(STILL_NOT_CREATED_FILE_DTO);
+        List<FileStructureDto> fileStructureDtoAfterAdding = fileDao.getFilesByUserIdAndFolderId(null, null);
+        assertNotNull(fileStructureDtoBeforeAdding);
+        assertNotNull(fileStructureDtoAfterAdding);
+        Integer countBeforeAdding = fileStructureDtoBeforeAdding.size();
+        Integer countAfterAdding = fileStructureDtoAfterAdding.size();
+        assertEquals(countBeforeAdding, countAfterAdding);
+    }
+
+    @Test
+    @Repeat(value = REPEATABLE)
+    public void getFileCount_correctCountReturned() {
+        Long countBeforeDeleting = fileDao.getFileCount();
+        Boolean deletingResult = fileDao.deleteFile(CORRECT_FILE_ID);
+        Long countAfterDeleting = fileDao.getFileCount();
+        assertNotNull(countBeforeDeleting);
+        assertNotNull(countAfterDeleting);
+        assertTrue(deletingResult);
+        assertEquals(countBeforeDeleting, ++countAfterDeleting);
+    }
+
+    @Test
+    @Repeat(value = REPEATABLE)
+    public void getFileNameByFileId_correctFileId_correctFileNameReturned() {
+        Long fileId = fileDao.addFile(STILL_NOT_CREATED_FILE_DTO);
+        assertNotNull(fileId);
+        String fileNameAfterAdding = fileDao.getFileNameByFileId(fileId);
+        assertNotNull(fileNameAfterAdding);
+        assertEquals(STILL_NOT_CREATED_FILE_DTO.getEncodeName(), fileNameAfterAdding);
+    }
+
+    @Test(expected = EmptyResultDataAccessException.class)
+    @Repeat(value = REPEATABLE)
+    public void getFileNameByFileId_incorrectFileId_emptyResultDataAccessExceptionReturned() {
+        fileDao.getFileNameByFileId(INCORRECT_FILE_ID);
+    }
+
+    @Test(expected = EmptyResultDataAccessException.class)
+    @Repeat(value = REPEATABLE)
+    public void getFileNameByFileId_nullFileId_correctFileNameReturned() {
+        fileDao.getFileNameByFileId(null);
+    }
+
+    @Test
+    @Repeat(value = REPEATABLE)
+    @Ignore
+    public void getFileNamesByFolderIdAndUserId_correctFolderIdAndUserId_correctFileNamesReturned() {
+        List<String> fileNames = fileDao.getFileNamesByFolderIdAndUserId(CORRECT_FOLDER_ID, CORRECT_USER_ID);
+        assertNotNull(fileNames);
+    }
+
+    @Test
+    @Repeat(value = REPEATABLE)
+    public void getFileInformationByFileIdAndUserId_correctFileIdAndUserId_correctFileInformationReturned() {
+        Long fileId = fileDao.addFile(STILL_NOT_CREATED_FILE_DTO);
+        assertNotNull(fileId);
+        FileUpdatingDto fileAfterAdding = fileDao.getFileInformationByFileIdAndUserId(fileId, STILL_NOT_CREATED_FILE_DTO.getUserId());
+        assertNotNull(fileAfterAdding);
+        assertEquals(fileAfterAdding.getId(), fileId);
+        assertEquals(fileAfterAdding.getDate(), STILL_NOT_CREATED_FILE_DTO.getDate());
+        assertEquals(fileAfterAdding.getDescription(), STILL_NOT_CREATED_FILE_DTO.getDescription());
+        assertEquals(fileAfterAdding.getRealName(), STILL_NOT_CREATED_FILE_DTO.getRealName());
+    }
+
+    @Test(expected = EmptyResultDataAccessException.class)
+    @Repeat(value = REPEATABLE)
+    public void getFileInformationByFileIdAndUserId_incorrectFileIdAndCorrectUserId_EmptyResultDataAccessExceptionReturned() {
+        fileDao.getFileInformationByFileIdAndUserId(INCORRECT_FILE_ID, CORRECT_USER_ID);
+    }
+
+    @Test(expected = EmptyResultDataAccessException.class)
+    @Repeat(value = REPEATABLE)
+    public void getFileInformationByFileIdAndUserId_correctFileIdAndIncorrectUserId_EmptyResultDataAccessExceptionReturned() {
+        fileDao.getFileInformationByFileIdAndUserId(CORRECT_FILE_ID, INCORRECT_USER_ID);
+    }
+
+    @Test(expected = EmptyResultDataAccessException.class)
+    @Repeat(value = REPEATABLE)
+    public void getFileInformationByFileIdAndUserId_incorrectFileIdAndIncorrectUserId_EmptyResultDataAccessExceptionReturned() {
+        fileDao.getFileInformationByFileIdAndUserId(INCORRECT_FILE_ID, INCORRECT_USER_ID);
+    }
+
+    @Test
+    @Repeat(value = REPEATABLE)
+    public void getFileNamesByUserId_correctUserId_correctFileNamesReturned() {
+        List<String> fileNamesBeforeAdding = fileDao.getFileNamesByUserId(STILL_NOT_CREATED_FILE_DTO.getUserId());
+        fileDao.addFile(STILL_NOT_CREATED_FILE_DTO);
+        List<String> fileNamesAfterAdding = fileDao.getFileNamesByUserId(STILL_NOT_CREATED_FILE_DTO.getUserId());
+        assertNotNull(fileNamesBeforeAdding);
+        assertNotNull(fileNamesAfterAdding);
+        Integer countBeforeAdding = fileNamesBeforeAdding.size();
+        Integer countAfterAdding = fileNamesAfterAdding.size();
+        assertEquals(++countBeforeAdding, countAfterAdding);
+    }
+
+    @Test
+    @Repeat(value = REPEATABLE)
+    public void getFileNamesByUserId_incorrectUserId_correctFileNamesReturned() {
+        List<String> fileNames = fileDao.getFileNamesByUserId(INCORRECT_USER_ID);
+        assertNotNull(fileNames);
+        Integer actualFileNamesSize = fileNames.size();
+        Integer expectedFileNamesSize = 0;
+        assertEquals(expectedFileNamesSize, actualFileNamesSize);
+    }
+
+    @Test
+    @Repeat(value = REPEATABLE)
+    public void getFileNamesByUserId_nullUserId_correctFileNamesReturned() {
+        List<String> fileNames = fileDao.getFileNamesByUserId(null);
+        assertNotNull(fileNames);
+        Integer actualFileNamesSize = fileNames.size();
+        Integer expectedFileNamesSize = 0;
+        assertEquals(expectedFileNamesSize, actualFileNamesSize);
     }
 
     private Boolean assertFiles(FileDto fileDto, File file) {

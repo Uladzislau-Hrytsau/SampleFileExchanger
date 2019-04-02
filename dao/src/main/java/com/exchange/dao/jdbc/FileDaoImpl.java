@@ -56,11 +56,12 @@ public class FileDaoImpl implements FileDao {
     /**
      * The constant LIMIT.
      */
-    public static final String LIMIT = "limit";
+    private static final String LIMIT = "limit";
     /**
      * The constant OFFSET.
      */
-    public static final String OFFSET = "offset";
+    private static final String OFFSET = "offset";
+
     private final JdbcTemplate jdbcTemplate;
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private final FileRowMapper fileRowMapper;
@@ -83,9 +84,9 @@ public class FileDaoImpl implements FileDao {
     @Value("${file.getFileNamesByFolderIdAndUserId}")
     private String getFileNamesByFolderIdAndUserIdSql;
     @Value("${file.getFileByFileIdAndUserId}")
-    private String getGetFileNameByFileIdAndUserIdSql;
-    @Value("${file.fetFileNamesByUserId}")
-    private String fetFileNamesByUserIdSql;
+    private String getFileNameByFileIdAndUserIdSql;
+    @Value("${file.getFileNamesByUserId}")
+    private String getFileNamesByUserIdSql;
 
     /**
      * Instantiates a new File dao.
@@ -182,13 +183,13 @@ public class FileDaoImpl implements FileDao {
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
         parameterSource.addValue(ID, fileId);
         parameterSource.addValue(USER_ID, userId);
-        return namedParameterJdbcTemplate.queryForObject(getGetFileNameByFileIdAndUserIdSql, parameterSource, fileUpdatingDtoRowMapper);
+        return namedParameterJdbcTemplate.queryForObject(getFileNameByFileIdAndUserIdSql, parameterSource, fileUpdatingDtoRowMapper);
     }
 
     @Override
     public List<String> getFileNamesByUserId(final Long userId) {
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
         parameterSource.addValue(USER_ID, userId);
-        return namedParameterJdbcTemplate.queryForList(fetFileNamesByUserIdSql, parameterSource, String.class);
+        return namedParameterJdbcTemplate.queryForList(getFileNamesByUserIdSql, parameterSource, String.class);
     }
 }

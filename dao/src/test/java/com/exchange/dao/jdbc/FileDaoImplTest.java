@@ -36,8 +36,6 @@ import static org.junit.Assert.*;
 @Rollback
 public class FileDaoImplTest {
 
-    private static final int REPEATABLE = 10;
-
     private static final int COUNT_ALL_FILES = 5;
     private static final int OFFSET_ZERO = 0;
     private static final int LIMIT_THREE = 3;
@@ -89,7 +87,6 @@ public class FileDaoImplTest {
      * Gets files by limit and offset correct limit and offset correct files returned.
      */
     @Test
-    @Repeat(value = REPEATABLE)
     public void getFilesByLimitAndOffset_correctLimitAndOffset_correctFilesReturned() {
         Integer offset = OFFSET_ZERO;
         Integer limit = COUNT_ALL_FILES;
@@ -103,7 +100,6 @@ public class FileDaoImplTest {
      * Gets files by limit and offset negative offset correct files returned.
      */
     @Test
-    @Repeat(value = REPEATABLE)
     public void getFilesByLimitAndOffset_negativeOffset_correctFilesReturned() {
         Integer limit = LIMIT_THREE;
         Integer offset = -(COUNT_ALL_FILES);
@@ -117,7 +113,6 @@ public class FileDaoImplTest {
      * Gets files by limit and offset negative limit all files returned.
      */
     @Test
-    @Repeat(value = REPEATABLE)
     public void getFilesByLimitAndOffset_negativeLimit_allFilesReturned() {
         Integer actualSizeFiles = COUNT_ALL_FILES;
         Integer limit = -(LIMIT_THREE);
@@ -133,7 +128,6 @@ public class FileDaoImplTest {
      * Gets files by limit and offset null limit and offset all files returned.
      */
     @Test
-    @Repeat(value = REPEATABLE)
     public void getFilesByLimitAndOffset_nullLimitAndOffset_allFilesReturned() {
         Integer actualSizeFiles = COUNT_ALL_FILES;
         List<File> files = fileDao.getFilesByLimitAndOffset(null, null);
@@ -146,7 +140,6 @@ public class FileDaoImplTest {
      * Add file correct file dto correct file dto id returned.
      */
     @Test
-    @Repeat(value = REPEATABLE)
     public void addFile_correctFileDto_correctFileDtoIdReturned() {
         Long beforeAdding = fileDao.getFileCount();
         Long fileId = fileDao.addFile(STILL_NOT_CREATED_FILE_DTO);
@@ -164,7 +157,6 @@ public class FileDaoImplTest {
      * Add file incorrect file dto count not changed and duplicate key exception returned.
      */
     @Test(expected = DuplicateKeyException.class)
-    @Repeat(value = REPEATABLE)
     public void addFile_incorrectFileDto_CountNotChangedAndDuplicateKeyExceptionReturned() {
         fileDao.addFile(ALREADY_CREATED_FILE_DTO);
     }
@@ -173,7 +165,6 @@ public class FileDaoImplTest {
      * Add file incorrect file dto __ count not changed and null pointer exception returned.
      */
     @Test(expected = NullPointerException.class)
-    @Repeat(value = REPEATABLE)
     public void addFile_incorrectFileDto__CountNotChangedAndNullPointerExceptionReturned() {
         fileDao.addFile(null);
     }
@@ -182,7 +173,6 @@ public class FileDaoImplTest {
      * Update file correct file updating dto true returned.
      */
     @Test
-    @Repeat(value = REPEATABLE)
     public void updateFile_correctFileUpdatingDto_trueReturned() {
         File beforeUpdating = this.getFileById(CORRECT_UPDATED_FILE.getId());
         Boolean updatingResult = fileDao.updateFile(CORRECT_UPDATED_FILE);
@@ -207,7 +197,6 @@ public class FileDaoImplTest {
      * Update file incorrect file updating dto false returned.
      */
     @Test
-    @Repeat(value = REPEATABLE)
     public void updateFile_incorrectFileUpdatingDto_falseReturned() {
         Boolean updatingResult = fileDao.updateFile(INCORRECT_UPDATED_FILE);
         assertNotNull(updatingResult);
@@ -218,7 +207,6 @@ public class FileDaoImplTest {
      * Update file incorrect file updating dto null pointer exception and false returned.
      */
     @Test(expected = NullPointerException.class)
-    @Repeat(value = REPEATABLE)
     public void updateFile_incorrectFileUpdatingDto_nullPointerExceptionAndFalseReturned() {
         Boolean updatingResult = fileDao.updateFile(null);
         assertNotNull(updatingResult);
@@ -229,7 +217,6 @@ public class FileDaoImplTest {
      * Delete file correct file id true returned.
      */
     @Test
-    @Repeat(value = REPEATABLE)
     public void deleteFile_correctFileId_trueReturned() {
         Long countBeforeDeleteFile = fileDao.getFileCount();
         Boolean actualDeleteFileResult = fileDao.deleteFile(CORRECT_FILE_ID);
@@ -245,7 +232,6 @@ public class FileDaoImplTest {
      * Delete file incorrect file id false returned.
      */
     @Test
-    @Repeat(value = REPEATABLE)
     public void deleteFile_incorrectFileId_falseReturned() {
         Long countBeforeDeleteFile = fileDao.getFileCount();
         Boolean actualDeleteFileResult = fileDao.deleteFile(INCORRECT_FILE_ID);
@@ -261,7 +247,6 @@ public class FileDaoImplTest {
      * Delete file null file id false returned.
      */
     @Test
-    @Repeat(value = REPEATABLE)
     public void deleteFile_nullFileId_falseReturned() {
         Long countBeforeDeleteFile = fileDao.getFileCount();
         Boolean actualDeleteFileResult = fileDao.deleteFile(null);
@@ -274,7 +259,6 @@ public class FileDaoImplTest {
     }
 
     @Test
-    @Repeat(value = REPEATABLE)
     public void getFilesByUserIdAndFolderId_correctUserIdAndFolderId_correctFileStructureDtoReturned() {
         List<FileStructureDto> fileStructureDtoBeforeAdding = fileDao.getFilesByUserIdAndFolderId(CORRECT_USER_ID, CORRECT_FOLDER_ID);
         fileDao.addFile(STILL_NOT_CREATED_FILE_DTO);
@@ -287,7 +271,6 @@ public class FileDaoImplTest {
     }
 
     @Test
-    @Repeat(value = REPEATABLE)
     public void getFilesByUserIdAndFolderId_incorrectUserIdAndCorrectFolderId_correctFileStructureDtoReturned() {
         List<FileStructureDto> fileStructureDtoBeforeAdding = fileDao.getFilesByUserIdAndFolderId(INCORRECT_USER_ID, CORRECT_FOLDER_ID);
         fileDao.addFile(STILL_NOT_CREATED_FILE_DTO);
@@ -300,7 +283,6 @@ public class FileDaoImplTest {
     }
 
     @Test
-    @Repeat(value = REPEATABLE)
     public void getFilesByUserIdAndFolderId_correctUserIdAndIncorrectFolderId_correctFileStructureDtoReturned() {
         List<FileStructureDto> fileStructureDtoBeforeAdding = fileDao.getFilesByUserIdAndFolderId(CORRECT_FILE_ID, INCORRECT_FOLDER_ID);
         fileDao.addFile(STILL_NOT_CREATED_FILE_DTO);
@@ -313,7 +295,6 @@ public class FileDaoImplTest {
     }
 
     @Test
-    @Repeat(value = REPEATABLE)
     public void getFilesByUserIdAndFolderId_nullUserIdAndFolderId_correctFileStructureDtoReturned() {
         List<FileStructureDto> fileStructureDtoBeforeAdding = fileDao.getFilesByUserIdAndFolderId(null, null);
         fileDao.addFile(STILL_NOT_CREATED_FILE_DTO);
@@ -326,7 +307,6 @@ public class FileDaoImplTest {
     }
 
     @Test
-    @Repeat(value = REPEATABLE)
     public void getFileCount_correctCountReturned() {
         Long countBeforeDeleting = fileDao.getFileCount();
         Boolean deletingResult = fileDao.deleteFile(CORRECT_FILE_ID);
@@ -338,7 +318,6 @@ public class FileDaoImplTest {
     }
 
     @Test
-    @Repeat(value = REPEATABLE)
     public void getFileNameByFileId_correctFileId_correctFileNameReturned() {
         Long fileId = fileDao.addFile(STILL_NOT_CREATED_FILE_DTO);
         assertNotNull(fileId);
@@ -348,19 +327,16 @@ public class FileDaoImplTest {
     }
 
     @Test(expected = EmptyResultDataAccessException.class)
-    @Repeat(value = REPEATABLE)
     public void getFileNameByFileId_incorrectFileId_emptyResultDataAccessExceptionReturned() {
         fileDao.getFileNameByFileId(INCORRECT_FILE_ID);
     }
 
     @Test(expected = EmptyResultDataAccessException.class)
-    @Repeat(value = REPEATABLE)
     public void getFileNameByFileId_nullFileId_correctFileNameReturned() {
         fileDao.getFileNameByFileId(null);
     }
 
     @Test
-    @Repeat(value = REPEATABLE)
     @Ignore
     public void getFileNamesByFolderIdAndUserId_correctFolderIdAndUserId_correctFileNamesReturned() {
         List<String> fileNames = fileDao.getFileNamesByFolderIdAndUserId(CORRECT_FOLDER_ID, CORRECT_USER_ID);
@@ -368,7 +344,6 @@ public class FileDaoImplTest {
     }
 
     @Test
-    @Repeat(value = REPEATABLE)
     public void getFileInformationByFileIdAndUserId_correctFileIdAndUserId_correctFileInformationReturned() {
         Long fileId = fileDao.addFile(STILL_NOT_CREATED_FILE_DTO);
         assertNotNull(fileId);
@@ -381,25 +356,21 @@ public class FileDaoImplTest {
     }
 
     @Test(expected = EmptyResultDataAccessException.class)
-    @Repeat(value = REPEATABLE)
     public void getFileInformationByFileIdAndUserId_incorrectFileIdAndCorrectUserId_EmptyResultDataAccessExceptionReturned() {
         fileDao.getFileInformationByFileIdAndUserId(INCORRECT_FILE_ID, CORRECT_USER_ID);
     }
 
     @Test(expected = EmptyResultDataAccessException.class)
-    @Repeat(value = REPEATABLE)
     public void getFileInformationByFileIdAndUserId_correctFileIdAndIncorrectUserId_EmptyResultDataAccessExceptionReturned() {
         fileDao.getFileInformationByFileIdAndUserId(CORRECT_FILE_ID, INCORRECT_USER_ID);
     }
 
     @Test(expected = EmptyResultDataAccessException.class)
-    @Repeat(value = REPEATABLE)
     public void getFileInformationByFileIdAndUserId_incorrectFileIdAndIncorrectUserId_EmptyResultDataAccessExceptionReturned() {
         fileDao.getFileInformationByFileIdAndUserId(INCORRECT_FILE_ID, INCORRECT_USER_ID);
     }
 
     @Test
-    @Repeat(value = REPEATABLE)
     public void getFileNamesByUserId_correctUserId_correctFileNamesReturned() {
         List<String> fileNamesBeforeAdding = fileDao.getFileNamesByUserId(STILL_NOT_CREATED_FILE_DTO.getUserId());
         fileDao.addFile(STILL_NOT_CREATED_FILE_DTO);
@@ -412,7 +383,6 @@ public class FileDaoImplTest {
     }
 
     @Test
-    @Repeat(value = REPEATABLE)
     public void getFileNamesByUserId_incorrectUserId_correctFileNamesReturned() {
         List<String> fileNames = fileDao.getFileNamesByUserId(INCORRECT_USER_ID);
         assertNotNull(fileNames);
@@ -422,7 +392,6 @@ public class FileDaoImplTest {
     }
 
     @Test
-    @Repeat(value = REPEATABLE)
     public void getFileNamesByUserId_nullUserId_correctFileNamesReturned() {
         List<String> fileNames = fileDao.getFileNamesByUserId(null);
         assertNotNull(fileNames);

@@ -19,17 +19,11 @@ import java.util.List;
 @Repository
 public class FolderDaoImpl implements FolderDao {
 
-    /**
-     * The constant USER_ID.
-     */
     private static final String USER_ID = "user_id";
     /**
      * The constant ID.
      */
     public static final String ID = "id";
-    /**
-     * The constant PARENT_ID.
-     */
     private static final String PARENT_ID = "parent_id";
     /**
      * The constant NAME.

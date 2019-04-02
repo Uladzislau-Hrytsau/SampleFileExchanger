@@ -17,6 +17,9 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
+/**
+ * The type Role dao impl test.
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestSpringDaoConfiguration.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
@@ -35,6 +38,9 @@ public class RoleDaoImplTest {
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
+    /**
+     * Add user role correct user id and role id true returned.
+     */
     @Test
     public void addUserRole_correctUserIdAndRoleId_trueReturned() {
         List<Integer> actualRolesByUserIdBeforeAdding = this.getRolesByUserId(CORRECT_USER_ID);
@@ -47,16 +53,25 @@ public class RoleDaoImplTest {
         assertTrue(actualRolesByUserIdAfterAdding.contains(CORRECT_ROLE_ID));
     }
 
+    /**
+     * Add user role incorrect user id and correct role id data integrity violation exception returned.
+     */
     @Test(expected = DataIntegrityViolationException.class)
     public void addUserRole_incorrectUserIdAndCorrectRoleId_dataIntegrityViolationExceptionReturned() {
         roleDao.addUserRole(CORRECT_USER_ID, INCORRECT_ROLE_ID);
     }
 
+    /**
+     * Add user role correct user id and incorrect role id data integrity violation exception returned.
+     */
     @Test(expected = DataIntegrityViolationException.class)
     public void addUserRole_correctUserIdAndIncorrectRoleId_dataIntegrityViolationExceptionReturned() {
         roleDao.addUserRole(INCORRECT_USER_ID, CORRECT_ROLE_ID);
     }
 
+    /**
+     * Add user role null user id and role id data integrity violation exception returned.
+     */
     @Test(expected = DataIntegrityViolationException.class)
     public void addUserRole_nullUserIdAndRoleId_dataIntegrityViolationExceptionReturned() {
         roleDao.addUserRole(null, null);

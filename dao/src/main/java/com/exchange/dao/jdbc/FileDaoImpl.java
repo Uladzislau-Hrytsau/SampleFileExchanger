@@ -53,13 +53,7 @@ public class FileDaoImpl implements FileDao {
      * The constant ENCODE_NAME.
      */
     public static final String ENCODE_NAME = "encode_name";
-    /**
-     * The constant LIMIT.
-     */
     private static final String LIMIT = "limit";
-    /**
-     * The constant OFFSET.
-     */
     private static final String OFFSET = "offset";
 
     private final JdbcTemplate jdbcTemplate;

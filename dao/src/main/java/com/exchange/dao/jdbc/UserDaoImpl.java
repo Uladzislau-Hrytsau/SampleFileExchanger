@@ -109,18 +109,6 @@ public class UserDaoImpl implements UserDao {
         return keyHolder.getKey().longValue();
     }
 
-    private void fillParameterSourceByPasswordAndGenderAndBirthDateAndInformation(
-            final MapSqlParameterSource parameterSource,
-            final String password,
-            final Boolean gender,
-            final LocalDate birthDate,
-            final String information) {
-        parameterSource.addValue(USER_PASSWORD, password);
-        parameterSource.addValue(USER_GENDER, gender);
-        parameterSource.addValue(USER_BIRTH_DATE, birthDate);
-        parameterSource.addValue(USER_INFORMATION, information);
-    }
-
     @Override
     public Boolean updateUser(final UserUpdatingDto userUpdatingDto) {
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
@@ -148,6 +136,18 @@ public class UserDaoImpl implements UserDao {
     @Override
     public Long getUserCount() {
         return jdbcTemplate.queryForObject(selectUsersCountSql, Long.class);
+    }
+
+    private void fillParameterSourceByPasswordAndGenderAndBirthDateAndInformation(
+            final MapSqlParameterSource parameterSource,
+            final String password,
+            final Boolean gender,
+            final LocalDate birthDate,
+            final String information) {
+        parameterSource.addValue(USER_PASSWORD, password);
+        parameterSource.addValue(USER_GENDER, gender);
+        parameterSource.addValue(USER_BIRTH_DATE, birthDate);
+        parameterSource.addValue(USER_INFORMATION, information);
     }
 
 }

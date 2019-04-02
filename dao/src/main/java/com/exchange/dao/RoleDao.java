@@ -6,11 +6,11 @@ package com.exchange.dao;
 public interface RoleDao {
 
     /**
-     * Add user role integer.
+     * Add user role boolean.
      *
      * @param userId the user id
      * @param roleId the role id
-     * @return the integer
+     * @return the boolean
      */
     Boolean addUserRole(Long userId, Integer roleId);
 

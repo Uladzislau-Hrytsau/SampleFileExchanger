@@ -19,6 +19,9 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
+/**
+ * The type Folder dao impl test.
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestSpringDaoConfiguration.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
@@ -50,6 +53,9 @@ public class FolderDaoImplTest {
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
+    /**
+     * Gets folders by user id and parent id correct user id and parent id correct folder structure dtos returned.
+     */
     @Test
     public void getFoldersByUserIdAndParentId_correctUserIdAndParentId_correctFolderStructureDtosReturned() {
         List<FolderStructureDto> folderStructureDtosBeforeAdding = folderDao.getFoldersByUserIdAndParentId(
@@ -65,6 +71,9 @@ public class FolderDaoImplTest {
         assertEquals(++countFolderStructureDtosBeforeAdding, countFolderStructureDtosAfterAdding);
     }
 
+    /**
+     * Gets folders by user id and parent id incorrect user id and correct parent id correct folder structure dtos returned.
+     */
     @Test
     public void getFoldersByUserIdAndParentId_incorrectUserIdAndCorrectParentId_correctFolderStructureDtosReturned() {
         List<FolderStructureDto> folderStructureDtos = folderDao.getFoldersByUserIdAndParentId(
@@ -74,6 +83,9 @@ public class FolderDaoImplTest {
         assertEquals(EXPECTED_COUNT_FOLDER_STRUCTURE_DTOS, actualCountFolderStructureDtos);
     }
 
+    /**
+     * Gets folders by user id and parent id correct user id and incorrect parent id correct folder structure dtos returned.
+     */
     @Test
     public void getFoldersByUserIdAndParentId_correctUserIdAndIncorrectParentId_correctFolderStructureDtosReturned() {
         List<FolderStructureDto> folderStructureDtos = folderDao.getFoldersByUserIdAndParentId(
@@ -83,6 +95,9 @@ public class FolderDaoImplTest {
         assertEquals(EXPECTED_COUNT_FOLDER_STRUCTURE_DTOS, actualCountFolderStructureDtos);
     }
 
+    /**
+     * Gets folders by user id and parent id incorrect user id and parent id correct folder structure dtos returned.
+     */
     @Test
     public void getFoldersByUserIdAndParentId_incorrectUserIdAndParentId_correctFolderStructureDtosReturned() {
         List<FolderStructureDto> folderStructureDtos = folderDao.getFoldersByUserIdAndParentId(
@@ -92,6 +107,9 @@ public class FolderDaoImplTest {
         assertEquals(EXPECTED_COUNT_FOLDER_STRUCTURE_DTOS, actualCountFolderStructureDtos);
     }
 
+    /**
+     * Gets folders by user id and parent id null user id and parent id correct folder structure dtos returned.
+     */
     @Test
     public void getFoldersByUserIdAndParentId_nullUserIdAndParentId_correctFolderStructureDtosReturned() {
         List<FolderStructureDto> folderStructureDtos = folderDao.getFoldersByUserIdAndParentId(
@@ -101,6 +119,9 @@ public class FolderDaoImplTest {
         assertEquals(EXPECTED_COUNT_FOLDER_STRUCTURE_DTOS, actualCountFolderStructureDtos);
     }
 
+    /**
+     * Add folder correct folder structure dto and user id correct folder id returned.
+     */
     @Test
     public void addFolder_correctFolderStructureDtoAndUserId_correctFolderIdReturned() {
         Long folderId = folderDao.addFolder(STILL_NOT_CREATED_FOLDER_STRUCTURE_DTO, CORRECT_USER_ID);
@@ -112,21 +133,33 @@ public class FolderDaoImplTest {
         assertEquals(CORRECT_USER_ID, actualFolderByFolderId.getUserId());
     }
 
+    /**
+     * Add folder incorrect folder structure dto and user id data integrity violation exception returned.
+     */
     @Test(expected = DataIntegrityViolationException.class)
     public void addFolder_incorrectFolderStructureDtoAndUserId_dataIntegrityViolationExceptionReturned() {
         folderDao.addFolder(INCORRECT_FOLDER_STRUCTURE_DTO, CORRECT_USER_ID);
     }
 
+    /**
+     * Add folder correct folder structure dto and incorrect user id data integrity violation exception returned.
+     */
     @Test(expected = DataIntegrityViolationException.class)
     public void addFolder_correctFolderStructureDtoAndIncorrectUserId_dataIntegrityViolationExceptionReturned() {
         folderDao.addFolder(STILL_NOT_CREATED_FOLDER_STRUCTURE_DTO, INCORRECT_USER_ID);
     }
 
+    /**
+     * Add folder null folder structure dto and user id null pointer exception returned.
+     */
     @Test(expected = NullPointerException.class)
     public void addFolder_nullFolderStructureDtoAndUserId_nullPointerExceptionReturned() {
         folderDao.addFolder(null, null);
     }
 
+    /**
+     * Exists parent id by user id correct parent id and user id true returned.
+     */
     @Test
     public void existsParentIdByUserId_correctParentIdAndUserId_trueReturned() {
         Long folderId = folderDao.addFolder(STILL_NOT_CREATED_FOLDER_STRUCTURE_DTO, CORRECT_USER_ID);
@@ -135,48 +168,72 @@ public class FolderDaoImplTest {
         assertTrue(actualFolderExistingResult);
     }
 
+    /**
+     * Exists parent id by user id incorrect parent id and correct user id false returned.
+     */
     @Test
     public void existsParentIdByUserId_incorrectParentIdAndCorrectUserId_falseReturned() {
         Boolean actualFolderExistingResult = folderDao.existsParentIdByUserId(INCORRECT_PARENT_ID, CORRECT_USER_ID);
         assertFalse(actualFolderExistingResult);
     }
 
+    /**
+     * Exists parent id by user id correct parent id and incorrect user id false returned.
+     */
     @Test
     public void existsParentIdByUserId_correctParentIdAndIncorrectUserId_falseReturned() {
         Boolean actualFolderExistingResult = folderDao.existsParentIdByUserId(CORRECT_PARENT_ID, INCORRECT_USER_ID);
         assertFalse(actualFolderExistingResult);
     }
 
+    /**
+     * Exists parent id by user id null parent id and user id false returned.
+     */
     @Test
     public void existsParentIdByUserId_nullParentIdAndUserId_falseReturned() {
         Boolean actualFolderExistingResult = folderDao.existsParentIdByUserId(null, null);
         assertFalse(actualFolderExistingResult);
     }
 
+    /**
+     * Delete by folder id and user id correct folder id and user id true returned.
+     */
     @Test
     public void deleteByFolderIdAndUserId_correctFolderIdAndUserId_trueReturned() {
         Boolean actualDeletingResult = folderDao.deleteByFolderIdAndUserId(CORRECT_PARENT_ID, CORRECT_USER_ID);
         assertTrue(actualDeletingResult);
     }
 
+    /**
+     * Delete by folder id and user id incorrect folder id and correct user id false returned.
+     */
     @Test
     public void deleteByFolderIdAndUserId_incorrectFolderIdAndCorrectUserId_falseReturned() {
         Boolean actualDeletingResult = folderDao.deleteByFolderIdAndUserId(INCORRECT_PARENT_ID, CORRECT_USER_ID);
         assertFalse(actualDeletingResult);
     }
 
+    /**
+     * Delete by folder id and user id correct folder id and incorrect user id false returned.
+     */
     @Test
     public void deleteByFolderIdAndUserId_correctFolderIdAndIncorrectUserId_falseReturned() {
         Boolean actualDeletingResult = folderDao.deleteByFolderIdAndUserId(CORRECT_PARENT_ID, INCORRECT_USER_ID);
         assertFalse(actualDeletingResult);
     }
 
+    /**
+     * Delete by folder id and user id null folder id and user id false returned.
+     */
     @Test
     public void deleteByFolderIdAndUserId_nullFolderIdAndUserId_falseReturned() {
         Boolean actualDeletingResult = folderDao.deleteByFolderIdAndUserId(null, null);
         assertFalse(actualDeletingResult);
     }
 
+    /**
+     * Update folder name by folder id and user id correct folder structure dto and user id true returned.
+     */
     @Test
     public void updateFolderNameByFolderIdAndUserId_correctFolderStructureDtoAndUserId_trueReturned() {
         Long folderId = folderDao.addFolder(STILL_NOT_CREATED_FOLDER_STRUCTURE_DTO, CORRECT_USER_ID);
@@ -191,6 +248,9 @@ public class FolderDaoImplTest {
         assertEquals(CORRECT_USER_ID, folderAfterUpdating.getUserId());
     }
 
+    /**
+     * Update folder name by folder id and user id incorrect folder structure dto and user id false returned.
+     */
     @Test
     public void updateFolderNameByFolderIdAndUserId_incorrectFolderStructureDtoAndUserId_falseReturned() {
         Long folderId = folderDao.addFolder(STILL_NOT_CREATED_FOLDER_STRUCTURE_DTO, CORRECT_USER_ID);
@@ -205,6 +265,9 @@ public class FolderDaoImplTest {
         assertEquals(CORRECT_USER_ID, folderAfterUpdating.getUserId());
     }
 
+    /**
+     * Update folder name by folder id and user id correct folder structure dto and incorrect user id false returned.
+     */
     @Test
     public void updateFolderNameByFolderIdAndUserId_correctFolderStructureDtoAndIncorrectUserId_falseReturned() {
         Boolean actualUpdatingResult = folderDao.updateFolderNameByFolderIdAndUserId(
@@ -212,6 +275,9 @@ public class FolderDaoImplTest {
         assertFalse(actualUpdatingResult);
     }
 
+    /**
+     * Update folder name by folder id and user id null folder structure dto and user id false returned.
+     */
     @Test(expected = NullPointerException.class)
     public void updateFolderNameByFolderIdAndUserId_nullFolderStructureDtoAndUserId_falseReturned() {
         Boolean actualUpdatingResult = folderDao.updateFolderNameByFolderIdAndUserId(

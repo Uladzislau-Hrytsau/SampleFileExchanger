@@ -12,11 +12,11 @@ insert into category (id, category)
 values (3, 'home');
 -- user
 insert into user (id, user_name, user_password, user_gender, user_birth_date, user_information)
-values (1, 'user1', 'password1', 1, '1000-10-10', 'information1');
+values (1, 'user1', 'password1', true, '1000-10-10', 'information1');
 insert into user (id, user_name, user_password, user_gender, user_birth_date, user_information)
-values (2, 'user2', 'password2', 2, '1000-11-10', 'information2');
+values (2, 'user2', 'password2', false, '1000-11-10', 'information2');
 insert into user (id, user_name, user_password, user_gender, user_birth_date, user_information)
-values (3, 'user3', 'password3', 1, '1001-10-10', 'information3');
+values (3, 'user3', 'password3', true, '1001-10-10', 'information3');
 -- user_role
 insert into user_role (user_id, role_id)
 values (1, 1);

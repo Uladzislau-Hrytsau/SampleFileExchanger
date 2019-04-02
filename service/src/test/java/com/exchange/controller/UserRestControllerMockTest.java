@@ -1,5 +1,8 @@
 package com.exchange.controller;
 
+/**
+ * The type User rest controller mock test.
+ */
 //@RunWith(MockitoJUnitRunner.class)
 public class UserRestControllerMockTest {
 //    private static final Long ID_URL_PARAMETER = 1L;

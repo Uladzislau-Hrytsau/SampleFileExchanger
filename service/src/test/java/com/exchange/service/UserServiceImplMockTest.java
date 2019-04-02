@@ -1,5 +1,8 @@
 package com.exchange.service;
 
+/**
+ * The type User service impl mock test.
+ */
 //@RunWith(MockitoJUnitRunner.class)
 public class UserServiceImplMockTest {
 

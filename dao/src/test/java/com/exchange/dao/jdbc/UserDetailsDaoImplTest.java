@@ -15,6 +15,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.util.Arrays;
 import java.util.HashSet;
 
+/**
+ * The type User details dao impl test.
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestSpringDaoConfiguration.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
@@ -35,22 +38,34 @@ public class UserDetailsDaoImplTest {
     @Autowired
     private UserDetailsDao userDetailsDao;
 
+    /**
+     * Gets user details by login correct login correct user details dto returned.
+     */
     @Test
     public void getUserDetailsByLogin_correctLogin_correctUserDetailsDtoReturned() {
         UserDetailsDto actualUserDetailsByLogin = userDetailsDao.getUserDetailsByLogin(CORRECT_LOGIN);
         Assert.assertEquals(CORRECT_USER_DETAILS_DTO, actualUserDetailsByLogin);
     }
 
+    /**
+     * Gets user details by login incorrect login empty result data access exception returned.
+     */
     @Test(expected = EmptyResultDataAccessException.class)
     public void getUserDetailsByLogin_incorrectLogin_emptyResultDataAccessExceptionReturned() {
         userDetailsDao.getUserDetailsByLogin(INCORRECT_LOGIN);
     }
 
+    /**
+     * Gets user details by login empty login empty result data access exception returned.
+     */
     @Test(expected = EmptyResultDataAccessException.class)
     public void getUserDetailsByLogin_emptyLogin_emptyResultDataAccessExceptionReturned() {
         userDetailsDao.getUserDetailsByLogin("");
     }
 
+    /**
+     * Gets user details by login null login empty result data access exception returned.
+     */
     @Test(expected = EmptyResultDataAccessException.class)
     public void getUserDetailsByLogin_nullLogin_emptyResultDataAccessExceptionReturned() {
         userDetailsDao.getUserDetailsByLogin(null);

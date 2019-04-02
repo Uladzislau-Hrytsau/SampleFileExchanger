@@ -22,7 +22,7 @@ public class FolderDaoImpl implements FolderDao {
     /**
      * The constant USER_ID.
      */
-    public static final String USER_ID = "user_id";
+    private static final String USER_ID = "user_id";
     /**
      * The constant ID.
      */
@@ -30,7 +30,7 @@ public class FolderDaoImpl implements FolderDao {
     /**
      * The constant PARENT_ID.
      */
-    public static final String PARENT_ID = "parent_id";
+    private static final String PARENT_ID = "parent_id";
     /**
      * The constant NAME.
      */

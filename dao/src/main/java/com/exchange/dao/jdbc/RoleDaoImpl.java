@@ -29,11 +29,11 @@ public class RoleDaoImpl implements RoleDao {
     }
 
     @Override
-    public Integer addUserRole(final Long userId, final Integer roleId) {
+    public Boolean addUserRole(final Long userId, final Integer roleId) {
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
         parameterSource.addValue(USER_ID, userId);
         parameterSource.addValue(ROLE_ID, roleId);
-        return namedParameterJdbcTemplate.update(insertRoleSql, parameterSource);
+        return namedParameterJdbcTemplate.update(insertRoleSql, parameterSource) == 1;
     }
 
 }

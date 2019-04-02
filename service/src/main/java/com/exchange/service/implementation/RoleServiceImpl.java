@@ -50,7 +50,7 @@ public class RoleServiceImpl implements RoleService {
     public void addUserRole(
             final Long userId,
             final Integer roleId) {
-        if (roleDao.addUserRole(userId, roleId) == 0) {
+        if (roleDao.addUserRole(userId, roleId)) {
             throw new ValidationException(roleDoesNotAdd);
         }
     }

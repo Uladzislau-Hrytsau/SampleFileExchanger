@@ -6,11 +6,11 @@ import com.exchange.dao.TestSpringDaoConfiguration;
 import com.exchange.dto.file.FileDto;
 import com.exchange.dto.file.FileStructureDto;
 import com.exchange.dto.file.FileUpdatingDto;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -21,6 +21,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -361,10 +362,48 @@ public class FileDaoImplTest {
      * Gets file names by folder id and user id correct folder id and user id correct file names returned.
      */
     @Test
-    @Ignore
     public void getFileNamesByFolderIdAndUserId_correctFolderIdAndUserId_correctFileNamesReturned() {
-        List<String> fileNames = fileDao.getFileNamesByFolderIdAndUserId(CORRECT_FOLDER_ID, CORRECT_USER_ID);
-        assertNotNull(fileNames);
+        List<String> actualFileNames = fileDao.getFileNamesByFolderIdAndUserId(CORRECT_FOLDER_ID, CORRECT_USER_ID);
+        assertNotNull(actualFileNames);
+        List<FileStructureDto> fileStructureDtos = fileDao.getFilesByUserIdAndFolderId(CORRECT_USER_ID, CORRECT_FOLDER_ID);
+        List<String> expectedFileNames = new ArrayList<>();
+        fileStructureDtos.forEach(item -> expectedFileNames.add(fileDao.getFileNameByFileId(item.getId())));
+        assertEquals(expectedFileNames, actualFileNames);
+    }
+
+    @Test(expected = DataIntegrityViolationException.class)
+    public void getFileNamesByFolderIdAndUserId_incorrectFolderIdAndCorrectUserId_dataIntegrityViolationExceptionReturned() {
+        fileDao.getFileNamesByFolderIdAndUserId(INCORRECT_FOLDER_ID, CORRECT_USER_ID);
+    }
+
+    @Test
+    public void getFileNamesByFolderIdAndUserId_correctFolderIdAndIncorrectUserId_correctFileNamesReturned() {
+        List<String> actualFileNames = fileDao.getFileNamesByFolderIdAndUserId(CORRECT_FOLDER_ID, INCORRECT_USER_ID);
+        assertNotNull(actualFileNames);
+        List<FileStructureDto> fileStructureDtos = fileDao.getFilesByUserIdAndFolderId(CORRECT_USER_ID, INCORRECT_USER_ID);
+        List<String> expectedFileNames = new ArrayList<>();
+        fileStructureDtos.forEach(item -> expectedFileNames.add(fileDao.getFileNameByFileId(item.getId())));
+        assertEquals(expectedFileNames, actualFileNames);
+    }
+
+    @Test
+    public void getFileNamesByFolderIdAndUserId_incorrectFolderIdAndUserId_correctFileNamesReturned() {
+        List<String> actualFileNames = fileDao.getFileNamesByFolderIdAndUserId(INCORRECT_FOLDER_ID, INCORRECT_USER_ID);
+        assertNotNull(actualFileNames);
+        List<FileStructureDto> fileStructureDtos = fileDao.getFilesByUserIdAndFolderId(INCORRECT_FOLDER_ID, INCORRECT_USER_ID);
+        List<String> expectedFileNames = new ArrayList<>();
+        fileStructureDtos.forEach(item -> expectedFileNames.add(fileDao.getFileNameByFileId(item.getId())));
+        assertEquals(expectedFileNames, actualFileNames);
+    }
+
+    @Test
+    public void getFileNamesByFolderIdAndUserId_nullFolderIdAndUserId_correctFileNamesReturned() {
+        List<String> actualFileNames = fileDao.getFileNamesByFolderIdAndUserId(null, null);
+        assertNotNull(actualFileNames);
+        List<FileStructureDto> fileStructureDtos = fileDao.getFilesByUserIdAndFolderId(null, null);
+        List<String> expectedFileNames = new ArrayList<>();
+        fileStructureDtos.forEach(item -> expectedFileNames.add(fileDao.getFileNameByFileId(item.getId())));
+        assertEquals(expectedFileNames, actualFileNames);
     }
 
     /**
@@ -388,6 +427,7 @@ public class FileDaoImplTest {
     @Test(expected = EmptyResultDataAccessException.class)
     public void getFileInformationByFileIdAndUserId_incorrectFileIdAndCorrectUserId_EmptyResultDataAccessExceptionReturned() {
         fileDao.getFileInformationByFileIdAndUserId(INCORRECT_FILE_ID, CORRECT_USER_ID);
+
     }
 
     /**

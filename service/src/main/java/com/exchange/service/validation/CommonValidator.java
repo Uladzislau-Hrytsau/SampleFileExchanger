@@ -47,10 +47,10 @@ public class CommonValidator {
     public void validatePageAndSize(
             final Integer page,
             final Integer size) {
-        if (page == null || page < 0) {
+        if (page == null || page <= 0) {
             throw new ValidationException(incorrectPage);
         }
-        if (size == null || size < 0) {
+        if (size == null || size <= 0) {
             throw new ValidationException(incorrectSize);
         }
     }
@@ -62,7 +62,10 @@ public class CommonValidator {
      * @return the local date
      */
     public LocalDate validateDate(final LocalDate localDate) {
-        return localDate == null ? LocalDate.now() : localDate;
+        if (localDate == null) {
+            return LocalDate.now();
+        }
+        return localDate;
     }
 
 }

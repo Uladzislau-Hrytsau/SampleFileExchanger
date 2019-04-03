@@ -19,7 +19,7 @@ public class UserServiceImplMockTest {
 //    @Mock
 //    private UserDao userDaoMock;
 //    @Mock
-//    private UserValidator userValidatorMock;
+//    private adaw userValidatorMock;
 //    @Mock
 //    private User userMock;
 //    @Mock

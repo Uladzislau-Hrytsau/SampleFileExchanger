@@ -37,20 +37,6 @@ public class FileValidator {
     }
 
     /**
-     * Validate size.
-     *
-     * @param multipartFile the multipart file
-     */
-    public void validateSize(final MultipartFile multipartFile) {
-        if (multipartFile == null) {
-            throw new ValidationException(fileNotPresented);
-        }
-        if (multipartFile.getSize() > MAX_FILE_SIZE) {
-            throw new ValidationException(fileIsLargerThanMaxUploadSize);
-        }
-    }
-
-    /**
      * Validate file id.
      *
      * @param fileId the file id

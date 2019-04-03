@@ -100,7 +100,6 @@ public class FileServiceImpl implements FileService {
             final MultipartFile multipartFile,
             final Authentication authentication) throws IOException {
         Long userId = commonService.getUserIdByAuthentication(authentication);
-        fileValidator.validateSize(multipartFile);
         fileValidator.validateDescription(fileDto.getDescription());
         String encodeName = UUID.randomUUID().toString();
         fileDto.setUserId(userId);

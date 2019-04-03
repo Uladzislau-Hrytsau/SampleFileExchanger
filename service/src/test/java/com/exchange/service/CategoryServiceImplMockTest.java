@@ -20,6 +20,9 @@ import java.util.Set;
 
 import static org.mockito.Mockito.*;
 
+/**
+ * The type Category service impl mock test.
+ */
 @RunWith(MockitoJUnitRunner.class)
 public class CategoryServiceImplMockTest {
 
@@ -39,6 +42,9 @@ public class CategoryServiceImplMockTest {
     @InjectMocks
     private CategoryServiceImpl categoryService;
 
+    /**
+     * Add file categories correct categories and file id and user id correct.
+     */
     @Test
     public void addFileCategories_correctCategoriesAndFileIdAndUserId_correct() {
         doNothing().when(categoryValidatorMock).validateCategoriesByUserId(anySet(), anyLong());
@@ -47,6 +53,9 @@ public class CategoryServiceImplMockTest {
         categoryService.addFileCategories(CORRECT_CATEGORIES, CORRECT_FILE_ID, CORRECT_USER_ID);
     }
 
+    /**
+     * Add file categories incorrect categories and file id and user id validation exception.
+     */
     @Test(expected = ValidationException.class)
     public void addFileCategories_incorrectCategoriesAndFileIdAndUserId_validationException() {
         doThrow(ValidationException.class).when(categoryValidatorMock).validateCategoriesByUserId(anySet(), anyLong());
@@ -54,6 +63,9 @@ public class CategoryServiceImplMockTest {
         verifyNoMoreInteractions(categoryDaoMock, categoryValidatorMock, commonServiceMock);
     }
 
+    /**
+     * Add file categories correct categories and user id and incorrect file id internal server exception.
+     */
     @Test(expected = InternalServerException.class)
     public void addFileCategories_correctCategoriesAndUserIdAndIncorrectFileId_internalServerException() {
         doNothing().when(categoryValidatorMock).validateCategoriesByUserId(anySet(), anyLong());
@@ -63,6 +75,9 @@ public class CategoryServiceImplMockTest {
         verifyNoMoreInteractions(categoryDaoMock, categoryValidatorMock, commonServiceMock);
     }
 
+    /**
+     * Gets file category dtos by categories and file id correct categories and file id correct file category dtos.
+     */
     @Test
     public void getFileCategoryDtosByCategoriesAndFileId_correctCategoriesAndFileId_correctFileCategoryDtos() {
         Set<FileCategoryDto> expectedFileCategoryDtos = new HashSet<>();

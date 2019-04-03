@@ -14,6 +14,9 @@ import java.util.Set;
 
 import static org.mockito.Mockito.*;
 
+/**
+ * The type Category validator mock test.
+ */
 @RunWith(MockitoJUnitRunner.class)
 public class CategoryValidatorMockTest {
 
@@ -29,6 +32,9 @@ public class CategoryValidatorMockTest {
     @InjectMocks
     private CategoryValidator categoryValidator;
 
+    /**
+     * Validate categories by user id correct categories and user id correct.
+     */
     @Test
     public void validateCategoriesByUserId_correctCategoriesAndUserId_correct() {
         when(categoryDaoMock.existsCategoriesByUserId(anySet(), anyLong())).thenReturn(Boolean.TRUE);
@@ -37,6 +43,9 @@ public class CategoryValidatorMockTest {
         verifyNoMoreInteractions(categoryDaoMock);
     }
 
+    /**
+     * Validate categories by user id incorrect categories and correct user id validation exception.
+     */
     @Test(expected = ValidationException.class)
     public void validateCategoriesByUserId_incorrectCategoriesAndCorrectUserId_validationException() {
         categoryValidator.validateCategoriesByUserId(anySet(), anyLong());
@@ -44,6 +53,9 @@ public class CategoryValidatorMockTest {
         verifyNoMoreInteractions(categoryDaoMock);
     }
 
+    /**
+     * Validate categories by user id correct categories and user id validation exception.
+     */
     @Test(expected = ValidationException.class)
     public void validateCategoriesByUserId_correctCategoriesAndUserId_validationException() {
         when(categoryDaoMock.existsCategoriesByUserId(anySet(), anyLong())).thenReturn(Boolean.FALSE);

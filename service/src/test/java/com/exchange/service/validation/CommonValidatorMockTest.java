@@ -10,6 +10,9 @@ import org.springframework.context.annotation.PropertySource;
 
 import java.time.LocalDate;
 
+/**
+ * The type Common validator mock test.
+ */
 @RunWith(MockitoJUnitRunner.class)
 @PropertySource("classpath:message.properties")
 public class CommonValidatorMockTest {
@@ -26,67 +29,103 @@ public class CommonValidatorMockTest {
     @InjectMocks
     private CommonValidator commonValidator;
 
+    /**
+     * Is valid identifier correct identifier true returned.
+     */
     @Test
     public void isValidIdentifier_correctIdentifier_trueReturned() {
         Boolean actualValidatingResult = commonValidator.isValidIdentifier(CORRECT_IDENTIFIER);
         Assert.assertTrue(actualValidatingResult);
     }
 
+    /**
+     * Is valid identifier incorrect identifier false returned.
+     */
     @Test
     public void isValidIdentifier_incorrectIdentifier_falseReturned() {
         Boolean actualValidatingResult = commonValidator.isValidIdentifier(INCORRECT_IDENTIFIER);
         Assert.assertFalse(actualValidatingResult);
     }
 
+    /**
+     * Is valid identifier null identifier false returned.
+     */
     @Test
     public void isValidIdentifier_nullIdentifier_falseReturned() {
         Boolean actualValidatingResult = commonValidator.isValidIdentifier(null);
         Assert.assertFalse(actualValidatingResult);
     }
 
+    /**
+     * Is valid string correct string true returned.
+     */
     @Test
     public void isValidString_correctString_trueReturned() {
         Boolean actualValidatingResult = commonValidator.isValidString(CORRECT_STRING);
         Assert.assertTrue(actualValidatingResult);
     }
 
+    /**
+     * Is valid string empty string false returned.
+     */
     @Test
     public void isValidString_emptyString_falseReturned() {
         Boolean actualValidatingResult = commonValidator.isValidString("");
         Assert.assertFalse(actualValidatingResult);
     }
 
+    /**
+     * Is valid string null string empty returned.
+     */
     @Test
     public void isValidString_nullString_emptyReturned() {
         Boolean actualValidatingResult = commonValidator.isValidString(null);
         Assert.assertFalse(actualValidatingResult);
     }
 
+    /**
+     * Validate page and size correct page and size correct.
+     */
     @Test
     public void validatePageAndSize_correctPageAndSize_correct() {
         commonValidator.validatePageAndSize(CORRECT_PAGE, CORRECT_SIZE);
     }
 
+    /**
+     * Validate page and size incorrect page and correct size correct.
+     */
     @Test(expected = ValidationException.class)
     public void validatePageAndSize_incorrectPageAndCorrectSize_correct() {
         commonValidator.validatePageAndSize(INCORRECT_PAGE, CORRECT_SIZE);
     }
 
+    /**
+     * Validate page and size correct page and incorrect size correct.
+     */
     @Test(expected = ValidationException.class)
     public void validatePageAndSize_correctPageAndIncorrectSize_correct() {
         commonValidator.validatePageAndSize(CORRECT_PAGE, INCORRECT_SIZE);
     }
 
+    /**
+     * Validate page and size incorrect page and size correct.
+     */
     @Test(expected = ValidationException.class)
     public void validatePageAndSize_incorrectPageAndSize_correct() {
         commonValidator.validatePageAndSize(INCORRECT_PAGE, INCORRECT_SIZE);
     }
 
+    /**
+     * Validate page and size null page and size correct.
+     */
     @Test(expected = ValidationException.class)
     public void validatePageAndSize_nullPageAndSize_correct() {
         commonValidator.validatePageAndSize(null, null);
     }
 
+    /**
+     * Validate date correct date correct.
+     */
     @Test
     public void validateDate_correctDate_correct() {
         LocalDate dateBeforeValidating = LocalDate.of(
@@ -97,6 +136,9 @@ public class CommonValidatorMockTest {
         Assert.assertEquals(CORRECT_DATE, dateBeforeValidating);
     }
 
+    /**
+     * Validate date incorrect date correct.
+     */
     @Test
     public void validateDate_incorrectDate_correct() {
         LocalDate dateBeforeValidating = null;

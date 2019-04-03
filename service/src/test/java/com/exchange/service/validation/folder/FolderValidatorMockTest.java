@@ -11,6 +11,9 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.mockito.Mockito.*;
 
+/**
+ * The type Folder validator mock test.
+ */
 @RunWith(MockitoJUnitRunner.class)
 public class FolderValidatorMockTest {
 
@@ -29,6 +32,9 @@ public class FolderValidatorMockTest {
     @InjectMocks
     private FolderValidator folderValidator;
 
+    /**
+     * Validate folder by user id correct folder id and user id correct.
+     */
     @Test
     public void validateFolderByUserId_correctFolderIdAndUserId_correct() {
         when(commonValidatorMock.isValidIdentifier(anyLong())).thenReturn(Boolean.TRUE);
@@ -39,6 +45,9 @@ public class FolderValidatorMockTest {
         verifyNoMoreInteractions(commonValidatorMock, folderDaoMock);
     }
 
+    /**
+     * Validate folder by user id incorrect folder id and correct user id validation exception.
+     */
     @Test(expected = ValidationException.class)
     public void validateFolderByUserId_incorrectFolderIdAndCorrectUserId_validationException() {
         when(commonValidatorMock.isValidIdentifier(anyLong())).thenReturn(Boolean.FALSE);
@@ -49,6 +58,9 @@ public class FolderValidatorMockTest {
         verifyNoMoreInteractions(commonValidatorMock, folderDaoMock);
     }
 
+    /**
+     * Validate folder by user id correct folder id and incorrect user id validation exception.
+     */
     @Test(expected = ValidationException.class)
     public void validateFolderByUserId_correctFolderIdAndIncorrectUserId_validationException() {
         when(commonValidatorMock.isValidIdentifier(anyLong())).thenReturn(Boolean.TRUE);
@@ -59,6 +71,9 @@ public class FolderValidatorMockTest {
         verifyNoMoreInteractions(commonValidatorMock, folderDaoMock);
     }
 
+    /**
+     * Validate folder id correct folder id correct.
+     */
     @Test
     public void validateFolderId_correctFolderId_correct() {
         when(commonValidatorMock.isValidIdentifier(anyLong())).thenReturn(Boolean.TRUE);
@@ -67,6 +82,9 @@ public class FolderValidatorMockTest {
         verifyNoMoreInteractions(commonValidatorMock);
     }
 
+    /**
+     * Validate folder id correct folder id validation exception.
+     */
     @Test(expected = ValidationException.class)
     public void validateFolderId_correctFolderId_validationException() {
         when(commonValidatorMock.isValidIdentifier(anyLong())).thenReturn(Boolean.FALSE);
@@ -75,6 +93,9 @@ public class FolderValidatorMockTest {
         verifyNoMoreInteractions(commonValidatorMock);
     }
 
+    /**
+     * Exists by user id correct folder id and user id correct.
+     */
     @Test
     public void existsByUserId_correctFolderIdAndUserId_correct() {
         when(folderDaoMock.existsParentIdByUserId(anyLong(), anyLong())).thenReturn(Boolean.TRUE);
@@ -83,6 +104,9 @@ public class FolderValidatorMockTest {
         verifyNoMoreInteractions(folderDaoMock);
     }
 
+    /**
+     * Exists by user id correct folder id and user id validation exception.
+     */
     @Test(expected = ValidationException.class)
     public void existsByUserId_correctFolderIdAndUserId_validationException() {
         when(folderDaoMock.existsParentIdByUserId(anyLong(), anyLong())).thenReturn(Boolean.FALSE);
@@ -91,16 +115,25 @@ public class FolderValidatorMockTest {
         verifyNoMoreInteractions(folderDaoMock);
     }
 
+    /**
+     * Validate folder name correct name correct.
+     */
     @Test
     public void validateFolderName_correctName_correct() {
         folderValidator.validateFolderName(CORRECT_NAME);
     }
 
+    /**
+     * Validate folder name incorrect name validation exception.
+     */
     @Test(expected = ValidationException.class)
     public void validateFolderName_incorrectName_validationException() {
         folderValidator.validateFolderName(EMPTY_NAME);
     }
 
+    /**
+     * Validate folder name null name validation exception.
+     */
     @Test(expected = ValidationException.class)
     public void validateFolderName_nullName_validationException() {
         folderValidator.validateFolderName(null);

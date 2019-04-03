@@ -11,6 +11,9 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.mockito.Mockito.*;
 
+/**
+ * The type User validator mock test.
+ */
 @RunWith(MockitoJUnitRunner.class)
 public class UserValidatorMockTest {
 
@@ -31,6 +34,9 @@ public class UserValidatorMockTest {
     @InjectMocks
     private UserValidator userValidator;
 
+    /**
+     * Validate user id correct user id correct.
+     */
     @Test
     public void validateUserId_correctUserId_correct() {
         when(commonValidatorMock.isValidIdentifier(anyLong())).thenReturn(Boolean.TRUE);
@@ -39,6 +45,9 @@ public class UserValidatorMockTest {
         verifyNoMoreInteractions(commonValidatorMock, userDaoMock);
     }
 
+    /**
+     * Validate user id incorrect user id validation exception.
+     */
     @Test(expected = ValidationException.class)
     public void validateUserId_incorrectUserId_validationException() {
         when(commonValidatorMock.isValidIdentifier(anyLong())).thenReturn(Boolean.FALSE);
@@ -47,6 +56,9 @@ public class UserValidatorMockTest {
         verifyNoMoreInteractions(commonValidatorMock, userDaoMock);
     }
 
+    /**
+     * Validate existing login correct login and user dao correct.
+     */
     @Test
     public void validateExistingLogin_correctLoginAndUserDao_correct() {
         when(commonValidatorMock.isValidString(anyString())).thenReturn(Boolean.TRUE);
@@ -57,6 +69,9 @@ public class UserValidatorMockTest {
         verifyNoMoreInteractions(commonValidatorMock, userDaoMock);
     }
 
+    /**
+     * Validate existing login incorrect login and correct user dao validation exception.
+     */
     @Test(expected = ValidationException.class)
     public void validateExistingLogin_incorrectLoginAndCorrectUserDao_validationException() {
         when(commonValidatorMock.isValidString(anyString())).thenReturn(Boolean.FALSE);
@@ -66,6 +81,9 @@ public class UserValidatorMockTest {
         verifyNoMoreInteractions(commonValidatorMock, userDaoMock);
     }
 
+    /**
+     * Validate existing login correct login and incorrect user dao validation exception.
+     */
     @Test(expected = ValidationException.class)
     public void validateExistingLogin_correctLoginAndIncorrectUserDao_validationException() {
         when(commonValidatorMock.isValidString(anyString())).thenReturn(Boolean.FALSE);
@@ -76,6 +94,9 @@ public class UserValidatorMockTest {
         verifyNoMoreInteractions(commonValidatorMock, userDaoMock);
     }
 
+    /**
+     * Validate password correct password correct.
+     */
     @Test
     public void validatePassword_correctPassword_correct() {
         when(commonValidatorMock.isValidString(anyString())).thenReturn(Boolean.TRUE);
@@ -84,6 +105,9 @@ public class UserValidatorMockTest {
         verifyNoMoreInteractions(commonValidatorMock, userDaoMock);
     }
 
+    /**
+     * Validate password incorrect password validation exception.
+     */
     @Test(expected = ValidationException.class)
     public void validatePassword_incorrectPassword_validationException() {
         when(commonValidatorMock.isValidString(anyString())).thenReturn(Boolean.FALSE);
@@ -92,6 +116,9 @@ public class UserValidatorMockTest {
         verifyNoMoreInteractions(commonValidatorMock, userDaoMock);
     }
 
+    /**
+     * Validate information correct information correct.
+     */
     @Test
     public void validateInformation_correctInformation_correct() {
         when(commonValidatorMock.isValidString(anyString())).thenReturn(Boolean.TRUE);
@@ -100,6 +127,9 @@ public class UserValidatorMockTest {
         verifyNoMoreInteractions(commonValidatorMock, userDaoMock);
     }
 
+    /**
+     * Validate information incorrect information correct.
+     */
     @Test(expected = ValidationException.class)
     public void validateInformation_incorrectInformation_correct() {
         when(commonValidatorMock.isValidString(anyString())).thenReturn(Boolean.FALSE);

@@ -1,7 +1,8 @@
-package com.exchange.service.validation.file;
+package com.exchange.service.validation;
 
 import com.exchange.exception.ValidationException;
 import com.exchange.service.validation.CommonValidator;
+import com.exchange.service.validation.FileValidator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

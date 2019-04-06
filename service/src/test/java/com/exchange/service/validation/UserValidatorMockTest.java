@@ -1,8 +1,9 @@
-package com.exchange.service.validation.user;
+package com.exchange.service.validation;
 
 import com.exchange.dao.UserDao;
 import com.exchange.exception.ValidationException;
 import com.exchange.service.validation.CommonValidator;
+import com.exchange.service.validation.UserValidator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

@@ -1,4 +1,4 @@
-package com.exchange.service.validation;
+package com.exchange.service;
 
 import com.exchange.dao.CategoryDao;
 import com.exchange.dao.FileDao;
@@ -10,17 +10,15 @@ import com.exchange.dto.structure.StructureDto;
 import com.exchange.exception.ValidationException;
 import com.exchange.service.implementation.CommonService;
 import com.exchange.service.implementation.StructureServiceImpl;
-import com.exchange.service.validation.folder.FolderValidator;
+import com.exchange.service.validation.FolderValidator;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.security.core.Authentication;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -37,16 +35,13 @@ public class StructureServiceImplMockTest {
     private static final String CORRECT_NAME = "correctName";
     private static final List<FileStructureDto> CORRECT_FILE_STRUCTURE_DTOS = Arrays.asList(
             new FileStructureDto(CORRECT_USER_ID, CORRECT_FOLDER_ID, CORRECT_NAME),
-            new FileStructureDto(CORRECT_USER_ID, CORRECT_FOLDER_ID, CORRECT_NAME)
-    );
+            new FileStructureDto(CORRECT_USER_ID, CORRECT_FOLDER_ID, CORRECT_NAME));
     private static final List<CategoryDto> CORRECT_CATEGORY_DTOS = Arrays.asList(
             new CategoryDto(CORRECT_CATEGORY_ID, CORRECT_NAME),
-            new CategoryDto(CORRECT_CATEGORY_ID, CORRECT_NAME)
-    );
+            new CategoryDto(CORRECT_CATEGORY_ID, CORRECT_NAME));
     private static final List<FolderStructureDto> CORRECT_FOLDER_STRUCTURE_DTOS = Arrays.asList(
             new FolderStructureDto(CORRECT_FOLDER_ID, CORRECT_NAME),
-            new FolderStructureDto(CORRECT_FOLDER_ID, CORRECT_NAME)
-    );
+            new FolderStructureDto(CORRECT_FOLDER_ID, CORRECT_NAME));
 
     @Mock
     private FileDao fileDaoMock;

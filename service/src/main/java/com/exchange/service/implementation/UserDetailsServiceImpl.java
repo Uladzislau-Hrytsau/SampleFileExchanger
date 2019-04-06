@@ -2,6 +2,7 @@ package com.exchange.service.implementation;
 
 import com.exchange.dao.UserDetailsDao;
 import com.exchange.dto.security.UserDetailsDto;
+import com.exchange.service.validation.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -21,6 +22,7 @@ import java.util.Set;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     private final UserDetailsDao userDetailsDao;
+    private final UserValidator userValidator;
 
     /**
      * Instantiates a new User details service.
@@ -28,15 +30,22 @@ public class UserDetailsServiceImpl implements UserDetailsService {
      * @param userDetailsDao the user details dao
      */
     @Autowired
-    public UserDetailsServiceImpl(final UserDetailsDao userDetailsDao) {
+    public UserDetailsServiceImpl(
+            final UserDetailsDao userDetailsDao,
+            final UserValidator userValidator) {
         this.userDetailsDao = userDetailsDao;
+        this.userValidator = userValidator;
     }
 
     @Override
     public UserDetails loadUserByUsername(final String login) {
+        userValidator.validateLogin(login);
         UserDetailsDto userDetailsDto = userDetailsDao.getUserDetailsByLogin(login);
         return new com.exchange.config.security.userdetails.UserDetails(
-                userDetailsDto.getUserId(), userDetailsDto.getUserName(), userDetailsDto.getUserPassword(), this.getGrantedAuthoritiesByUserDetailsDto(userDetailsDto));
+                userDetailsDto.getUserId(),
+                userDetailsDto.getUserName(),
+                userDetailsDto.getUserPassword(),
+                this.getGrantedAuthoritiesByUserDetailsDto(userDetailsDto));
     }
 
     /**

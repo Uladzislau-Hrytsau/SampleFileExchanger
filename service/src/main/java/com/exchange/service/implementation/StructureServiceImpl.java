@@ -5,7 +5,7 @@ import com.exchange.dao.FileDao;
 import com.exchange.dao.FolderDao;
 import com.exchange.dto.structure.StructureDto;
 import com.exchange.service.StructureService;
-import com.exchange.service.validation.folder.FolderValidator;
+import com.exchange.service.validation.FolderValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;

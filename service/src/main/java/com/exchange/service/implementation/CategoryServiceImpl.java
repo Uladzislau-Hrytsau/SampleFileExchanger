@@ -4,7 +4,7 @@ import com.exchange.dao.CategoryDao;
 import com.exchange.dto.file.FileCategoryDto;
 import com.exchange.exception.InternalServerException;
 import com.exchange.service.CategoryService;
-import com.exchange.service.validation.category.CategoryValidator;
+import com.exchange.service.validation.CategoryValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

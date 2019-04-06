@@ -1,4 +1,4 @@
-package com.exchange.service.validation.file;
+package com.exchange.service.validation;
 
 import com.exchange.exception.ValidationException;
 import com.exchange.service.validation.CommonValidator;

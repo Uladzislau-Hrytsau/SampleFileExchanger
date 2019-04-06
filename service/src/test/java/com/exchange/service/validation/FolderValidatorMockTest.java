@@ -1,8 +1,9 @@
-package com.exchange.service.validation.folder;
+package com.exchange.service.validation;
 
 import com.exchange.dao.FolderDao;
 import com.exchange.exception.ValidationException;
 import com.exchange.service.validation.CommonValidator;
+import com.exchange.service.validation.FolderValidator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

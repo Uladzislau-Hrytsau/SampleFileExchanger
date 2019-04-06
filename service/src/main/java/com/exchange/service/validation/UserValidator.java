@@ -1,4 +1,4 @@
-package com.exchange.service.validation.user;
+package com.exchange.service.validation;
 
 import com.exchange.dao.UserDao;
 import com.exchange.exception.ValidationException;
@@ -56,11 +56,15 @@ public class UserValidator {
     public void validateExistingLogin(
             final String login,
             final UserDao userDao) {
-        if (!commonValidator.isValidString(login)) {
-            throw new ValidationException(incorrectLogin);
-        }
+        this.validateLogin(login);
         if (userDao.checkUserByLogin(login)) {
             throw new ValidationException(alreadyExist);
+        }
+    }
+
+    public void validateLogin(String login) {
+        if (!commonValidator.isValidString(login)) {
+            throw new ValidationException(incorrectLogin);
         }
     }
 

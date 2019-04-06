@@ -6,7 +6,7 @@ import com.exchange.exception.InternalServerException;
 import com.exchange.exception.ValidationException;
 import com.exchange.service.implementation.CategoryServiceImpl;
 import com.exchange.service.implementation.CommonService;
-import com.exchange.service.validation.category.CategoryValidator;
+import com.exchange.service.validation.CategoryValidator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -31,8 +31,7 @@ public class CategoryServiceImplMockTest {
     private static final Long CORRECT_FILE_ID = 1L;
     private static final Long CORRECT_USER_ID = 1L;
     private static final Set<Long> CORRECT_CATEGORIES = new HashSet<>(
-            Arrays.asList(1L, 2L, 3L)
-    );
+            Arrays.asList(1L, 2L, 3L));
 
     @Mock
     private CategoryDao categoryDaoMock;

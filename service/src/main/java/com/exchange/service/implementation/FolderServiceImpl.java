@@ -7,7 +7,7 @@ import com.exchange.exception.InternalServerException;
 import com.exchange.service.FileWriterService;
 import com.exchange.service.FolderService;
 import com.exchange.service.validation.CommonValidator;
-import com.exchange.service.validation.folder.FolderValidator;
+import com.exchange.service.validation.FolderValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;

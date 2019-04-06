@@ -7,7 +7,7 @@ import com.exchange.exception.InternalServerException;
 import com.exchange.service.implementation.CommonService;
 import com.exchange.service.implementation.FolderServiceImpl;
 import com.exchange.service.validation.CommonValidator;
-import com.exchange.service.validation.folder.FolderValidator;
+import com.exchange.service.validation.FolderValidator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -28,8 +28,7 @@ public class FolderServiceImplMockTest {
     private static final String CORRECT_STRING = "CORRECT_STRING";
     private static final FolderStructureDto CORRECT_FOLDER_STRUCTURE_DTO = new FolderStructureDto(
             CORRECT_IDENTIFIER,
-            CORRECT_STRING
-    );
+            CORRECT_STRING);
 
     @Mock
     private FolderDao folderDaoMock;

@@ -1,4 +1,4 @@
-package com.exchange.service.validation.folder;
+package com.exchange.service.validation;
 
 import com.exchange.dao.FolderDao;
 import com.exchange.exception.ValidationException;

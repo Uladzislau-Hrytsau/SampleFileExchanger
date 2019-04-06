@@ -10,7 +10,7 @@ import com.exchange.service.CategoryService;
 import com.exchange.service.FileService;
 import com.exchange.service.FileWriterService;
 import com.exchange.service.validation.CommonValidator;
-import com.exchange.service.validation.file.FileValidator;
+import com.exchange.service.validation.FileValidator;
 import com.exchange.wrapper.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

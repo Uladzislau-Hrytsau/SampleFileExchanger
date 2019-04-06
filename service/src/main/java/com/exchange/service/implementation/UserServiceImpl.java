@@ -10,7 +10,7 @@ import com.exchange.service.FileWriterService;
 import com.exchange.service.RoleService;
 import com.exchange.service.UserService;
 import com.exchange.service.validation.CommonValidator;
-import com.exchange.service.validation.user.UserValidator;
+import com.exchange.service.validation.UserValidator;
 import com.exchange.wrapper.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

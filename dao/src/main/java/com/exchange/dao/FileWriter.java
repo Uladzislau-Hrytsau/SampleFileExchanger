@@ -1,4 +1,4 @@
-package com.exchange.dao.file;
+package com.exchange.dao;
 
 import org.springframework.web.multipart.MultipartFile;
 

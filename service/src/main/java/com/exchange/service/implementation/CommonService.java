@@ -30,7 +30,9 @@ public class CommonService {
      * @return the authorities by authentication
      */
     public Collection<GrantedAuthority> getAuthoritiesByAuthentication(final Authentication authentication) {
-        return ((UserDetails) authentication.getPrincipal()).getAuthorities();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+        return userDetails.getAuthorities();
     }
 
     /**

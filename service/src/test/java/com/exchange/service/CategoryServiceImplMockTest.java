@@ -7,7 +7,6 @@ import com.exchange.exception.ValidationException;
 import com.exchange.service.implementation.CategoryServiceImpl;
 import com.exchange.service.implementation.CommonService;
 import com.exchange.service.validation.category.CategoryValidator;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -18,6 +17,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 /**
@@ -26,6 +26,7 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class)
 public class CategoryServiceImplMockTest {
 
+    private static final Integer TIMES_ONE = 1;
     private static final int[] CORRECT_BATCH_RESULT = {1, 1, 1};
     private static final Long CORRECT_FILE_ID = 1L;
     private static final Long CORRECT_USER_ID = 1L;
@@ -51,6 +52,10 @@ public class CategoryServiceImplMockTest {
         when(categoryDaoMock.addFileCategories(anySet())).thenReturn(any());
         when(commonServiceMock.checkBatchResult(CORRECT_BATCH_RESULT)).thenReturn(Boolean.TRUE);
         categoryService.addFileCategories(CORRECT_CATEGORIES, CORRECT_FILE_ID, CORRECT_USER_ID);
+        verify(categoryValidatorMock, times(TIMES_ONE)).validateCategoriesByUserId(any(), any());
+        verify(categoryDaoMock, times(TIMES_ONE)).addFileCategories(any());
+        verify(commonServiceMock, times(TIMES_ONE)).checkBatchResult(any());
+        verifyNoMoreInteractions(commonServiceMock, categoryValidatorMock, commonServiceMock);
     }
 
     /**
@@ -60,6 +65,7 @@ public class CategoryServiceImplMockTest {
     public void addFileCategories_incorrectCategoriesAndFileIdAndUserId_validationException() {
         doThrow(ValidationException.class).when(categoryValidatorMock).validateCategoriesByUserId(anySet(), anyLong());
         categoryService.addFileCategories(CORRECT_CATEGORIES, CORRECT_FILE_ID, CORRECT_USER_ID);
+        verify(categoryValidatorMock, times(TIMES_ONE)).validateCategoriesByUserId(any(), any());
         verifyNoMoreInteractions(categoryDaoMock, categoryValidatorMock, commonServiceMock);
     }
 
@@ -72,6 +78,9 @@ public class CategoryServiceImplMockTest {
         when(categoryDaoMock.addFileCategories(anySet())).thenReturn(any());
         when(commonServiceMock.checkBatchResult(CORRECT_BATCH_RESULT)).thenReturn(Boolean.FALSE);
         categoryService.addFileCategories(CORRECT_CATEGORIES, CORRECT_FILE_ID, CORRECT_USER_ID);
+        verify(categoryValidatorMock, times(TIMES_ONE)).validateCategoriesByUserId(any(), any());
+        verify(categoryDaoMock, times(TIMES_ONE)).addFileCategories(any());
+        verify(commonServiceMock, times(TIMES_ONE)).checkBatchResult(any());
         verifyNoMoreInteractions(categoryDaoMock, categoryValidatorMock, commonServiceMock);
     }
 
@@ -84,6 +93,7 @@ public class CategoryServiceImplMockTest {
         CORRECT_CATEGORIES.forEach(item -> expectedFileCategoryDtos.add(new FileCategoryDto(item, CORRECT_FILE_ID)));
         Set<FileCategoryDto> actualFileCategoryDtos = categoryService.getFileCategoryDtosByCategoriesAndFileId(
                 CORRECT_CATEGORIES, CORRECT_FILE_ID);
-        Assert.assertEquals(expectedFileCategoryDtos, actualFileCategoryDtos);
+        assertEquals(expectedFileCategoryDtos, actualFileCategoryDtos);
+        verifyNoMoreInteractions(categoryDaoMock, categoryValidatorMock, commonServiceMock);
     }
 }

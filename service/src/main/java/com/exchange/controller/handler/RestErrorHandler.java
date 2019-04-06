@@ -5,10 +5,9 @@ import com.exchange.exception.InternalServerException;
 import com.exchange.exception.ValidationException;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -17,8 +16,7 @@ import java.util.Collections;
 /**
  * The type Rest error handler.
  */
-@ControllerAdvice
-@ResponseBody
+@RestControllerAdvice
 public class RestErrorHandler {
 
     /**

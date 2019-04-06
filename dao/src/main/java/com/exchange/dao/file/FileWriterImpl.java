@@ -1,9 +1,11 @@
 package com.exchange.dao.file;
 
+import com.exchange.dao.FileWriter;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -14,12 +16,25 @@ import java.io.IOException;
 public class FileWriterImpl implements FileWriter {
 
     @Override
-    public void saveFile(final MultipartFile multipartFile, final String filePath) throws IOException {
+    public void saveFile(final MultipartFile multipartFile, final String filePath) {
         File file = new File(filePath);
-        file.createNewFile();
-        FileOutputStream fileOutputStream = new FileOutputStream(file);
-        fileOutputStream.write(multipartFile.getBytes());
-        fileOutputStream.close();
+        FileOutputStream fileOutputStream = null;
+        try {
+            file.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            fileOutputStream = new FileOutputStream(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            fileOutputStream.write(multipartFile.getBytes());
+            fileOutputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

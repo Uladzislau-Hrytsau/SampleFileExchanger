@@ -23,6 +23,7 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class)
 public class FolderServiceImplMockTest {
 
+    private static final Integer TIMES_ONE = 1;
     private static final Long CORRECT_IDENTIFIER = 1L;
     private static final String CORRECT_STRING = "CORRECT_STRING";
     private static final FolderStructureDto CORRECT_FOLDER_STRUCTURE_DTO = new FolderStructureDto(
@@ -56,6 +57,11 @@ public class FolderServiceImplMockTest {
         when(folderDaoMock.addFolder(any(), any())).thenReturn(anyLong());
         when(commonValidatorMock.isValidIdentifier(CORRECT_IDENTIFIER)).thenReturn(Boolean.TRUE);
         folderService.addFolder(CORRECT_FOLDER_STRUCTURE_DTO, authentication);
+        verify(folderValidatorMock, times(TIMES_ONE)).validateFolderName(any());
+        verify(folderDaoMock, times(TIMES_ONE)).addFolder(any(), any());
+        verify(commonValidatorMock, times(TIMES_ONE)).isValidIdentifier(any());
+        verifyNoMoreInteractions(folderDaoMock, fileWriterServiceMock, fileDaoMock, folderValidatorMock,
+                commonValidatorMock, authentication);
     }
 
     /**
@@ -67,6 +73,11 @@ public class FolderServiceImplMockTest {
         when(folderDaoMock.addFolder(any(), any())).thenReturn(anyLong());
         when(commonValidatorMock.isValidIdentifier(CORRECT_IDENTIFIER)).thenReturn(Boolean.FALSE);
         folderService.addFolder(CORRECT_FOLDER_STRUCTURE_DTO, authentication);
+        verify(folderValidatorMock, times(TIMES_ONE)).validateFolderName(any());
+        verify(folderDaoMock, times(TIMES_ONE)).addFolder(any(), any());
+        verify(commonValidatorMock, times(TIMES_ONE)).isValidIdentifier(any());
+        verifyNoMoreInteractions(folderDaoMock, fileWriterServiceMock, fileDaoMock, folderValidatorMock,
+                commonServiceMock, commonValidatorMock, authentication);
     }
 
     /**
@@ -79,6 +90,11 @@ public class FolderServiceImplMockTest {
         doNothing().when(fileWriterServiceMock).deleteFilesByNames(any());
         when(folderDaoMock.deleteByFolderIdAndUserId(any(), any())).thenReturn(Boolean.TRUE);
         folderService.deleteByFolderIdAndAuthentication(CORRECT_IDENTIFIER, authentication);
+        verify(commonServiceMock, times(TIMES_ONE)).getUserIdByAuthentication(any());
+        verify(folderValidatorMock, times(TIMES_ONE)).validateFolderByUserId(any(), any());
+        verify(fileWriterServiceMock, times(TIMES_ONE)).deleteFilesByNames(any());
+        verifyNoMoreInteractions(fileWriterServiceMock, folderValidatorMock,
+                commonServiceMock, commonValidatorMock, authentication);
     }
 
     /**
@@ -91,6 +107,12 @@ public class FolderServiceImplMockTest {
         doNothing().when(fileWriterServiceMock).deleteFilesByNames(any());
         when(folderDaoMock.deleteByFolderIdAndUserId(any(), any())).thenReturn(Boolean.FALSE);
         folderService.deleteByFolderIdAndAuthentication(CORRECT_IDENTIFIER, authentication);
+        verify(commonServiceMock, times(TIMES_ONE)).getUserIdByAuthentication(any());
+        verify(folderValidatorMock, times(TIMES_ONE)).validateFolderByUserId(any(), any());
+        verify(fileWriterServiceMock, times(TIMES_ONE)).deleteFilesByNames(any());
+        verify(folderDaoMock, times(TIMES_ONE)).deleteByFolderIdAndUserId(any(), any());
+        verifyNoMoreInteractions(folderDaoMock, fileWriterServiceMock, fileDaoMock, folderValidatorMock,
+                commonServiceMock, commonValidatorMock, authentication);
     }
 
     /**
@@ -103,6 +125,12 @@ public class FolderServiceImplMockTest {
         when(commonServiceMock.getUserIdByAuthentication(authentication)).thenReturn(CORRECT_IDENTIFIER);
         when(folderDaoMock.updateFolderNameByFolderIdAndUserId(CORRECT_FOLDER_STRUCTURE_DTO, CORRECT_IDENTIFIER)).thenReturn(Boolean.TRUE);
         folderService.updateFolder(CORRECT_FOLDER_STRUCTURE_DTO, authentication);
+        verify(folderValidatorMock, times(TIMES_ONE)).validateFolderName(any());
+        verify(folderValidatorMock, times(TIMES_ONE)).validateFolderId(any());
+        verify(commonServiceMock, times(TIMES_ONE)).getUserIdByAuthentication(any());
+        verify(folderDaoMock, times(TIMES_ONE)).updateFolderNameByFolderIdAndUserId(any(), any());
+        verifyNoMoreInteractions(folderDaoMock, fileWriterServiceMock, fileDaoMock, folderValidatorMock,
+                commonServiceMock, commonValidatorMock, authentication);
     }
 
     /**
@@ -115,5 +143,11 @@ public class FolderServiceImplMockTest {
         when(commonServiceMock.getUserIdByAuthentication(authentication)).thenReturn(CORRECT_IDENTIFIER);
         when(folderDaoMock.updateFolderNameByFolderIdAndUserId(CORRECT_FOLDER_STRUCTURE_DTO, CORRECT_IDENTIFIER)).thenReturn(Boolean.FALSE);
         folderService.updateFolder(CORRECT_FOLDER_STRUCTURE_DTO, authentication);
+        verify(folderValidatorMock, times(TIMES_ONE)).validateFolderName(any());
+        verify(folderValidatorMock, times(TIMES_ONE)).validateFolderId(any());
+        verify(commonServiceMock, times(TIMES_ONE)).getUserIdByAuthentication(any());
+        verify(folderDaoMock, times(TIMES_ONE)).updateFolderNameByFolderIdAndUserId(any(), any());
+        verifyNoMoreInteractions(folderDaoMock, fileWriterServiceMock, fileDaoMock, folderValidatorMock,
+                commonServiceMock, commonValidatorMock, authentication);
     }
 }

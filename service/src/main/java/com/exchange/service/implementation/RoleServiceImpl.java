@@ -35,22 +35,21 @@ public class RoleServiceImpl implements RoleService {
      */
     @Autowired
     public RoleServiceImpl(
-            final RoleDao roleDao,
-            final CommonService commonService) {
+            final RoleDao roleDao, final CommonService commonService) {
         this.roleDao = roleDao;
         this.commonService = commonService;
     }
 
     @Override
-    public Set<String> getRolesByAuthentication(final Authentication authentication) {
-        return this.getRolesByGrantedAuthorities(commonService.getAuthoritiesByAuthentication(authentication));
+    public Set<String> getRolesByAuthentication(
+            final Authentication authentication) {
+        Collection<GrantedAuthority> authoritiesByAuthentication = commonService.getAuthoritiesByAuthentication(authentication);
+        return this.getRolesByGrantedAuthorities(authoritiesByAuthentication);
     }
 
     @Override
-    public void addUserRole(
-            final Long userId,
-            final Integer roleId) {
-        if (roleDao.addUserRole(userId, roleId)) {
+    public void addUserRole(final Long userId, final Integer roleId) {
+        if (!roleDao.addUserRole(userId, roleId)) {
             throw new ValidationException(roleDoesNotAdd);
         }
     }

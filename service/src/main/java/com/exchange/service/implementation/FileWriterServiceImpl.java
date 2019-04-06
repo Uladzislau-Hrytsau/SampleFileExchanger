@@ -1,6 +1,6 @@
 package com.exchange.service.implementation;
 
-import com.exchange.dao.file.FileWriter;
+import com.exchange.dao.FileWriter;
 import com.exchange.exception.FileNotDeletedException;
 import com.exchange.service.FileWriterService;
 import org.springframework.beans.factory.annotation.Autowired;

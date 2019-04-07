@@ -35,7 +35,6 @@ public class UserServiceImplMockTest {
     private static final Integer CORRECT_PAGE = 2;
     private static final Integer CORRECT_SIZE = 10;
     private static final String CORRECT_LOGIN = "correctLogin";
-    private static final String INCORRECT_LOGIN = "";
     private static final String CORRECT_PASSWORD = "correctPassword";
     private static final String CORRECT_INFORMATION = "correctInformation";
     private static final Boolean CORRECT_GENDER = Boolean.TRUE;

@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
@@ -55,6 +56,8 @@ public class FileServiceImpl implements FileService {
     private String updateError;
     @Value("${fileService.deleteError}")
     private String deleteError;
+    @Value("${fileService.downloadError}")
+    private String downloadError;
 
     /**
      * Instantiates a new File service.
@@ -136,8 +139,12 @@ public class FileServiceImpl implements FileService {
         String encodedFileName = fileDao.getFileNameByFileId(fileId);
         java.io.File file = fileWriterService.getFileByName(encodedFileName);
         this.buildFileDownloadResponse(response, fileName, (int) file.length());
-        InputStream inputStream = new BufferedInputStream(new FileInputStream(file));
-        FileCopyUtils.copy(inputStream, response.getOutputStream());
+        FileInputStream fileInputStream = new FileInputStream(file);
+        InputStream inputStream = new BufferedInputStream(fileInputStream);
+        ServletOutputStream outputStream = response.getOutputStream();
+        if (FileCopyUtils.copy(inputStream, outputStream) != inputStream.read()) {
+            throw new InternalServerException(downloadError);
+        }
     }
 
     @Override

@@ -2,7 +2,6 @@ package com.exchange.service.validation;
 
 import com.exchange.dao.UserDao;
 import com.exchange.exception.ValidationException;
-import com.exchange.service.validation.CommonValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

@@ -95,7 +95,7 @@ public class UserServiceImpl implements UserService {
         userValidator.validatePassword(user.getPassword());
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         Long userId = userDao.addUser(user);
-        if (userId == null) {
+        if (!commonValidator.isValidIdentifier(userId)) {
             throw new InternalServerException(createError);
         }
         roleService.addUserRole(userId, USER_ROLE_ID);

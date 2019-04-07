@@ -24,6 +24,9 @@ import java.util.List;
 
 import static org.mockito.Mockito.*;
 
+/**
+ * The type Structure service impl mock test.
+ */
 @RunWith(MockitoJUnitRunner.class)
 public class StructureServiceImplMockTest {
 
@@ -58,6 +61,9 @@ public class StructureServiceImplMockTest {
     @InjectMocks
     private StructureServiceImpl structureService;
 
+    /**
+     * Gets structure and categories by folder id and authentication correct folder id and authentication correct structure dto returned.
+     */
     @Test
     public void getStructureAndCategoriesByFolderIdAndAuthentication_correctFolderIdAndAuthentication_correctStructureDtoReturned() {
         doNothing().when(folderValidatorMock).validateFolderId(any());
@@ -78,6 +84,9 @@ public class StructureServiceImplMockTest {
                 fileDaoMock, categoryDaoMock, commonServiceMock, folderValidatorMock, authenticationMock);
     }
 
+    /**
+     * Gets structure and categories by folder id and authentication incorrect folder id validation exception.
+     */
     @Test(expected = ValidationException.class)
     public void getStructureAndCategoriesByFolderIdAndAuthentication_incorrectFolderId_validationException() {
         doThrow(ValidationException.class).when(folderValidatorMock).validateFolderId(any());

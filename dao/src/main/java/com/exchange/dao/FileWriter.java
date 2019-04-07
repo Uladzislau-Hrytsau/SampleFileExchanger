@@ -2,6 +2,7 @@ package com.exchange.dao;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -25,5 +26,7 @@ public interface FileWriter {
      * @return the boolean
      */
     Boolean deleteFileByPath(String path);
+
+    File getFileByName(String fileName);
 
 }

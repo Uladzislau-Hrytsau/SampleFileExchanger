@@ -22,6 +22,9 @@ import java.util.Set;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
+/**
+ * The type Role service impl mock test.
+ */
 @RunWith(MockitoJUnitRunner.class)
 public class RoleServiceImplMockTest {
 
@@ -44,6 +47,9 @@ public class RoleServiceImplMockTest {
     @InjectMocks
     private RoleServiceImpl roleService;
 
+    /**
+     * Gets roles by authentication correct authentication correct roles returned.
+     */
     @Test
     public void getRolesByAuthentication_correctAuthentication_correctRolesReturned() {
         when(commonServiceMock.getAuthoritiesByAuthentication(authenticationMock)).thenReturn(CORRECT_GRANTED_AUTHORITY);
@@ -53,6 +59,9 @@ public class RoleServiceImplMockTest {
         verifyNoMoreInteractions(roleDaoMock, authenticationMock, userDetailsMock);
     }
 
+    /**
+     * Add user role correct user id and role id correct.
+     */
     @Test
     public void addUserRole_correctUserIdAndRoleId_correct() {
         when(roleDaoMock.addUserRole(any(), any())).thenReturn(Boolean.TRUE);
@@ -61,6 +70,9 @@ public class RoleServiceImplMockTest {
         verifyNoMoreInteractions(roleDaoMock, authenticationMock, userDetailsMock, commonServiceMock);
     }
 
+    /**
+     * Add user role correct user id and role id validation exception.
+     */
     @Test(expected = ValidationException.class)
     public void addUserRole_correctUserIdAndRoleId_validationException() {
         when(roleDaoMock.addUserRole(any(), any())).thenReturn(Boolean.FALSE);
@@ -69,6 +81,9 @@ public class RoleServiceImplMockTest {
         verifyNoMoreInteractions(roleDaoMock, authenticationMock, userDetailsMock, commonServiceMock);
     }
 
+    /**
+     * Gets roles by granted authorities correct granted authorities correct roles returned.
+     */
     @Test
     public void getRolesByGrantedAuthorities_correctGrantedAuthorities_correctRolesReturned() {
         Set<String> actualRolesByGrantedAuthorities = roleService.getRolesByGrantedAuthorities(CORRECT_GRANTED_AUTHORITY);

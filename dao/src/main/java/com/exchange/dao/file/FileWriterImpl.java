@@ -41,4 +41,9 @@ public class FileWriterImpl implements FileWriter {
     public Boolean deleteFileByPath(final String path) {
         return new File(path).delete();
     }
+
+    @Override
+    public File getFileByName(String fileName) {
+        return new File(fileName);
+    }
 }

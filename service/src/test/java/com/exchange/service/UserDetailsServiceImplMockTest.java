@@ -22,6 +22,9 @@ import java.util.Set;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
+/**
+ * The type User details service impl mock test.
+ */
 @RunWith(MockitoJUnitRunner.class)
 public class UserDetailsServiceImplMockTest {
 
@@ -50,6 +53,9 @@ public class UserDetailsServiceImplMockTest {
     @InjectMocks
     private UserDetailsServiceImpl userDetailsService;
 
+    /**
+     * Load user by username correct login correct user details returned.
+     */
     @Test
     public void loadUserByUsername_correctLogin_correctUserDetailsReturned() {
         doNothing().when(userValidatorMock).validateLogin(any());
@@ -63,6 +69,9 @@ public class UserDetailsServiceImplMockTest {
         verifyNoMoreInteractions(userDetailsDaoMock, userValidatorMock);
     }
 
+    /**
+     * Load user by username incorrect login validation exception.
+     */
     @Test(expected = ValidationException.class)
     public void loadUserByUsername_incorrectLogin_validationException() {
         doThrow(ValidationException.class).when(userValidatorMock).validateLogin(any());
@@ -72,6 +81,9 @@ public class UserDetailsServiceImplMockTest {
         verifyNoMoreInteractions(userDetailsDaoMock, userValidatorMock);
     }
 
+    /**
+     * Gets granted authorities by user details dto correct user details dto correct granted authorities.
+     */
     @Test
     public void getGrantedAuthoritiesByUserDetailsDto_correctUserDetailsDto_correctGrantedAuthorities() {
         Set<GrantedAuthority> actualGrantedAuthoritiesByUserDetailsDto =

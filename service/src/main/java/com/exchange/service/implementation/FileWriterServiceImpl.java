@@ -52,7 +52,7 @@ public class FileWriterServiceImpl implements FileWriterService {
 
     @Override
     public File getFileByName(final String fileName) {
-        return new java.io.File(this.getFilePath(fileName));
+        return fileWriter.getFileByName(this.getFilePath(fileName));
     }
 
     @Override
@@ -67,7 +67,7 @@ public class FileWriterServiceImpl implements FileWriterService {
         fileNames.forEach(this::deleteFileByName);
     }
 
-    private String getFilePath(final String encodeName) {
+    public String getFilePath(final String encodeName) {
         return servletContext.getRealPath(REPOSITORY_PATH + java.io.File.separator + encodeName);
     }
 }

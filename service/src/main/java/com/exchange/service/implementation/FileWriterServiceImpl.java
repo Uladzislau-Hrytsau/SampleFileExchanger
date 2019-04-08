@@ -1,7 +1,7 @@
 package com.exchange.service.implementation;
 
 import com.exchange.dao.FileWriter;
-import com.exchange.exception.FileNotDeletedException;
+import com.exchange.dao.exception.FileNotDeletedException;
 import com.exchange.service.FileWriterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -67,6 +67,12 @@ public class FileWriterServiceImpl implements FileWriterService {
         fileNames.forEach(this::deleteFileByName);
     }
 
+    /**
+     * Gets file path.
+     *
+     * @param encodeName the encode name
+     * @return the file path
+     */
     public String getFilePath(final String encodeName) {
         return servletContext.getRealPath(REPOSITORY_PATH + java.io.File.separator + encodeName);
     }

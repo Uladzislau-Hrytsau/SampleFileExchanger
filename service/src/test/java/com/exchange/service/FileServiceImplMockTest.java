@@ -3,9 +3,9 @@ package com.exchange.service;
 import com.exchange.dao.File;
 import com.exchange.dao.FileDao;
 import com.exchange.dao.Pagination;
+import com.exchange.dao.exception.FileNotDeletedException;
 import com.exchange.dto.file.FileDto;
 import com.exchange.dto.file.FileUpdatingDto;
-import com.exchange.exception.FileNotDeletedException;
 import com.exchange.exception.InternalServerException;
 import com.exchange.exception.ValidationException;
 import com.exchange.service.implementation.CommonService;
@@ -17,7 +17,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
@@ -28,7 +27,8 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.core.Authentication;
 
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.net.URLConnection;
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -41,9 +41,12 @@ import static org.junit.Assert.assertNotEquals;
 import static org.mockito.Mockito.*;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 
+/**
+ * The type File service impl mock test.
+ */
 @RunWith(PowerMockRunner.class)
 @PowerMockRunnerDelegate(MockitoJUnitRunner.class)
-@PrepareForTest(URLConnection.class)
+@PrepareForTest({URLConnection.class, FileInputStream.class})
 public class FileServiceImplMockTest {
 
     private static final Integer TIMES_ONE = 1;
@@ -103,6 +106,9 @@ public class FileServiceImplMockTest {
     @InjectMocks
     private FileServiceImpl fileService;
 
+    /**
+     * Gets files and count by page and size correct page and size correct response returned.
+     */
     @Test
     public void getFilesAndCountByPageAndSize_correctPageAndSize_correctResponseReturned() {
         doNothing().when(commonValidatorMock).validatePageAndSize(any(), any());
@@ -125,6 +131,9 @@ public class FileServiceImplMockTest {
                 authenticationMock);
     }
 
+    /**
+     * Gets files and count by page and size incorrect page and size validation exception.
+     */
     @Test(expected = ValidationException.class)
     public void getFilesAndCountByPageAndSize_incorrectPageAndSize_validationException() {
         doThrow(ValidationException.class).when(commonValidatorMock).validatePageAndSize(any(), any());
@@ -142,6 +151,11 @@ public class FileServiceImplMockTest {
                 authenticationMock);
     }
 
+    /**
+     * Add file correct file dto and multipart file and authentication correct file id returned.
+     *
+     * @throws IOException the io exception
+     */
     @Test
     public void addFile_correctFileDtoAndMultipartFileAndAuthentication_correctFileIdReturned() throws IOException {
         fileDtoMock.setDescription(CORRECT_DESCRIPTION);
@@ -170,6 +184,11 @@ public class FileServiceImplMockTest {
                 commonValidatorMock);
     }
 
+    /**
+     * Add file incorrect file dto description validation exception.
+     *
+     * @throws IOException the io exception
+     */
     @Test(expected = ValidationException.class)
     public void addFile_incorrectFileDtoDescription_validationException() throws IOException {
         MockMultipartFile mockMultipartFile = new MockMultipartFile(
@@ -191,6 +210,11 @@ public class FileServiceImplMockTest {
                 commonValidatorMock);
     }
 
+    /**
+     * Add file incorrect file dto and multipart file and authentication internal server exception.
+     *
+     * @throws IOException the io exception
+     */
     @Test(expected = InternalServerException.class)
     public void addFile_incorrectFileDtoAndMultipartFileAndAuthentication_internalServerException() throws IOException {
         MockMultipartFile mockMultipartFile = new MockMultipartFile(
@@ -214,6 +238,9 @@ public class FileServiceImplMockTest {
                 commonValidatorMock);
     }
 
+    /**
+     * Update file correct file updating dto.
+     */
     @Test
     public void updateFile_correctFileUpdatingDto() {
         CORRECT_FILE_UPDATING_DTO.setDate(null);
@@ -236,6 +263,9 @@ public class FileServiceImplMockTest {
                 commonValidatorMock);
     }
 
+    /**
+     * Update file incorrect file updating dto file id validation exception.
+     */
     @Test(expected = ValidationException.class)
     public void updateFile_incorrectFileUpdatingDtoFileId_validationException() {
         doThrow(ValidationException.class).when(fileValidatorMock).validateFileId(any());
@@ -252,6 +282,9 @@ public class FileServiceImplMockTest {
                 commonValidatorMock);
     }
 
+    /**
+     * Update file incorrect file updating dto description validation exception.
+     */
     @Test(expected = ValidationException.class)
     public void updateFile_incorrectFileUpdatingDtoDescription_validationException() {
         doNothing().when(fileValidatorMock).validateFileId(any());
@@ -270,6 +303,9 @@ public class FileServiceImplMockTest {
                 commonValidatorMock);
     }
 
+    /**
+     * Update file correct file updating dto name validation exception.
+     */
     @Test(expected = ValidationException.class)
     public void updateFile_correctFileUpdatingDtoName_validationException() {
         doNothing().when(fileValidatorMock).validateFileId(any());
@@ -289,6 +325,9 @@ public class FileServiceImplMockTest {
                 commonValidatorMock);
     }
 
+    /**
+     * Update file incorrect file updating dto internal server exception.
+     */
     @Test(expected = InternalServerException.class)
     public void updateFile_incorrectFileUpdatingDto_internalServerException() {
         doNothing().when(fileValidatorMock).validateFileId(any());
@@ -308,46 +347,9 @@ public class FileServiceImplMockTest {
                 commonValidatorMock);
     }
 
-//    @Test
-//    public void downloadFileByFileId() throws Exception {
-//        mockStatic(FileCopyUtils.class);
-//        mockStatic(StreamUtils.class);
-//        mockStatic(InputStream.class);
-//
-//        MockHttpServletResponse mockHttpServletResponse = Mockito.mock(MockHttpServletResponse.class);
-//
-//        MockMultipartFile mockMultipartFile = new MockMultipartFile(
-//                CORRECT_REAL_NAME, CORRECT_REAL_NAME, null, "file".getBytes());
-//
-//
-//        FileInputStream fileInputStreamMock = Mockito.mock(FileInputStream.class);
-//        InputStream inputStreamMock = Mockito.mock(BufferedInputStream.class);
-//        java.io.File fileMock = Mockito.mock(java.io.File.class);
-//        ServletOutputStream servletOutputStreamMock = Mockito.mock(ServletOutputStream.class);
-//
-////        java.io.File file = StreamUtils.;
-//
-//        whenNew(FileInputStream.class).withArguments(fileMock).thenReturn(fileInputStreamMock);
-//        whenNew(BufferedInputStream.class).withArguments(fileInputStreamMock).thenReturn((BufferedInputStream) inputStreamMock);
-//
-//        doNothing().when(fileValidatorMock).validateName(any());
-//        doNothing().when(fileValidatorMock).validateFileId(any());
-//        when(fileDaoMock.getFileNameByFileId(any())).thenReturn(CORRECT_ENCODE_NAME);
-//
-////        mockMultipartFile.transferTo(fileMock);
-//        PowerMockito.when(inputStreamMock.read()).thenReturn(1).thenReturn(-1).thenReturn(-1);
-//
-//        when(fileWriterServiceMock.getFileByName(any())).thenReturn(fileMock);
-//        when(fileMock.length()).thenReturn(Long.valueOf(CORRECT_FILE_LENGTH));
-//        when(mockHttpServletResponse.getOutputStream()).thenReturn(servletOutputStreamMock);
-//
-//
-//
-//        when(FileCopyUtils.copy(inputStreamMock, servletOutputStreamMock)).thenReturn(CORRECT_FILE_LENGTH);
-//
-//        fileService.downloadFileByFileId(CORRECT_ID, CORRECT_REAL_NAME, mockHttpServletResponse);
-//    }
-
+    /**
+     * Delete file correct file id.
+     */
     @Test
     public void deleteFile_correctFileId() {
         doNothing().when(fileValidatorMock).validateFileId(any());
@@ -367,6 +369,9 @@ public class FileServiceImplMockTest {
                 commonValidatorMock);
     }
 
+    /**
+     * Delete file incorrect file id validation exception.
+     */
     @Test(expected = ValidationException.class)
     public void deleteFile_incorrectFileId_validationException() {
         doThrow(ValidationException.class).when(fileValidatorMock).validateFileId(any());
@@ -383,6 +388,9 @@ public class FileServiceImplMockTest {
                 commonValidatorMock);
     }
 
+    /**
+     * Delete file correct file id file not deleted exception.
+     */
     @Test(expected = FileNotDeletedException.class)
     public void deleteFile_correctFileId_fileNotDeletedException() {
         doNothing().when(fileValidatorMock).validateFileId(any());
@@ -401,6 +409,9 @@ public class FileServiceImplMockTest {
                 commonValidatorMock);
     }
 
+    /**
+     * Delete file correct file id internal server exception.
+     */
     @Test(expected = InternalServerException.class)
     public void deleteFile_correctFileId_internalServerException() {
         doNothing().when(fileValidatorMock).validateFileId(any());
@@ -420,6 +431,9 @@ public class FileServiceImplMockTest {
                 commonValidatorMock);
     }
 
+    /**
+     * Gets file count correct count returned.
+     */
     @Test
     public void getFileCount_correctCountReturned() {
         when(fileDaoMock.getFileCount()).thenReturn((long) CORRECT_FILES.size());
@@ -435,6 +449,9 @@ public class FileServiceImplMockTest {
                 commonValidatorMock);
     }
 
+    /**
+     * Gets file information by file id and authentication correct file id and authentication correct file updating dto returned.
+     */
     @Test
     public void getFileInformationByFileIdAndAuthentication_correctFileIdAndAuthentication_correctFileUpdatingDtoReturned() {
         doNothing().when(fileValidatorMock).validateFileId(any());
@@ -452,6 +469,9 @@ public class FileServiceImplMockTest {
                 commonValidatorMock);
     }
 
+    /**
+     * Gets file information by file id and authentication incorrect file id validation exception.
+     */
     @Test(expected = ValidationException.class)
     public void getFileInformationByFileIdAndAuthentication_incorrectFileId_validationException() {
         doThrow(ValidationException.class).when(fileValidatorMock).validateFileId(any());
@@ -467,6 +487,9 @@ public class FileServiceImplMockTest {
                 commonValidatorMock);
     }
 
+    /**
+     * Gets file names by user id correct user id correct names returned.
+     */
     @Test
     public void getFileNamesByUserId_correctUserId_correctNamesReturned() {
         when(fileDaoMock.getFileNamesByUserId(any())).thenReturn(any());
@@ -480,6 +503,9 @@ public class FileServiceImplMockTest {
                 commonValidatorMock);
     }
 
+    /**
+     * Build file download response.
+     */
     @Test
     public void buildFileDownloadResponse() {
         MockHttpServletResponse actualResponse = new MockHttpServletResponse();
@@ -495,6 +521,9 @@ public class FileServiceImplMockTest {
                 commonValidatorMock);
     }
 
+    /**
+     * Gets file type by file name known file type correct file type.
+     */
     @Test
     public void getFileTypeByFileName_knownFileType_correctFileType() {
         mockStatic(URLConnection.class);
@@ -503,6 +532,9 @@ public class FileServiceImplMockTest {
         assertEquals(MediaType.APPLICATION_PDF_VALUE, actualFileTypeByFileName);
     }
 
+    /**
+     * Gets file type by file name unknown file type correct file type.
+     */
     @Test
     public void getFileTypeByFileName_unknownFileType_correctFileType() {
         mockStatic(URLConnection.class);

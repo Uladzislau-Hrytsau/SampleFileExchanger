@@ -2,7 +2,6 @@ package com.exchange.service.validation;
 
 import com.exchange.dao.CategoryDao;
 import com.exchange.exception.ValidationException;
-import com.exchange.service.validation.CategoryValidator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

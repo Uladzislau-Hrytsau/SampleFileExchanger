@@ -3,8 +3,8 @@ package com.exchange.service;
 import com.exchange.dao.Pagination;
 import com.exchange.dao.User;
 import com.exchange.dao.UserDao;
+import com.exchange.dao.exception.FileNotDeletedException;
 import com.exchange.dto.user.UserUpdatingDto;
-import com.exchange.exception.FileNotDeletedException;
 import com.exchange.exception.InternalServerException;
 import com.exchange.exception.ValidationException;
 import com.exchange.service.implementation.CommonService;
@@ -26,6 +26,9 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
+/**
+ * The type User service impl mock test.
+ */
 @RunWith(MockitoJUnitRunner.class)
 public class UserServiceImplMockTest {
 
@@ -68,6 +71,9 @@ public class UserServiceImplMockTest {
     @InjectMocks
     private UserServiceImpl userService;
 
+    /**
+     * Gets users and count by page and size correct page and size correct response returned.
+     */
     @Test
     public void getUsersAndCountByPageAndSize_correctPageAndSize_correctResponseReturned() {
         doNothing().when(commonValidatorMock).validatePageAndSize(any(), any());
@@ -90,6 +96,9 @@ public class UserServiceImplMockTest {
                 fileWriterServiceMock);
     }
 
+    /**
+     * Gets users and count by page and size incorrect page and size validation exception.
+     */
     @Test(expected = ValidationException.class)
     public void getUsersAndCountByPageAndSize_incorrectPageAndSize_validationException() {
         doThrow(ValidationException.class).when(commonValidatorMock).validatePageAndSize(any(), any());
@@ -104,6 +113,9 @@ public class UserServiceImplMockTest {
                 fileWriterServiceMock);
     }
 
+    /**
+     * Add user correct user.
+     */
     @Test
     public void addUser_correctUser() {
         doNothing().when(userValidatorMock).validateExistingLogin(CORRECT_LOGIN, userDaoMock);
@@ -130,6 +142,9 @@ public class UserServiceImplMockTest {
                 fileWriterServiceMock);
     }
 
+    /**
+     * Add user incorrect user login validation exception.
+     */
     @Test(expected = ValidationException.class)
     public void addUser_incorrectUserLogin_validationException() {
         doThrow(ValidationException.class).when(userValidatorMock).validateExistingLogin(any(), any());
@@ -152,6 +167,9 @@ public class UserServiceImplMockTest {
                 fileWriterServiceMock);
     }
 
+    /**
+     * Add user incorrect user password validation exception.
+     */
     @Test(expected = ValidationException.class)
     public void addUser_incorrectUserPassword_validationException() {
         doNothing().when(userValidatorMock).validateExistingLogin(any(), any());
@@ -176,6 +194,9 @@ public class UserServiceImplMockTest {
                 fileWriterServiceMock);
     }
 
+    /**
+     * Add user incorrect user id internal server exception.
+     */
     @Test(expected = InternalServerException.class)
     public void addUser_incorrectUserId_internalServerException() {
         doNothing().when(userValidatorMock).validateExistingLogin(any(), any());
@@ -202,6 +223,9 @@ public class UserServiceImplMockTest {
                 fileWriterServiceMock);
     }
 
+    /**
+     * Update user correct user updating dto.
+     */
     @Test
     public void updateUser_correctUserUpdatingDto() {
         doNothing().when(userValidatorMock).validatePassword(any());
@@ -226,6 +250,9 @@ public class UserServiceImplMockTest {
                 fileWriterServiceMock);
     }
 
+    /**
+     * Update user incorrect user updating dto password validation exception.
+     */
     @Test(expected = ValidationException.class)
     public void updateUser_incorrectUserUpdatingDtoPassword_validationException() {
         doThrow(ValidationException.class).when(userValidatorMock).validatePassword(any());
@@ -246,6 +273,9 @@ public class UserServiceImplMockTest {
                 fileWriterServiceMock);
     }
 
+    /**
+     * Update user incorrect user updating dto information validation exception.
+     */
     @Test(expected = ValidationException.class)
     public void updateUser_incorrectUserUpdatingDtoInformation_validationException() {
         doNothing().when(userValidatorMock).validatePassword(any());
@@ -267,6 +297,9 @@ public class UserServiceImplMockTest {
                 fileWriterServiceMock);
     }
 
+    /**
+     * Update user incorrect user updating dto information internal server exception.
+     */
     @Test(expected = InternalServerException.class)
     public void updateUser_incorrectUserUpdatingDtoInformation_internalServerException() {
         doNothing().when(userValidatorMock).validatePassword(any());
@@ -291,6 +324,9 @@ public class UserServiceImplMockTest {
                 fileWriterServiceMock);
     }
 
+    /**
+     * Delete user correct user id.
+     */
     @Test
     public void deleteUser_correctUserId() {
         doNothing().when(userValidatorMock).validateUserId(any());
@@ -310,6 +346,9 @@ public class UserServiceImplMockTest {
                 fileWriterServiceMock);
     }
 
+    /**
+     * Delete user incorrect user id validation exception.
+     */
     @Test(expected = ValidationException.class)
     public void deleteUser_incorrectUserId_validationException() {
         doThrow(ValidationException.class).when(userValidatorMock).validateUserId(any());
@@ -328,6 +367,9 @@ public class UserServiceImplMockTest {
                 fileWriterServiceMock);
     }
 
+    /**
+     * Delete user incorrect file names file not deleted exception.
+     */
     @Test(expected = FileNotDeletedException.class)
     public void deleteUser_incorrectFileNames_fileNotDeletedException() {
         doNothing().when(userValidatorMock).validateUserId(any());
@@ -347,6 +389,9 @@ public class UserServiceImplMockTest {
                 fileWriterServiceMock);
     }
 
+    /**
+     * Delete user incorrect user id internal server exception.
+     */
     @Test(expected = InternalServerException.class)
     public void deleteUser_incorrectUserId_internalServerException() {
         doNothing().when(userValidatorMock).validateUserId(any());
@@ -367,6 +412,9 @@ public class UserServiceImplMockTest {
                 fileWriterServiceMock);
     }
 
+    /**
+     * Gets user count correct count returned.
+     */
     @Test
     public void getUserCount_correctCountReturned() {
         when(userDaoMock.getUserCount()).thenReturn(Long.valueOf(CORRECT_SIZE));

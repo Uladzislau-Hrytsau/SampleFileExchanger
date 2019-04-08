@@ -371,11 +371,17 @@ public class FileDaoImplTest {
         assertEquals(expectedFileNames, actualFileNames);
     }
 
+    /**
+     * Gets file names by folder id and user id incorrect folder id and correct user id data integrity violation exception returned.
+     */
     @Test(expected = DataIntegrityViolationException.class)
     public void getFileNamesByFolderIdAndUserId_incorrectFolderIdAndCorrectUserId_dataIntegrityViolationExceptionReturned() {
         fileDao.getFileNamesByFolderIdAndUserId(INCORRECT_FOLDER_ID, CORRECT_USER_ID);
     }
 
+    /**
+     * Gets file names by folder id and user id correct folder id and incorrect user id correct file names returned.
+     */
     @Test
     public void getFileNamesByFolderIdAndUserId_correctFolderIdAndIncorrectUserId_correctFileNamesReturned() {
         List<String> actualFileNames = fileDao.getFileNamesByFolderIdAndUserId(CORRECT_FOLDER_ID, INCORRECT_USER_ID);
@@ -386,6 +392,9 @@ public class FileDaoImplTest {
         assertEquals(expectedFileNames, actualFileNames);
     }
 
+    /**
+     * Gets file names by folder id and user id incorrect folder id and user id correct file names returned.
+     */
     @Test
     public void getFileNamesByFolderIdAndUserId_incorrectFolderIdAndUserId_correctFileNamesReturned() {
         List<String> actualFileNames = fileDao.getFileNamesByFolderIdAndUserId(INCORRECT_FOLDER_ID, INCORRECT_USER_ID);
@@ -396,6 +405,9 @@ public class FileDaoImplTest {
         assertEquals(expectedFileNames, actualFileNames);
     }
 
+    /**
+     * Gets file names by folder id and user id null folder id and user id correct file names returned.
+     */
     @Test
     public void getFileNamesByFolderIdAndUserId_nullFolderIdAndUserId_correctFileNamesReturned() {
         List<String> actualFileNames = fileDao.getFileNamesByFolderIdAndUserId(null, null);

@@ -1,4 +1,4 @@
-package com.exchange.config;
+package com.exchange.configuration;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 

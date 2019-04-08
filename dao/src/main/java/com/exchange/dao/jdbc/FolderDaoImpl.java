@@ -19,17 +19,16 @@ import java.util.List;
 @Repository
 public class FolderDaoImpl implements FolderDao {
 
-    private static final String USER_ID = "user_id";
     /**
      * The constant ID.
      */
     public static final String ID = "id";
-    private static final String PARENT_ID = "parent_id";
     /**
      * The constant NAME.
      */
     public static final String NAME = "name";
-
+    private static final String USER_ID = "user_id";
+    private static final String PARENT_ID = "parent_id";
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private final FolderStructureDtoRowMapper folderStructureDtoRowMapper;
     @Value("${folder.selectByUserIdAndParentId}")

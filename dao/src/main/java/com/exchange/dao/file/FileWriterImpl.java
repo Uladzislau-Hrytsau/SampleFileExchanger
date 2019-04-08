@@ -1,11 +1,15 @@
 package com.exchange.dao.file;
 
 import com.exchange.dao.FileWriter;
+import com.exchange.dao.exception.FileNotCreatedException;
+import com.exchange.dao.exception.FileNotDeletedException;
+import com.exchange.dao.exception.FileNotExistException;
+import com.exchange.dao.exception.FileNotWrittenException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -15,35 +19,43 @@ import java.io.IOException;
 @Repository
 public class FileWriterImpl implements FileWriter {
 
+    @Value("${fileWriter.errorCreatingFile}")
+    private String errorCreatingFile;
+    @Value("${fileWriter.errorSavingFile}")
+    private String errorSavingFile;
+    @Value("${fileWriter.errorGettingFile}")
+    private String errorGettingFile;
+    @Value("${fileWriter.errorDeletingFile}")
+    private String errorDeletingFile;
+
     @Override
     public void saveFile(final MultipartFile multipartFile, final String filePath) {
         File file = new File(filePath);
-        FileOutputStream fileOutputStream = null;
-        try {
-            file.createNewFile();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            fileOutputStream = new FileOutputStream(file);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        try {
+        try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
+            if (!file.createNewFile()) {
+                throw new FileNotCreatedException(errorCreatingFile);
+            }
             fileOutputStream.write(multipartFile.getBytes());
-            fileOutputStream.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new FileNotWrittenException(errorSavingFile);
         }
     }
 
     @Override
     public Boolean deleteFileByPath(final String path) {
-        return new File(path).delete();
+        File file = new File(path);
+        if (!file.delete()) {
+            throw new FileNotDeletedException(errorDeletingFile);
+        }
+        return true;
     }
 
     @Override
     public File getFileByName(String fileName) {
-        return new File(fileName);
+        File file = new File(fileName);
+        if (!file.exists()) {
+            throw new FileNotExistException(errorGettingFile);
+        }
+        return file;
     }
 }

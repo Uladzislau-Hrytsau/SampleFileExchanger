@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 /**
  * The type Folder rest controller.
  */
-@RestController
+@RestController("/folders")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class FolderRestController {
 
@@ -34,7 +34,7 @@ public class FolderRestController {
      * @param authentication     the authentication
      */
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    @PostMapping("/folders")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void addFolder(
             @RequestBody final FolderStructureDto folderStructureDto,
@@ -49,7 +49,7 @@ public class FolderRestController {
      * @param authentication     the authentication
      */
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    @PutMapping("/folders")
+    @PutMapping
     @ResponseStatus(value = HttpStatus.OK)
     public void updateFolderName(
             @RequestBody final FolderStructureDto folderStructureDto,
@@ -64,7 +64,7 @@ public class FolderRestController {
      * @param authentication the authentication
      */
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    @DeleteMapping(value = "/folders", params = {"folderId"})
+    @DeleteMapping(params = {"folderId"})
     @ResponseStatus(HttpStatus.OK)
     public void deleteFolder(
             @RequestParam("folderId") final Long folderId,

@@ -27,6 +27,12 @@ public interface FileWriter {
      */
     Boolean deleteFileByPath(String path);
 
+    /**
+     * Gets file by name.
+     *
+     * @param fileName the file name
+     * @return the file by name
+     */
     File getFileByName(String fileName);
 
 }

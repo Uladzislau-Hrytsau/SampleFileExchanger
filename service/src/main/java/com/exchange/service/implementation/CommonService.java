@@ -1,6 +1,6 @@
 package com.exchange.service.implementation;
 
-import com.exchange.config.security.userdetails.UserDetails;
+import com.exchange.configuration.security.userdetails.UserDetails;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;

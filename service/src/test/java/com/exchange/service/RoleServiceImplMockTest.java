@@ -1,6 +1,6 @@
 package com.exchange.service;
 
-import com.exchange.config.security.userdetails.UserDetails;
+import com.exchange.configuration.security.userdetails.UserDetails;
 import com.exchange.dao.RoleDao;
 import com.exchange.exception.ValidationException;
 import com.exchange.service.implementation.CommonService;

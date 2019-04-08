@@ -19,8 +19,10 @@ import javax.sql.DataSource;
  */
 @Configuration
 @ComponentScan(basePackages = {"com.exchange.dao"})
-@PropertySource("classpath:sql-queries.properties")
-@PropertySource("classpath:test-queries.properties")
+@PropertySource({
+        "classpath:sql-queries.properties",
+        "classpath:test-queries.properties",
+        "classpath:message.properties"})
 public class TestSpringDaoConfiguration {
 
     /**

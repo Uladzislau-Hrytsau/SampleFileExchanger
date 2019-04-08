@@ -1,10 +1,78 @@
 package com.exchange.controller;
+//import com.exchange.controller.handler.RestErrorHandler;
+//import com.exchange.dao.User;
+//import com.exchange.exception.InternalServerException;
+//import com.exchange.exception.ValidationException;
+//import com.exchange.service.UserService;
+//import org.junit.Before;
+//import org.junit.Test;
+//import org.junit.runner.RunWith;
+//import org.mockito.InjectMocks;
+//import org.mockito.Mock;
+//import org.mockito.runners.MockitoJUnitRunner;
+//import org.springframework.http.MediaType;
+//import org.springframework.test.web.servlet.MockMvc;
+//import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+//
+//import java.time.LocalDate;
+//import java.util.Collections;
+//
+//import static com.exchange.controller.converter.JsonConverter.asJsonString;
+//import static org.mockito.BDDMockito.given;
+//import static org.mockito.Mockito.*;
+//import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+//import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+//import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+//import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 
 /**
  * The type File rest controller mock test.
+ * <p>
+ * Sets up.
+ * <p>
+ * Gets all files success 1 mock test.
+ *
+ * @throws Exception the exception
+ * <p>
+ * Gets file by id success 1 mock test.
+ * @throws Exception the exception
+ * <p>
+ * Gets file by id un success 1 mock test.
+ * @throws Exception the exception
+ * <p>
+ * Gets all files by user id success 1 mock test.
+ * @throws Exception the exception
+ * <p>
+ * Gets all files by user id un success 1 mock test.
+ * @throws Exception the exception
+ * <p>
+ * Add file success 1 mock test.
+ * @throws Exception the exception
+ * <p>
+ * Add file un success 1 mock test.
+ * @throws Exception the exception
+ * <p>
+ * Update file success 1 mock test.
+ * @throws Exception the exception
+ * <p>
+ * Update file un success 1 mock test.
+ * @throws Exception the exception
+ * <p>
+ * Update file un success 2 mock test.
+ * @throws Exception the exception
+ * <p>
+ * Delete file success 1 mock test.
+ * @throws Exception the exception
+ * <p>
+ * Delete file un success 1 mock test.
+ * @throws Exception the exception
+ * <p>
+ * Delete file un success 2 mock test.
+ * @throws Exception the exception
  */
 //@RunWith(MockitoJUnitRunner.class)
-public class FileRestControllerMockTest {
+//public class FileRestControllerMockTest {
 //    private static final String FILES_URL_QUERY = "/files";
 //    private static final String FILE_ID_URL_QUERY = "/file/{id}";
 //    private static final String FILES_USER_ID_URL_QUERY = "/files/{userId}";
@@ -26,9 +94,9 @@ public class FileRestControllerMockTest {
 //            FILE_DESCRIPTION,
 //            FILE_CATEGORY_ID);
 
-    /**
-     * Sets up.
-     */
+/**
+ * Sets up.
+ */
 //    @Before
 //    public void setUp() {
 //        mockMvc = MockMvcBuilders.standaloneSetup(fileRestController)
@@ -37,11 +105,11 @@ public class FileRestControllerMockTest {
 //                .build();
 //    }
 
-    /**
-     * Gets all files success 1 mock test.
-     *
-     * @throws Exception the exception
-     */
+/**
+ * Gets all files success 1 mock test.
+ *
+ * @throws Exception the exception
+ */
 //    @Test
 //    public void getAllFilesSuccess_1_MockTest() throws Exception {
 //        file.setDate(LocalDate.of(2019, 1, 1));
@@ -52,11 +120,11 @@ public class FileRestControllerMockTest {
 //                .andExpect(content().json(asJsonString(Collections.singletonList(file))));
 //    }
 
-    /**
-     * Gets file by id success 1 mock test.
-     *
-     * @throws Exception the exception
-     */
+/**
+ * Gets file by id success 1 mock test.
+ *
+ * @throws Exception the exception
+ */
 //    @Test
 //    public void getFileByIdSuccess_1_MockTest() throws Exception {
 //        file.setDate(LocalDate.of(2019, 1, 2));
@@ -67,11 +135,11 @@ public class FileRestControllerMockTest {
 //                .andExpect(content().json(asJsonString(file)));
 //    }
 
-    /**
-     * Gets file by id un success 1 mock test.
-     *
-     * @throws Exception the exception
-     */
+/**
+ * Gets file by id un success 1 mock test.
+ *
+ * @throws Exception the exception
+ */
 //    @Test
 //    public void getFileByIdUnSuccess_1_MockTest() throws Exception {
 //        file.setDate(LocalDate.of(2019, 1, 3));
@@ -81,11 +149,11 @@ public class FileRestControllerMockTest {
 //                .andExpect(status().isBadRequest());
 //    }
 
-    /**
-     * Gets all files by user id success 1 mock test.
-     *
-     * @throws Exception the exception
-     */
+/**
+ * Gets all files by user id success 1 mock test.
+ *
+ * @throws Exception the exception
+ */
 //    @Test
 //    public void getAllFilesByUserIdSuccess_1_MockTest() throws Exception {
 //        file.setDate(LocalDate.of(2019, 1, 4));
@@ -96,11 +164,11 @@ public class FileRestControllerMockTest {
 //                .andExpect(content().json(asJsonString(Collections.singletonList(file))));
 //    }
 
-    /**
-     * Gets all files by user id un success 1 mock test.
-     *
-     * @throws Exception the exception
-     */
+/**
+ * Gets all files by user id un success 1 mock test.
+ *
+ * @throws Exception the exception
+ */
 //    @Test
 //    public void getAllFilesByUserIdUnSuccess_1_MockTest() throws Exception {
 //        file.setDate(LocalDate.of(2019, 1, 5));
@@ -110,11 +178,11 @@ public class FileRestControllerMockTest {
 //                .andExpect(status().isBadRequest());
 //    }
 
-    /**
-     * Add file success 1 mock test.
-     *
-     * @throws Exception the exception
-     */
+/**
+ * Add file success 1 mock test.
+ *
+ * @throws Exception the exception
+ */
 //    @Test
 //    public void addFileSuccess_1_MockTest() throws Exception {
 //        file.setDate(LocalDate.of(2019, 1, 6));
@@ -125,11 +193,11 @@ public class FileRestControllerMockTest {
 //                .andExpect(status().isCreated());
 //    }
 
-    /**
-     * Add file un success 1 mock test.
-     *
-     * @throws Exception the exception
-     */
+/**
+ * Add file un success 1 mock test.
+ *
+ * @throws Exception the exception
+ */
 //    @Test
 //    public void addFileUnSuccess_1_MockTest() throws Exception {
 //        file.setDate(LocalDate.of(2019, 1, 7));
@@ -140,11 +208,11 @@ public class FileRestControllerMockTest {
 //                .andExpect(status().isBadRequest());
 //    }
 
-    /**
-     * Update file success 1 mock test.
-     *
-     * @throws Exception the exception
-     */
+/**
+ * Update file success 1 mock test.
+ *
+ * @throws Exception the exception
+ */
 //    @Test
 //    public void updateFileSuccess_1_MockTest() throws Exception {
 //        file.setDate(LocalDate.of(2019, 1, 8));
@@ -155,11 +223,11 @@ public class FileRestControllerMockTest {
 //                .andExpect(status().isOk());
 //    }
 
-    /**
-     * Update file un success 1 mock test.
-     *
-     * @throws Exception the exception
-     */
+/**
+ * Update file un success 1 mock test.
+ *
+ * @throws Exception the exception
+ */
 //    @Test
 //    public void updateFileUnSuccess_1_MockTest() throws Exception {
 //        file.setDate(LocalDate.of(2019, 1, 9));
@@ -170,11 +238,11 @@ public class FileRestControllerMockTest {
 //                .andExpect(status().isBadRequest());
 //    }
 
-    /**
-     * Update file un success 2 mock test.
-     *
-     * @throws Exception the exception
-     */
+/**
+ * Update file un success 2 mock test.
+ *
+ * @throws Exception the exception
+ */
 //    @Test
 //    public void updateFileUnSuccess_2_MockTest() throws Exception {
 //        file.setDate(LocalDate.of(2019, 1, 10));
@@ -185,11 +253,11 @@ public class FileRestControllerMockTest {
 //                .andExpect(status().isInternalServerError());
 //    }
 
-    /**
-     * Delete file success 1 mock test.
-     *
-     * @throws Exception the exception
-     */
+/**
+ * Delete file success 1 mock test.
+ *
+ * @throws Exception the exception
+ */
 //    @Test
 //    public void deleteFileSuccess_1_MockTest() throws Exception {
 //        file.setDate(LocalDate.of(2019, 1, 11));
@@ -199,11 +267,11 @@ public class FileRestControllerMockTest {
 //                .andExpect(status().isOk());
 //    }
 
-    /**
-     * Delete file un success 1 mock test.
-     *
-     * @throws Exception the exception
-     */
+/**
+ * Delete file un success 1 mock test.
+ *
+ * @throws Exception the exception
+ */
 //    @Test
 //    public void deleteFileUnSuccess_1_MockTest() throws Exception {
 //        file.setDate(LocalDate.of(2019, 1, 12));
@@ -213,11 +281,11 @@ public class FileRestControllerMockTest {
 //                .andExpect(status().isBadRequest());
 //    }
 
-    /**
-     * Delete file un success 2 mock test.
-     *
-     * @throws Exception the exception
-     */
+/**
+ * Delete file un success 2 mock test.
+ *
+ * @throws Exception the exception
+ */
 //    @Test
 //    public void deleteFileUnSuccess_2_MockTest() throws Exception {
 //        file.setDate(LocalDate.of(2019, 1, 13));
@@ -226,4 +294,4 @@ public class FileRestControllerMockTest {
 //                .contentType(MediaType.APPLICATION_JSON_UTF8))
 //                .andExpect(status().isInternalServerError());
 //    }
-}
+//}

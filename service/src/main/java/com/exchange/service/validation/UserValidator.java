@@ -61,6 +61,11 @@ public class UserValidator {
         }
     }
 
+    /**
+     * Validate login.
+     *
+     * @param login the login
+     */
     public void validateLogin(String login) {
         if (!commonValidator.isValidString(login)) {
             throw new ValidationException(incorrectLogin);

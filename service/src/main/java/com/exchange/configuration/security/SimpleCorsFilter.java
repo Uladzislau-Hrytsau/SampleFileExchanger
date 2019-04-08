@@ -1,4 +1,4 @@
-package com.exchange.config.security;
+package com.exchange.configuration.security;
 
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;

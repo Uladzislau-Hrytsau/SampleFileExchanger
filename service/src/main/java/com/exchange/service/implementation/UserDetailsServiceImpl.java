@@ -28,6 +28,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
      * Instantiates a new User details service.
      *
      * @param userDetailsDao the user details dao
+     * @param userValidator  the user validator
      */
     @Autowired
     public UserDetailsServiceImpl(
@@ -41,7 +42,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(final String login) {
         userValidator.validateLogin(login);
         UserDetailsDto userDetailsDto = userDetailsDao.getUserDetailsByLogin(login);
-        return new com.exchange.config.security.userdetails.UserDetails(
+        return new com.exchange.configuration.security.userdetails.UserDetails(
                 userDetailsDto.getUserId(),
                 userDetailsDto.getUserName(),
                 userDetailsDto.getUserPassword(),

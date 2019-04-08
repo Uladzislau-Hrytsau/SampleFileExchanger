@@ -1,7 +1,7 @@
 package com.exchange.service;
 
 import com.exchange.dao.FileWriter;
-import com.exchange.exception.FileNotDeletedException;
+import com.exchange.dao.exception.FileNotDeletedException;
 import com.exchange.service.implementation.FileWriterServiceImpl;
 import org.junit.Assert;
 import org.junit.Test;

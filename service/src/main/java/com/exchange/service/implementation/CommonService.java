@@ -31,7 +31,6 @@ public class CommonService {
      */
     public Collection<GrantedAuthority> getAuthoritiesByAuthentication(final Authentication authentication) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-
         return userDetails.getAuthorities();
     }
 

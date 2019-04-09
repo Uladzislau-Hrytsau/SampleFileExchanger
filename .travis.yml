@@ -12,8 +12,7 @@ jdk:
   - oraclejdk8
 
 script:
-  - mvn clean package sonar:sonar cobertura:cobertura
-#  org.jacoco:jacoco-maven-plugin:prepare-agent
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar cobertura:cobertura
 
 cache:
   directories:

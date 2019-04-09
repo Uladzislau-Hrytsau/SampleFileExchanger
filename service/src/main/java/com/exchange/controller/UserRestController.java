@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
  * The type User rest controller.
  */
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-@RestController
+@RestController("/users")
 public class UserRestController {
 
     private final UserService userService;
@@ -36,7 +36,7 @@ public class UserRestController {
      * @return the users by page and size
      */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @GetMapping(value = "/users", params = {"page", "size"})
+    @GetMapping(params = {"page", "size"})
     @ResponseStatus(value = HttpStatus.OK)
     public Response getUsersByPageAndSize(
             @RequestParam(value = "page", required = false, defaultValue = "null") final Integer page,
@@ -49,7 +49,7 @@ public class UserRestController {
      *
      * @param user the user
      */
-    @PostMapping("/users")
+    @PostMapping
     @ResponseStatus(value = HttpStatus.CREATED)
     public void addUser(@RequestBody final User user) {
         userService.addUser(user);
@@ -61,7 +61,7 @@ public class UserRestController {
      * @param userUpdatingDto the user updating dto
      */
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    @PutMapping("/users")
+    @PutMapping
     @ResponseStatus(value = HttpStatus.OK)
     public void updateUser(@RequestBody final UserUpdatingDto userUpdatingDto) {
         userService.updateUser(userUpdatingDto);
@@ -73,7 +73,7 @@ public class UserRestController {
      * @param id the id
      */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @DeleteMapping(value = "/users", params = {"id"})
+    @DeleteMapping(params = {"id"})
     @ResponseStatus(value = HttpStatus.OK)
     public void deleteUser(@RequestParam(value = "id") final Long id) {
         userService.deleteUser(id);

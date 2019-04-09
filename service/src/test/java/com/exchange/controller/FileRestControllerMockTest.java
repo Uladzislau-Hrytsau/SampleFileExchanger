@@ -70,6 +70,47 @@ package com.exchange.controller;
  * <p>
  * Delete file un success 2 mock test.
  * @throws Exception the exception
+ * <p>
+ * Sets up.
+ * <p>
+ * Gets all files success 1 mock test.
+ * @throws Exception the exception
+ * <p>
+ * Gets file by id success 1 mock test.
+ * @throws Exception the exception
+ * <p>
+ * Gets file by id un success 1 mock test.
+ * @throws Exception the exception
+ * <p>
+ * Gets all files by user id success 1 mock test.
+ * @throws Exception the exception
+ * <p>
+ * Gets all files by user id un success 1 mock test.
+ * @throws Exception the exception
+ * <p>
+ * Add file success 1 mock test.
+ * @throws Exception the exception
+ * <p>
+ * Add file un success 1 mock test.
+ * @throws Exception the exception
+ * <p>
+ * Update file success 1 mock test.
+ * @throws Exception the exception
+ * <p>
+ * Update file un success 1 mock test.
+ * @throws Exception the exception
+ * <p>
+ * Update file un success 2 mock test.
+ * @throws Exception the exception
+ * <p>
+ * Delete file success 1 mock test.
+ * @throws Exception the exception
+ * <p>
+ * Delete file un success 1 mock test.
+ * @throws Exception the exception
+ * <p>
+ * Delete file un success 2 mock test.
+ * @throws Exception the exception
  */
 //@RunWith(MockitoJUnitRunner.class)
 //public class FileRestControllerMockTest {

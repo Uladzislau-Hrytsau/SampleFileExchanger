@@ -60,12 +60,12 @@ public class SecurityRestControllerMockTest {
     }
 
     /**
-     * Add folder correct folder structure dto and authentication.
+     * Add folder correct folder structure dto and authentication correct roles returned.
      *
      * @throws Exception the exception
      */
     @Test
-    public void addFolder_correctFolderStructureDtoAndAuthentication() throws Exception {
+    public void addFolder_correctFolderStructureDtoAndAuthentication_correctRolesReturned() throws Exception {
         given(roleServiceMock.getRolesByAuthentication(any(Authentication.class))).willReturn(CORRECT_ROLES);
         mockMvc.perform(get("/oauth/role")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)

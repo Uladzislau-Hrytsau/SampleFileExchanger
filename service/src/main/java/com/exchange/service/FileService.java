@@ -33,7 +33,7 @@ public interface FileService {
      * @return the long
      * @throws IOException the io exception
      */
-    Long addFile(FileDto fileDto, MultipartFile multipartFile, Authentication authentication) throws IOException;
+    void addFile(FileDto fileDto, MultipartFile multipartFile, Authentication authentication) throws IOException;
 
     /**
      * Update file.

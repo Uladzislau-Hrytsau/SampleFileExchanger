@@ -22,7 +22,7 @@ import javax.sql.DataSource;
 @PropertySource({
         "classpath:sql-queries.properties",
         "classpath:test-queries.properties",
-        "classpath:message.properties"})
+        "classpath:error-message.properties"})
 public class TestSpringDaoConfiguration {
 
     /**

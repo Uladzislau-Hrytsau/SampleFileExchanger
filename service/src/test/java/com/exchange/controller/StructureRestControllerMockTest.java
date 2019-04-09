@@ -111,4 +111,14 @@ public class StructureRestControllerMockTest {
         verifyNoMoreInteractions(structureServiceMock);
     }
 
+    @Test
+    public void getStructureByFolderIdAndCategories_nonFolderIdAndAuthentication_validationException() throws Exception {
+        mockMvc.perform(get("/structures")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .principal(authenticationMock))
+                .andExpect(status().isBadRequest());
+        verify(structureServiceMock, never()).getStructureAndCategoriesByFolderIdAndAuthentication(CORRECT_FOLDER_ID, authenticationMock);
+        verifyNoMoreInteractions(structureServiceMock);
+    }
+
 }

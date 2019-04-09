@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.*;
  * The type User rest controller.
  */
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-@RestController("/users")
+@RestController
+@RequestMapping("/users")
 public class UserRestController {
 
     private final UserService userService;

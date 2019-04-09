@@ -16,7 +16,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.Authentication;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
@@ -29,6 +28,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
@@ -61,8 +61,6 @@ public class UserRestControllerMockTest {
     private static final String ID_PARAM = "id";
     @Mock
     private UserService userServiceMock;
-    @Mock
-    private Authentication authenticationMock;
     @InjectMocks
     private UserRestController userRestController;
     private MockMvc mockMvc;
@@ -91,8 +89,23 @@ public class UserRestControllerMockTest {
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .param(PAGE_PARAM, String.valueOf(CORRECT_PAGE))
                 .param(SIZE_PARAM, String.valueOf(CORRECT_SIZE)))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(content().json(asJsonString(CORRECT_RESPONSE)));
         verify(userServiceMock, times(TIMES_ONE)).getUsersAndCountByPageAndSize(any(), any());
+        verifyNoMoreInteractions(userServiceMock);
+    }
+
+    /**
+     * Gets users by page and size non page and size validation exception.
+     *
+     * @throws Exception the exception
+     */
+    @Test
+    public void getUsersByPageAndSize_nonPageAndSize_validationException() throws Exception {
+        mockMvc.perform(get(USERS_URI)
+                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isBadRequest());
+        verify(userServiceMock, never()).getUsersAndCountByPageAndSize(any(), any());
         verifyNoMoreInteractions(userServiceMock);
     }
 
@@ -145,6 +158,20 @@ public class UserRestControllerMockTest {
     }
 
     /**
+     * Add user not user internal server exception.
+     *
+     * @throws Exception the exception
+     */
+    @Test
+    public void addUser_notUser_internalServerException() throws Exception {
+        mockMvc.perform(post(USERS_URI)
+                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isBadRequest());
+        verify(userServiceMock, never()).addUser(any());
+        verifyNoMoreInteractions(userServiceMock);
+    }
+
+    /**
      * Update user correct user updating dto.
      *
      * @throws Exception the exception
@@ -189,6 +216,20 @@ public class UserRestControllerMockTest {
                 .content(asJsonString(CORRECT_USER_UPDATING_DTO)))
                 .andExpect(status().isInternalServerError());
         verify(userServiceMock, times(TIMES_ONE)).updateUser(any());
+        verifyNoMoreInteractions(userServiceMock);
+    }
+
+    /**
+     * Update user non user updating dto internal server exception.
+     *
+     * @throws Exception the exception
+     */
+    @Test
+    public void updateUser_nonUserUpdatingDto_internalServerException() throws Exception {
+        mockMvc.perform(put(USERS_URI)
+                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isBadRequest());
+        verify(userServiceMock, never()).updateUser(any());
         verifyNoMoreInteractions(userServiceMock);
     }
 
@@ -253,6 +294,20 @@ public class UserRestControllerMockTest {
                 .param(ID_PARAM, String.valueOf(CORRECT_ID)))
                 .andExpect(status().isInternalServerError());
         verify(userServiceMock, times(TIMES_ONE)).deleteUser(any());
+        verifyNoMoreInteractions(userServiceMock);
+    }
+
+    /**
+     * Delete user non user id internal server exception.
+     *
+     * @throws Exception the exception
+     */
+    @Test
+    public void deleteUser_nonUserId_internalServerException() throws Exception {
+        mockMvc.perform(delete(USERS_URI)
+                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isBadRequest());
+        verify(userServiceMock, never()).deleteUser(any());
         verifyNoMoreInteractions(userServiceMock);
     }
 

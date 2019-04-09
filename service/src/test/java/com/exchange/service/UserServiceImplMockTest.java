@@ -40,7 +40,7 @@ public class UserServiceImplMockTest {
     private static final String CORRECT_LOGIN = "correctLogin";
     private static final String CORRECT_PASSWORD = "correctPassword";
     private static final String CORRECT_INFORMATION = "correctInformation";
-    private static final Boolean CORRECT_GENDER = Boolean.TRUE;
+    private static final Boolean CORRECT_GENDER = Boolean.FALSE;
     private static final LocalDate CORRECT_BIRTH_DATE = LocalDate.of(1000, 10, 10);
     private static final String CORRECT_ENCODE_PASSWORD = "810711ba-8589-4e54-9453-9df3e398a5c0";
     private static final User CORRECT_USER = new User(CORRECT_LOGIN, CORRECT_PASSWORD);

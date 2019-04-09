@@ -1,338 +1,108 @@
 package com.exchange.controller;
-//import com.exchange.controller.handler.RestErrorHandler;
-//import com.exchange.dao.User;
-//import com.exchange.exception.InternalServerException;
-//import com.exchange.exception.ValidationException;
-//import com.exchange.service.UserService;
-//import org.junit.Before;
-//import org.junit.Test;
-//import org.junit.runner.RunWith;
-//import org.mockito.InjectMocks;
-//import org.mockito.Mock;
-//import org.mockito.runners.MockitoJUnitRunner;
-//import org.springframework.http.MediaType;
-//import org.springframework.test.web.servlet.MockMvc;
-//import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-//
-//import java.time.LocalDate;
-//import java.util.Collections;
-//
-//import static com.exchange.controller.converter.JsonConverter.asJsonString;
-//import static org.mockito.BDDMockito.given;
-//import static org.mockito.Mockito.*;
-//import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-//import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-//import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-//import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import com.exchange.controller.handler.RestErrorHandler;
+import com.exchange.dao.File;
+import com.exchange.dao.Pagination;
+import com.exchange.exception.ValidationException;
+import com.exchange.service.FileService;
+import com.exchange.wrapper.Response;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
+
+import static com.exchange.controller.converter.JsonConverter.asJsonString;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+@RunWith(MockitoJUnitRunner.class)
+public class FileRestControllerMockTest {
+
+    public static final int TIMES_ONE = 1;
+    private static final String PAGE_PARAM = "page";
+    private static final String SIZE_PARAM = "size";
+    private static final String USERS_URI = "/files";
+    private static final Integer CORRECT_PAGE = 1;
+    private static final Integer CORRECT_SIZE = 2;
+    private static final Long CORRECT_COUNT = 2L;
+    private static final Long CORRECT_ID = 1L;
+    private static final File CORRECT_FILE = new File(
+            1L, 1L, 1L, "description",
+            "realName", "encodeName", LocalDate.of(1000, 10, 10));
+    private static final List<File> CORRECT_FILES = Arrays.asList(
+            CORRECT_FILE,
+            CORRECT_FILE);
+    private static final Pagination CORRECT_PAGINATION = new Pagination(CORRECT_COUNT);
+    private static final Response CORRECT_RESPONSE = new Response(
+            CORRECT_FILES,
+            CORRECT_PAGINATION);
+
+    @Mock
+    private FileService fileServiceMock;
+    @InjectMocks
+    private FileRestController fileRestController;
+    private MockMvc mockMvc;
+
+    /**
+     * Sets up.
+     */
+    @Before
+    public void setUp() {
+        mockMvc = MockMvcBuilders.standaloneSetup(fileRestController)
+                .setControllerAdvice(new RestErrorHandler())
+                .alwaysDo(print())
+                .build();
+    }
+
+    @Test
+    public void getUsersByPageAndSize_correctPageAndSize_correctResponseReturned() throws Exception {
+        given(fileServiceMock.getFilesAndCountByPageAndSize(any(Integer.class), any(Integer.class)))
+                .willReturn(CORRECT_RESPONSE);
+        mockMvc.perform(get(USERS_URI)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .param(PAGE_PARAM, String.valueOf(CORRECT_PAGE))
+                .param(SIZE_PARAM, String.valueOf(CORRECT_SIZE)))
+                .andExpect(status().isOk())
+                .andExpect(content().json(asJsonString(CORRECT_RESPONSE)));
+        verify(fileServiceMock, times(TIMES_ONE)).getFilesAndCountByPageAndSize(any(), any());
+        verifyNoMoreInteractions(fileServiceMock);
+    }
+
+    @Test
+    public void getUsersByPageAndSize_incorrectPageAndSize_validationException() throws Exception {
+        given(fileServiceMock.getFilesAndCountByPageAndSize(any(Integer.class), any(Integer.class)))
+                .willThrow(ValidationException.class);
+        mockMvc.perform(get(USERS_URI)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .param(PAGE_PARAM, String.valueOf(CORRECT_PAGE))
+                .param(SIZE_PARAM, String.valueOf(CORRECT_SIZE)))
+                .andExpect(status().isBadRequest());
+        verify(fileServiceMock, times(TIMES_ONE)).getFilesAndCountByPageAndSize(any(), any());
+        verifyNoMoreInteractions(fileServiceMock);
+    }
+
+    @Test
+    public void getUsersByPageAndSize_nonPageAndSize_badRequest() throws Exception {
+        mockMvc.perform(get(USERS_URI)
+                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isBadRequest());
+        verify(fileServiceMock, never()).getFilesAndCountByPageAndSize(any(), any());
+        verifyNoMoreInteractions(fileServiceMock);
+    }
 
 
-/**
- * The type File rest controller mock test.
- * <p>
- * Sets up.
- * <p>
- * Gets all files success 1 mock test.
- *
- * @throws Exception the exception
- * <p>
- * Gets file by id success 1 mock test.
- * @throws Exception the exception
- * <p>
- * Gets file by id un success 1 mock test.
- * @throws Exception the exception
- * <p>
- * Gets all files by user id success 1 mock test.
- * @throws Exception the exception
- * <p>
- * Gets all files by user id un success 1 mock test.
- * @throws Exception the exception
- * <p>
- * Add file success 1 mock test.
- * @throws Exception the exception
- * <p>
- * Add file un success 1 mock test.
- * @throws Exception the exception
- * <p>
- * Update file success 1 mock test.
- * @throws Exception the exception
- * <p>
- * Update file un success 1 mock test.
- * @throws Exception the exception
- * <p>
- * Update file un success 2 mock test.
- * @throws Exception the exception
- * <p>
- * Delete file success 1 mock test.
- * @throws Exception the exception
- * <p>
- * Delete file un success 1 mock test.
- * @throws Exception the exception
- * <p>
- * Delete file un success 2 mock test.
- * @throws Exception the exception
- * <p>
- * Sets up.
- * <p>
- * Gets all files success 1 mock test.
- * @throws Exception the exception
- * <p>
- * Gets file by id success 1 mock test.
- * @throws Exception the exception
- * <p>
- * Gets file by id un success 1 mock test.
- * @throws Exception the exception
- * <p>
- * Gets all files by user id success 1 mock test.
- * @throws Exception the exception
- * <p>
- * Gets all files by user id un success 1 mock test.
- * @throws Exception the exception
- * <p>
- * Add file success 1 mock test.
- * @throws Exception the exception
- * <p>
- * Add file un success 1 mock test.
- * @throws Exception the exception
- * <p>
- * Update file success 1 mock test.
- * @throws Exception the exception
- * <p>
- * Update file un success 1 mock test.
- * @throws Exception the exception
- * <p>
- * Update file un success 2 mock test.
- * @throws Exception the exception
- * <p>
- * Delete file success 1 mock test.
- * @throws Exception the exception
- * <p>
- * Delete file un success 1 mock test.
- * @throws Exception the exception
- * <p>
- * Delete file un success 2 mock test.
- * @throws Exception the exception
- */
-//@RunWith(MockitoJUnitRunner.class)
-//public class FileRestControllerMockTest {
-//    private static final String FILES_URL_QUERY = "/files";
-//    private static final String FILE_ID_URL_QUERY = "/file/{id}";
-//    private static final String FILES_USER_ID_URL_QUERY = "/files/{userId}";
-//    private static final String FILE_URL_QUERY = "/file";
-//    private Long FILE_ID = 1L;
-//    private Long USER_ID = 1L;
-//    private String FILE_URL = "url";
-//    private String FILE_DESCRIPTION = "description";
-//    private Long FILE_CATEGORY_ID = 1L;
-//    @Mock
-//    private FileService fileServiceMock;
-//    @InjectMocks
-//    private FileRestController fileRestController;
-//    private MockMvc mockMvc;
-//    private File file = new File(
-//            FILE_ID,
-//            USER_ID,
-//            FILE_URL,
-//            FILE_DESCRIPTION,
-//            FILE_CATEGORY_ID);
 
-/**
- * Sets up.
- */
-//    @Before
-//    public void setUp() {
-//        mockMvc = MockMvcBuilders.standaloneSetup(fileRestController)
-//                .setControllerAdvice(new RestErrorHandler())
-//                .alwaysDo(print())
-//                .build();
-//    }
-
-/**
- * Gets all files success 1 mock test.
- *
- * @throws Exception the exception
- */
-//    @Test
-//    public void getAllFilesSuccess_1_MockTest() throws Exception {
-//        file.setDate(LocalDate.of(2019, 1, 1));
-//        given(fileServiceMock.getAllFiles()).willReturn(Collections.singletonList(file));
-//        mockMvc.perform(get(FILES_URL_QUERY)
-//                .contentType(MediaType.APPLICATION_JSON_UTF8))
-//                .andExpect(status().isOk())
-//                .andExpect(content().json(asJsonString(Collections.singletonList(file))));
-//    }
-
-/**
- * Gets file by id success 1 mock test.
- *
- * @throws Exception the exception
- */
-//    @Test
-//    public void getFileByIdSuccess_1_MockTest() throws Exception {
-//        file.setDate(LocalDate.of(2019, 1, 2));
-//        given(fileServiceMock.getFileById(anyLong())).willReturn(file);
-//        mockMvc.perform(get(FILE_ID_URL_QUERY, anyLong())
-//                .contentType(MediaType.APPLICATION_JSON_UTF8))
-//                .andExpect(status().isOk())
-//                .andExpect(content().json(asJsonString(file)));
-//    }
-
-/**
- * Gets file by id un success 1 mock test.
- *
- * @throws Exception the exception
- */
-//    @Test
-//    public void getFileByIdUnSuccess_1_MockTest() throws Exception {
-//        file.setDate(LocalDate.of(2019, 1, 3));
-//        given(fileServiceMock.getFileById(anyLong())).willThrow(ValidationException.class);
-//        mockMvc.perform(get(FILE_ID_URL_QUERY, anyLong())
-//                .contentType(MediaType.APPLICATION_JSON_UTF8))
-//                .andExpect(status().isBadRequest());
-//    }
-
-/**
- * Gets all files by user id success 1 mock test.
- *
- * @throws Exception the exception
- */
-//    @Test
-//    public void getAllFilesByUserIdSuccess_1_MockTest() throws Exception {
-//        file.setDate(LocalDate.of(2019, 1, 4));
-//        given(fileServiceMock.getAllFilesByUserId(anyLong())).willReturn(Collections.singletonList(file));
-//        mockMvc.perform(get(FILES_USER_ID_URL_QUERY, anyLong())
-//                .contentType(MediaType.APPLICATION_JSON_UTF8))
-//                .andExpect(status().isOk())
-//                .andExpect(content().json(asJsonString(Collections.singletonList(file))));
-//    }
-
-/**
- * Gets all files by user id un success 1 mock test.
- *
- * @throws Exception the exception
- */
-//    @Test
-//    public void getAllFilesByUserIdUnSuccess_1_MockTest() throws Exception {
-//        file.setDate(LocalDate.of(2019, 1, 5));
-//        given(fileServiceMock.getAllFilesByUserId(anyLong())).willThrow(ValidationException.class);
-//        mockMvc.perform(get(FILES_USER_ID_URL_QUERY, anyLong())
-//                .contentType(MediaType.APPLICATION_JSON_UTF8))
-//                .andExpect(status().isBadRequest());
-//    }
-
-/**
- * Add file success 1 mock test.
- *
- * @throws Exception the exception
- */
-//    @Test
-//    public void addFileSuccess_1_MockTest() throws Exception {
-//        file.setDate(LocalDate.of(2019, 1, 6));
-//        given(fileServiceMock.addFile(any(File.class))).willReturn(anyLong());
-//        mockMvc.perform(post(FILE_URL_QUERY)
-//                .contentType(MediaType.APPLICATION_JSON_UTF8)
-//                .content(asJsonString(file)))
-//                .andExpect(status().isCreated());
-//    }
-
-/**
- * Add file un success 1 mock test.
- *
- * @throws Exception the exception
- */
-//    @Test
-//    public void addFileUnSuccess_1_MockTest() throws Exception {
-//        file.setDate(LocalDate.of(2019, 1, 7));
-//        given(fileServiceMock.addFile(any(File.class))).willThrow(ValidationException.class);
-//        mockMvc.perform(post(FILE_URL_QUERY)
-//                .contentType(MediaType.APPLICATION_JSON_UTF8)
-//                .content(asJsonString(file)))
-//                .andExpect(status().isBadRequest());
-//    }
-
-/**
- * Update file success 1 mock test.
- *
- * @throws Exception the exception
- */
-//    @Test
-//    public void updateFileSuccess_1_MockTest() throws Exception {
-//        file.setDate(LocalDate.of(2019, 1, 8));
-//        doNothing().when(fileServiceMock).updateFile(any(File.class));
-//        mockMvc.perform(put(FILE_URL_QUERY)
-//                .contentType(MediaType.APPLICATION_JSON_UTF8)
-//                .content(asJsonString(file)))
-//                .andExpect(status().isOk());
-//    }
-
-/**
- * Update file un success 1 mock test.
- *
- * @throws Exception the exception
- */
-//    @Test
-//    public void updateFileUnSuccess_1_MockTest() throws Exception {
-//        file.setDate(LocalDate.of(2019, 1, 9));
-//        doThrow(ValidationException.class).when(fileServiceMock).updateFile(any(File.class));
-//        mockMvc.perform(put(FILE_URL_QUERY)
-//                .contentType(MediaType.APPLICATION_JSON_UTF8)
-//                .content(asJsonString(file)))
-//                .andExpect(status().isBadRequest());
-//    }
-
-/**
- * Update file un success 2 mock test.
- *
- * @throws Exception the exception
- */
-//    @Test
-//    public void updateFileUnSuccess_2_MockTest() throws Exception {
-//        file.setDate(LocalDate.of(2019, 1, 10));
-//        doThrow(InternalServerException.class).when(fileServiceMock).updateFile(any(File.class));
-//        mockMvc.perform(put(FILE_URL_QUERY)
-//                .contentType(MediaType.APPLICATION_JSON_UTF8)
-//                .content(asJsonString(file)))
-//                .andExpect(status().isInternalServerError());
-//    }
-
-/**
- * Delete file success 1 mock test.
- *
- * @throws Exception the exception
- */
-//    @Test
-//    public void deleteFileSuccess_1_MockTest() throws Exception {
-//        file.setDate(LocalDate.of(2019, 1, 11));
-//        doNothing().when(fileServiceMock).deleteFile(anyLong());
-//        mockMvc.perform(delete(FILE_ID_URL_QUERY, anyLong())
-//                .contentType(MediaType.APPLICATION_JSON_UTF8))
-//                .andExpect(status().isOk());
-//    }
-
-/**
- * Delete file un success 1 mock test.
- *
- * @throws Exception the exception
- */
-//    @Test
-//    public void deleteFileUnSuccess_1_MockTest() throws Exception {
-//        file.setDate(LocalDate.of(2019, 1, 12));
-//        doThrow(ValidationException.class).when(fileServiceMock).deleteFile(anyLong());
-//        mockMvc.perform(delete(FILE_ID_URL_QUERY, anyLong())
-//                .contentType(MediaType.APPLICATION_JSON_UTF8))
-//                .andExpect(status().isBadRequest());
-//    }
-
-/**
- * Delete file un success 2 mock test.
- *
- * @throws Exception the exception
- */
-//    @Test
-//    public void deleteFileUnSuccess_2_MockTest() throws Exception {
-//        file.setDate(LocalDate.of(2019, 1, 13));
-//        doThrow(InternalServerException.class).when(fileServiceMock).deleteFile(anyLong());
-//        mockMvc.perform(delete(FILE_ID_URL_QUERY, anyLong())
-//                .contentType(MediaType.APPLICATION_JSON_UTF8))
-//                .andExpect(status().isInternalServerError());
-//    }
-//}
+}

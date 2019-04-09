@@ -19,6 +19,7 @@ import java.io.IOException;
  */
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
+@RequestMapping("/files")
 public class FileRestController {
 
     private final FileService fileService;
@@ -42,7 +43,7 @@ public class FileRestController {
      * @return the files by page and size
      */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @GetMapping(value = "/files", params = {"page", "size"})
+    @GetMapping(params = {"page", "size"})
     @ResponseStatus(value = HttpStatus.OK)
     public Response getFilesByPageAndSize(
             @RequestParam(value = "page", required = false, defaultValue = "null") final Integer page,
@@ -60,13 +61,13 @@ public class FileRestController {
      * @throws IOException the io exception
      */
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    @PostMapping(value = "/files", consumes = "multipart/form-data")
+    @PostMapping(consumes = "multipart/form-data")
     @ResponseStatus(value = HttpStatus.CREATED)
-    public Long addFile(
+    public void addFile(
             @RequestPart("multipartFile") final MultipartFile multipartFile,
             @RequestPart("metaData") final FileDto fileDto,
             final Authentication authentication) throws IOException {
-        return fileService.addFile(fileDto, multipartFile, authentication);
+        fileService.addFile(fileDto, multipartFile, authentication);
     }
 
     /**
@@ -75,7 +76,7 @@ public class FileRestController {
      * @param fileUpdatingDto the file updating dto
      */
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    @PutMapping("/files")
+    @PutMapping
     @ResponseStatus(value = HttpStatus.OK)
     public void updateFile(@RequestBody final FileUpdatingDto fileUpdatingDto) {
         fileService.updateFile(fileUpdatingDto);
@@ -89,7 +90,7 @@ public class FileRestController {
      * @param response the response
      * @throws IOException the io exception
      */
-    @GetMapping(value = "/files", params = {"fileId", "fileName"})
+    @GetMapping(params = {"fileId", "fileName"})
     @ResponseStatus(value = HttpStatus.OK)
     public void downloadFile(
             @RequestParam("fileId") final Long fileId,
@@ -104,7 +105,7 @@ public class FileRestController {
      * @param id the id
      */
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    @DeleteMapping(value = "/files", params = {"id"})
+    @DeleteMapping(params = {"id"})
     @ResponseStatus(value = HttpStatus.OK)
     public void deleteFile(
             @RequestParam(value = "id") final Long id) {
@@ -119,7 +120,7 @@ public class FileRestController {
      * @return the file information by file id
      */
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    @GetMapping(value = "/files", params = {"fileId"})
+    @GetMapping(params = {"fileId"})
     @ResponseStatus(value = HttpStatus.OK)
     public FileUpdatingDto getFileInformationByFileId(
             @RequestParam(value = "fileId") final Long fileId,

@@ -75,5 +75,4 @@ public class SecurityRestControllerMockTest {
         verify(roleServiceMock, times(TIMES_ONE)).getRolesByAuthentication(authenticationMock);
         verifyNoMoreInteractions(roleServiceMock);
     }
-
 }

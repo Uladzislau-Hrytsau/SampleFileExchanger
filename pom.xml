@@ -13,7 +13,6 @@
         <module>model</module>
         <module>dao</module>
         <module>service</module>
-        <module>front-end</module>
     </modules>
 
     <properties>

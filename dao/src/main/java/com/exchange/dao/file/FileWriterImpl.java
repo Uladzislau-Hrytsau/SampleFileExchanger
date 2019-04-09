@@ -32,7 +32,7 @@ public class FileWriterImpl implements FileWriter {
     public void saveFile(final MultipartFile multipartFile, final String filePath) {
         File file = new File(filePath);
         try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
-            if (!file.createNewFile()) {
+            if (file.createNewFile()) {
                 throw new FileNotCreatedException(errorCreatingFile);
             }
             fileOutputStream.write(multipartFile.getBytes());

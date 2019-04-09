@@ -98,7 +98,7 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public Long addFile(
+    public void addFile(
             final FileDto fileDto,
             final MultipartFile multipartFile,
             final Authentication authentication) throws IOException {
@@ -112,7 +112,6 @@ public class FileServiceImpl implements FileService {
         Long fileId = fileDao.addFile(fileDto);
         categoryService.addFileCategories(fileDto.getCategories(), fileId, userId);
         fileWriterService.saveFile(multipartFile, encodeName);
-        return fileId;
     }
 
     @Override

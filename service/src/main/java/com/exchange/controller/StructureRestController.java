@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
+@RequestMapping("/structures")
 public class StructureRestController {
 
     private final StructureService structureService;
@@ -35,7 +36,7 @@ public class StructureRestController {
      * @return the structure by folder id and categories
      */
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    @GetMapping(value = "/structures", params = {"folderId"})
+    @GetMapping(params = {"folderId"})
     @ResponseStatus(value = HttpStatus.OK)
     public StructureDto getStructureByFolderIdAndCategories(
             @RequestParam(value = "folderId") final Long folderId,

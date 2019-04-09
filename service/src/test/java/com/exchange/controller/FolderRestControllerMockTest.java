@@ -109,6 +109,20 @@ public class FolderRestControllerMockTest {
     }
 
     /**
+     * Add folder bad request.
+     *
+     * @throws Exception the exception
+     */
+    @Test
+    public void addFolder_badRequest() throws Exception {
+        mockMvc.perform(post(FOLDERS_URI)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .principal(authenticationMock));
+        verify(folderServiceMock, never()).addFolder(any(), any());
+        verifyNoMoreInteractions(folderServiceMock);
+    }
+
+    /**
      * Update folder name correct folder structure dto and authentication.
      *
      * @throws Exception the exception
@@ -156,6 +170,21 @@ public class FolderRestControllerMockTest {
                 .principal(authenticationMock))
                 .andExpect(status().isInternalServerError());
         verify(folderServiceMock, times(TIMES_ONE)).updateFolder(any(), any());
+        verifyNoMoreInteractions(folderServiceMock);
+    }
+
+    /**
+     * Update folder name non folder structure dto and authentication bad request.
+     *
+     * @throws Exception the exception
+     */
+    @Test
+    public void updateFolderName_nonFolderStructureDtoAndAuthentication_badRequest() throws Exception {
+        mockMvc.perform(put(FOLDERS_URI)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .principal(authenticationMock))
+                .andExpect(status().isBadRequest());
+        verify(folderServiceMock, never()).updateFolder(any(), any());
         verifyNoMoreInteractions(folderServiceMock);
     }
 
@@ -217,6 +246,23 @@ public class FolderRestControllerMockTest {
      */
     @Test
     public void deleteFolder_internalServerException() throws Exception {
+        doThrow(InternalServerException.class).when(folderServiceMock).deleteByFolderIdAndAuthentication(any(Long.class), any(Authentication.class));
+        mockMvc.perform(delete(FOLDERS_URI)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .param(FOLDER_ID, CORRECT_FOLDER_ID)
+                .principal(authenticationMock))
+                .andExpect(status().isInternalServerError());
+        verify(folderServiceMock, times(TIMES_ONE)).deleteByFolderIdAndAuthentication(any(), any());
+        verifyNoMoreInteractions(folderServiceMock);
+    }
+
+    /**
+     * Delete folder non folder id and authentication bad request.
+     *
+     * @throws Exception the exception
+     */
+    @Test
+    public void deleteFolder_nonFolderIdAndAuthentication_badRequest() throws Exception {
         doThrow(InternalServerException.class).when(folderServiceMock).deleteByFolderIdAndAuthentication(any(Long.class), any(Authentication.class));
         mockMvc.perform(delete(FOLDERS_URI)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)

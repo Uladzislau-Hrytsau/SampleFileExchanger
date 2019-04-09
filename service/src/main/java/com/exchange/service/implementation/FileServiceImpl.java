@@ -138,11 +138,11 @@ public class FileServiceImpl implements FileService {
         String encodedFileName = fileDao.getFileNameByFileId(fileId);
         java.io.File file = fileWriterService.getFileByName(encodedFileName);
         this.buildFileDownloadResponse(response, fileName, (int) file.length());
-
         FileInputStream fileInputStream = new FileInputStream(file);
         InputStream inputStream = new BufferedInputStream(fileInputStream);
         ServletOutputStream outputStream = response.getOutputStream();
-
+        fileInputStream.close();
+        inputStream.close();
         if (FileCopyUtils.copy(inputStream, outputStream) != inputStream.read()) {
             throw new InternalServerException(downloadError);
         }

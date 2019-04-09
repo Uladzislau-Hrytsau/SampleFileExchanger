@@ -269,6 +269,7 @@
                     <formats>
                         <format>html</format>
                         <format>xml</format>
+                        <format>java</format>
                     </formats>
                     <check />
                 </configuration>

@@ -12,12 +12,6 @@ public class FileNotWrittenException extends RuntimeException {
 
     /**
      * Instantiates a new File not written exception.
-     */
-    public FileNotWrittenException() {
-    }
-
-    /**
-     * Instantiates a new File not written exception.
      *
      * @param message the message
      */

@@ -52,12 +52,11 @@ public class FileRestController {
     }
 
     /**
-     * Add file long.
+     * Add file.
      *
      * @param multipartFile  the multipart file
      * @param fileDto        the file dto
      * @param authentication the authentication
-     * @return the long
      * @throws IOException the io exception
      */
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
@@ -88,15 +87,15 @@ public class FileRestController {
      * @param fileId   the file id
      * @param fileName the file name
      * @param response the response
-     * @throws IOException the io exception
      */
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @GetMapping(params = {"fileId", "fileName"})
     @ResponseStatus(value = HttpStatus.OK)
     public void downloadFile(
             @RequestParam("fileId") final Long fileId,
             @RequestParam("fileName") final String fileName,
-            final HttpServletResponse response) throws IOException {
-        fileService.downloadFileByFileId(fileId, fileName, response);
+            final HttpServletResponse response) {
+        fileService.downloadFileByFileIdAndFileName(fileId, fileName, response);
     }
 
     /**

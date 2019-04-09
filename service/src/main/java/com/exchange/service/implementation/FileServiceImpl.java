@@ -129,21 +129,20 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public void downloadFileByFileId(
+    public void downloadFileByFileIdAndFileName(
             final Long fileId,
             final String fileName,
-            final HttpServletResponse response) throws IOException {
+            final HttpServletResponse response) {
         fileValidator.validateName(fileName);
         fileValidator.validateFileId(fileId);
         String encodedFileName = fileDao.getFileNameByFileId(fileId);
         java.io.File file = fileWriterService.getFileByName(encodedFileName);
         this.buildFileDownloadResponse(response, fileName, (int) file.length());
-        FileInputStream fileInputStream = new FileInputStream(file);
-        InputStream inputStream = new BufferedInputStream(fileInputStream);
-        ServletOutputStream outputStream = response.getOutputStream();
-        fileInputStream.close();
-        inputStream.close();
-        if (FileCopyUtils.copy(inputStream, outputStream) != inputStream.read()) {
+        try (FileInputStream fileInputStream = new FileInputStream(file);
+             InputStream inputStream = new BufferedInputStream(fileInputStream);
+             ServletOutputStream outputStream = response.getOutputStream()) {
+            FileCopyUtils.copy(inputStream, outputStream);
+        } catch (IOException e) {
             throw new InternalServerException(downloadError);
         }
     }

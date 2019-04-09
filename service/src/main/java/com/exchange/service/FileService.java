@@ -25,12 +25,11 @@ public interface FileService {
     Response getFilesAndCountByPageAndSize(Integer page, Integer size);
 
     /**
-     * Add file long.
+     * Add file.
      *
      * @param fileDto        the file dto
      * @param multipartFile  the multipart file
      * @param authentication the authentication
-     * @return the long
      * @throws IOException the io exception
      */
     void addFile(FileDto fileDto, MultipartFile multipartFile, Authentication authentication) throws IOException;
@@ -43,14 +42,13 @@ public interface FileService {
     void updateFile(FileUpdatingDto fileUpdatingDto);
 
     /**
-     * Download file by file id.
+     * Download file by file id and file name.
      *
      * @param fileId   the file id
      * @param fileName the file name
      * @param response the response
-     * @throws IOException the io exception
      */
-    void downloadFileByFileId(Long fileId, String fileName, final HttpServletResponse response) throws IOException;
+    void downloadFileByFileIdAndFileName(Long fileId, String fileName, final HttpServletResponse response);
 
     /**
      * Delete file.

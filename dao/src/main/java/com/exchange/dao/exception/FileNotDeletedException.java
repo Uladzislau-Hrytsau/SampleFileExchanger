@@ -12,12 +12,6 @@ public class FileNotDeletedException extends RuntimeException {
 
     /**
      * Instantiates a new File not deleted exception.
-     */
-    public FileNotDeletedException() {
-    }
-
-    /**
-     * Instantiates a new File not deleted exception.
      *
      * @param message the message
      */

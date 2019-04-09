@@ -13,9 +13,6 @@ jdk:
 
 script:
   - mvn clean package sonar:sonar
-#  - cobertura:cobertura
-#  - org.jacoco:jacoco-maven-plugin:prepare-agent
-#  - cobertura:cobertura
 
 cache:
   directories:

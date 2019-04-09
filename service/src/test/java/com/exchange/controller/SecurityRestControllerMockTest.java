@@ -32,8 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class SecurityRestControllerMockTest {
 
     private static final Integer TIMES_ONE = 1;
-    private static final String OAUTH_URI = "/oauth";
-    private static final String ROLE_URI = "/role";
+    private static final String OAUTH_ROLE_URI = "/oauth/role";
     private static final String ROLE_USER = "ROLE_USER";
     private static final String ROLE_ADMIN = "ROLE_ADMIN";
     private static final Set<String> CORRECT_ROLES = new HashSet<>(Arrays.asList(
@@ -66,8 +65,9 @@ public class SecurityRestControllerMockTest {
      */
     @Test
     public void addFolder_correctFolderStructureDtoAndAuthentication_correctRolesReturned() throws Exception {
-        given(roleServiceMock.getRolesByAuthentication(any(Authentication.class))).willReturn(CORRECT_ROLES);
-        mockMvc.perform(get("/oauth/role")
+        given(roleServiceMock.getRolesByAuthentication(any(Authentication.class)))
+                .willReturn(CORRECT_ROLES);
+        mockMvc.perform(get(OAUTH_ROLE_URI)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .principal(authenticationMock))
                 .andExpect(status().isOk())

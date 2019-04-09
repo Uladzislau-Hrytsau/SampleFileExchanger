@@ -96,12 +96,12 @@ public class UserRestControllerMockTest {
     }
 
     /**
-     * Gets users by page and size non page and size validation exception.
+     * Gets users by page and size non page and size bad request.
      *
      * @throws Exception the exception
      */
     @Test
-    public void getUsersByPageAndSize_nonPageAndSize_validationException() throws Exception {
+    public void getUsersByPageAndSize_nonPageAndSize_badRequest() throws Exception {
         mockMvc.perform(get(USERS_URI)
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isBadRequest());
@@ -158,12 +158,12 @@ public class UserRestControllerMockTest {
     }
 
     /**
-     * Add user not user internal server exception.
+     * Add user non user bad request.
      *
      * @throws Exception the exception
      */
     @Test
-    public void addUser_notUser_internalServerException() throws Exception {
+    public void addUser_nonUser_badRequest() throws Exception {
         mockMvc.perform(post(USERS_URI)
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isBadRequest());
@@ -220,12 +220,12 @@ public class UserRestControllerMockTest {
     }
 
     /**
-     * Update user non user updating dto internal server exception.
+     * Update user non user updating dto bad request.
      *
      * @throws Exception the exception
      */
     @Test
-    public void updateUser_nonUserUpdatingDto_internalServerException() throws Exception {
+    public void updateUser_nonUserUpdatingDto_badRequest() throws Exception {
         mockMvc.perform(put(USERS_URI)
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isBadRequest());
@@ -298,12 +298,12 @@ public class UserRestControllerMockTest {
     }
 
     /**
-     * Delete user non user id internal server exception.
+     * Delete user non user id bad request.
      *
      * @throws Exception the exception
      */
     @Test
-    public void deleteUser_nonUserId_internalServerException() throws Exception {
+    public void deleteUser_nonUserId_badRequest() throws Exception {
         mockMvc.perform(delete(USERS_URI)
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isBadRequest());

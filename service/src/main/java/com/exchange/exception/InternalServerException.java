@@ -12,12 +12,6 @@ public class InternalServerException extends RuntimeException {
 
     /**
      * Instantiates a new Internal server exception.
-     */
-    public InternalServerException() {
-    }
-
-    /**
-     * Instantiates a new Internal server exception.
      *
      * @param message the message
      */

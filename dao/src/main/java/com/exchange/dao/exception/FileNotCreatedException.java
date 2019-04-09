@@ -12,12 +12,6 @@ public class FileNotCreatedException extends RuntimeException {
 
     /**
      * Instantiates a new File not created exception.
-     */
-    public FileNotCreatedException() {
-    }
-
-    /**
-     * Instantiates a new File not created exception.
      *
      * @param message the message
      */

@@ -2,7 +2,6 @@ package com.exchange.dao.file;
 
 import com.exchange.dao.FileWriter;
 import com.exchange.dao.exception.FileNotCreatedException;
-import com.exchange.dao.exception.FileNotDeletedException;
 import com.exchange.dao.exception.FileNotExistException;
 import com.exchange.dao.exception.FileNotWrittenException;
 import org.springframework.beans.factory.annotation.Value;
@@ -43,11 +42,7 @@ public class FileWriterImpl implements FileWriter {
 
     @Override
     public Boolean deleteFileByPath(final String path) {
-        File file = new File(path);
-        if (!file.delete()) {
-            throw new FileNotDeletedException(errorDeletingFile);
-        }
-        return true;
+        return new File(path).delete();
     }
 
     @Override

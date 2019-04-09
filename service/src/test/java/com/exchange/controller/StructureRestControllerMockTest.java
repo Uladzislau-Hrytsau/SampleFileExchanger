@@ -94,12 +94,12 @@ public class StructureRestControllerMockTest {
     }
 
     /**
-     * Gets structure by folder id and categories correct folder id and authentication validation exception.
+     * Gets structure by folder id and categories incorrect folder id and authentication validation exception.
      *
      * @throws Exception the exception
      */
     @Test
-    public void getStructureByFolderIdAndCategories_correctFolderIdAndAuthentication_validationException() throws Exception {
+    public void getStructureByFolderIdAndCategories_incorrectFolderIdAndAuthentication_validationException() throws Exception {
         given(structureServiceMock.getStructureAndCategoriesByFolderIdAndAuthentication(any(Long.class), any(Authentication.class)))
                 .willThrow(ValidationException.class);
         mockMvc.perform(get("/structures")
@@ -111,11 +111,15 @@ public class StructureRestControllerMockTest {
         verifyNoMoreInteractions(structureServiceMock);
     }
 
+    /**
+     * Gets structure by folder id and categories non folder id and authentication bad request.
+     *
+     * @throws Exception the exception
+     */
     @Test
-    public void getStructureByFolderIdAndCategories_nonFolderIdAndAuthentication_validationException() throws Exception {
+    public void getStructureByFolderIdAndCategories_nonFolderIdAndAuthentication_badRequest() throws Exception {
         mockMvc.perform(get("/structures")
-                .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .principal(authenticationMock))
+                .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isBadRequest());
         verify(structureServiceMock, never()).getStructureAndCategoriesByFolderIdAndAuthentication(CORRECT_FOLDER_ID, authenticationMock);
         verifyNoMoreInteractions(structureServiceMock);

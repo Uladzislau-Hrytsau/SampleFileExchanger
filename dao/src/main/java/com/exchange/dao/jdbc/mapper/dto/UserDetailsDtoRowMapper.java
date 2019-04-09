@@ -9,6 +9,8 @@ import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
 
+import static com.exchange.dao.jdbc.UserDetailsDaoImpl.*;
+
 /**
  * The type User details dto row mapper.
  */
@@ -18,12 +20,12 @@ public class UserDetailsDtoRowMapper implements RowMapper<UserDetailsDto> {
     @Override
     public UserDetailsDto mapRow(final ResultSet rs, final int rowNum) throws SQLException {
         UserDetailsDto userDetailsDto = new UserDetailsDto();
-        userDetailsDto.setUserId(rs.getLong("id"));
-        userDetailsDto.setUserName(rs.getString("user_name"));
-        userDetailsDto.setUserPassword(rs.getString("user_password"));
+        userDetailsDto.setUserId(rs.getLong(ID));
+        userDetailsDto.setUserName(rs.getString(USER_NAME));
+        userDetailsDto.setUserPassword(rs.getString(USER_PASSWORD));
         Set<String> set = new HashSet<>();
         do {
-            set.add(rs.getString("role"));
+            set.add(rs.getString(USER_ROLE));
         } while (rs.next());
         userDetailsDto.setRoles(set);
         return userDetailsDto;

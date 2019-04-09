@@ -137,21 +137,6 @@ public class FileRestControllerMockTest {
         verifyNoMoreInteractions(fileServiceMock);
     }
 
-//    @Test
-//    public void addFile_correctPageAndSize_correctResponseReturned() throws Exception {
-//        MockMultipartFile mockMultipartFile1 = new MockMultipartFile(
-//                "fileName", "originalName", MediaType.MULTIPART_FORM_DATA_VALUE, "fileContent".getBytes());
-//        FileDto fileDto = new FileDto(1L, 1L, "desc", "realName", "encodeName", LocalDate.of(1000, 10, 10));
-//        doNothing().when(fileServiceMock).addFile(any(FileDto.class), any(MultipartFile.class), any(Authentication.class));
-//        ObjectMapper mapper = new ObjectMapper();
-//        mockMvc.perform(multipart(FILES_URI)
-//                .file("multipartFile", mockMultipartFile1.getBytes())
-//                .part(new MockPart("metaData", mapper.writeValueAsBytes(asJsonString(fileDto))))
-//                .principal(authenticationMock)
-//                .contentType(MediaType.MULTIPART_FORM_DATA))
-//                .andExpect(status().isCreated());
-//    }
-
     /**
      * Update file correct file updating dto.
      *

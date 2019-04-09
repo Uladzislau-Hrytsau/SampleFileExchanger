@@ -21,6 +21,8 @@ import java.util.Set;
 @Repository
 public class CategoryDaoImpl implements CategoryDao {
 
+    public static final String ID = "id";
+    public static final String CATEGORY = "category";
     private static final String USER_ID = "user_id";
     private static final String CATEGORY_ID = "category_id";
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;

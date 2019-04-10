@@ -15,7 +15,7 @@ public class FileNotCreatedException extends RuntimeException {
      *
      * @param message the message
      */
-    public FileNotCreatedException(String message) {
+    public FileNotCreatedException(final String message) {
         super(message);
         LOGGER.error(message);
     }

@@ -15,5 +15,4 @@ public interface CategoryService {
      * @param userId     the user id
      */
     void addFileCategories(Set<Long> categories, Long fileId, Long userId);
-
 }

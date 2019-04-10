@@ -45,5 +45,4 @@ public interface UserService {
      * @return the user count
      */
     Long getUserCount();
-
 }

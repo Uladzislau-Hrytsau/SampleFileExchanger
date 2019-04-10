@@ -34,5 +34,4 @@ public class ResourceServerOAuth2Config
                 .antMatchers(ALL_ENDPOINTS).access(HAS_ROLE_ADMIN_OR_HAS_ROLE_USER);
 
     }
-
 }

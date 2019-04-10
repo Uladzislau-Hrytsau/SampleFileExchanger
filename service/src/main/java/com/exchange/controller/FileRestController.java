@@ -126,5 +126,4 @@ public class FileRestController {
             final Authentication authentication) {
         return fileService.getFileInformationByFileIdAndAuthentication(fileId, authentication);
     }
-
 }

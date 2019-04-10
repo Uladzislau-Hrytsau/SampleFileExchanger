@@ -13,5 +13,4 @@ public interface RoleDao {
      * @return the boolean
      */
     Boolean addUserRole(Long userId, Integer roleId);
-
 }

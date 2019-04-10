@@ -40,5 +40,4 @@ public interface FileWriterService {
      * @param fileNames the file names
      */
     void deleteFilesByNames(List<String> fileNames);
-
 }

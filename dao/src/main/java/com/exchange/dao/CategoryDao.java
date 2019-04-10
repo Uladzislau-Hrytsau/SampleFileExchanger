@@ -35,5 +35,4 @@ public interface CategoryDao {
      * @return the categories by user id
      */
     List<CategoryDto> getCategoriesByUserId(Long userId);
-
 }

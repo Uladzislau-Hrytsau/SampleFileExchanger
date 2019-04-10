@@ -23,5 +23,4 @@ public class FileConfiguration {
         multipartResolver.setMaxUploadSize(Long.MAX_VALUE);
         return multipartResolver;
     }
-
 }

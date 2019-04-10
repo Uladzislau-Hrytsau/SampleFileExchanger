@@ -41,5 +41,4 @@ public class SecurityRestController {
     public Set<String> getUserRole(final Authentication authentication) {
         return roleService.getRolesByAuthentication(authentication);
     }
-
 }

@@ -43,5 +43,4 @@ public class StructureRestController {
             final Authentication authentication) {
         return structureService.getStructureAndCategoriesByFolderIdAndAuthentication(folderId, authentication);
     }
-
 }

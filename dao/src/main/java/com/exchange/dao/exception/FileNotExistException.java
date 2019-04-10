@@ -15,7 +15,7 @@ public class FileNotExistException extends RuntimeException {
      *
      * @param message the message
      */
-    public FileNotExistException(String message) {
+    public FileNotExistException(final String message) {
         super(message);
         LOGGER.error(message);
     }

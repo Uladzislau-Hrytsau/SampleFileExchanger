@@ -78,5 +78,4 @@ public class JdbcConfiguration {
         dataSourceTransactionManager.setDataSource(dataSource());
         return dataSourceTransactionManager;
     }
-
 }

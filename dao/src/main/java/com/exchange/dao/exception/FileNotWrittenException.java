@@ -15,7 +15,7 @@ public class FileNotWrittenException extends RuntimeException {
      *
      * @param message the message
      */
-    public FileNotWrittenException(String message) {
+    public FileNotWrittenException(final String message) {
         super(message);
         LOGGER.error(message);
     }

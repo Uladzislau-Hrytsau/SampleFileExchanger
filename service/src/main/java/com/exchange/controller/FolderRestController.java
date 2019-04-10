@@ -72,7 +72,6 @@ public class FolderRestController {
             final Authentication authentication) {
         folderService.deleteByFolderIdAndAuthentication(folderId, authentication);
     }
-
 }
 
 

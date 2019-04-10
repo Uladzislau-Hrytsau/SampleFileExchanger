@@ -60,5 +60,4 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         userDetailsDto.getRoles().forEach(item -> roles.add(new SimpleGrantedAuthority(item)));
         return roles;
     }
-
 }

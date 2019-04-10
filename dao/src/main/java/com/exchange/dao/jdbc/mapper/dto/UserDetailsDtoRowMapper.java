@@ -30,5 +30,4 @@ public class UserDetailsDtoRowMapper implements RowMapper<UserDetailsDto> {
         userDetailsDto.setRoles(set);
         return userDetailsDto;
     }
-
 }

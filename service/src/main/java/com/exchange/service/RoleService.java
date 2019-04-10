@@ -28,5 +28,4 @@ public interface RoleService {
      * @param roleId the role id
      */
     void addUserRole(Long userId, Integer roleId);
-
 }

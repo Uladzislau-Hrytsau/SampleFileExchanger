@@ -56,5 +56,4 @@ public interface UserDao {
      * @return the user count
      */
     Long getUserCount();
-
 }

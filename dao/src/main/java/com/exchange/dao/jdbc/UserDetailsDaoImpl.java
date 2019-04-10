@@ -46,5 +46,4 @@ public class UserDetailsDaoImpl implements UserDetailsDao {
         parameterSource.addValue(USER_NAME, login);
         return namedParameterJdbcTemplate.queryForObject(selectUserDetailsByLoginSql, parameterSource, userDetailsDtoRowMapper);
     }
-
 }

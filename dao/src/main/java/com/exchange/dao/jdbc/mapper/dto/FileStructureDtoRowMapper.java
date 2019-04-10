@@ -23,5 +23,4 @@ public class FileStructureDtoRowMapper implements RowMapper<FileStructureDto> {
         fileStructureDto.setName(rs.getString(REAL_NAME));
         return fileStructureDto;
     }
-
 }

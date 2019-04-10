@@ -149,5 +149,4 @@ public class UserDaoImpl implements UserDao {
         parameterSource.addValue(USER_BIRTH_DATE, birthDate);
         parameterSource.addValue(USER_INFORMATION, information);
     }
-
 }

@@ -16,5 +16,4 @@ public interface StructureService {
      * @return the structure and categories by folder id and authentication
      */
     StructureDto getStructureAndCategoriesByFolderIdAndAuthentication(Long folderId, Authentication authentication);
-
 }

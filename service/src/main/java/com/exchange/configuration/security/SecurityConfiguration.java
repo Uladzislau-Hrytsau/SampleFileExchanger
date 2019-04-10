@@ -109,5 +109,4 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         store.setTokenStore(tokenStore);
         return store;
     }
-
 }

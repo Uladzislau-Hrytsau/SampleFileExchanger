@@ -134,5 +134,4 @@ public class RestErrorHandler extends ResponseEntityExceptionHandler {
         response.setMessage(Collections.singletonList(ex.getMessage()));
         return response;
     }
-
 }

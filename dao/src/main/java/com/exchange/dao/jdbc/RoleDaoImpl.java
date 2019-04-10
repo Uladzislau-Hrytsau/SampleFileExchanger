@@ -35,5 +35,4 @@ public class RoleDaoImpl implements RoleDao {
         parameterSource.addValue(ROLE_ID, roleId);
         return namedParameterJdbcTemplate.update(insertRoleSql, parameterSource) == 1;
     }
-
 }

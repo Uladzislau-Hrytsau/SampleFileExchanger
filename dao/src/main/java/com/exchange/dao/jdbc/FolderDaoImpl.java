@@ -102,5 +102,4 @@ public class FolderDaoImpl implements FolderDao {
         parameterSource.addValue(ID, id);
         parameterSource.addValue(USER_ID, userId);
     }
-
 }

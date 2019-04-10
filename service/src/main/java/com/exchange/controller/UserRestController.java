@@ -79,5 +79,4 @@ public class UserRestController {
     public void deleteUser(@RequestParam(value = "id") final Long id) {
         userService.deleteUser(id);
     }
-
 }

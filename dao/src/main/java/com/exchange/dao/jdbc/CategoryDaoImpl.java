@@ -66,5 +66,4 @@ public class CategoryDaoImpl implements CategoryDao {
         parameterSource.addValue(USER_ID, userId);
         return namedParameterJdbcTemplate.query(getCategoriesByUserIdSql, parameterSource, categoryDtoRowMapper);
     }
-
 }

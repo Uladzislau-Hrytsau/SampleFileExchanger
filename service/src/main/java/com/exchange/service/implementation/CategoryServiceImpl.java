@@ -70,5 +70,4 @@ public class CategoryServiceImpl implements CategoryService {
         categories.forEach(item -> fileCategoryDtos.add(new FileCategoryDto(item, fileId)));
         return fileCategoryDtos;
     }
-
 }

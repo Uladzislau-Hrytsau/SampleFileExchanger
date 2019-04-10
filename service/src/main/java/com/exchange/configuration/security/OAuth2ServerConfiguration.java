@@ -84,5 +84,4 @@ class OAuth2ServerConfiguration extends AuthorizationServerConfigurerAdapter {
     public TokenStore tokenStore() {
         return new InMemoryTokenStore();
     }
-
 }

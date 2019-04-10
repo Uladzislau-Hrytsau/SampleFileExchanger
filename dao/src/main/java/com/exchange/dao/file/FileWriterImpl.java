@@ -46,7 +46,7 @@ public class FileWriterImpl implements FileWriter {
     }
 
     @Override
-    public File getFileByName(String fileName) {
+    public File getFileByName(final String fileName) {
         File file = new File(fileName);
         if (!file.exists()) {
             throw new FileNotExistException(errorGettingFile);

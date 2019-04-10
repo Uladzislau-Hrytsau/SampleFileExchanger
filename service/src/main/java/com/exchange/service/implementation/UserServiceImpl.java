@@ -123,5 +123,4 @@ public class UserServiceImpl implements UserService {
     public Long getUserCount() {
         return userDao.getUserCount();
     }
-
 }

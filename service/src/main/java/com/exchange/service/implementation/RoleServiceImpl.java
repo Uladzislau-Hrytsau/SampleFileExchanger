@@ -65,5 +65,4 @@ public class RoleServiceImpl implements RoleService {
         grantedAuthorities.forEach(item -> roles.add(item.getAuthority()));
         return roles;
     }
-
 }

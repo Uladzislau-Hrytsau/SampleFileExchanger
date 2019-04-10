@@ -1,35 +1,40 @@
 <template>
-  <div>
+  <div class="container-fluid">
     <mdb-container>
-      <mdb-row>
-        <mdb-col size="12" class="text-center mb-5">
-          <mdb-modal-body class="grey-text">
-            <mdb-input size="sm" label="Password" icon="key" group type="password" validate error="wrong"
-                       success="right" required v-model="userNew.password"/>
-            <mdb-input size="sm" label="Birth date" icon="fas fa-birthday-cake" group type="date" validate error="wrong"
-                       success="right" required v-model="userNew.birthDate"/>
-            <mdb-input size="sm" label="About yourself" icon="fas fa-info" group type="text" validate error="wrong"
-                       success="right" required v-model="userNew.information"/>
-            <b-form-group label="Gender">
-              <b-form-radio-group v-model="selected"
-                                  :options="options"
+      <mdb-modal v-if="enabledUserUpdate" @close="cancel" size="xl" class="text-center" dark>
+        <mdb-modal-header center>
+          <p class="heading">Are you sure you want to update information about the user?</p>
+        </mdb-modal-header>
+        <mdb-modal-body>
+          <mdb-input size="sm" icon="key" group type="password" required v-model="newUser.password"
+                     v-bind:label="user.password"/>
+          <mdb-input size="sm" icon="fas fa-birthday-cake" group type="date" required v-model="newUser.birthDate"
+                     v-bind:label="user.birthDate"/>
+          <mdb-input size="sm" icon="fas fa-info" group type="text" required v-model="newUser.information"
+                     v-bind:label="user.information"/>
+          <div>
+            <b-form-group v-bind:label="user.gender ? 'Male' : 'Female'">
+              <b-form-radio-group size="sm" v-model="newUser.gender"
+                                  :options="genders"
                                   name="radioInline">
               </b-form-radio-group>
             </b-form-group>
-          </mdb-modal-body>
-
-          <mdb-modal-footer>
-            <mdb-btn color="primary" v-on:click="saveCustomer">update</mdb-btn>
-          </mdb-modal-footer>
-        </mdb-col>
-      </mdb-row>
+          </div>
+        </mdb-modal-body>
+        <mdb-modal-footer center>
+          <mdb-btn outline="dark" @click="approve">Yes</mdb-btn>
+          <mdb-btn color="dark" @click="cancel">No</mdb-btn>
+        </mdb-modal-footer>
+      </mdb-modal>
     </mdb-container>
   </div>
 </template>
 <script>
-
+  import {mapState, mapGetters, mapMutations, mapActions} from 'vuex'
   import 'bootstrap-css-only/css/bootstrap.min.css';
   import 'mdbvue/build/css/mdb.css';
+  import VueMaterial from 'vue-material';
+  import 'vue-material/dist/vue-material.min.css';
 
   import {
     mdbContainer,
@@ -62,43 +67,51 @@
     },
     data() {
       return {
-        options: [
+        newUser: {
+          password: '',
+          gender: '',
+          birthDate: '',
+          information: '',
+        },
+        gender: '',
+        genders: [
           {text: 'Male', value: true},
           {text: 'Female', value: false},
         ],
-        selected: '',
-
-        userOld: this.$store.state.user,
-        userNew: {
-          userId: "",
-          password: "",
-          gender: "",
-          birthDate: "",
-          information: "",
-        },
-        validation: true,
-        response: [],
       };
     },
+    computed: {
+      ...mapState([
+        'user',
+        'enabledUserUpdate'
+      ]),
+    },
     methods: {
-      saveCustomer() {
+      ...mapActions([
+        'updateUser',
+        'retrieveUsers'
+      ]),
+      ...mapMutations([
+        'disableUserUpdate',
+        'destroyUser'
+      ]),
+      async approve() {
         let data = {
-          userId: this.userOld.userId,
-          password: this.userNew.password,
-          gender: this.selected,
-          birthDate: this.userNew.birthDate,
-          information: this.userNew.information,
+          id: this.user.id,
+          password: this.newUser.password.toString ? this.newUser.password : this.user.password,
+          gender: this.newUser.gender.toString ? this.newUser.gender : this.user.gender,
+          birthDate: this.newUser.birthDate.toString ? this.newUser.birthDate : this.user.birthDate,
+          information: this.newUser.information.toString ? this.newUser.information : this.user.information,
         };
-        this.$store.dispatch('updateUser', {
-          data: data
-        })
-          .then(response => {
-            this.$router.push('/Main')
-          })
-          .catch(error => {
-            console.log(error)
-          })
-      }
+        await this.updateUser(data);
+        this.retrieveUsers();
+        this.destroyUser();
+        this.disableUserUpdate();
+      },
+      cancel() {
+        this.destroyUser();
+        this.disableUserUpdate();
+      },
     }
   };
 </script>

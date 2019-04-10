@@ -1,10 +1,14 @@
 package com.exchange.controller;
 
 import com.exchange.controller.handler.RestErrorHandler;
+import com.exchange.dao.Pagination;
 import com.exchange.dao.User;
+import com.exchange.dao.exception.FileNotDeletedException;
+import com.exchange.dto.user.UserUpdatingDto;
 import com.exchange.exception.InternalServerException;
 import com.exchange.exception.ValidationException;
 import com.exchange.service.UserService;
+import com.exchange.wrapper.Response;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,7 +20,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.time.LocalDate;
-import java.util.Collections;
+import java.util.Arrays;
+import java.util.List;
 
 import static com.exchange.controller.converter.JsonConverter.asJsonString;
 import static org.mockito.BDDMockito.given;
@@ -31,23 +36,29 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @RunWith(MockitoJUnitRunner.class)
 public class UserRestControllerMockTest {
-    private static final Long ID_URL_PARAMETER = 1L;
-    private static final Long ONE_LONG = 1L;
-    private static final Long USER_ID = 1L;
-    private static final String USER_LOGIN = "userLogin";
-    private static final String USER_PASSWORD = "userPassword";
-    private static final Boolean USER_GENDER = true;
-    private static final String USER_INFORMATION = "userInformation";
-    private static final User user = new User(
-            USER_ID,
-            USER_LOGIN,
-            USER_PASSWORD,
-            USER_GENDER,
-            USER_INFORMATION);
-    private static final String USERS_URL = "/users";
-    private static final String USER_ID_URL = "/user/{id}";
-    private static final String USER_URL = "/user";
-    private static final String USER_LOGIN_LOGIN_URL = "/user/login/{login}";
+
+    /**
+     * The constant TIMES_ONE.
+     */
+    public static final int TIMES_ONE = 1;
+    private static final String PAGE_PARAM = "page";
+    private static final String SIZE_PARAM = "size";
+    private static final String USERS_URI = "/users";
+    private static final Integer CORRECT_PAGE = 1;
+    private static final Integer CORRECT_SIZE = 2;
+    private static final Long CORRECT_COUNT = 2L;
+    private static final Long CORRECT_ID = 1L;
+    private static final User CORRECT_USER = new User("correctName", "correctPassword");
+    private static final List<User> CORRECT_USERS = Arrays.asList(
+            CORRECT_USER,
+            CORRECT_USER);
+    private static final UserUpdatingDto CORRECT_USER_UPDATING_DTO = new UserUpdatingDto(
+            1L, "password", true, "information", LocalDate.of(1000, 10, 10));
+    private static final Pagination CORRECT_PAGINATION = new Pagination(CORRECT_COUNT);
+    private static final Response CORRECT_RESPONSE = new Response(
+            CORRECT_USERS,
+            CORRECT_PAGINATION);
+    private static final String ID_PARAM = "id";
     @Mock
     private UserService userServiceMock;
     @InjectMocks
@@ -66,211 +77,238 @@ public class UserRestControllerMockTest {
     }
 
     /**
-     * Gets all users success 1 mock test.
+     * Gets users by page and size correct page and size correct response returned.
      *
      * @throws Exception the exception
      */
     @Test
-    public void getAllUsersSuccess_1_MockTest() throws Exception {
-        user.setBirthDate(LocalDate.of(2019, 1, 1));
-        given(userServiceMock.getAllUsers()).
-                willReturn(Collections.singletonList(user));
-        mockMvc.perform(get(USERS_URL)
-                .contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(content().json(asJsonString(Collections.singletonList(user))));
-    }
-
-    /**
-     * Gets user by user id success 1 mock test.
-     *
-     * @throws Exception the exception
-     */
-    @Test
-    public void getUserByUserIdSuccess_1_MockTest() throws Exception {
-        user.setBirthDate(LocalDate.of(2019, 1, 2));
-        given(userServiceMock.getUserByUserId(USER_ID)).willReturn(user);
-        mockMvc.perform(get(USER_ID_URL, ID_URL_PARAMETER)
-                .contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(status().isOk())
-                .andExpect(content().json(asJsonString(user)));
-    }
-
-    /**
-     * Gets user by user id un success 1 mock test.
-     *
-     * @throws Exception the exception
-     */
-    @Test
-    public void getUserByUserIdUnSuccess_1_MockTest() throws Exception {
-        user.setBirthDate(LocalDate.of(2019, 1, 2));
-        given(userServiceMock.getUserByUserId(USER_ID)).willReturn(user);
-        mockMvc.perform(get(USER_ID_URL, ID_URL_PARAMETER)
-                .contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(status().isOk());
-    }
-
-    /**
-     * Gets user by user id un success 2 mock test.
-     *
-     * @throws Exception the exception
-     */
-    @Test
-    public void getUserByUserIdUnSuccess_2_MockTest() throws Exception {
-        user.setBirthDate(LocalDate.of(2019, 1, 3));
-        given(userServiceMock.getUserByUserId(anyLong())).willThrow(ValidationException.class);
-        mockMvc.perform(get(USER_ID_URL, ID_URL_PARAMETER)
-                .contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(status().isBadRequest());
-    }
-
-    /**
-     * Gets user by login success 1 mock test.
-     *
-     * @throws Exception the exception
-     */
-    @Test
-    public void getUserByLoginSuccess_1_MockTest() throws Exception {
-        user.setBirthDate(LocalDate.of(2019, 1, 4));
-        given(userServiceMock.getUserByLogin(anyString())).willReturn(user);
-        mockMvc.perform(get(USER_LOGIN_LOGIN_URL, USER_LOGIN)
-                .contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(status().isOk())
-                .andExpect(content().json(asJsonString(user)));
-    }
-
-    /**
-     * Gets user by login un success 1 mock test.
-     *
-     * @throws Exception the exception
-     */
-    @Test
-    public void getUserByLoginUnSuccess_1_MockTest() throws Exception {
-        user.setBirthDate(LocalDate.of(2019, 1, 5));
-        given(userServiceMock.getUserByLogin(anyString())).willThrow(ValidationException.class);
-        mockMvc.perform(get(USER_LOGIN_LOGIN_URL, USER_LOGIN)
-                .contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(status().isBadRequest());
-    }
-
-    /**
-     * Add user success 1 mock test.
-     *
-     * @throws Exception the exception
-     */
-    @Test
-    public void addUserSuccess_1_MockTest() throws Exception {
-        user.setBirthDate(LocalDate.of(2019, 1, 6));
-        given(userServiceMock.addUser(user)).willReturn(ONE_LONG);
-        mockMvc.perform(post(USER_URL)
+    public void getUsersByPageAndSize_correctPageAndSize_correctResponseReturned() throws Exception {
+        given(userServiceMock.getUsersAndCountByPageAndSize(any(Integer.class), any(Integer.class)))
+                .willReturn(CORRECT_RESPONSE);
+        mockMvc.perform(get(USERS_URI)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(asJsonString(user)))
+                .param(PAGE_PARAM, String.valueOf(CORRECT_PAGE))
+                .param(SIZE_PARAM, String.valueOf(CORRECT_SIZE)))
+                .andExpect(status().isOk())
+                .andExpect(content().json(asJsonString(CORRECT_RESPONSE)));
+        verify(userServiceMock, times(TIMES_ONE)).getUsersAndCountByPageAndSize(any(), any());
+        verifyNoMoreInteractions(userServiceMock);
+    }
+
+    /**
+     * Gets users by page and size non page and size bad request.
+     *
+     * @throws Exception the exception
+     */
+    @Test
+    public void getUsersByPageAndSize_nonPageAndSize_badRequest() throws Exception {
+        mockMvc.perform(get(USERS_URI)
+                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isBadRequest());
+        verify(userServiceMock, never()).getUsersAndCountByPageAndSize(any(), any());
+        verifyNoMoreInteractions(userServiceMock);
+    }
+
+    /**
+     * Add user correct user.
+     *
+     * @throws Exception the exception
+     */
+    @Test
+    public void addUser_correctUser() throws Exception {
+        doNothing().when(userServiceMock).addUser(any(User.class));
+        mockMvc.perform(post(USERS_URI)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(asJsonString(CORRECT_USER)))
                 .andExpect(status().isCreated());
+        verify(userServiceMock, times(TIMES_ONE)).addUser(any());
+        verifyNoMoreInteractions(userServiceMock);
     }
 
     /**
-     * Add user un success 1 mock test.
+     * Add user incorrect user validation exception.
      *
      * @throws Exception the exception
      */
     @Test
-    public void addUserUnSuccess_1_MockTest() throws Exception {
-        user.setBirthDate(LocalDate.of(2019, 1, 7));
-        given(userServiceMock.addUser(user)).willThrow(ValidationException.class);
-        mockMvc.perform(post(USER_URL)
+    public void addUser_incorrectUser_validationException() throws Exception {
+        doThrow(ValidationException.class).when(userServiceMock).addUser(any(User.class));
+        mockMvc.perform(post(USERS_URI)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(asJsonString(user)))
+                .content(asJsonString(CORRECT_USER)))
                 .andExpect(status().isBadRequest());
+        verify(userServiceMock, times(TIMES_ONE)).addUser(any());
+        verifyNoMoreInteractions(userServiceMock);
     }
 
     /**
-     * Update user success 1 mock test.
+     * Add user incorrect user internal server exception.
      *
      * @throws Exception the exception
      */
     @Test
-    public void updateUserSuccess_1_MockTest() throws Exception {
-        user.setBirthDate(LocalDate.of(2019, 1, 8));
-        doNothing().when(userServiceMock).updateUser(user);
-        mockMvc.perform(put(USER_URL)
-                .content(asJsonString(user))
-                .contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(status().isOk());
-    }
-
-    /**
-     * Update user un success 1 mock test.
-     *
-     * @throws Exception the exception
-     */
-    @Test
-    public void updateUserUnSuccess_1_MockTest() throws Exception {
-        user.setBirthDate(LocalDate.of(2019, 1, 9));
-        doThrow(ValidationException.class).when(userServiceMock).updateUser(any(User.class));
-        mockMvc.perform(put(USER_URL)
-                .content(asJsonString(user))
-                .contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(status().isBadRequest());
-    }
-
-    /**
-     * Update user un success 2 mock test.
-     *
-     * @throws Exception the exception
-     */
-    @Test
-    public void updateUserUnSuccess_2_MockTest() throws Exception {
-        user.setBirthDate(LocalDate.of(2019, 1, 10));
-        doThrow(InternalServerException.class).when(userServiceMock).updateUser(any(User.class));
-        mockMvc.perform(put(USER_URL)
-                .content(asJsonString(user))
-                .contentType(MediaType.APPLICATION_JSON_UTF8))
+    public void addUser_incorrectUser_internalServerException() throws Exception {
+        doThrow(InternalServerException.class).when(userServiceMock).addUser(any(User.class));
+        mockMvc.perform(post(USERS_URI)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(asJsonString(CORRECT_USER)))
                 .andExpect(status().isInternalServerError());
+        verify(userServiceMock, times(TIMES_ONE)).addUser(any());
+        verifyNoMoreInteractions(userServiceMock);
     }
 
     /**
-     * Delete user success 1 mock test.
+     * Add user non user bad request.
      *
      * @throws Exception the exception
      */
     @Test
-    public void deleteUserSuccess_1_MockTest() throws Exception {
-        user.setBirthDate(LocalDate.of(2019, 1, 11));
-        given(userServiceMock.addUser(user)).willReturn(ONE_LONG);
-        mockMvc.perform(delete(USER_ID_URL, ID_URL_PARAMETER)
-                .contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(status().isOk());
-    }
-
-    /**
-     * Delete user un success 1 mock test.
-     *
-     * @throws Exception the exception
-     */
-    @Test
-    public void deleteUserUnSuccess_1_MockTest() throws Exception {
-        user.setBirthDate(LocalDate.of(2019, 1, 11));
-        given(userServiceMock.addUser(user)).willReturn(ONE_LONG);
-        doThrow(ValidationException.class).when(userServiceMock).deleteUser(ONE_LONG);
-        mockMvc.perform(delete(USER_ID_URL, ID_URL_PARAMETER)
+    public void addUser_nonUser_badRequest() throws Exception {
+        mockMvc.perform(post(USERS_URI)
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isBadRequest());
+        verify(userServiceMock, never()).addUser(any());
+        verifyNoMoreInteractions(userServiceMock);
     }
 
     /**
-     * Delete user un success 2 mock test.
+     * Update user correct user updating dto.
      *
      * @throws Exception the exception
      */
     @Test
-    public void deleteUserUnSuccess_2_MockTest() throws Exception {
-        user.setBirthDate(LocalDate.of(2019, 1, 12));
-        given(userServiceMock.addUser(user)).willReturn(ONE_LONG);
-        doThrow(InternalServerException.class).when(userServiceMock).deleteUser(ONE_LONG);
-        mockMvc.perform(delete(USER_ID_URL, ID_URL_PARAMETER)
-                .contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(status().isInternalServerError());
-
+    public void updateUser_correctUserUpdatingDto() throws Exception {
+        doNothing().when(userServiceMock).updateUser(any(UserUpdatingDto.class));
+        mockMvc.perform(put(USERS_URI)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(asJsonString(CORRECT_USER_UPDATING_DTO)))
+                .andExpect(status().isOk());
+        verify(userServiceMock, times(TIMES_ONE)).updateUser(any());
+        verifyNoMoreInteractions(userServiceMock);
     }
 
+    /**
+     * Update user incorrect user updating dto validation exception.
+     *
+     * @throws Exception the exception
+     */
+    @Test
+    public void updateUser_incorrectUserUpdatingDto_validationException() throws Exception {
+        doThrow(ValidationException.class).when(userServiceMock).updateUser(any(UserUpdatingDto.class));
+        mockMvc.perform(put(USERS_URI)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(asJsonString(CORRECT_USER_UPDATING_DTO)))
+                .andExpect(status().isBadRequest());
+        verify(userServiceMock, times(TIMES_ONE)).updateUser(any());
+        verifyNoMoreInteractions(userServiceMock);
+    }
+
+    /**
+     * Update user incorrect user updating dto internal server exception.
+     *
+     * @throws Exception the exception
+     */
+    @Test
+    public void updateUser_incorrectUserUpdatingDto_internalServerException() throws Exception {
+        doThrow(InternalServerException.class).when(userServiceMock).updateUser(any(UserUpdatingDto.class));
+        mockMvc.perform(put(USERS_URI)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(asJsonString(CORRECT_USER_UPDATING_DTO)))
+                .andExpect(status().isInternalServerError());
+        verify(userServiceMock, times(TIMES_ONE)).updateUser(any());
+        verifyNoMoreInteractions(userServiceMock);
+    }
+
+    /**
+     * Update user non user updating dto bad request.
+     *
+     * @throws Exception the exception
+     */
+    @Test
+    public void updateUser_nonUserUpdatingDto_badRequest() throws Exception {
+        mockMvc.perform(put(USERS_URI)
+                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isBadRequest());
+        verify(userServiceMock, never()).updateUser(any());
+        verifyNoMoreInteractions(userServiceMock);
+    }
+
+    /**
+     * Delete user correct user id.
+     *
+     * @throws Exception the exception
+     */
+    @Test
+    public void deleteUser_correctUserId() throws Exception {
+        doNothing().when(userServiceMock).deleteUser(any(Long.class));
+        mockMvc.perform(delete(USERS_URI)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .param(ID_PARAM, String.valueOf(CORRECT_ID)))
+                .andExpect(status().isOk());
+        verify(userServiceMock, times(TIMES_ONE)).deleteUser(any());
+        verifyNoMoreInteractions(userServiceMock);
+    }
+
+    /**
+     * Delete user incorrect user id validation exception.
+     *
+     * @throws Exception the exception
+     */
+    @Test
+    public void deleteUser_incorrectUserId_validationException() throws Exception {
+        doThrow(ValidationException.class).when(userServiceMock).deleteUser(any(Long.class));
+        mockMvc.perform(delete(USERS_URI)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .param(ID_PARAM, String.valueOf(CORRECT_ID)))
+                .andExpect(status().isBadRequest());
+        verify(userServiceMock, times(TIMES_ONE)).deleteUser(any());
+        verifyNoMoreInteractions(userServiceMock);
+    }
+
+    /**
+     * Delete user incorrect user id file not deleted exception.
+     *
+     * @throws Exception the exception
+     */
+    @Test
+    public void deleteUser_incorrectUserId_fileNotDeletedException() throws Exception {
+        doThrow(FileNotDeletedException.class).when(userServiceMock).deleteUser(any(Long.class));
+        mockMvc.perform(delete(USERS_URI)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .param(ID_PARAM, String.valueOf(CORRECT_ID)))
+                .andExpect(status().isInternalServerError());
+        verify(userServiceMock, times(TIMES_ONE)).deleteUser(any());
+        verifyNoMoreInteractions(userServiceMock);
+    }
+
+    /**
+     * Delete user incorrect user id internal server exception.
+     *
+     * @throws Exception the exception
+     */
+    @Test
+    public void deleteUser_incorrectUserId_internalServerException() throws Exception {
+        doThrow(InternalServerException.class).when(userServiceMock).deleteUser(any(Long.class));
+        mockMvc.perform(delete(USERS_URI)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .param(ID_PARAM, String.valueOf(CORRECT_ID)))
+                .andExpect(status().isInternalServerError());
+        verify(userServiceMock, times(TIMES_ONE)).deleteUser(any());
+        verifyNoMoreInteractions(userServiceMock);
+    }
+
+    /**
+     * Delete user non user id bad request.
+     *
+     * @throws Exception the exception
+     */
+    @Test
+    public void deleteUser_nonUserId_badRequest() throws Exception {
+        mockMvc.perform(delete(USERS_URI)
+                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isBadRequest());
+        verify(userServiceMock, never()).deleteUser(any());
+        verifyNoMoreInteractions(userServiceMock);
+    }
 
 }

@@ -1,6 +1,8 @@
 package com.exchange.dao;
 
-import org.springframework.dao.DataAccessException;
+import com.exchange.dto.file.FileDto;
+import com.exchange.dto.file.FileStructureDto;
+import com.exchange.dto.file.FileUpdatingDto;
 
 import java.util.List;
 
@@ -10,80 +12,85 @@ import java.util.List;
 public interface FileDao {
 
     /**
-     * Gets all files by user id.
+     * Gets files by limit and offset.
      *
-     * @param userId the user id
-     * @return the all files by user id
-     * @throws DataAccessException the data access exception
+     * @param limit  the limit
+     * @param offset the offset
+     * @return the files by limit and offset
      */
-    List<File> getAllFilesByUserId(Long userId);
-
-    /**
-     * Gets all files.
-     *
-     * @return the all files
-     * @throws DataAccessException the data access exception
-     */
-    List<File> getAllFiles();
-
-    /**
-     * Gets file by id.
-     *
-     * @param id the id
-     * @return the file by id
-     * @throws DataAccessException the data access exception
-     */
-    File getFileById(Long id);
+    List<File> getFilesByLimitAndOffset(Integer limit, Integer offset);
 
     /**
      * Add file long.
      *
-     * @param file the file
+     * @param fileDto the file dto
      * @return the long
-     * @throws DataAccessException the data access exception
      */
-    Long addFile(File file);
+    Long addFile(FileDto fileDto);
 
     /**
-     * Update file int.
+     * Update file boolean.
      *
-     * @param file the file
-     * @return the int
-     * @throws DataAccessException the data access exception
-     */
-    int updateFile(File file);
-
-    /**
-     * Delete file int.
-     *
-     * @param id the id
-     * @return the int
-     * @throws DataAccessException the data access exception
-     */
-    int deleteFile(Long id);
-
-    /**
-     * Check file by id boolean.
-     *
-     * @param id the id
+     * @param fileUpdatingDto the file updating dto
      * @return the boolean
      */
-    boolean checkFileById(Long id);
+    Boolean updateFile(FileUpdatingDto fileUpdatingDto);
 
     /**
-     * Check file by user id boolean.
+     * Delete file boolean.
+     *
+     * @param fileId the file id
+     * @return the boolean
+     */
+    Boolean deleteFile(Long fileId);
+
+    /**
+     * Gets files by user id and folder id.
+     *
+     * @param userId   the user id
+     * @param folderId the folder id
+     * @return the files by user id and folder id
+     */
+    List<FileStructureDto> getFilesByUserIdAndFolderId(Long userId, Long folderId);
+
+    /**
+     * Gets file count.
+     *
+     * @return the file count
+     */
+    Long getFileCount();
+
+    /**
+     * Gets file name by file id.
+     *
+     * @param fileId the file id
+     * @return the file name by file id
+     */
+    String getFileNameByFileId(Long fileId);
+
+    /**
+     * Gets file names by folder id and user id.
+     *
+     * @param folderId the folder id
+     * @param userId   the user id
+     * @return the file names by folder id and user id
+     */
+    List<String> getFileNamesByFolderIdAndUserId(Long folderId, Long userId);
+
+    /**
+     * Gets file information by file id and user id.
+     *
+     * @param fileId the file id
+     * @param userId the user id
+     * @return the file information by file id and user id
+     */
+    FileUpdatingDto getFileInformationByFileIdAndUserId(Long fileId, Long userId);
+
+    /**
+     * Gets file names by user id.
      *
      * @param userId the user id
-     * @return the boolean
+     * @return the file names by user id
      */
-    boolean checkFileByUserId(Long userId);
-
-    /**
-     * Check file by url boolean.
-     *
-     * @param url the url
-     * @return the boolean
-     */
-    boolean checkFileByUrl(String url);
-
+    List<String> getFileNamesByUserId(Long userId);
 }

@@ -11,17 +11,13 @@ import java.util.Objects;
 public class File {
 
     private Long id;
-
     private Long userId;
-
-    private String url;
-
+    private Long folderId;
     private String description;
-
+    private String realName;
+    private String encodeName;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate date;
-
-    private Long categoryId;
 
     /**
      * Instantiates a new File.
@@ -32,62 +28,29 @@ public class File {
     /**
      * Instantiates a new File.
      *
-     * @param id     the id
-     * @param userId the user id
-     * @param url    the url
-     * @param date   the date
+     * @param id          the id
+     * @param userId      the user id
+     * @param folderId    the folder id
+     * @param description the description
+     * @param realName    the real name
+     * @param encodeName  the encode name
+     * @param date        the date
      */
-    public File(Long id, Long userId, String url, LocalDate date) {
+    public File(
+            final Long id,
+            final Long userId,
+            final Long folderId,
+            final String description,
+            final String realName,
+            final String encodeName,
+            final LocalDate date) {
         this.id = id;
         this.userId = userId;
-        this.url = url;
+        this.folderId = folderId;
+        this.description = description;
+        this.realName = realName;
+        this.encodeName = encodeName;
         this.date = date;
-    }
-
-    /**
-     * Instantiates a new File.
-     *
-     * @param id          the id
-     * @param userId      the user id
-     * @param url         the url
-     * @param description the description
-     * @param date        the date
-     */
-    public File(Long id, Long userId, String url, String description, LocalDate date) {
-        this(id, userId, url, date);
-        this.description = description;
-    }
-
-    /**
-     * Instantiates a new File.
-     *
-     * @param id          the id
-     * @param userId      the user id
-     * @param url         the url
-     * @param description the description
-     * @param date        the date
-     * @param categoryId  the category id
-     */
-    public File(Long id, Long userId, String url, String description, LocalDate date, Long categoryId) {
-        this(id, userId, url, description, date);
-        this.categoryId = categoryId;
-    }
-
-    /**
-     * Instantiates a new File.
-     *
-     * @param id          the id
-     * @param userId      the user id
-     * @param url         the url
-     * @param description the description
-     * @param categoryId  the category id
-     */
-    public File(Long id, Long userId, String url, String description, Long categoryId) {
-        this.id = id;
-        this.userId = userId;
-        this.url = url;
-        this.description = description;
-        this.categoryId = categoryId;
     }
 
     /**
@@ -104,7 +67,7 @@ public class File {
      *
      * @param id the id
      */
-    public void setId(Long id) {
+    public void setId(final Long id) {
         this.id = id;
     }
 
@@ -122,26 +85,26 @@ public class File {
      *
      * @param userId the user id
      */
-    public void setUserId(Long userId) {
+    public void setUserId(final Long userId) {
         this.userId = userId;
     }
 
     /**
-     * Gets url.
+     * Gets folder id.
      *
-     * @return the url
+     * @return the folder id
      */
-    public String getUrl() {
-        return url;
+    public Long getFolderId() {
+        return folderId;
     }
 
     /**
-     * Sets url.
+     * Sets folder id.
      *
-     * @param url the url
+     * @param folderId the folder id
      */
-    public void setUrl(String url) {
-        this.url = url;
+    public void setFolderId(final Long folderId) {
+        this.folderId = folderId;
     }
 
     /**
@@ -158,8 +121,44 @@ public class File {
      *
      * @param description the description
      */
-    public void setDescription(String description) {
+    public void setDescription(final String description) {
         this.description = description;
+    }
+
+    /**
+     * Gets real name.
+     *
+     * @return the real name
+     */
+    public String getRealName() {
+        return realName;
+    }
+
+    /**
+     * Sets real name.
+     *
+     * @param realName the real name
+     */
+    public void setRealName(final String realName) {
+        this.realName = realName;
+    }
+
+    /**
+     * Gets encode name.
+     *
+     * @return the encode name
+     */
+    public String getEncodeName() {
+        return encodeName;
+    }
+
+    /**
+     * Sets encode name.
+     *
+     * @param encodeName the encode name
+     */
+    public void setEncodeName(final String encodeName) {
+        this.encodeName = encodeName;
     }
 
     /**
@@ -176,55 +175,39 @@ public class File {
      *
      * @param date the date
      */
-    public void setDate(LocalDate date) {
+    public void setDate(final LocalDate date) {
         this.date = date;
     }
 
-    /**
-     * Gets category id.
-     *
-     * @return the category id
-     */
-    public Long getCategoryId() {
-        return categoryId;
-    }
-
-    /**
-     * Sets category id.
-     *
-     * @param categoryId the category id
-     */
-    public void setCategoryId(Long categoryId) {
-        this.categoryId = categoryId;
-    }
-
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         File file = (File) o;
         return Objects.equals(id, file.id) &&
                 Objects.equals(userId, file.userId) &&
-                Objects.equals(url, file.url) &&
+                Objects.equals(folderId, file.folderId) &&
                 Objects.equals(description, file.description) &&
-                Objects.equals(date, file.date) &&
-                Objects.equals(categoryId, file.categoryId);
+                Objects.equals(realName, file.realName) &&
+                Objects.equals(encodeName, file.encodeName) &&
+                Objects.equals(date, file.date);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userId, url, description, date, categoryId);
+        return Objects.hash(id, userId, folderId, description, realName, encodeName, date);
     }
 
     @Override
     public String toString() {
         return "File{" +
                 "id=" + id +
-                ", user_id=" + userId +
-                ", url='" + url + '\'' +
+                ", userId=" + userId +
+                ", folderId=" + folderId +
                 ", description='" + description + '\'' +
+                ", realName='" + realName + '\'' +
+                ", encodeName='" + encodeName + '\'' +
                 ", date=" + date +
-                ", categoryId=" + categoryId +
                 '}';
     }
 }

@@ -1,7 +1,13 @@
 package com.exchange.service;
 
-import com.exchange.dao.File;
+import com.exchange.dto.file.FileDto;
+import com.exchange.dto.file.FileUpdatingDto;
+import com.exchange.wrapper.Response;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -10,47 +16,68 @@ import java.util.List;
 public interface FileService {
 
     /**
-     * Gets all files.
+     * Gets files and count by page and size.
      *
-     * @return the all files
+     * @param page the page
+     * @param size the size
+     * @return the files and count by page and size
      */
-    List<File> getAllFiles();
+    Response getFilesAndCountByPageAndSize(Integer page, Integer size);
 
     /**
-     * Gets all files by user id.
+     * Add file.
      *
-     * @param userId the user id
-     * @return the all files by user id
+     * @param fileDto        the file dto
+     * @param multipartFile  the multipart file
+     * @param authentication the authentication
+     * @throws IOException the io exception
      */
-    List<File> getAllFilesByUserId(Long userId);
-
-    /**
-     * Gets file by id.
-     *
-     * @param id the id
-     * @return the file by id
-     */
-    File getFileById(Long id);
-
-    /**
-     * Add file long.
-     *
-     * @param file the file
-     * @return the long
-     */
-    Long addFile(File file);
+    void addFile(FileDto fileDto, MultipartFile multipartFile, Authentication authentication) throws IOException;
 
     /**
      * Update file.
      *
-     * @param file the file
+     * @param fileUpdatingDto the file updating dto
      */
-    void updateFile(File file);
+    void updateFile(FileUpdatingDto fileUpdatingDto);
+
+    /**
+     * Download file by file id and file name.
+     *
+     * @param fileId   the file id
+     * @param fileName the file name
+     * @param response the response
+     */
+    void downloadFileByFileIdAndFileName(Long fileId, String fileName, final HttpServletResponse response);
 
     /**
      * Delete file.
      *
-     * @param id the id
+     * @param fileId the file id
      */
-    void deleteFile(Long id);
+    void deleteFile(Long fileId);
+
+    /**
+     * Gets file count.
+     *
+     * @return the file count
+     */
+    Long getFileCount();
+
+    /**
+     * Gets file information by file id and authentication.
+     *
+     * @param fileId         the file id
+     * @param authentication the authentication
+     * @return the file information by file id and authentication
+     */
+    FileUpdatingDto getFileInformationByFileIdAndAuthentication(Long fileId, Authentication authentication);
+
+    /**
+     * Gets file names by user id.
+     *
+     * @param userId the user id
+     * @return the file names by user id
+     */
+    List<String> getFileNamesByUserId(Long userId);
 }

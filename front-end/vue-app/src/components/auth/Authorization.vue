@@ -8,7 +8,6 @@
           <mdb-input size="sm" label="Password" icon="key" group type="password" validate error="wrong"
                      success="right" required v-model="user.password"/>
         </mdb-modal-body>
-
         <mdb-modal-footer>
           <mdb-btn color="primary" @click="signIn">Sign in</mdb-btn>
         </mdb-modal-footer>
@@ -82,9 +81,9 @@
 
           })
           .catch(error => {
-            this.username = ''
-            this.password = ''
-          })
+            this.username = '';
+            this.password = '';
+          });
 
         await this.$store.dispatch('retrieveUserRoles')
           .then(response => {

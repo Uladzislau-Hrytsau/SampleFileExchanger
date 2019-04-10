@@ -1,6 +1,6 @@
 package com.exchange.dao;
 
-import org.springframework.dao.DataAccessException;
+import com.exchange.dto.user.UserUpdatingDto;
 
 import java.util.List;
 
@@ -10,73 +10,37 @@ import java.util.List;
 public interface UserDao {
 
     /**
-     * Gets all users.
+     * Gets users by limit and offset.
      *
-     * @return the all users
-     * @throws DataAccessException the data access exception
+     * @param limit  the limit
+     * @param offset the offset
+     * @return the users by limit and offset
      */
-    List<User> getAllUsers();
-
-    /**
-     * Gets user by user id.
-     *
-     * @param userId the user id
-     * @return the user by user id
-     * @throws DataAccessException the data access exception
-     */
-    User getUserByUserId(Long userId);
-
-    /**
-     * Gets user by login.
-     *
-     * @param login the login
-     * @return the user by login
-     * @throws DataAccessException the data access exception
-     */
-    User getUserByLogin(String login);
-
-    /**
-     * Gets user password by user name.
-     *
-     * @param userName the user name
-     * @return the user password by user name
-     */
-    String getUserPasswordByUserName(String userName);
+    List<User> getUsersByLimitAndOffset(Integer limit, Integer offset);
 
     /**
      * Add user long.
      *
      * @param user the user
      * @return the long
-     * @throws DataAccessException the data access exception
      */
     Long addUser(User user);
 
     /**
-     * Update user int.
+     * Update user boolean.
      *
-     * @param user the user
-     * @return the int
-     * @throws DataAccessException the data access exception
+     * @param userUpdatingDto the user updating dto
+     * @return the boolean
      */
-    int updateUser(User user);
+    Boolean updateUser(UserUpdatingDto userUpdatingDto);
 
     /**
-     * Delete user int.
-     *
-     * @param userId the user id
-     * @return the int
-     * @throws DataAccessException the data access exception
-     */
-    int deleteUser(Long userId);
-
-    /**
-     * Check user by user id boolean.
+     * Delete user boolean.
      *
      * @param userId the user id
      * @return the boolean
      */
-    boolean checkUserByUserId(Long userId);
+    Boolean deleteUser(Long userId);
 
     /**
      * Check user by login boolean.
@@ -84,14 +48,12 @@ public interface UserDao {
      * @param login the login
      * @return the boolean
      */
-    boolean checkUserByLogin(String login);
+    Boolean checkUserByLogin(String login);
 
     /**
-     * Gets user id by login.
+     * Gets user count.
      *
-     * @param login the login
-     * @return the user id by login
+     * @return the user count
      */
-    Long getUserIdByLogin(String login);
-
+    Long getUserCount();
 }

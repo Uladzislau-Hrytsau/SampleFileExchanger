@@ -1,22 +1,28 @@
 package com.exchange.controller;
 
-import com.exchange.dao.File;
+import com.exchange.dto.file.FileDto;
+import com.exchange.dto.file.FileUpdatingDto;
 import com.exchange.service.FileService;
+import com.exchange.wrapper.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * The type File rest controller.
  */
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
+@RequestMapping("/files")
 public class FileRestController {
 
-    private FileService fileService;
+    private final FileService fileService;
 
     /**
      * Instantiates a new File rest controller.
@@ -24,71 +30,72 @@ public class FileRestController {
      * @param fileService the file service
      */
     @Autowired
-    public FileRestController(FileService fileService) {
+    public FileRestController(final FileService fileService) {
         this.fileService = fileService;
+
     }
 
     /**
-     * Gets all files.
+     * Gets files by page and size.
      *
-     * @return the all files
+     * @param page the page
+     * @param size the size
+     * @return the files by page and size
      */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @GetMapping("/files")
+    @GetMapping(params = {"page", "size"})
     @ResponseStatus(value = HttpStatus.OK)
-    public List<File> getAllFiles() {
-        return fileService.getAllFiles();
+    public Response getFilesByPageAndSize(
+            @RequestParam(value = "page", required = false, defaultValue = "null") final Integer page,
+            @RequestParam(value = "size", required = false, defaultValue = "null") final Integer size) {
+        return fileService.getFilesAndCountByPageAndSize(page, size);
     }
 
     /**
-     * Gets file by id.
+     * Add file.
      *
-     * @param id the id
-     * @return the file by id
+     * @param multipartFile  the multipart file
+     * @param fileDto        the file dto
+     * @param authentication the authentication
+     * @throws IOException the io exception
      */
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    @GetMapping("/file/{id}")
-    @ResponseStatus(value = HttpStatus.OK)
-    public File getFileById(@PathVariable(value = "id") Long id) {
-        return fileService.getFileById(id);
-    }
-
-    /**
-     * Gets all files by user id.
-     *
-     * @param userId the user id
-     * @return the all files by user id
-     */
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    @GetMapping("/files/{userId}")
-    @ResponseStatus(value = HttpStatus.OK)
-    public List<File> getAllFilesByUserId(@PathVariable(value = "userId") Long userId) {
-        return fileService.getAllFilesByUserId(userId);
-    }
-
-    /**
-     * Add file long.
-     *
-     * @param file the file
-     * @return the long
-     */
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN') or hasRole('IS_AUTHENTICATED_ANONYMOUSLY')")
-    @PostMapping("/file")
+    @PostMapping(consumes = "multipart/form-data")
     @ResponseStatus(value = HttpStatus.CREATED)
-    public Long addFile(@RequestBody File file) {
-        return fileService.addFile(file);
+    public void addFile(
+            @RequestPart("multipartFile") final MultipartFile multipartFile,
+            @RequestPart("metaData") final FileDto fileDto,
+            final Authentication authentication) throws IOException {
+        fileService.addFile(fileDto, multipartFile, authentication);
     }
 
     /**
      * Update file.
      *
-     * @param file the file
+     * @param fileUpdatingDto the file updating dto
      */
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    @PutMapping("/file")
+    @PutMapping
     @ResponseStatus(value = HttpStatus.OK)
-    public void updateFile(@RequestBody File file) {
-        fileService.updateFile(file);
+    public void updateFile(@RequestBody final FileUpdatingDto fileUpdatingDto) {
+        fileService.updateFile(fileUpdatingDto);
+    }
+
+    /**
+     * Download file.
+     *
+     * @param fileId   the file id
+     * @param fileName the file name
+     * @param response the response
+     */
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    @GetMapping(params = {"fileId", "fileName"})
+    @ResponseStatus(value = HttpStatus.OK)
+    public void downloadFile(
+            @RequestParam("fileId") final Long fileId,
+            @RequestParam("fileName") final String fileName,
+            final HttpServletResponse response) {
+        fileService.downloadFileByFileIdAndFileName(fileId, fileName, response);
     }
 
     /**
@@ -97,10 +104,26 @@ public class FileRestController {
      * @param id the id
      */
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    @DeleteMapping("/file/{id}")
+    @DeleteMapping(params = {"id"})
     @ResponseStatus(value = HttpStatus.OK)
-    public void deleteFile(@PathVariable(value = "id") Long id) {
+    public void deleteFile(
+            @RequestParam(value = "id") final Long id) {
         fileService.deleteFile(id);
     }
 
+    /**
+     * Gets file information by file id.
+     *
+     * @param fileId         the file id
+     * @param authentication the authentication
+     * @return the file information by file id
+     */
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    @GetMapping(params = {"fileId"})
+    @ResponseStatus(value = HttpStatus.OK)
+    public FileUpdatingDto getFileInformationByFileId(
+            @RequestParam(value = "fileId") final Long fileId,
+            final Authentication authentication) {
+        return fileService.getFileInformationByFileIdAndAuthentication(fileId, authentication);
+    }
 }

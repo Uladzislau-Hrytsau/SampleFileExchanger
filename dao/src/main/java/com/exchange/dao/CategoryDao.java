@@ -1,6 +1,10 @@
 package com.exchange.dao;
 
+import com.exchange.dto.category.CategoryDto;
+import com.exchange.dto.file.FileCategoryDto;
+
 import java.util.List;
+import java.util.Set;
 
 /**
  * The interface Category dao.
@@ -8,26 +12,27 @@ import java.util.List;
 public interface CategoryDao {
 
     /**
-     * Gets all categories.
+     * Exists categories by user id boolean.
      *
-     * @return the all categories
-     */
-    List<Category> getAllCategories();
-
-    /**
-     * Gets category by id.
-     *
-     * @param id the id
-     * @return the category by id
-     */
-    Category getCategoryById(Long id);
-
-    /**
-     * Check category by id boolean.
-     *
-     * @param id the id
+     * @param categories the categories
+     * @param userId     the user id
      * @return the boolean
      */
-    boolean checkCategoryById(Long id);
+    Boolean existsCategoriesByUserId(Set<Long> categories, Long userId);
 
+    /**
+     * Add file categories int [ ].
+     *
+     * @param categoryDto the category dto
+     * @return the int [ ]
+     */
+    int[] addFileCategories(Set<FileCategoryDto> categoryDto);
+
+    /**
+     * Gets categories by user id.
+     *
+     * @param userId the user id
+     * @return the categories by user id
+     */
+    List<CategoryDto> getCategoriesByUserId(Long userId);
 }

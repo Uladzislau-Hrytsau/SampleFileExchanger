@@ -1,69 +1,69 @@
 package com.exchange.dao.jdbc;
 
-import com.exchange.dao.Category;
 import com.exchange.dao.CategoryDao;
-import com.exchange.dao.jdbc.mapper.CategoryRowMapper;
+import com.exchange.dao.jdbc.mapper.dto.CategoryDtoRowMapper;
+import com.exchange.dto.category.CategoryDto;
+import com.exchange.dto.file.FileCategoryDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.core.namedparam.SqlParameterSourceUtils;
+import org.springframework.stereotype.Repository;
 
-import javax.sql.DataSource;
 import java.util.List;
+import java.util.Set;
 
 /**
  * The type Category dao.
  */
+@Repository
 public class CategoryDaoImpl implements CategoryDao {
 
-    /**
-     * The constant ID.
-     */
     public static final String ID = "id";
-    /**
-     * The constant CATEGORY.
-     */
     public static final String CATEGORY = "category";
-
-    @Value("${category.select}")
-    private String getAllCategoriesSql;
-    @Value("${category.selectById}")
-    private String getCategoryByIdSql;
-    @Value("${category.checkCategoryById}")
-    private String checkCategoryByIdSql;
-
-    private CategoryRowMapper categoryRowMapper;
-    private JdbcTemplate jdbcTemplate;
-    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    private static final String USER_ID = "user_id";
+    private static final String CATEGORY_ID = "category_id";
+    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    private final CategoryDtoRowMapper categoryDtoRowMapper;
+    @Value("${category.existsByUserIdAndCategoryId}")
+    private String existsByUserIdAndCategoryIdSql;
+    @Value("${category.insertFileCategories}")
+    private String insertFileCategoriesSql;
+    @Value("${category.getCategoriesByUserId}")
+    private String getCategoriesByUserIdSql;
 
     /**
      * Instantiates a new Category dao.
      *
-     * @param dataSource        the data source
-     * @param categoryRowMapper the category row mapper
+     * @param namedParameterJdbcTemplate the named parameter jdbc template
+     * @param categoryDtoRowMapper       the category dto row mapper
      */
     @Autowired
-    public CategoryDaoImpl(DataSource dataSource, CategoryRowMapper categoryRowMapper) {
-        this.jdbcTemplate = new JdbcTemplate(dataSource);
-        this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
-        this.categoryRowMapper = categoryRowMapper;
+    public CategoryDaoImpl(final NamedParameterJdbcTemplate namedParameterJdbcTemplate, final CategoryDtoRowMapper categoryDtoRowMapper) {
+        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
+        this.categoryDtoRowMapper = categoryDtoRowMapper;
     }
 
     @Override
-    public List<Category> getAllCategories() {
-        return jdbcTemplate.query(getAllCategoriesSql, categoryRowMapper);
+    public Boolean existsCategoriesByUserId(final Set<Long> categories, final Long userId) {
+        MapSqlParameterSource parameterSource = new MapSqlParameterSource();
+        parameterSource.addValue(USER_ID, userId);
+        parameterSource.addValue(CATEGORY_ID, categories);
+        return categories.size() == namedParameterJdbcTemplate.queryForObject(existsByUserIdAndCategoryIdSql, parameterSource, Integer.class);
     }
 
     @Override
-    public Category getCategoryById(Long id) {
-        SqlParameterSource parameterSource = new MapSqlParameterSource("id", id);
-        return namedParameterJdbcTemplate.queryForObject(getCategoryByIdSql, parameterSource, categoryRowMapper);
+    public int[] addFileCategories(final Set<FileCategoryDto> fileCategoryDtos) {
+        SqlParameterSource[] batch = SqlParameterSourceUtils.createBatch(fileCategoryDtos);
+        return namedParameterJdbcTemplate.batchUpdate(insertFileCategoriesSql, batch);
     }
 
     @Override
-    public boolean checkCategoryById(Long id) {
-        return jdbcTemplate.queryForObject(checkCategoryByIdSql, new Object[]{id}, boolean.class);
+    public List<CategoryDto> getCategoriesByUserId(final Long userId) {
+        MapSqlParameterSource parameterSource = new MapSqlParameterSource();
+        parameterSource.addValue(USER_ID, userId);
+        return namedParameterJdbcTemplate.query(getCategoriesByUserIdSql, parameterSource, categoryDtoRowMapper);
     }
 }

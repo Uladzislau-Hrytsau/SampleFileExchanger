@@ -10,18 +10,13 @@ import java.util.Objects;
  */
 public class User {
 
-    private Long userId;
-
-    private String login;
-
+    private Long id;
+    private String name;
     private String password;
-
     private Boolean gender;
-
+    private String information;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
-
-    private String information;
 
     /**
      * Instantiates a new User.
@@ -32,128 +27,97 @@ public class User {
     /**
      * Instantiates a new User.
      *
-     * @param login the login
-     */
-    public User(String login) {
-        this.login = login;
-    }
-
-    /**
-     * Instantiates a new User.
-     *
-     * @param login    the login
+     * @param name     the name
      * @param password the password
      */
-    public User(String login, String password) {
-        this.login = login;
+    public User(
+            final String name,
+            final String password) {
+        this.name = name;
         this.password = password;
     }
 
     /**
      * Instantiates a new User.
      *
-     * @param userId   the user id
-     * @param login    the login
-     * @param password the password
+     * @param id          the id
+     * @param name        the name
+     * @param password    the password
+     * @param gender      the gender
+     * @param information the information
      */
-    public User(Long userId, String login, String password) {
-        this(login, password);
-        this.userId = userId;
-    }
-
-    /**
-     * Instantiates a new User.
-     *
-     * @param userId   the user id
-     * @param login    the login
-     * @param password the password
-     * @param gender   the gender
-     */
-    public User(Long userId, String login, String password, Boolean gender) {
-        this(userId, login, password);
+    public User(
+            final Long id,
+            final String name,
+            final String password,
+            final Boolean gender,
+            final String information) {
+        this.id = id;
+        this.name = name;
+        this.password = password;
         this.gender = gender;
+        this.information = information;
     }
 
     /**
      * Instantiates a new User.
      *
-     * @param userId    the user id
-     * @param login     the login
-     * @param password  the password
-     * @param gender    the gender
-     * @param birthDate the birth date
+     * @param id          the id
+     * @param name        the name
+     * @param password    the password
+     * @param gender      the gender
+     * @param information the information
+     * @param birthDate   the birth date
      */
-    public User(Long userId, String login, String password, Boolean gender, LocalDate birthDate) {
-        this(userId, login, password, gender);
+    public User(
+            final Long id,
+            final String name,
+            final String password,
+            final Boolean gender,
+            final String information,
+            final LocalDate birthDate) {
+        this.id = id;
+        this.name = name;
+        this.password = password;
+        this.gender = gender;
+        this.information = information;
         this.birthDate = birthDate;
     }
 
     /**
-     * Instantiates a new User.
+     * Gets id.
      *
-     * @param userId      the user id
-     * @param login       the login
-     * @param password    the password
-     * @param gender      the gender
-     * @param information the information
+     * @return the id
      */
-    public User(Long userId, String login, String password, Boolean gender, String information) {
-        this.userId = userId;
-        this.login = login;
-        this.password = password;
-        this.gender = gender;
-        this.information = information;
+    public Long getId() {
+        return id;
     }
 
     /**
-     * Instantiates a new User.
+     * Sets id.
      *
-     * @param userId      the user id
-     * @param login       the login
-     * @param password    the password
-     * @param gender      the gender
-     * @param birthDate   the birth date
-     * @param information the information
+     * @param id the id
      */
-    public User(Long userId, String login, String password, Boolean gender, LocalDate birthDate, String information) {
-        this(userId, login, password, gender, birthDate);
-        this.information = information;
+    public void setId(final Long id) {
+        this.id = id;
     }
 
     /**
-     * Gets user id.
+     * Gets name.
      *
-     * @return the user id
+     * @return the name
      */
-    public Long getUserId() {
-        return userId;
+    public String getName() {
+        return name;
     }
 
     /**
-     * Sets user id.
+     * Sets name.
      *
-     * @param userId the user id
+     * @param name the name
      */
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    /**
-     * Gets login.
-     *
-     * @return the login
-     */
-    public String getLogin() {
-        return login;
-    }
-
-    /**
-     * Sets login.
-     *
-     * @param login the login
-     */
-    public void setLogin(String login) {
-        this.login = login;
+    public void setName(final String name) {
+        this.name = name;
     }
 
     /**
@@ -170,7 +134,7 @@ public class User {
      *
      * @param password the password
      */
-    public void setPassword(String password) {
+    public void setPassword(final String password) {
         this.password = password;
     }
 
@@ -188,26 +152,8 @@ public class User {
      *
      * @param gender the gender
      */
-    public void setGender(Boolean gender) {
+    public void setGender(final Boolean gender) {
         this.gender = gender;
-    }
-
-    /**
-     * Gets birth date.
-     *
-     * @return the birth date
-     */
-    public LocalDate getBirthDate() {
-        return birthDate;
-    }
-
-    /**
-     * Sets birth date.
-     *
-     * @param birthDate the birth date
-     */
-    public void setBirthDate(LocalDate birthDate) {
-        this.birthDate = birthDate;
     }
 
     /**
@@ -224,37 +170,55 @@ public class User {
      *
      * @param information the information
      */
-    public void setInformation(String information) {
+    public void setInformation(final String information) {
         this.information = information;
     }
 
+    /**
+     * Gets birth date.
+     *
+     * @return the birth date
+     */
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    /**
+     * Sets birth date.
+     *
+     * @param birthDate the birth date
+     */
+    public void setBirthDate(final LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
+
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(userId, user.userId) &&
-                Objects.equals(login, user.login) &&
+        return Objects.equals(id, user.id) &&
+                Objects.equals(name, user.name) &&
                 Objects.equals(password, user.password) &&
                 Objects.equals(gender, user.gender) &&
-                Objects.equals(birthDate, user.birthDate) &&
-                Objects.equals(information, user.information);
+                Objects.equals(information, user.information) &&
+                Objects.equals(birthDate, user.birthDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, login, password, gender, birthDate, information);
+        return Objects.hash(id, name, password, gender, information, birthDate);
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "userId=" + userId +
-                ", login='" + login + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 ", password='" + password + '\'' +
                 ", gender=" + gender +
-                ", birthDate=" + birthDate +
                 ", information='" + information + '\'' +
+                ", birthDate=" + birthDate +
                 '}';
     }
 }

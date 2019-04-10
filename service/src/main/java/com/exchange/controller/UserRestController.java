@@ -1,19 +1,20 @@
 package com.exchange.controller;
 
 import com.exchange.dao.User;
+import com.exchange.dto.user.UserUpdatingDto;
 import com.exchange.service.UserService;
+import com.exchange.wrapper.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * The type User rest controller.
  */
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
+@RequestMapping("/users")
 public class UserRestController {
 
     private final UserService userService;
@@ -24,82 +25,58 @@ public class UserRestController {
      * @param userService the user service
      */
     @Autowired
-    public UserRestController(UserService userService) {
+    public UserRestController(final UserService userService) {
         this.userService = userService;
     }
 
     /**
-     * Gets all users.
+     * Gets users by page and size.
      *
-     * @return the all users
+     * @param page the page
+     * @param size the size
+     * @return the users by page and size
      */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @GetMapping("/users")
+    @GetMapping(params = {"page", "size"})
     @ResponseStatus(value = HttpStatus.OK)
-    public List<User> getAllUsers() {
-        return userService.getAllUsers();
+    public Response getUsersByPageAndSize(
+            @RequestParam(value = "page", required = false, defaultValue = "null") final Integer page,
+            @RequestParam(value = "size", required = false, defaultValue = "null") final Integer size) {
+        return userService.getUsersAndCountByPageAndSize(page, size);
     }
 
     /**
-     * Gets user by user id.
-     *
-     * @param userId the user id
-     * @return the user by user id
-     */
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    @GetMapping(value = "/user/{id}")
-    @ResponseStatus(value = HttpStatus.OK)
-    public User getUserByUserId(@PathVariable(value = "id") Long userId) {
-        return userService.getUserByUserId(userId);
-    }
-
-    /**
-     * Gets user by login.
-     *
-     * @param login the login
-     * @return the user by login
-     */
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    @GetMapping(value = "/user/login/{login}")
-    @ResponseStatus(value = HttpStatus.OK)
-    public User getUserByLogin(@PathVariable(value = "login") String login) {
-        return userService.getUserByLogin(login);
-    }
-
-    /**
-     * Add user long.
+     * Add user.
      *
      * @param user the user
-     * @return the long
      */
-    @PostMapping("/user")
+    @PostMapping
     @ResponseStatus(value = HttpStatus.CREATED)
-    public Long addUser(@RequestBody User user) {
-        return userService.addUser(user);
+    public void addUser(@RequestBody final User user) {
+        userService.addUser(user);
     }
 
     /**
      * Update user.
      *
-     * @param user the user
+     * @param userUpdatingDto the user updating dto
      */
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    @PutMapping("/user")
+    @PutMapping
     @ResponseStatus(value = HttpStatus.OK)
-    public void updateUser(@RequestBody User user) {
-        userService.updateUser(user);
+    public void updateUser(@RequestBody final UserUpdatingDto userUpdatingDto) {
+        userService.updateUser(userUpdatingDto);
     }
 
     /**
      * Delete user.
      *
-     * @param userId the user id
+     * @param id the id
      */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @DeleteMapping(value = "/user/{id}")
+    @DeleteMapping(params = {"id"})
     @ResponseStatus(value = HttpStatus.OK)
-    public void deleteUser(@PathVariable(value = "id") Long userId) {
-        userService.deleteUser(userId);
+    public void deleteUser(@RequestParam(value = "id") final Long id) {
+        userService.deleteUser(id);
     }
-
 }

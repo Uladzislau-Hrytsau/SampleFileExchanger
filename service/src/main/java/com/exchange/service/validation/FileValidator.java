@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class FileValidator {
 
-    private static final Long MAX_FILE_SIZE = Long.MAX_VALUE;
     private final CommonValidator commonValidator;
     @Value("${fileService.fileNotPresented}")
     private String fileNotPresented;

@@ -48,9 +48,11 @@ public class FileWriterServiceImplMockTest {
     @Test
     public void saveFile_correctMultipartFileAndEncodeName() throws IOException {
         MockMultipartFile mockMultipartFile = new MockMultipartFile(
-                "file", "orig", null, "file".getBytes());
+                "file", "originalName", null, "file".getBytes());
         doNothing().when(fileWriterMock).saveFile(any(), any());
         fileWriterService.saveFile(mockMultipartFile, CORRECT_ENCODE_NAME);
+        verify(fileWriterMock, times(TIMES_ONE)).saveFile(any(), any());
+        verifyNoMoreInteractions(fileWriterMock);
     }
 
     /**

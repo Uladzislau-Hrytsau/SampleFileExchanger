@@ -167,8 +167,8 @@ public class FileServiceImplMockTest {
         doNothing().when(categoryServiceMock).addFileCategories(any(), any(), any());
         doNothing().when(fileWriterServiceMock).saveFile(any(), any());
         fileService.addFile(CORRECT_FILE_DTO, mockMultipartFile, authenticationMock);
-        assertEquals(CORRECT_FILE_DTO.getUserId(), CORRECT_USER_ID);
-        assertEquals(CORRECT_FILE_DTO.getRealName(), CORRECT_REAL_NAME);
+        assertEquals(CORRECT_USER_ID, CORRECT_FILE_DTO.getUserId());
+        assertEquals(CORRECT_REAL_NAME, CORRECT_FILE_DTO.getRealName());
         assertNotEquals(CORRECT_FILE_DTO.getEncodeName(), CORRECT_ENCODE_NAME);
         verify(commonServiceMock, times(TIMES_ONE)).getUserIdByAuthentication(any());
         verify(fileValidatorMock, times(TIMES_ONE)).validateDescription(any());
@@ -512,7 +512,7 @@ public class FileServiceImplMockTest {
         fileService.buildFileDownloadResponse(actualResponse, CORRECT_REAL_NAME, CORRECT_FILE_LENGTH);
         assertEquals(actualResponse.getContentType(), fileService.getFileTypeByFileName(CORRECT_REAL_NAME));
         assertEquals(actualResponse.getHeader("Content-Disposition"), String.format("attachment; filename=\"%s\"", CORRECT_REAL_NAME));
-        assertEquals(java.util.Optional.of(actualResponse.getContentLength()).get(), CORRECT_FILE_LENGTH);
+        assertEquals(CORRECT_FILE_LENGTH, java.util.Optional.of(actualResponse.getContentLength()).get());
         verifyNoMoreInteractions(
                 fileValidatorMock,
                 categoryServiceMock,

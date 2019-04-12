@@ -1,4 +1,4 @@
-package com.exchange.configuration.security;
+package com.exchange.it.configuration.security;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -13,7 +13,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 @Configuration
 @EnableResourceServer
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class ResourceServerOAuth2Config
+public class ResourceServerOAuth2ConfigurationIT
         extends ResourceServerConfigurerAdapter {
 
     private static final String OAUTH_TOKEN_ENDPOINT = "/oauth/token";

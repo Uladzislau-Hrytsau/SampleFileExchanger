@@ -140,7 +140,7 @@
             <plugin>
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
-                <version>${jetty-maven-plugin.version}</version>
+                <version>9.4.14.v20181114</version>
                 <configuration>
                     <scanIntervalSeconds>10</scanIntervalSeconds>
                     <webApp>
@@ -149,8 +149,12 @@
                     <httpConnector>
                         <port>8088</port>
                     </httpConnector>
-                    <stopKey>quit</stopKey>
+                    <scanIntervalSeconds>0</scanIntervalSeconds>
                     <stopPort>1999</stopPort>
+                    <stopKey>STOP</stopKey>
+                    <supportedPackagings>
+                        <supportedPackaging>war</supportedPackaging>
+                    </supportedPackagings>
                 </configuration>
                 <executions>
                     <execution>
@@ -163,8 +167,8 @@
                             <useTestScope>true</useTestScope>
                             <scanIntervalSeconds>0</scanIntervalSeconds>
                             <webApp>
+                                <descriptor>${basedir}/src/test/webapp/WEB-INF/web-test.xml</descriptor>
                                 <contextPath>/</contextPath>
-                                <descriptor>/src/test/java/com/exchange/it/IntegrationTestConfiguration.java</descriptor>
                             </webApp>
                         </configuration>
                     </execution>
@@ -176,6 +180,10 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

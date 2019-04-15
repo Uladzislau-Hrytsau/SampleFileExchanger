@@ -24,12 +24,12 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <scope>test</scope>
+            <!--            <scope>test</scope>-->
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
-            <scope>test</scope>
+            <!--            <scope>test</scope>-->
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -43,17 +43,17 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-all</artifactId>
-            <scope>test</scope>
+            <!--            <scope>test</scope>-->
         </dependency>
         <dependency>
             <groupId>org.powermock</groupId>
             <artifactId>powermock-module-junit4</artifactId>
-            <scope>test</scope>
+            <!--            <scope>test</scope>-->
         </dependency>
         <dependency>
             <groupId>org.powermock</groupId>
             <artifactId>powermock-api-mockito</artifactId>
-            <scope>test</scope>
+            <!--            <scope>test</scope>-->
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -90,12 +90,12 @@
         <dependency>
             <groupId>org.skyscreamer</groupId>
             <artifactId>jsonassert</artifactId>
-            <scope>test</scope>
+            <!--            <scope>test</scope>-->
         </dependency>
         <dependency>
             <groupId>com.jayway.jsonpath</groupId>
             <artifactId>json-path</artifactId>
-            <scope>test</scope>
+            <!--            <scope>test</scope>-->
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
@@ -137,6 +137,107 @@
 
     <build>
         <plugins>
+<!--            <plugin>-->
+<!--                <groupId>org.eclipse.jetty</groupId>-->
+<!--                <artifactId>jetty-maven-plugin</artifactId>-->
+<!--                <version>9.4.14.v20181114</version>-->
+<!--                <configuration>-->
+<!--                    <scanIntervalSeconds>10</scanIntervalSeconds>-->
+<!--                    <webAppSourceDirectory>src/main/java/com/exchange/configuration</webAppSourceDirectory>-->
+<!--                    <webApp>-->
+<!--                        <contextPath>/</contextPath>-->
+<!--                    </webApp>-->
+<!--                    <httpConnector>-->
+<!--                        <port>8088</port>-->
+<!--                    </httpConnector>-->
+<!--                    <scanIntervalSeconds>0</scanIntervalSeconds>-->
+<!--                    <stopPort>1999</stopPort>-->
+<!--                    <stopKey>STOP</stopKey>-->
+<!--                    <supportedPackagings>-->
+<!--                        <supportedPackaging>war</supportedPackaging>-->
+<!--                    </supportedPackagings>-->
+<!--                </configuration>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>start-jetty</id>-->
+<!--                        <phase>pre-integration-test</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>start</goal>-->
+<!--                        </goals>-->
+<!--                        <configuration>-->
+<!--                            <useTestScope>true</useTestScope>-->
+<!--                            <scanIntervalSeconds>0</scanIntervalSeconds>-->
+<!--                            <scanClassesPattern>-->
+<!--                                <excludes>-->
+<!--                                    <exclude>-->
+<!--                                        ${basedir}/src/main/java/com/exchange/configuration/WebApplicationInitializer.class-->
+<!--                                    </exclude>-->
+<!--                                    <exclude>-->
+<!--                                        **/WebApplicationInitializer.class-->
+<!--                                    </exclude>-->
+<!--                                    <exclude>-->
+<!--                                        ${basedir}/src/main/java/com/exchange/configuration/security/SecurityInitializerConfiguration.class-->
+<!--                                    </exclude>-->
+<!--                                    <exclude>-->
+<!--                                        **/SecurityInitializerConfiguration.class-->
+<!--                                    </exclude>-->
+<!--                                    <exclude>-->
+<!--                                        ${basedir}/src/main/java/com/exchange/configuration/security/OAuth2ServerConfiguration.class-->
+<!--                                    </exclude>-->
+<!--                                    <exclude>-->
+<!--                                        **/OAuth2ServerConfiguration.class-->
+<!--                                    </exclude>-->
+<!--                                    <exclude>-->
+<!--                                        ${basedir}/src/main/java/com/exchange/configuration/security/ResourceServerOAuth2Configuration.class-->
+<!--                                    </exclude>-->
+<!--                                    <exclude>-->
+<!--                                        **/ResourceServerOAuth2Configuration.class-->
+<!--                                    </exclude>-->
+<!--                                    <exclude>-->
+<!--                                        ${basedir}/src/main/java/com/exchange/configuration/FileConfiguration.class-->
+<!--                                    </exclude>-->
+<!--                                    <exclude>-->
+<!--                                        **/FileConfiguration.class-->
+<!--                                    </exclude>-->
+<!--                                    <exclude>-->
+<!--                                        ${basedir}/src/main/java/com/exchange/configuration/JdbcConfiguration.class-->
+<!--                                    </exclude>-->
+<!--                                    <exclude>-->
+<!--                                        **/JdbcConfiguration.class-->
+<!--                                    </exclude>-->
+<!--                                </excludes>-->
+<!--                                <includes>-->
+<!--                                    <incule>**/*IT.class</incule>-->
+<!--                                </includes>-->
+<!--                            </scanClassesPattern>-->
+
+<!--                            <scanTargetPatterns>-->
+<!--                                <scanTargetPattern>-->
+<!--                                    <directory>src/other-resources</directory>-->
+<!--                                    <includes>-->
+<!--                                        <include>**/*IT.class</include>-->
+<!--                                    </includes>-->
+<!--                                    <excludes>-->
+<!--                                        <exclude>**/WebApplicationInitializer.class</exclude>-->
+<!--                                    </excludes>-->
+<!--                                </scanTargetPattern>-->
+<!--                            </scanTargetPatterns>-->
+
+<!--                            <webAppSourceDirectory>-->
+<!--                                src/test/java/com/exchange/it/configuration-->
+<!--                            </webAppSourceDirectory>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
+<!--                    <execution>-->
+<!--                        <id>stop-jetty</id>-->
+<!--                        <phase>post-integration-test</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>stop</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
+
             <plugin>
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
@@ -150,13 +251,14 @@
                         <port>8088</port>
                     </httpConnector>
                     <scanIntervalSeconds>0</scanIntervalSeconds>
-                    <stopPort>1999</stopPort>
+                    <stopPort>9000</stopPort>
                     <stopKey>STOP</stopKey>
                     <supportedPackagings>
                         <supportedPackaging>war</supportedPackaging>
                     </supportedPackagings>
                 </configuration>
                 <executions>
+
                     <execution>
                         <id>start-jetty</id>
                         <phase>pre-integration-test</phase>
@@ -165,13 +267,14 @@
                         </goals>
                         <configuration>
                             <useTestScope>true</useTestScope>
-                            <scanIntervalSeconds>0</scanIntervalSeconds>
                             <webApp>
-                                <descriptor>${basedir}/src/test/webapp/WEB-INF/web-test.xml</descriptor>
+                                <descriptor>${basedir}/src/test/resources/webapp/web-test.xml</descriptor>
                                 <contextPath>/</contextPath>
                             </webApp>
+                            <scanIntervalSeconds>0</scanIntervalSeconds>
                         </configuration>
                     </execution>
+
                     <execution>
                         <id>stop-jetty</id>
                         <phase>post-integration-test</phase>
@@ -179,8 +282,11 @@
                             <goal>stop</goal>
                         </goals>
                     </execution>
+
                 </executions>
             </plugin>
+
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>

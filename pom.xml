@@ -79,13 +79,13 @@
                 <groupId>org.powermock</groupId>
                 <artifactId>powermock-module-junit4</artifactId>
                 <version>${powermock-module-junit4.version}</version>
-                <scope>test</scope>
+<!--                <scope>test</scope>-->
             </dependency>
             <dependency>
                 <groupId>org.powermock</groupId>
                 <artifactId>powermock-api-mockito</artifactId>
                 <version>${powermock-module-junit4.version}</version>
-                <scope>test</scope>
+<!--                <scope>test</scope>-->
             </dependency>
             <dependency>
                 <groupId>org.springframework</groupId>
@@ -227,6 +227,87 @@
                         <target>${java.version}</target>
                     </configuration>
                 </plugin>
+
+<!--                <plugin>-->
+<!--                    <groupId>org.apache.maven.plugins</groupId>-->
+<!--                    <artifactId>maven-failsafe-plugin</artifactId>-->
+<!--                    <version>${maven-failsafe-plugin.version}</version>-->
+<!--                    <configuration>-->
+<!--                        <includes>-->
+<!--                            <include>**/*IT</include>-->
+<!--                        </includes>-->
+<!--                    </configuration>-->
+<!--                    <executions>-->
+<!--                        <execution>-->
+<!--                            <id>integration-test</id>-->
+<!--                            <goals>-->
+<!--                                <goal>integration-test</goal>-->
+<!--                            </goals>-->
+<!--                        </execution>-->
+<!--                        <execution>-->
+<!--                            <id>verify</id>-->
+<!--                            <goals>-->
+<!--                                <goal>verify</goal>-->
+<!--                            </goals>-->
+<!--                        </execution>-->
+<!--                    </executions>-->
+<!--                    <executions>-->
+<!--                        <execution>-->
+<!--                            <goals>-->
+<!--                                <goal>integration-test</goal>-->
+<!--                                <goal>verify</goal>-->
+<!--                            </goals>-->
+<!--                        </execution>-->
+<!--                    </executions>-->
+<!--                </plugin>-->
+
+<!--                <plugin>-->
+<!--                    <groupId>org.eclipse.jetty</groupId>-->
+<!--                    <artifactId>jetty-maven-plugin</artifactId>-->
+<!--                    <version>9.4.14.v20181114</version>-->
+<!--                    <configuration>-->
+<!--                        <scanIntervalSeconds>10</scanIntervalSeconds>-->
+<!--                        <webApp>-->
+<!--                            <contextPath>/</contextPath>-->
+<!--                        </webApp>-->
+<!--                        <httpConnector>-->
+<!--                            <port>8088</port>-->
+<!--                        </httpConnector>-->
+<!--                        <scanIntervalSeconds>0</scanIntervalSeconds>-->
+<!--                        <stopPort>9000</stopPort>-->
+<!--                        <stopKey>STOP</stopKey>-->
+<!--                        <supportedPackagings>-->
+<!--                            <supportedPackaging>war</supportedPackaging>-->
+<!--                        </supportedPackagings>-->
+<!--                    </configuration>-->
+<!--                    <executions>-->
+
+<!--                        <execution>-->
+<!--                            <id>start-jetty</id>-->
+<!--                            <phase>pre-integration-test</phase>-->
+<!--                            <goals>-->
+<!--                                <goal>start</goal>-->
+<!--                            </goals>-->
+<!--                            <configuration>-->
+<!--                                <useTestScope>true</useTestScope>-->
+<!--                                <webApp>-->
+<!--                                    <descriptor>${basedir}/src/test/resources/webapp/web-test.xml</descriptor>-->
+<!--                                    <contextPath>/</contextPath>-->
+<!--                                </webApp>-->
+<!--                                <scanIntervalSeconds>0</scanIntervalSeconds>-->
+<!--                            </configuration>-->
+<!--                        </execution>-->
+
+<!--                        <execution>-->
+<!--                            <id>stop-jetty</id>-->
+<!--                            <phase>post-integration-test</phase>-->
+<!--                            <goals>-->
+<!--                                <goal>stop</goal>-->
+<!--                            </goals>-->
+<!--                        </execution>-->
+
+<!--                    </executions>-->
+<!--                </plugin>-->
 
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>

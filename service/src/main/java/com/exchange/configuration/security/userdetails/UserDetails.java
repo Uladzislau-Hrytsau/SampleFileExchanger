@@ -30,28 +30,6 @@ public class UserDetails extends User {
     /**
      * Instantiates a new User details.
      *
-     * @param username              the username
-     * @param password              the password
-     * @param enabled               the enabled
-     * @param accountNonExpired     the account non expired
-     * @param credentialsNonExpired the credentials non expired
-     * @param accountNonLocked      the account non locked
-     * @param authorities           the authorities
-     */
-    public UserDetails(
-            final String username,
-            final String password,
-            final boolean enabled,
-            final boolean accountNonExpired,
-            final boolean credentialsNonExpired,
-            final boolean accountNonLocked,
-            final Collection<? extends GrantedAuthority> authorities) {
-        super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
-    }
-
-    /**
-     * Instantiates a new User details.
-     *
      * @param userId      the user id
      * @param username    the username
      * @param password    the password
@@ -63,31 +41,6 @@ public class UserDetails extends User {
             final String password,
             final Collection<? extends GrantedAuthority> authorities) {
         super(username, password, authorities);
-        this.userId = userId;
-    }
-
-    /**
-     * Instantiates a new User details.
-     *
-     * @param userId                the user id
-     * @param username              the username
-     * @param password              the password
-     * @param enabled               the enabled
-     * @param accountNonExpired     the account non expired
-     * @param credentialsNonExpired the credentials non expired
-     * @param accountNonLocked      the account non locked
-     * @param authorities           the authorities
-     */
-    public UserDetails(
-            final Long userId,
-            final String username,
-            final String password,
-            final boolean enabled,
-            final boolean accountNonExpired,
-            final boolean credentialsNonExpired,
-            final boolean accountNonLocked,
-            final Collection<? extends GrantedAuthority> authorities) {
-        super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
         this.userId = userId;
     }
 

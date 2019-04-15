@@ -17,8 +17,8 @@ import java.io.IOException;
 /**
  * The type File rest controller.
  */
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("/files")
 public class FileRestController {
 

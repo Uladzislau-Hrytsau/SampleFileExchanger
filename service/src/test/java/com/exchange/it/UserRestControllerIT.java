@@ -12,7 +12,7 @@ import static org.junit.Assert.assertEquals;
 
 public class UserRestControllerIT {
 
-    private static RestTemplate restTemplate = new RestTemplate();
+//    private static RestTemplate restTemplate = new RestTemplate();
     private String endpoint = "http://localhost:8088/oauth/token";
 
     @BeforeClass
@@ -36,7 +36,7 @@ public class UserRestControllerIT {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 //        headers.set("Authorization", "Basic Y2xpZW50SWRQYXNzd29yZDpzZWNyZXQ=");
-        headers.setBasicAuth("clientIdPassword", "clientIdPassword");
+        headers.setBasicAuth("clientIdPassword", "secret");
 //        headers.setBasicAuth("clientIdPassword", "clientIdPassword");
         System.out.println(headers.toString());
         System.out.println(headers.toString());

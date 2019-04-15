@@ -1,4 +1,4 @@
-package com.exchange.it.configuration.security;
+package com.exchange.configuration.security;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
@@ -7,6 +7,6 @@ import org.springframework.security.web.context.AbstractSecurityWebApplicationIn
  * The type Security initializer.
  */
 @Configuration
-public class SecurityInitializerIT extends AbstractSecurityWebApplicationInitializer {
+public class SecurityInitializerConfiguration extends AbstractSecurityWebApplicationInitializer {
 
 }

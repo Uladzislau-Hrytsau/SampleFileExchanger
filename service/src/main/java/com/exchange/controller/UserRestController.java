@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.*;
 /**
  * The type User rest controller.
  */
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("/users")
 public class UserRestController {
 
@@ -80,3 +80,4 @@ public class UserRestController {
         userService.deleteUser(id);
     }
 }
+

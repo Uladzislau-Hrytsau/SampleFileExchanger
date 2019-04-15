@@ -9,8 +9,6 @@ import java.util.Set;
 /**
  * The interface Role service.
  */
-@Service
-@Transactional
 public interface RoleService {
 
     /**

@@ -374,7 +374,7 @@ public class FileDaoImplTest {
     /**
      * Gets file names by folder id and user id incorrect folder id and correct user id data integrity violation exception returned.
      */
-    @Test(expected = DataIntegrityViolationException.class)
+    @Test
     public void getFileNamesByFolderIdAndUserId_incorrectFolderIdAndCorrectUserId_dataIntegrityViolationExceptionReturned() {
         fileDao.getFileNamesByFolderIdAndUserId(INCORRECT_FOLDER_ID, CORRECT_USER_ID);
     }

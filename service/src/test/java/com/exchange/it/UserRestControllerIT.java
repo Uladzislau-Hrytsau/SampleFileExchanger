@@ -5,7 +5,9 @@ import com.exchange.dao.User;
 import com.exchange.dto.user.UserUpdatingDto;
 import com.exchange.wrapper.Response;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 import org.springframework.http.*;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.util.LinkedMultiValueMap;
@@ -23,6 +25,7 @@ import static org.junit.Assert.assertNotNull;
 /**
  * The type User rest controller it.
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class UserRestControllerIT {
 
     private static final String ENDPOINT = "http://localhost:";

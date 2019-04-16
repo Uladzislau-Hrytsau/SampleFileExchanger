@@ -6,7 +6,9 @@ import com.exchange.dto.file.FileStructureDto;
 import com.exchange.dto.folder.FolderStructureDto;
 import com.exchange.dto.structure.StructureDto;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 import org.springframework.http.*;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.util.LinkedMultiValueMap;
@@ -23,6 +25,10 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+/**
+ * The type Structure rest controller it.
+ */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class StructureRestControllerIT {
 
     private static final String ENDPOINT = "http://localhost:";
@@ -86,6 +92,9 @@ public class StructureRestControllerIT {
         assertEquals(CORRECT_STRUCTURE_DTO_BY_ROLE_ADMIN, responseEntity.getBody());
     }
 
+    /**
+     * Gets structure by folder id and categories with correct user id and role user.
+     */
     @Test
     public void getStructureByFolderIdAndCategoriesWithCorrectUserIdAndRoleUser() {
         this.getAccessTokenByUser(CORRECT_USER_WITH_ROLE_USER);
@@ -101,6 +110,9 @@ public class StructureRestControllerIT {
         assertEquals(CORRECT_STRUCTURE_DTO_BY_ROLE_USER, responseEntity.getBody());
     }
 
+    /**
+     * Gets structure by folder id and categories with incorrect folder id then throw bad request.
+     */
     @Test(expected = HttpClientErrorException.BadRequest.class)
     public void getStructureByFolderIdAndCategoriesWithIncorrectFolderIdThenThrowBadRequest() {
         this.getAccessTokenByUser(CORRECT_USER_WITH_ROLE_ADMIN);
@@ -115,6 +127,9 @@ public class StructureRestControllerIT {
         assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
     }
 
+    /**
+     * Gets structure by folder id and categories with non folder id then throw bad request.
+     */
     @Test(expected = HttpClientErrorException.BadRequest.class)
     public void getStructureByFolderIdAndCategoriesWithNonFolderIdThenThrowBadRequest() {
         this.getAccessTokenByUser(CORRECT_USER_WITH_ROLE_ADMIN);

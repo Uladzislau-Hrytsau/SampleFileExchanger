@@ -52,6 +52,12 @@ insert into folder (id, name, user_id, parent_id)
 values (3, 'folder31', 1, 1);
 insert into folder (id, name, user_id, parent_id)
 values (4, 'folder43', 1, 3);
+insert into folder (id, name, user_id, parent_id)
+values (4000, 'folder43', 1, null);
+insert into folder (id, name, user_id, parent_id)
+values (5000, 'folder43', 2, null);
+insert into folder (id, name, user_id, parent_id)
+values (4001, 'folder43', 1, null);
 -- file
 insert into file (id, user_id, date, description, folder_id, real_name, encode_name)
 values (1, 1, '1000-10-10', 'description1', 1, 'real_name1', 'encode_name1');

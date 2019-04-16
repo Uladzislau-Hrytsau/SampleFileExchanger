@@ -1,9 +1,10 @@
 package com.exchange.it;
 
 import com.exchange.dao.User;
-import com.exchange.dto.structure.StructureDto;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 import org.springframework.http.*;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.util.LinkedMultiValueMap;
@@ -19,6 +20,10 @@ import java.util.Set;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+/**
+ * The type Security rest controller it.
+ */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class SecurityRestControllerIT {
 
     private static final String ENDPOINT = "http://localhost:";
@@ -35,11 +40,17 @@ public class SecurityRestControllerIT {
     private static HttpHeaders httpHeaders = new HttpHeaders();
     private OAuth2AccessToken token;
 
+    /**
+     * Sets up.
+     */
     @Before
     public void setUp() {
         httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
     }
 
+    /**
+     * Gets user role with role admin.
+     */
     @Test
     public void getUserRoleWithRoleAdmin() {
         this.getAccessTokenByUser(CORRECT_USER_WITH_ROLE_ADMIN);
@@ -54,6 +65,9 @@ public class SecurityRestControllerIT {
         assertEquals(ADMIN_ROLES, responseEntity.getBody());
     }
 
+    /**
+     * Gets user role with role user.
+     */
     @Test
     public void getUserRoleWithRoleUser() {
         this.getAccessTokenByUser(CORRECT_USER_WITH_ROLE_USER);

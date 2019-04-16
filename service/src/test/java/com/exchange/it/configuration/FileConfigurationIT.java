@@ -6,7 +6,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 /**
- * The type File configuration.
+ * The type File configuration it.
  */
 @Configuration
 @PropertySource("classpath:error-message.properties")

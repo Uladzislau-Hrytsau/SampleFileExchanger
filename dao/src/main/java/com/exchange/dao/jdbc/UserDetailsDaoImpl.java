@@ -15,9 +15,21 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class UserDetailsDaoImpl implements UserDetailsDao {
 
+    /**
+     * The constant ID.
+     */
     public static final String ID = "id";
+    /**
+     * The constant USER_NAME.
+     */
     public static final String USER_NAME = "user_name";
+    /**
+     * The constant USER_PASSWORD.
+     */
     public static final String USER_PASSWORD = "user_password";
+    /**
+     * The constant USER_ROLE.
+     */
     public static final String USER_ROLE = "role";
 
     @Value("${userDetails.selectUserDetailsByLogin}")

@@ -11,30 +11,16 @@ public class WebApplicationInitializer extends AbstractAnnotationConfigDispatche
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        System.out.println("WebApplicationInitializer");
-        System.out.println("WebApplicationInitializer");
-        System.out.println("WebApplicationInitializer");
-        System.out.println("WebApplicationInitializer");
-        System.out.println("WebApplicationInitializer");
         return new Class<?>[]{WebConfiguration.class};
     }
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        System.out.println("WebApplicationInitializer");
-        System.out.println("WebApplicationInitializer");
-        System.out.println("WebApplicationInitializer");
-        System.out.println("WebApplicationInitializer");
-        System.out.println("WebApplicationInitializer");
         return null;
     }
 
     @Override
     protected String[] getServletMappings() {
-        System.out.println("WebApplicationInitializer");
-        System.out.println("WebApplicationInitializer");
-        System.out.println("WebApplicationInitializer");
-        System.out.println("WebApplicationInitializer");
         return new String[]{URL_MAPPING};
     }
 }

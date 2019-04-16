@@ -10,7 +10,7 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 import java.util.Collections;
 
 /**
- * The type Web configuration.
+ * The type Web configuration it.
  */
 @Configuration
 @EnableWebMvc

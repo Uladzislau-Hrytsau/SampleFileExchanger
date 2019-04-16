@@ -1,7 +1,7 @@
 CREATE TABLE `user` (
   `id` bigint(10) unsigned NOT NULL AUTO_INCREMENT,
-  `user_name` varchar(11) NOT NULL,
-  `user_password` varchar(60) NOT NULL,
+  `user_name` varchar(100) NOT NULL,
+  `user_password` varchar(100) NOT NULL,
   `user_gender` varchar(45) DEFAULT NULL,
   `user_birth_date` date DEFAULT NULL,
   `user_information` varchar(45) DEFAULT NULL,

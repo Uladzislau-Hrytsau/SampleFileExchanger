@@ -20,7 +20,7 @@ import org.springframework.security.oauth2.provider.approval.TokenApprovalStore;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 
 /**
- * The type Security configuration.
+ * The type Security configuration it.
  */
 @Configuration
 @EnableWebSecurity
@@ -33,7 +33,7 @@ public class SecurityConfigurationIT extends WebSecurityConfigurerAdapter {
     private final UserDetailsService userDetailsService;
 
     /**
-     * Instantiates a new Security configuration.
+     * Instantiates a new Security configuration it.
      *
      * @param userDetailsService the user details service
      */
@@ -91,7 +91,7 @@ public class SecurityConfigurationIT extends WebSecurityConfigurerAdapter {
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-//        provider.setPasswordEncoder(bCryptPasswordEncoder());
+        provider.setPasswordEncoder(bCryptPasswordEncoder());
         provider.setUserDetailsService(userDetailsService);
         return provider;
     }

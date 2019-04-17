@@ -28,7 +28,7 @@ CREATE TABLE `file` (
   `description` varchar(450) DEFAULT NULL,
   `folder_id` bigint(10) unsigned DEFAULT NULL,
   `real_name` varchar(450) NOT NULL,
-  `encode_name` varchar(40) NOT NULL,
+  `encode_name` varchar(450) NOT NULL,
   PRIMARY KEY (`id`,`user_id`),
   UNIQUE KEY `encode_name_UNIQUE` (`encode_name`),
   KEY `fk_files_users1_idx` (`user_id`),

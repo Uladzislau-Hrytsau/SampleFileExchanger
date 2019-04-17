@@ -32,7 +32,6 @@ public class FileRestController {
     @Autowired
     public FileRestController(final FileService fileService) {
         this.fileService = fileService;
-
     }
 
     /**

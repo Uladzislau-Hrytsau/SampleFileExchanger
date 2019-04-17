@@ -6,6 +6,7 @@ import com.exchange.dto.user.UserUpdatingDto;
 import com.exchange.wrapper.Response;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 import org.springframework.http.*;
@@ -25,6 +26,7 @@ import static org.junit.Assert.assertNotNull;
 /**
  * The type User rest controller it.
  */
+@Ignore
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class UserRestControllerIT {
 

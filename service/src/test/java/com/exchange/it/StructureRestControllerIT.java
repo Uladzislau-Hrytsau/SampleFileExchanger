@@ -7,6 +7,7 @@ import com.exchange.dto.folder.FolderStructureDto;
 import com.exchange.dto.structure.StructureDto;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 import org.springframework.http.*;
@@ -28,6 +29,7 @@ import static org.junit.Assert.assertNotNull;
 /**
  * The type Structure rest controller it.
  */
+@Ignore
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class StructureRestControllerIT {
 

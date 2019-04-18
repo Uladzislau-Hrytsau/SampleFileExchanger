@@ -60,8 +60,8 @@ public class FileRestControllerIT {
             LocalDate.of(1000, 10, 10));
     private static final RestTemplate restTemplate = new RestTemplate();
     private static final HttpHeaders httpHeaders = new HttpHeaders();
-    private static String REPOSITORY_PATH = "./src/main/webapp/WEB-INF/repo/";
     private static Path tempDirectoryPath;
+    private static String REPOSITORY_PATH = "./src/main/webapp/WEB-INF/repo/";
     private OAuth2AccessToken token;
 
     /**
@@ -71,11 +71,9 @@ public class FileRestControllerIT {
      */
     @BeforeClass
     public static void prepareEnvironment() throws IOException {
-        Path directoryPath = FileSystems.getDefault().getPath(REPOSITORY_PATH);
+        Path directoryPath = FileSystems.getDefault().getPath(REPOSITORY_PATH).toAbsolutePath();
         Path tempDirectory = Files.createTempDirectory(directoryPath, "prefix-");
         tempDirectoryPath = tempDirectory;
-        REPOSITORY_PATH += tempDirectory.getFileName();
-
     }
 
     /**
@@ -759,7 +757,7 @@ public class FileRestControllerIT {
         return File.createTempFile(
                 "prefix-",
                 "-suffix",
-                new File(REPOSITORY_PATH));
+                new File(tempDirectoryPath.toString()));
     }
 
     private void getAccessTokenByUser(User user) {

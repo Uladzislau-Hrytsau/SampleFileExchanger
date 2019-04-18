@@ -60,7 +60,7 @@ public class FileRestControllerIT {
             LocalDate.of(1000, 10, 10));
     private static final RestTemplate restTemplate = new RestTemplate();
     private static final HttpHeaders httpHeaders = new HttpHeaders();
-    private static String REPOSITORY_PATH = "/home/vlad/IdeaProjects/SampleFileExchanger/service/src/main/webapp/WEB-INF/repo/";
+    private static String REPOSITORY_PATH = "./src/main/webapp/WEB-INF/repo/";
     private static Path tempDirectoryPath;
     private OAuth2AccessToken token;
 

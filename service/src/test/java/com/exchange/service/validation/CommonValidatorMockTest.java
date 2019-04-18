@@ -30,104 +30,104 @@ public class CommonValidatorMockTest {
     private CommonValidator commonValidator;
 
     /**
-     * Is valid identifier correct identifier true returned.
+     * Is valid identifier with correct identifier then true returned.
      */
     @Test
-    public void isValidIdentifier_correctIdentifier_trueReturned() {
+    public void isValidIdentifierWithCorrectIdentifierThenTrueReturned() {
         Boolean actualValidatingResult = commonValidator.isValidIdentifier(CORRECT_IDENTIFIER);
         Assert.assertTrue(actualValidatingResult);
     }
 
     /**
-     * Is valid identifier incorrect identifier false returned.
+     * Is valid identifier with incorrect identifier then false returned.
      */
     @Test
-    public void isValidIdentifier_incorrectIdentifier_falseReturned() {
+    public void isValidIdentifierWithIncorrectIdentifierThenFalseReturned() {
         Boolean actualValidatingResult = commonValidator.isValidIdentifier(INCORRECT_IDENTIFIER);
         Assert.assertFalse(actualValidatingResult);
     }
 
     /**
-     * Is valid identifier null identifier false returned.
+     * Is valid identifier with null identifier then false returned.
      */
     @Test
-    public void isValidIdentifier_nullIdentifier_falseReturned() {
+    public void isValidIdentifierWithNullIdentifierThenFalseReturned() {
         Boolean actualValidatingResult = commonValidator.isValidIdentifier(null);
         Assert.assertFalse(actualValidatingResult);
     }
 
     /**
-     * Is valid string correct string true returned.
+     * Is valid string with correct string then true returned.
      */
     @Test
-    public void isValidString_correctString_trueReturned() {
+    public void isValidStringWithCorrectStringThenTrueReturned() {
         Boolean actualValidatingResult = commonValidator.isValidString(CORRECT_STRING);
         Assert.assertTrue(actualValidatingResult);
     }
 
     /**
-     * Is valid string empty string false returned.
+     * Is valid string with empty string then false returned.
      */
     @Test
-    public void isValidString_emptyString_falseReturned() {
+    public void isValidStringWithEmptyStringThenFalseReturned() {
         Boolean actualValidatingResult = commonValidator.isValidString("");
         Assert.assertFalse(actualValidatingResult);
     }
 
     /**
-     * Is valid string null string empty returned.
+     * Is valid string with null string then empty returned.
      */
     @Test
-    public void isValidString_nullString_emptyReturned() {
+    public void isValidStringWithNullStringThenEmptyReturned() {
         Boolean actualValidatingResult = commonValidator.isValidString(null);
         Assert.assertFalse(actualValidatingResult);
     }
 
     /**
-     * Validate page and size correct page and size correct.
+     * Validate page and size with correct page and size then correct.
      */
     @Test
-    public void validatePageAndSize_correctPageAndSize_correct() {
+    public void validatePageAndSizeWithCorrectPageAndSizeThenCorrect() {
         commonValidator.validatePageAndSize(CORRECT_PAGE, CORRECT_SIZE);
     }
 
     /**
-     * Validate page and size incorrect page and correct size correct.
+     * Validate page and size with incorrect page and correct size then throw validation exception.
      */
     @Test(expected = ValidationException.class)
-    public void validatePageAndSize_incorrectPageAndCorrectSize_correct() {
+    public void validatePageAndSizeWithIncorrectPageAndCorrectSizeThenThrowValidationException() {
         commonValidator.validatePageAndSize(INCORRECT_PAGE, CORRECT_SIZE);
     }
 
     /**
-     * Validate page and size correct page and incorrect size correct.
+     * Validate page and size with correct page and incorrect size then throw validation exception.
      */
     @Test(expected = ValidationException.class)
-    public void validatePageAndSize_correctPageAndIncorrectSize_correct() {
+    public void validatePageAndSizeWithCorrectPageAndIncorrectSizeThenThrowValidationException() {
         commonValidator.validatePageAndSize(CORRECT_PAGE, INCORRECT_SIZE);
     }
 
     /**
-     * Validate page and size incorrect page and size correct.
+     * Validate page and size with incorrect page and size then throw validation exception.
      */
     @Test(expected = ValidationException.class)
-    public void validatePageAndSize_incorrectPageAndSize_correct() {
+    public void validatePageAndSizeWithIncorrectPageAndSizeThenThrowValidationException() {
         commonValidator.validatePageAndSize(INCORRECT_PAGE, INCORRECT_SIZE);
     }
 
     /**
-     * Validate page and size null page and size correct.
+     * Validate page and size with null page and size then throw validation exception.
      */
     @Test(expected = ValidationException.class)
-    public void validatePageAndSize_nullPageAndSize_correct() {
+    public void validatePageAndSizeWithNullPageAndSizeThenThrowValidationException() {
         commonValidator.validatePageAndSize(null, null);
     }
 
     /**
-     * Validate date correct date correct.
+     * Validate date with correct date thencorrect.
      */
     @Test
-    public void validateDate_correctDate_correct() {
+    public void validateDateWithCorrectDateThencorrect() {
         LocalDate dateBeforeValidating = LocalDate.of(
                 CORRECT_DATE.getYear(),
                 CORRECT_DATE.getMonth(),
@@ -137,10 +137,10 @@ public class CommonValidatorMockTest {
     }
 
     /**
-     * Validate date incorrect date correct.
+     * Validate date with incorrect date then correct.
      */
     @Test
-    public void validateDate_incorrectDate_correct() {
+    public void validateDateWithIncorrectDateThenCorrect() {
         LocalDate dateBeforeValidating = null;
         dateBeforeValidating = commonValidator.validateDate(dateBeforeValidating);
         Assert.assertEquals(LocalDate.now(), dateBeforeValidating);

@@ -39,10 +39,10 @@ public class RoleDaoImplTest {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     /**
-     * Add user role correct user id and role id true returned.
+     * Add user role with correct user id and role id then true returned.
      */
     @Test
-    public void addUserRole_correctUserIdAndRoleId_trueReturned() {
+    public void addUserRoleWithCorrectUserIdAndRoleIdThenTrueReturned() {
         List<Integer> actualRolesByUserIdBeforeAdding = this.getRolesByUserId(CORRECT_USER_ID);
         Boolean addingUserRoleResult = roleDao.addUserRole(CORRECT_USER_ID, CORRECT_ROLE_ID);
         List<Integer> actualRolesByUserIdAfterAdding = this.getRolesByUserId(CORRECT_USER_ID);
@@ -54,26 +54,26 @@ public class RoleDaoImplTest {
     }
 
     /**
-     * Add user role incorrect user id and correct role id data integrity violation exception returned.
+     * Add user role with incorrect user id and correct role id then throw data integrity violation exception.
      */
     @Test(expected = DataIntegrityViolationException.class)
-    public void addUserRole_incorrectUserIdAndCorrectRoleId_dataIntegrityViolationExceptionReturned() {
+    public void addUserRoleWithIncorrectUserIdAndCorrectRoleIdThenThrowDataIntegrityViolationException() {
         roleDao.addUserRole(CORRECT_USER_ID, INCORRECT_ROLE_ID);
     }
 
     /**
-     * Add user role correct user id and incorrect role id data integrity violation exception returned.
+     * Add user role with correct user id and incorrect role id then throw data integrity violation exception.
      */
     @Test(expected = DataIntegrityViolationException.class)
-    public void addUserRole_correctUserIdAndIncorrectRoleId_dataIntegrityViolationExceptionReturned() {
+    public void addUserRoleWithCorrectUserIdAndIncorrectRoleIdThenThrowDataIntegrityViolationException() {
         roleDao.addUserRole(INCORRECT_USER_ID, CORRECT_ROLE_ID);
     }
 
     /**
-     * Add user role null user id and role id data integrity violation exception returned.
+     * Add user role with null user id and role id then throw data integrity violation exception.
      */
     @Test(expected = DataIntegrityViolationException.class)
-    public void addUserRole_nullUserIdAndRoleId_dataIntegrityViolationExceptionReturned() {
+    public void addUserRoleWithNullUserIdAndRoleIdThenThrowDataIntegrityViolationException() {
         roleDao.addUserRole(null, null);
     }
 

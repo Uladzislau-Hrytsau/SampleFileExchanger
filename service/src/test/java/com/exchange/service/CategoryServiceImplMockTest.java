@@ -43,10 +43,10 @@ public class CategoryServiceImplMockTest {
     private CategoryServiceImpl categoryService;
 
     /**
-     * Add file categories correct categories and file id and user id correct.
+     * Add file categories with correct categories and file id and user id then correct.
      */
     @Test
-    public void addFileCategories_correctCategoriesAndFileIdAndUserId_correct() {
+    public void addFileCategoriesWithCorrectCategoriesAndFileIdAndUserIdThenCorrect() {
         doNothing().when(categoryValidatorMock).validateCategoriesByUserId(anySet(), anyLong());
         when(categoryDaoMock.addFileCategories(anySet())).thenReturn(any());
         when(commonServiceMock.checkBatchResult(CORRECT_BATCH_RESULT)).thenReturn(Boolean.TRUE);
@@ -58,10 +58,10 @@ public class CategoryServiceImplMockTest {
     }
 
     /**
-     * Add file categories incorrect categories and file id and user id validation exception.
+     * Add file categories with incorrect categories and file id and user id then throw validation exception.
      */
     @Test(expected = ValidationException.class)
-    public void addFileCategories_incorrectCategoriesAndFileIdAndUserId_validationException() {
+    public void addFileCategoriesWithIncorrectCategoriesAndFileIdAndUserIdThenThrowValidationException() {
         doThrow(ValidationException.class).when(categoryValidatorMock).validateCategoriesByUserId(anySet(), anyLong());
         categoryService.addFileCategories(CORRECT_CATEGORIES, CORRECT_FILE_ID, CORRECT_USER_ID);
         verify(categoryValidatorMock, times(TIMES_ONE)).validateCategoriesByUserId(any(), any());
@@ -69,10 +69,10 @@ public class CategoryServiceImplMockTest {
     }
 
     /**
-     * Add file categories correct categories and user id and incorrect file id internal server exception.
+     * Add file categories with correct categories and user id and incorrect file id then throw internal server exception.
      */
     @Test(expected = InternalServerException.class)
-    public void addFileCategories_correctCategoriesAndUserIdAndIncorrectFileId_internalServerException() {
+    public void addFileCategoriesWithCorrectCategoriesAndUserIdAndIncorrectFileIdThenThrowInternalServerException() {
         doNothing().when(categoryValidatorMock).validateCategoriesByUserId(anySet(), anyLong());
         when(categoryDaoMock.addFileCategories(anySet())).thenReturn(any());
         when(commonServiceMock.checkBatchResult(CORRECT_BATCH_RESULT)).thenReturn(Boolean.FALSE);
@@ -84,10 +84,10 @@ public class CategoryServiceImplMockTest {
     }
 
     /**
-     * Gets file category dtos by categories and file id correct categories and file id correct file category dtos.
+     * Gets file category dtos by categories and file id with correct categories and file id then correct file category dtos.
      */
     @Test
-    public void getFileCategoryDtosByCategoriesAndFileId_correctCategoriesAndFileId_correctFileCategoryDtos() {
+    public void getFileCategoryDtosByCategoriesAndFileIdWithCorrectCategoriesAndFileIdThenCorrectFileCategoryDtos() {
         Set<FileCategoryDto> expectedFileCategoryDtos = new HashSet<>();
         CORRECT_CATEGORIES.forEach(item -> expectedFileCategoryDtos.add(new FileCategoryDto(item, CORRECT_FILE_ID)));
         Set<FileCategoryDto> actualFileCategoryDtos = categoryService.getFileCategoryDtosByCategoriesAndFileId(

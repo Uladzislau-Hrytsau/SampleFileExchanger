@@ -87,10 +87,10 @@ public class UserDaoImplTest {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     /**
-     * Gets users by limit and offset correct limit and offset correct users returned.
+     * Gets users by limit and offset with correct limit and offset then correct users returned.
      */
     @Test
-    public void getUsersByLimitAndOffset_correctLimitAndOffset_correctUsersReturned() {
+    public void getUsersByLimitAndOffsetWithCorrectLimitAndOffsetThenCorrectUsersReturned() {
         List<User> usersByLimitAndOffset = userDao.getUsersByLimitAndOffset(CORRECT_LIMIT, CORRECT_OFFSET);
         Integer actualSize = usersByLimitAndOffset.size();
         assertEquals(CORRECT_LIMIT, actualSize);
@@ -98,10 +98,10 @@ public class UserDaoImplTest {
     }
 
     /**
-     * Gets users by limit and offset incorrect limit and correct offset all users returned.
+     * Gets users by limit and offset with incorrect limit and correct offset then all users returned.
      */
     @Test
-    public void getUsersByLimitAndOffset_incorrectLimitAndCorrectOffset_allUsersReturned() {
+    public void getUsersByLimitAndOffsetWithIncorrectLimitAndCorrectOffsetThenAllUsersReturned() {
         List<User> usersByLimitAndOffset = userDao.getUsersByLimitAndOffset(INCORRECT_LIMIT, CORRECT_OFFSET);
         Integer actualSize = usersByLimitAndOffset.size();
         Integer expectedSize = Math.toIntExact(userDao.getUserCount());
@@ -110,10 +110,10 @@ public class UserDaoImplTest {
     }
 
     /**
-     * Gets users by limit and offset correct limit and incorrect offset correct users by limit with offset zero returned.
+     * Gets users by limit and offset with correct limit and incorrect offset then correct users by limit with offset zero returned.
      */
     @Test
-    public void getUsersByLimitAndOffset_correctLimitAndIncorrectOffset_correctUsersByLimitWithOffsetZeroReturned() {
+    public void getUsersByLimitAndOffsetWithCorrectLimitAndIncorrectOffsetThenCorrectUsersByLimitWithOffsetZeroReturned() {
         List<User> usersByLimitAndOffset = userDao.getUsersByLimitAndOffset(CORRECT_LIMIT, INCORRECT_OFFSET);
         Integer actualSize = usersByLimitAndOffset.size();
         assertEquals(CORRECT_LIMIT, actualSize);
@@ -122,10 +122,10 @@ public class UserDaoImplTest {
     }
 
     /**
-     * Gets users by limit and offset null limit and offset all users returned.
+     * Gets users by limit and offset with null limit and offset all users returned.
      */
     @Test
-    public void getUsersByLimitAndOffset_nullLimitAndOffset_allUsersReturned() {
+    public void getUsersByLimitAndOffsetWithNullLimitAndOffset_allUsersReturned() {
         List<User> usersByLimitAndOffset = userDao.getUsersByLimitAndOffset(null, null);
         Integer actualSize = usersByLimitAndOffset.size();
         Integer expectedSize = Math.toIntExact(userDao.getUserCount());
@@ -134,10 +134,10 @@ public class UserDaoImplTest {
     }
 
     /**
-     * Add user correct user correct user returned.
+     * Add user with correct user then correct user returned.
      */
     @Test
-    public void addUser_correctUser_correctUserReturned() {
+    public void addUserWithCorrectUserThenCorrectUserReturned() {
         Long actualUserId = userDao.addUser(STILL_NOT_EXIST_USER);
         User userByUserIdAfterAdding = this.getUserByUserId(actualUserId);
         assertNotNull(userByUserIdAfterAdding);
@@ -145,26 +145,26 @@ public class UserDaoImplTest {
     }
 
     /**
-     * Add user already exists user duplicate key exception returned.
+     * Add user with already exists user then throw duplicate key exception returned.
      */
     @Test(expected = DuplicateKeyException.class)
-    public void addUser_alreadyExistsUser_duplicateKeyExceptionReturned() {
+    public void addUserWithAlreadyExistsUserThenThrowDuplicateKeyExceptionReturned() {
         userDao.addUser(ALREADY_EXISTS_USER);
     }
 
     /**
-     * Add user incorrect exists user null pointer exception returned.
+     * Add user with incorrect exists user then throw null pointer exception returned.
      */
     @Test(expected = NullPointerException.class)
-    public void addUser_incorrectExistsUser_nullPointerExceptionReturned() {
+    public void addUserWithIncorrectExistsUserThenThrowNullPointerExceptionReturned() {
         userDao.addUser(null);
     }
 
     /**
-     * Update user correct user updating dto true returned.
+     * Update user with correct user updating dto then true returned.
      */
     @Test
-    public void updateUser_correctUserUpdatingDto_trueReturned() {
+    public void updateUserWithCorrectUserUpdatingDtoThenTrueReturned() {
         User userBeforeUpdating = this.getUserByUserId(CORRECT_USER_UPDATING_DTO.getId());
         Boolean updatingUserResult = userDao.updateUser(CORRECT_USER_UPDATING_DTO);
         User userAfterUpdating = this.getUserByUserId(CORRECT_USER_UPDATING_DTO.getId());
@@ -183,27 +183,27 @@ public class UserDaoImplTest {
     }
 
     /**
-     * Update user incorrect user updating dto false returned.
+     * Update user with incorrect user updating dto then false returned.
      */
     @Test
-    public void updateUser_incorrectUserUpdatingDto_falseReturned() {
+    public void updateUserWithIncorrectUserUpdatingDtoThenFalseReturned() {
         Boolean updatingUserResult = userDao.updateUser(INCORRECT_USER_UPDATING_DTO);
         assertFalse(updatingUserResult);
     }
 
     /**
-     * Update user null user updating dto false returned.
+     * Update user with null user updating dto then throw null pointer exception and false returned.
      */
     @Test(expected = NullPointerException.class)
-    public void updateUser_nullUserUpdatingDto_falseReturned() {
+    public void updateUserWithNullUserUpdatingDtoThenThrowNullPointerExceptionAndFalseReturned() {
         userDao.updateUser(null);
     }
 
     /**
-     * Delete user correct user id true returned.
+     * Delete user with correct user id then throw empty result data access exception andtrue returned.
      */
     @Test(expected = EmptyResultDataAccessException.class)
-    public void deleteUser_correctUserId_trueReturned() {
+    public void deleteUserWithCorrectUserIdThenThrowEmptyResultDataAccessExceptionAndtrueReturned() {
         User userByUserIdBeforeDeleting = this.getUserByUserId(CORRECT_USER_ONE.getId());
         Boolean deletingResult = userDao.deleteUser(CORRECT_USER_ONE.getId());
         assertTrue(deletingResult);
@@ -212,28 +212,28 @@ public class UserDaoImplTest {
     }
 
     /**
-     * Delete user incorrect user id false returned.
+     * Delete user with incorrect user id then false returned.
      */
     @Test
-    public void deleteUser_incorrectUserId_falseReturned() {
+    public void deleteUserWithIncorrectUserIdThenFalseReturned() {
         Boolean deletingResult = userDao.deleteUser(STILL_NOT_EXIST_USER.getId());
         assertFalse(deletingResult);
     }
 
     /**
-     * Delete user null user id false returned.
+     * Delete user with null user id then false returned.
      */
     @Test
-    public void deleteUser_nullUserId_falseReturned() {
+    public void deleteUserWithNullUserIdThenFalseReturned() {
         Boolean deletingResult = userDao.deleteUser(null);
         assertFalse(deletingResult);
     }
 
     /**
-     * Check user by login correct user name true returned.
+     * Check user by login with correct user name then true returned.
      */
     @Test
-    public void checkUserByLogin_correctUserName_trueReturned() {
+    public void checkUserByLoginWithCorrectUserNameThenTrueReturned() {
         Boolean checkingUserByLoginResult = userDao.checkUserByLogin(CORRECT_USER_ONE.getName());
         assertTrue(checkingUserByLoginResult);
         User existingUserByUserId = this.getUserByUserId(CORRECT_USER_ONE.getId());
@@ -241,38 +241,38 @@ public class UserDaoImplTest {
     }
 
     /**
-     * Check user by login incorrect user name false returned.
+     * Check user by login with incorrect user name then throw empty result data access exception.
      */
     @Test(expected = EmptyResultDataAccessException.class)
-    public void checkUserByLogin_incorrectUserName_falseReturned() {
+    public void checkUserByLoginWithIncorrectUserNameThenThrowEmptyResultDataAccessException() {
         Boolean checkingUserByLoginResult = userDao.checkUserByLogin(STILL_NOT_EXIST_USER.getName());
         assertFalse(checkingUserByLoginResult);
         this.getUserByUserId(STILL_NOT_EXIST_USER.getId());
     }
 
     /**
-     * Check user by login empty user name false returned.
+     * Check user by login with empty user name then false returned.
      */
     @Test
-    public void checkUserByLogin_emptyUserName_falseReturned() {
+    public void checkUserByLoginWithEmptyUserNameThenFalseReturned() {
         Boolean checkingUserByLoginResult = userDao.checkUserByLogin("");
         assertFalse(checkingUserByLoginResult);
     }
 
     /**
-     * Check user by login null user name false returned.
+     * Check user by login with null user name then false returned.
      */
     @Test
-    public void checkUserByLogin_nullUserName_falseReturned() {
+    public void checkUserByLoginWithNullUserNameThenFalseReturned() {
         Boolean checkingUserByLoginResult = userDao.checkUserByLogin(null);
         assertFalse(checkingUserByLoginResult);
     }
 
     /**
-     * Gets user count correct count users returned.
+     * Gets user count with correct count users returned.
      */
     @Test
-    public void getUserCount_correctCountUsersReturned() {
+    public void getUserCountWithCorrectCountUsersReturned() {
         Long userCountBeforeAddingUser = userDao.getUserCount();
         userDao.addUser(STILL_NOT_EXIST_USER);
         Long userCountAfterAddingUser = userDao.getUserCount();

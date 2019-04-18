@@ -58,12 +58,12 @@ public class FolderRestControllerMockTest {
     }
 
     /**
-     * Add folder correct folder structure dto and authentication.
+     * Add folder with correct folder structure dto and authentication.
      *
      * @throws Exception the exception
      */
     @Test
-    public void addFolder_correctFolderStructureDtoAndAuthentication() throws Exception {
+    public void addFolderWithCorrectFolderStructureDtoAndAuthentication() throws Exception {
         doNothing().when(folderServiceMock).addFolder(any(FolderStructureDto.class), any(Authentication.class));
         mockMvc.perform(post(FOLDERS_URI)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -75,12 +75,12 @@ public class FolderRestControllerMockTest {
     }
 
     /**
-     * Add folder incorrect folder structure dto and authentication validation exception.
+     * Add folder with incorrect folder structure dto and authentication then throw validation exception.
      *
      * @throws Exception the exception
      */
     @Test
-    public void addFolder_incorrectFolderStructureDtoAndAuthentication_validationException() throws Exception {
+    public void addFolderWithIncorrectFolderStructureDtoAndAuthenticationThenThrowValidationException() throws Exception {
         doThrow(ValidationException.class).when(folderServiceMock).addFolder(any(), any());
         mockMvc.perform(post(FOLDERS_URI)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -92,12 +92,12 @@ public class FolderRestControllerMockTest {
     }
 
     /**
-     * Add folder incorrect folder structure dto and authentication internal server exception.
+     * Add folder with incorrect folder structure dto and authentication then throw internal server exception.
      *
      * @throws Exception the exception
      */
     @Test
-    public void addFolder_incorrectFolderStructureDtoAndAuthentication_internalServerException() throws Exception {
+    public void addFolderWithIncorrectFolderStructureDtoAndAuthenticationThenThrowInternalServerException() throws Exception {
         doThrow(InternalServerException.class).when(folderServiceMock).addFolder(any(), any());
         mockMvc.perform(post(FOLDERS_URI)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -109,12 +109,12 @@ public class FolderRestControllerMockTest {
     }
 
     /**
-     * Add folder non folder structure dto bad request.
+     * Add folder with non folder structure dto then throw bad request.
      *
      * @throws Exception the exception
      */
     @Test
-    public void addFolder_nonFolderStructureDto_badRequest() throws Exception {
+    public void addFolderWithNonFolderStructureDtoThenThrowBadRequest() throws Exception {
         mockMvc.perform(post(FOLDERS_URI)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .principal(authenticationMock));
@@ -123,12 +123,12 @@ public class FolderRestControllerMockTest {
     }
 
     /**
-     * Update folder name correct folder structure dto and authentication.
+     * Update folder name with correct folder structure dto and authentication.
      *
      * @throws Exception the exception
      */
     @Test
-    public void updateFolderName_correctFolderStructureDtoAndAuthentication() throws Exception {
+    public void updateFolderNameWithCorrectFolderStructureDtoAndAuthentication() throws Exception {
         doNothing().when(folderServiceMock).updateFolder(any(), any());
         mockMvc.perform(put(FOLDERS_URI)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -140,12 +140,12 @@ public class FolderRestControllerMockTest {
     }
 
     /**
-     * Update folder name incorrect folder dto and authentication validation exception.
+     * Update folder name with incorrect folder dto and authentication then throw validation exception.
      *
      * @throws Exception the exception
      */
     @Test
-    public void updateFolderName_incorrectFolderDtoAndAuthentication_validationException() throws Exception {
+    public void updateFolderNameWithIncorrectFolderDtoAndAuthenticationThenThrowValidationException() throws Exception {
         doThrow(ValidationException.class).when(folderServiceMock).updateFolder(any(), any());
         mockMvc.perform(put(FOLDERS_URI)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -157,12 +157,12 @@ public class FolderRestControllerMockTest {
     }
 
     /**
-     * Update folder name incorrect folder structure dto and authentication internal server exception.
+     * Update folder name with incorrect folder structure dto and authentication then throw internal server exception.
      *
      * @throws Exception the exception
      */
     @Test
-    public void updateFolderName_incorrectFolderStructureDtoAndAuthentication_internalServerException() throws Exception {
+    public void updateFolderNameWithIncorrectFolderStructureDtoAndAuthenticationThenThrowInternalServerException() throws Exception {
         doThrow(InternalServerException.class).when(folderServiceMock).updateFolder(any(), any());
         mockMvc.perform(put(FOLDERS_URI)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -174,12 +174,12 @@ public class FolderRestControllerMockTest {
     }
 
     /**
-     * Update folder name non folder structure dto and authentication bad request.
+     * Update folder name with non folder structure dto and authentication then throw bad request.
      *
      * @throws Exception the exception
      */
     @Test
-    public void updateFolderName_nonFolderStructureDtoAndAuthentication_badRequest() throws Exception {
+    public void updateFolderNameWithNonFolderStructureDtoAndAuthenticationThenThrowBadRequest() throws Exception {
         mockMvc.perform(put(FOLDERS_URI)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .principal(authenticationMock))
@@ -189,12 +189,12 @@ public class FolderRestControllerMockTest {
     }
 
     /**
-     * Delete folder correct folder id and authentication.
+     * Delete folder with correct folder id and authentication.
      *
      * @throws Exception the exception
      */
     @Test
-    public void deleteFolder_correctFolderIdAndAuthentication() throws Exception {
+    public void deleteFolderWithCorrectFolderIdAndAuthentication() throws Exception {
         doNothing().when(folderServiceMock).deleteByFolderIdAndAuthentication(any(Long.class), any(Authentication.class));
         mockMvc.perform(delete(FOLDERS_URI)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -206,12 +206,12 @@ public class FolderRestControllerMockTest {
     }
 
     /**
-     * Delete folder incorrect folder id and authentication validation exception.
+     * Delete folder with incorrect folder id and authentication then throw validation exception.
      *
      * @throws Exception the exception
      */
     @Test
-    public void deleteFolder_incorrectFolderIdAndAuthentication_validationException() throws Exception {
+    public void deleteFolderWithIncorrectFolderIdAndAuthenticationThenThrowValidationException() throws Exception {
         doThrow(ValidationException.class).when(folderServiceMock).deleteByFolderIdAndAuthentication(any(Long.class), any(Authentication.class));
         mockMvc.perform(delete(FOLDERS_URI)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -223,12 +223,12 @@ public class FolderRestControllerMockTest {
     }
 
     /**
-     * Delete folder incorrect folder id and authentication file not deleted exception.
+     * Delete folder with incorrect folder id and authentication then throw file not deleted exception.
      *
      * @throws Exception the exception
      */
     @Test
-    public void deleteFolder_incorrectFolderIdAndAuthentication_fileNotDeletedException() throws Exception {
+    public void deleteFolderWithIncorrectFolderIdAndAuthenticationThenThrowFileNotDeletedException() throws Exception {
         doThrow(FileNotDeletedException.class).when(folderServiceMock).deleteByFolderIdAndAuthentication(any(Long.class), any(Authentication.class));
         mockMvc.perform(delete(FOLDERS_URI)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -240,12 +240,12 @@ public class FolderRestControllerMockTest {
     }
 
     /**
-     * Delete folder incorrect folder id and authentication internal server exception.
+     * Delete folder with incorrect folder id and authentication then throw internal server exception.
      *
      * @throws Exception the exception
      */
     @Test
-    public void deleteFolder_incorrectFolderIdAndAuthentication_internalServerException() throws Exception {
+    public void deleteFolderWithIncorrectFolderIdAndAuthenticationThenThrowInternalServerException() throws Exception {
         doThrow(InternalServerException.class).when(folderServiceMock).deleteByFolderIdAndAuthentication(any(Long.class), any(Authentication.class));
         mockMvc.perform(delete(FOLDERS_URI)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -257,12 +257,12 @@ public class FolderRestControllerMockTest {
     }
 
     /**
-     * Delete folder non folder id and authentication bad request.
+     * Delete folder with non folder id and authentication then throw bad request.
      *
      * @throws Exception the exception
      */
     @Test
-    public void deleteFolder_nonFolderIdAndAuthentication_badRequest() throws Exception {
+    public void deleteFolderWithNonFolderIdAndAuthenticationThenThrowBadRequest() throws Exception {
         doThrow(InternalServerException.class).when(folderServiceMock).deleteByFolderIdAndAuthentication(any(Long.class), any(Authentication.class));
         mockMvc.perform(delete(FOLDERS_URI)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)

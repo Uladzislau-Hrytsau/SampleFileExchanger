@@ -39,35 +39,35 @@ public class UserDetailsDaoImplTest {
     private UserDetailsDao userDetailsDao;
 
     /**
-     * Gets user details by login correct login correct user details dto returned.
+     * Gets user details by login with correct login then correct user details dto returned.
      */
     @Test
-    public void getUserDetailsByLogin_correctLogin_correctUserDetailsDtoReturned() {
+    public void getUserDetailsByLoginWithCorrectLoginThenCorrectUserDetailsDtoReturned() {
         UserDetailsDto actualUserDetailsByLogin = userDetailsDao.getUserDetailsByLogin(CORRECT_LOGIN);
         Assert.assertEquals(CORRECT_USER_DETAILS_DTO, actualUserDetailsByLogin);
     }
 
     /**
-     * Gets user details by login incorrect login empty result data access exception returned.
+     * Gets user details by login with incorrect login then throw empty result data access exception.
      */
     @Test(expected = EmptyResultDataAccessException.class)
-    public void getUserDetailsByLogin_incorrectLogin_emptyResultDataAccessExceptionReturned() {
+    public void getUserDetailsByLoginWithIncorrectLoginThenThrowEmptyResultDataAccessException() {
         userDetailsDao.getUserDetailsByLogin(INCORRECT_LOGIN);
     }
 
     /**
-     * Gets user details by login empty login empty result data access exception returned.
+     * Gets user details by login with empty login then throw empty result data access exception.
      */
     @Test(expected = EmptyResultDataAccessException.class)
-    public void getUserDetailsByLogin_emptyLogin_emptyResultDataAccessExceptionReturned() {
+    public void getUserDetailsByLoginWithEmptyLoginThenThrowEmptyResultDataAccessException() {
         userDetailsDao.getUserDetailsByLogin("");
     }
 
     /**
-     * Gets user details by login null login empty result data access exception returned.
+     * Gets user details by login with null login then throw empty result data access exception.
      */
     @Test(expected = EmptyResultDataAccessException.class)
-    public void getUserDetailsByLogin_nullLogin_emptyResultDataAccessExceptionReturned() {
+    public void getUserDetailsByLoginWithNullLoginThenThrowEmptyResultDataAccessException() {
         userDetailsDao.getUserDetailsByLogin(null);
     }
 

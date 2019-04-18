@@ -75,12 +75,12 @@ public class StructureRestControllerMockTest {
     }
 
     /**
-     * Gets structure by folder id and categories correct folder id and authentication correct structure dto returned.
+     * Gets structure by folder id and categories with correct folder id and authentication then correct structure dto returned.
      *
      * @throws Exception the exception
      */
     @Test
-    public void getStructureByFolderIdAndCategories_correctFolderIdAndAuthentication_correctStructureDtoReturned() throws Exception {
+    public void getStructureByFolderIdAndCategoriesWithCorrectFolderIdAndAuthenticationThenCorrectStructureDtoReturned() throws Exception {
         given(structureServiceMock.getStructureAndCategoriesByFolderIdAndAuthentication(any(Long.class), any(Authentication.class)))
                 .willReturn(CORRECT_STRUCTURE_DTO);
         mockMvc.perform(get("/structures")
@@ -94,12 +94,12 @@ public class StructureRestControllerMockTest {
     }
 
     /**
-     * Gets structure by folder id and categories incorrect folder id and authentication validation exception.
+     * Gets structure by folder id and categories with incorrect folder id and authentication then throw validation exception.
      *
      * @throws Exception the exception
      */
     @Test
-    public void getStructureByFolderIdAndCategories_incorrectFolderIdAndAuthentication_validationException() throws Exception {
+    public void getStructureByFolderIdAndCategoriesWithIncorrectFolderIdAndAuthenticationThenThrowValidationException() throws Exception {
         given(structureServiceMock.getStructureAndCategoriesByFolderIdAndAuthentication(any(Long.class), any(Authentication.class)))
                 .willThrow(ValidationException.class);
         mockMvc.perform(get("/structures")
@@ -112,12 +112,12 @@ public class StructureRestControllerMockTest {
     }
 
     /**
-     * Gets structure by folder id and categories non folder id and authentication bad request.
+     * Gets structure by folder id and categories with non folder id and authentication then throw bad request.
      *
      * @throws Exception the exception
      */
     @Test
-    public void getStructureByFolderIdAndCategories_nonFolderIdAndAuthentication_badRequest() throws Exception {
+    public void getStructureByFolderIdAndCategoriesWithNonFolderIdAndAuthenticationThenThrowBadRequest() throws Exception {
         mockMvc.perform(get("/structures")
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isBadRequest());

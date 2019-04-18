@@ -5,7 +5,6 @@ import com.exchange.dao.User;
 import com.exchange.dto.folder.FolderStructureDto;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 import org.springframework.http.*;
@@ -25,7 +24,6 @@ import static org.junit.Assert.assertNotNull;
 /**
  * The type Folder rest controller it.
  */
-@Ignore
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class FolderRestControllerIT {
 

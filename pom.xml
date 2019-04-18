@@ -261,7 +261,7 @@
                             <format>html</format>
                             <format>xml</format>
                         </formats>
-                        <check />
+                        <check/>
                     </configuration>
                 </plugin>
             </plugins>
@@ -297,7 +297,7 @@
                         <format>xml</format>
                         <format>java</format>
                     </formats>
-                    <check />
+                    <check/>
                 </configuration>
             </plugin>
             <plugin>

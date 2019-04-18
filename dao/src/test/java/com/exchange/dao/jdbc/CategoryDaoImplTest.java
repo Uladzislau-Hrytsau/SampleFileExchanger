@@ -44,45 +44,45 @@ public class CategoryDaoImplTest {
     private CategoryDao categoryDao;
 
     /**
-     * Exists categories by user id exists true returned.
+     * Exists categories by user id with exists then true returned.
      */
     @Test
-    public void existsCategoriesByUserId_exists_TrueReturned() {
+    public void existsCategoriesByUserIdWithExistsThenTrueReturned() {
         Set<Long> categories = new HashSet<>(Arrays.asList(CORRECT_CATEGORY_ONE, CORRECT_CATEGORY_TWO, CORRECT_CATEGORY_THREE));
         assertTrue(categoryDao.existsCategoriesByUserId(categories, CORRECT_USER_ID_ONE));
     }
 
     /**
-     * Exists categories by user id does not exist false returned.
+     * Exists categories by user id with does not exist then false returned.
      */
     @Test
-    public void existsCategoriesByUserId_doesNotExist_FalseReturned() {
+    public void existsCategoriesByUserIdWithDoesNotExistThenFalseReturned() {
         Set<Long> categories = new HashSet<>(Arrays.asList(CORRECT_CATEGORY_ONE, CORRECT_CATEGORY_TWO, CORRECT_CATEGORY_THREE));
         assertFalse(categoryDao.existsCategoriesByUserId(categories, CORRECT_USER_ID_TWO));
     }
 
     /**
-     * Exists categories by user id null categories false returned.
+     * Exists categories by user id with null categories then throw null pointer exception.
      */
     @Test(expected = NullPointerException.class)
-    public void existsCategoriesByUserId_nullCategories_FalseReturned() {
+    public void existsCategoriesByUserIdWithNullCategoriesThenThrowNullPointerException() {
         assertFalse(categoryDao.existsCategoriesByUserId(null, CORRECT_USER_ID_TWO));
     }
 
     /**
-     * Exists categories by user id null user id false returned.
+     * Exists categories by user id with null user id then false returned.
      */
     @Test
-    public void existsCategoriesByUserId_nullUserId_FalseReturned() {
+    public void existsCategoriesByUserIdWithNullUserIdThenFalseReturned() {
         Set<Long> categories = new HashSet<>(Arrays.asList(CORRECT_CATEGORY_ONE, CORRECT_CATEGORY_TWO, CORRECT_CATEGORY_THREE));
         assertFalse(categoryDao.existsCategoriesByUserId(categories, null));
     }
 
     /**
-     * Add file categories correct file categories correct array returned.
+     * Add file categories with correct file categories then correct array returned.
      */
     @Test
-    public void addFileCategories_correctFileCategories_correctArrayReturned() {
+    public void addFileCategoriesWithCorrectFileCategoriesThenCorrectArrayReturned() {
         int[] batchResult = categoryDao.addFileCategories(CORRECT_FILE_CATEGORY_DTOS);
         assertNotNull(batchResult);
         Integer expectedSize = CORRECT_FILE_CATEGORY_DTOS.size();
@@ -92,10 +92,10 @@ public class CategoryDaoImplTest {
     }
 
     /**
-     * Add file categories incorrect file id data integrity violation exception and incorrect array returned.
+     * Add file categories with incorrect file id then throw data integrity violation exception and incorrect array.
      */
     @Test(expected = DataIntegrityViolationException.class)
-    public void addFileCategories_incorrectFileId_DataIntegrityViolationExceptionAndIncorrectArrayReturned() {
+    public void addFileCategoriesWithIncorrectFileIdThenThrowDataIntegrityViolationExceptionAndIncorrectArray() {
         int[] batchResult = categoryDao.addFileCategories(INCORRECT_FILE_CATEGORY_DTOS);
         assertNotNull(batchResult);
         Integer expectedSize = INCORRECT_FILE_CATEGORY_DTOS.size();
@@ -105,10 +105,10 @@ public class CategoryDaoImplTest {
     }
 
     /**
-     * Add file categories null file category dtos null pointer exception and incorrect array returned.
+     * Add file categories with null file category dtos then throw null pointer exception and incorrect array.
      */
     @Test(expected = NullPointerException.class)
-    public void addFileCategories_nullFileCategoryDtos_NullPointerExceptionAndIncorrectArrayReturned() {
+    public void addFileCategoriesWithNullFileCategoryDtosThenThrowNullPointerExceptionAndIncorrectArray() {
         int[] batchResult = categoryDao.addFileCategories(null);
         assertNotNull(batchResult);
         Integer expectedSize = 0;
@@ -118,10 +118,10 @@ public class CategoryDaoImplTest {
     }
 
     /**
-     * Gets categories by user id correct user id correct categories returned.
+     * Gets categories by user id with correct user id then correct categories returned.
      */
     @Test
-    public void getCategoriesByUserId_correctUserId_correctCategoriesReturned() {
+    public void getCategoriesByUserIdWithCorrectUserIdThenCorrectCategoriesReturned() {
         Integer expectedSize = 3;
         List<CategoryDto> categoryDtos = categoryDao.getCategoriesByUserId(CORRECT_USER_ID_ONE);
         assertNotNull(categoryDtos);
@@ -130,10 +130,10 @@ public class CategoryDaoImplTest {
     }
 
     /**
-     * Gets categories by user id not exists user id zero categories returned.
+     * Gets categories by user id with not exists user id then zero categories returned.
      */
     @Test
-    public void getCategoriesByUserId_notExistsUserId_zeroCategoriesReturned() {
+    public void getCategoriesByUserIdWithNotExistsUserIdThenZeroCategoriesReturned() {
         Integer expectedSize = 0;
         List<CategoryDto> categoryDtos = categoryDao.getCategoriesByUserId(INCORRECT_NEGATIVE_USER_ID);
         assertNotNull(categoryDtos);
@@ -142,10 +142,10 @@ public class CategoryDaoImplTest {
     }
 
     /**
-     * Gets categories by user id null user id incorrect categories returned.
+     * Gets categories by user id with null user id then incorrect categories returned.
      */
     @Test
-    public void getCategoriesByUserId_nullUserId_incorrectCategoriesReturned() {
+    public void getCategoriesByUserIdWithNullUserIdThenIncorrectCategoriesReturned() {
         Integer expectedSize = 0;
         List<CategoryDto> categoryDtos = categoryDao.getCategoriesByUserId(null);
         assertNotNull(categoryDtos);

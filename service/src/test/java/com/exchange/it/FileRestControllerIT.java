@@ -74,8 +74,8 @@ public class FileRestControllerIT {
         Path directoryPath = FileSystems.getDefault().getPath("/home/travis/build/Uladzislau-Hrytsau/SampleFileExchanger/service/src/main/webapp/WEB-INF/repo/").normalize().toAbsolutePath();
 //        tempDirectoryPath = Files.createTempDirectory(directoryPath, "directoryPrefix-");
 
-//        tempDirectoryPath = Files.createTempDirectory(directoryPath, "directoryPrefix-");
-        tempDirectoryPath = directoryPath;
+        tempDirectoryPath = Files.createTempDirectory(directoryPath, "directoryPrefix-");
+//        tempDirectoryPath = directoryPath;
 
 //        Files.createDirectory(directoryPath, new )
     }

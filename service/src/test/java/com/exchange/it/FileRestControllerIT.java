@@ -61,7 +61,6 @@ public class FileRestControllerIT {
     private static final RestTemplate restTemplate = new RestTemplate();
     private static final HttpHeaders httpHeaders = new HttpHeaders();
     private static Path tempDirectoryPath;
-    private static String REPOSITORY_PATH = "./src/main/webapp/WEB-INF/repo/";
     private OAuth2AccessToken token;
 
     /**
@@ -71,7 +70,9 @@ public class FileRestControllerIT {
      */
     @BeforeClass
     public static void prepareEnvironment() throws IOException {
-        Path directoryPath = FileSystems.getDefault().getPath(REPOSITORY_PATH).normalize().toAbsolutePath();
+//        Path directoryPath = FileSystems.getDefault().getPath("./src/main/webapp/WEB-INF/repo/").normalize().toAbsolutePath();
+        Path directoryPath = FileSystems.getDefault().getPath("/home/travis/build/Uladzislau-Hrytsau/SampleFileExchanger/service/src/main/webapp/WEB-INF/repo/").normalize().toAbsolutePath();
+//        tempDirectoryPath = Files.createTempDirectory(directoryPath, "directoryPrefix-");
         tempDirectoryPath = Files.createTempDirectory(directoryPath, "directoryPrefix-");
     }
 

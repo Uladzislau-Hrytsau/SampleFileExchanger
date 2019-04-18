@@ -71,7 +71,7 @@ public class FileRestControllerIT {
      */
     @BeforeClass
     public static void prepareEnvironment() throws IOException {
-        Path directoryPath = FileSystems.getDefault().getPath(REPOSITORY_PATH).toAbsolutePath();
+        Path directoryPath = FileSystems.getDefault().getPath(REPOSITORY_PATH).normalize().toAbsolutePath();
         Path tempDirectory = Files.createTempDirectory(directoryPath, "prefix-");
         tempDirectoryPath = tempDirectory;
     }

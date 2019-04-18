@@ -72,8 +72,7 @@ public class FileRestControllerIT {
     @BeforeClass
     public static void prepareEnvironment() throws IOException {
         Path directoryPath = FileSystems.getDefault().getPath(REPOSITORY_PATH).normalize().toAbsolutePath();
-        Path tempDirectory = Files.createTempDirectory(directoryPath, "prefix-");
-        tempDirectoryPath = tempDirectory;
+        tempDirectoryPath = Files.createTempDirectory(directoryPath, "directoryPrefix-");
     }
 
     /**
@@ -755,9 +754,9 @@ public class FileRestControllerIT {
 
     private File getTempFile() throws IOException {
         return File.createTempFile(
-                "prefix-",
-                "-suffix",
-                new File(tempDirectoryPath.toString()));
+                "filePrefix-",
+                "-fileSuffix",
+                new File(tempDirectoryPath.toUri()));
     }
 
     private void getAccessTokenByUser(User user) {

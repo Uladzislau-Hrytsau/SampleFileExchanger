@@ -70,17 +70,18 @@ public class FileRestControllerIT {
      */
     @BeforeClass
     public static void prepareEnvironment()  {
-        Path directoryPath = FileSystems.getDefault().getPath("./src/main/webapp/WEB-INF/repo/").normalize().toAbsolutePath();
+        Path directoryPath = FileSystems.getDefault().getPath("./src/main/webapp/WEB-INF/repo/tempDirectory").normalize().toAbsolutePath();
 //        Path directoryPath = FileSystems.getDefault().getPath("/home/travis/build/Uladzislau-Hrytsau/SampleFileExchanger/service/src/main/webapp/WEB-INF/repo/").normalize().toAbsolutePath();
 //        tempDirectoryPath = Files.createTempDirectory(directoryPath, "directoryPrefix-");
 
         Files.isWritable(directoryPath);
-        try {
-            tempDirectoryPath = Files.createTempDirectory(directoryPath, "directoryPrefix-");
-        } catch (IOException e) {
-            e.printStackTrace();
+//            tempDirectoryPath = Files.createTempDirectory(directoryPath, "directoryPrefix-");
+            File file = new File(directoryPath.toUri());
+        if (!file.mkdirs()) {
+            throw new RuntimeException("message");
         }
-//        tempDirectoryPath = directoryPath;
+
+        tempDirectoryPath = directoryPath;
 
 //        Files.createDirectory(directoryPath, new )
     }

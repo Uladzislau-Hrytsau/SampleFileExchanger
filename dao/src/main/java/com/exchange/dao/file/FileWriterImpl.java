@@ -40,10 +40,13 @@ public class FileWriterImpl implements FileWriter {
                 LOGGER.trace("saveFile() from " + this.getClass().getName() + " with message " + errorCreatingFile);
                 throw new FileNotCreatedException(errorCreatingFile);
             }
+            LOGGER.info("file.exists() " + file.exists());
             LOGGER.info("file is created in saveFile from " + this.getClass().getName());
+            LOGGER.info("fileOutputStream.toString() is " + fileOutputStream.toString());
             fileOutputStream.write(multipartFile.getBytes());
         } catch (IOException e) {
             LOGGER.trace("saveFile() from " + this.getClass().getName() + " with message " + errorSavingFile);
+            LOGGER.trace(e);
             throw new FileNotWrittenException(errorSavingFile);
         }
     }

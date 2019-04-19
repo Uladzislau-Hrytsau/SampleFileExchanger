@@ -36,12 +36,20 @@ public class FileWriterImpl implements FileWriter {
     public void saveFile(final MultipartFile multipartFile, final String filePath) {
         File file = new File(filePath);
         LOGGER.info(filePath + " from " + this.getClass().getName());
+
         try {
 
             LOGGER.info(file.exists() + " file.exists()");
-            if (file.createNewFile()) {
-                throw new FileNotCreatedException(errorCreatingFile);
+            try {
+                if (file.createNewFile()) {
+                    throw new FileNotCreatedException(errorCreatingFile);
+                }
+            } catch (IOException e) {
+                LOGGER.trace(e);
+                LOGGER.error(e);
+                e.printStackTrace();
             }
+
             LOGGER.info("file.exists()" + file.exists() + file.getAbsolutePath());
             LOGGER.info("file.canRead()" + file.canRead() + file.getAbsolutePath());
             LOGGER.info("file.canWrite()" + file.canWrite() + file.getAbsolutePath());

@@ -69,12 +69,17 @@ public class FileRestControllerIT {
      * @throws IOException the io exception
      */
     @BeforeClass
-    public static void prepareEnvironment() throws IOException {
+    public static void prepareEnvironment()  {
         Path directoryPath = FileSystems.getDefault().getPath("./src/main/webapp/WEB-INF/repo/").normalize().toAbsolutePath();
 //        Path directoryPath = FileSystems.getDefault().getPath("/home/travis/build/Uladzislau-Hrytsau/SampleFileExchanger/service/src/main/webapp/WEB-INF/repo/").normalize().toAbsolutePath();
 //        tempDirectoryPath = Files.createTempDirectory(directoryPath, "directoryPrefix-");
 
-        tempDirectoryPath = Files.createTempDirectory(directoryPath, "directoryPrefix-");
+        Files.isWritable(directoryPath);
+        try {
+            tempDirectoryPath = Files.createTempDirectory(directoryPath, "directoryPrefix-");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 //        tempDirectoryPath = directoryPath;
 
 //        Files.createDirectory(directoryPath, new )

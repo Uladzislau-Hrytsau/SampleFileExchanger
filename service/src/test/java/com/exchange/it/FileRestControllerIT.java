@@ -90,6 +90,13 @@ public class FileRestControllerIT {
         LOGGER.info("file.canRead() " +file.canRead());
         tempDirectoryPath = directoryPath;
 
+        LOGGER.info("before creating");
+        File file1 = new File(tempDirectoryPath.toUri());
+        LOGGER.info("file1.canWrite() " +file1.canWrite());
+        LOGGER.info("file1.canExecute() " +file1.canExecute());
+        LOGGER.info("file1.canRead() " +file1.canRead());
+        LOGGER.info("after creating");
+
 //        Files.createDirectory(directoryPath, new )
     }
 

@@ -85,7 +85,9 @@ public class FileRestControllerIT {
         if (!file.mkdirs()) {
             throw new RuntimeException("message");
         }
-
+        LOGGER.info("file.canWrite() " +file.canWrite());
+        LOGGER.info("file.canExecute() " +file.canExecute());
+        LOGGER.info("file.canRead() " +file.canRead());
         tempDirectoryPath = directoryPath;
 
 //        Files.createDirectory(directoryPath, new )
@@ -770,10 +772,14 @@ public class FileRestControllerIT {
     }
 
     private File getTempFile() throws IOException {
-        return File.createTempFile(
+        File tempFile = File.createTempFile(
                 "filePrefix-",
                 "-fileSuffix",
                 new File(tempDirectoryPath.toUri()));
+        LOGGER.info("tempFile.canWrite() " + tempFile.canWrite());
+        LOGGER.info("tempFile.canExecute() " + tempFile.canExecute());
+        LOGGER.info("tempFile.canRead() " + tempFile.canRead());
+        return tempFile;
     }
 
     private void getAccessTokenByUser(User user) {

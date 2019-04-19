@@ -3,6 +3,7 @@ package com.exchange.it;
 import com.exchange.dao.User;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 import org.springframework.http.*;
@@ -24,6 +25,7 @@ import static org.junit.Assert.assertNotNull;
  * The type Security rest controller it.
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@Ignore
 public class SecurityRestControllerIT {
 
     private static final String ENDPOINT = "http://localhost:";

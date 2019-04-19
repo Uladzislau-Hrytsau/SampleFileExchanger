@@ -4,6 +4,8 @@ import com.exchange.dao.FileWriter;
 import com.exchange.dao.exception.FileNotCreatedException;
 import com.exchange.dao.exception.FileNotExistException;
 import com.exchange.dao.exception.FileNotWrittenException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,6 +19,9 @@ import java.io.IOException;
  */
 @Repository
 public class FileWriterImpl implements FileWriter {
+
+    private static final Logger LOGGER = LogManager.getLogger();
+
 
     @Value("${fileWriter.errorCreatingFile}")
     private String errorCreatingFile;
@@ -32,10 +37,13 @@ public class FileWriterImpl implements FileWriter {
         File file = new File(filePath);
         try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
             if (file.createNewFile()) {
+                LOGGER.trace("saveFile() from " + this.getClass().getName() + " with message " + errorCreatingFile);
                 throw new FileNotCreatedException(errorCreatingFile);
             }
+            LOGGER.info("file is created in saveFile from " + this.getClass().getName());
             fileOutputStream.write(multipartFile.getBytes());
         } catch (IOException e) {
+            LOGGER.trace("saveFile() from " + this.getClass().getName() + " with message " + errorSavingFile);
             throw new FileNotWrittenException(errorSavingFile);
         }
     }

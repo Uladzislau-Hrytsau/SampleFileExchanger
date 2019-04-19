@@ -5,11 +5,15 @@ import com.exchange.dto.file.FileCategoryDto;
 import com.exchange.exception.InternalServerException;
 import com.exchange.service.CategoryService;
 import com.exchange.service.validation.CategoryValidator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.spi.LoggerRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,7 +23,7 @@ import java.util.Set;
 @Service
 @Transactional
 public class CategoryServiceImpl implements CategoryService {
-
+    private static final Logger LOGGER = LogManager.getLogger();
     private final CategoryDao categoryDao;
     private final CategoryValidator categoryValidator;
     private final CommonService commonService;
@@ -49,9 +53,11 @@ public class CategoryServiceImpl implements CategoryService {
             final Set<Long> categories,
             final Long fileId,
             final Long userId) {
+        LOGGER.info("addFileCategories from " + this.getClass().getName());
         categoryValidator.validateCategoriesByUserId(categories, userId);
         int[] batchResult = categoryDao.addFileCategories(this.getFileCategoryDtosByCategoriesAndFileId(categories, fileId));
         if (!commonService.checkBatchResult(batchResult)) {
+            LOGGER.trace("Batch result is not valid " + Arrays.toString(batchResult));
             throw new InternalServerException(createError);
         }
     }

@@ -16,6 +16,9 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import javax.ws.rs.core.UriBuilder;
 import java.io.File;
 import java.io.IOException;
@@ -35,6 +38,8 @@ import static org.junit.Assert.assertNotNull;
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class FileRestControllerIT {
+
+    private static final Logger LOGGER = LogManager.getLogger();
 
     private static final String ENDPOINT = "http://localhost:";
     private static final String PORT = "8088";
@@ -190,6 +195,7 @@ public class FileRestControllerIT {
         body.add("metaData", CORRECT_FILE_DTO);
         httpHeaders.setContentType(MediaType.MULTIPART_FORM_DATA);
         HttpEntity<LinkedMultiValueMap<String, Object>> httpEntity = new HttpEntity<>(body, httpHeaders);
+        LOGGER.info("addFileWithCorrectPhysicalFileAndRoleAdmin");
         ResponseEntity<Void> responseEntity = restTemplate.exchange(endpoint, HttpMethod.POST, httpEntity, Void.class);
         assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
     }

@@ -34,11 +34,12 @@ public class FileWriterImpl implements FileWriter {
 
     @Override
     public void saveFile(final MultipartFile multipartFile, final String filePath) {
-        LOGGER.info(filePath + " from " + this.getClass().getName());
         File file = new File(filePath);
-        LOGGER.info("file.exists()" + file.exists());
-        LOGGER.info("file.canRead()" + file.canRead());
-        LOGGER.info("file.canWrite()" + file.canWrite());
+        LOGGER.info(filePath + " from " + this.getClass().getName());
+        LOGGER.info("filePath.equals(file.getAbsolutePath()) is " + filePath.equals(file.getAbsolutePath()));
+        LOGGER.info("file.exists()" + file.exists() + file.getAbsolutePath());
+        LOGGER.info("file.canRead()" + file.canRead() + file.getAbsolutePath());
+        LOGGER.info("file.canWrite()" + file.canWrite() + file.getAbsolutePath());
         try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
             LOGGER.info(file.exists());
             if (file.createNewFile()) {

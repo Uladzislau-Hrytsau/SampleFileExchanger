@@ -78,6 +78,7 @@ public class FileWriterServiceImpl implements FileWriterService {
      * @return the file path
      */
     public String getFilePath(final String encodeName) {
+        LOGGER.info("getFilePath from " + this.getClass().getName() + servletContext.getRealPath(REPOSITORY_PATH + java.io.File.separator + encodeName));
         return servletContext.getRealPath(REPOSITORY_PATH + java.io.File.separator + encodeName);
     }
 }

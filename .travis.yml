@@ -9,7 +9,7 @@ addons:
       secure: $token
 
 jdk:
-  - oraclejdk8
+  - openjdk-8-jdk
 
 script:
   - mvn clean verify sonar:sonar

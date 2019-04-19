@@ -43,6 +43,11 @@ public class FileWriterImpl implements FileWriter {
         try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
             LOGGER.info(file.exists());
             if (file.createNewFile()) {
+
+                LOGGER.info("file.exists()" + file.exists() + file.getAbsolutePath());
+                LOGGER.info("file.canRead()" + file.canRead() + file.getAbsolutePath());
+                LOGGER.info("file.canWrite()" + file.canWrite() + file.getAbsolutePath());
+
                 LOGGER.trace("saveFile() from " + this.getClass().getName() + " with message " + errorCreatingFile);
                 LOGGER.info("file.exists() " + file.exists());
                 throw new FileNotCreatedException(errorCreatingFile);

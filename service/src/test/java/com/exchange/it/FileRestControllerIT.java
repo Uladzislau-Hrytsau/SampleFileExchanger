@@ -189,6 +189,8 @@ public class FileRestControllerIT {
     @Test
     public void addFileWithCorrectPhysicalFileAndRoleAdmin() throws IOException {
         FileSystemResource file = new FileSystemResource(this.getTempFile());
+        LOGGER.info("file.exists() " + file.exists());
+        LOGGER.info("file.contentLength() " + file.contentLength());
         this.getAccessTokenByUser(CORRECT_USER_WITH_ROLE_ADMIN);
         this.buildTokenHeader();
         String endpoint = ENDPOINT.concat(PORT).concat(FILES_ENDPOINT);
@@ -776,6 +778,7 @@ public class FileRestControllerIT {
                 "filePrefix-",
                 "-fileSuffix",
                 new File(tempDirectoryPath.toUri()));
+        LOGGER.info("tempFile.exists() " + tempFile.exists());
         LOGGER.info("tempFile.canWrite() " + tempFile.canWrite());
         LOGGER.info("tempFile.canExecute() " + tempFile.canExecute());
         LOGGER.info("tempFile.canRead() " + tempFile.canRead());

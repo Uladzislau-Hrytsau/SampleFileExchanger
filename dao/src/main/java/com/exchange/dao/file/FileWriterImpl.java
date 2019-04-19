@@ -36,12 +36,9 @@ public class FileWriterImpl implements FileWriter {
     public void saveFile(final MultipartFile multipartFile, final String filePath) {
         File file = new File(filePath);
         LOGGER.info(filePath + " from " + this.getClass().getName());
-        LOGGER.info("filePath.equals(file.getAbsolutePath()) is " + filePath.equals(file.getAbsolutePath()));
-        LOGGER.info("file.exists()" + file.exists() + file.getAbsolutePath());
-        LOGGER.info("file.canRead()" + file.canRead() + file.getAbsolutePath());
-        LOGGER.info("file.canWrite()" + file.canWrite() + file.getAbsolutePath());
-        try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
-            LOGGER.info(file.exists());
+        try {
+
+            LOGGER.info(file.exists() + " file.exists()");
             if (file.createNewFile()) {
 
                 LOGGER.info("file.exists()" + file.exists() + file.getAbsolutePath());
@@ -52,6 +49,8 @@ public class FileWriterImpl implements FileWriter {
                 LOGGER.info("file.exists() " + file.exists());
                 throw new FileNotCreatedException(errorCreatingFile);
             }
+            LOGGER.info(file.exists() + " file.exists()");
+            FileOutputStream fileOutputStream = new FileOutputStream(file);
             LOGGER.info("file.exists() " + file.exists());
             LOGGER.info("file is created in saveFile from " + this.getClass().getName());
             LOGGER.info("fileOutputStream.toString() is " + fileOutputStream.toString());

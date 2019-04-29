@@ -3,8 +3,6 @@ package com.exchange.service.implementation;
 import com.exchange.dao.FileWriter;
 import com.exchange.dao.exception.FileNotDeletedException;
 import com.exchange.service.FileWriterService;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -24,7 +22,6 @@ import java.util.List;
 public class FileWriterServiceImpl implements FileWriterService {
 
     private static final String REPOSITORY_PATH = "WEB-INF/repo";
-    private static final Logger LOGGER = LogManager.getLogger();
 
     private final FileWriter fileWriter;
     private final ServletContext servletContext;
@@ -50,7 +47,6 @@ public class FileWriterServiceImpl implements FileWriterService {
     public void saveFile(
             final MultipartFile multipartFile,
             final String encodeName) throws IOException {
-        LOGGER.info("saveFile() from " + this.getClass().getName());
         fileWriter.saveFile(multipartFile, this.getFilePath(encodeName));
     }
 
@@ -78,7 +74,6 @@ public class FileWriterServiceImpl implements FileWriterService {
      * @return the file path
      */
     public String getFilePath(final String encodeName) {
-        LOGGER.info("getFilePath from " + this.getClass().getName() + servletContext.getRealPath(REPOSITORY_PATH + java.io.File.separator + encodeName));
         return servletContext.getRealPath(REPOSITORY_PATH + java.io.File.separator + encodeName);
     }
 }

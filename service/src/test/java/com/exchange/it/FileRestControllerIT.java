@@ -16,9 +16,6 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import javax.ws.rs.core.UriBuilder;
 import java.io.File;
 import java.io.IOException;
@@ -38,8 +35,6 @@ import static org.junit.Assert.assertNotNull;
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class FileRestControllerIT {
-
-    private static final Logger LOGGER = LogManager.getLogger();
 
     private static final String ENDPOINT = "http://localhost:";
     private static final String PORT = "8088";
@@ -70,34 +65,16 @@ public class FileRestControllerIT {
 
     /**
      * Prepare environment.
-     *
-     * @throws IOException the io exception
      */
     @BeforeClass
-    public static void prepareEnvironment()  {
+    public static void prepareEnvironment() {
         Path directoryPath = FileSystems.getDefault().getPath("./src/main/webapp/WEB-INF/repo/tempDirectory").normalize().toAbsolutePath();
-//        Path directoryPath = FileSystems.getDefault().getPath("/home/travis/build/Uladzislau-Hrytsau/SampleFileExchanger/service/src/main/webapp/WEB-INF/repo/").normalize().toAbsolutePath();
-//        tempDirectoryPath = Files.createTempDirectory(directoryPath, "directoryPrefix-");
-
         Files.isWritable(directoryPath);
-//            tempDirectoryPath = Files.createTempDirectory(directoryPath, "directoryPrefix-");
-            File file = new File(directoryPath.toUri());
+        File file = new File(directoryPath.toUri());
         if (!file.mkdirs()) {
             throw new RuntimeException("message");
         }
-        LOGGER.info("file.canWrite() " +file.canWrite());
-        LOGGER.info("file.canExecute() " +file.canExecute());
-        LOGGER.info("file.canRead() " +file.canRead());
         tempDirectoryPath = directoryPath;
-
-        LOGGER.info("before creating");
-        File file1 = new File(tempDirectoryPath.toUri());
-        LOGGER.info("file1.canWrite() " +file1.canWrite());
-        LOGGER.info("file1.canExecute() " +file1.canExecute());
-        LOGGER.info("file1.canRead() " +file1.canRead());
-        LOGGER.info("after creating");
-
-//        Files.createDirectory(directoryPath, new )
     }
 
     /**
@@ -196,8 +173,6 @@ public class FileRestControllerIT {
     @Test
     public void addFileWithCorrectPhysicalFileAndRoleAdmin() throws IOException {
         FileSystemResource file = new FileSystemResource(this.getTempFile());
-        LOGGER.info("file.exists() " + file.exists());
-        LOGGER.info("file.contentLength() " + file.contentLength());
         this.getAccessTokenByUser(CORRECT_USER_WITH_ROLE_ADMIN);
         this.buildTokenHeader();
         String endpoint = ENDPOINT.concat(PORT).concat(FILES_ENDPOINT);
@@ -206,7 +181,6 @@ public class FileRestControllerIT {
         body.add("metaData", CORRECT_FILE_DTO);
         httpHeaders.setContentType(MediaType.MULTIPART_FORM_DATA);
         HttpEntity<LinkedMultiValueMap<String, Object>> httpEntity = new HttpEntity<>(body, httpHeaders);
-        LOGGER.info("addFileWithCorrectPhysicalFileAndRoleAdmin");
         ResponseEntity<Void> responseEntity = restTemplate.exchange(endpoint, HttpMethod.POST, httpEntity, Void.class);
         assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
     }
@@ -785,10 +759,6 @@ public class FileRestControllerIT {
                 "filePrefix-",
                 "-fileSuffix",
                 new File(tempDirectoryPath.toUri()));
-        LOGGER.info("tempFile.exists() " + tempFile.exists());
-        LOGGER.info("tempFile.canWrite() " + tempFile.canWrite());
-        LOGGER.info("tempFile.canExecute() " + tempFile.canExecute());
-        LOGGER.info("tempFile.canRead() " + tempFile.canRead());
         return tempFile;
     }
 

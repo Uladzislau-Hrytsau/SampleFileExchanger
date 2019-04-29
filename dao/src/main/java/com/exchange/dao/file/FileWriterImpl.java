@@ -4,8 +4,6 @@ import com.exchange.dao.FileWriter;
 import com.exchange.dao.exception.FileNotCreatedException;
 import com.exchange.dao.exception.FileNotExistException;
 import com.exchange.dao.exception.FileNotWrittenException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,9 +18,6 @@ import java.io.IOException;
 @Repository
 public class FileWriterImpl implements FileWriter {
 
-    private static final Logger LOGGER = LogManager.getLogger();
-
-
     @Value("${fileWriter.errorCreatingFile}")
     private String errorCreatingFile;
     @Value("${fileWriter.errorSavingFile}")
@@ -35,37 +30,13 @@ public class FileWriterImpl implements FileWriter {
     @Override
     public void saveFile(final MultipartFile multipartFile, final String filePath) {
         File file = new File(filePath);
-        LOGGER.info(filePath + " from " + this.getClass().getName());
-
         try {
-
-            LOGGER.info(file.exists() + " file.exists()");
-            try {
-                if (file.createNewFile()) {
-                    throw new FileNotCreatedException(errorCreatingFile);
-                }
-            } catch (IOException e) {
-                LOGGER.trace(e);
-                LOGGER.error(e);
-                e.printStackTrace();
+            if (!file.createNewFile()) {
+                throw new FileNotCreatedException(errorCreatingFile);
             }
-
-            LOGGER.info("file.exists()" + file.exists() + file.getAbsolutePath());
-            LOGGER.info("file.canRead()" + file.canRead() + file.getAbsolutePath());
-            LOGGER.info("file.canWrite()" + file.canWrite() + file.getAbsolutePath());
-
-            LOGGER.trace("saveFile() from " + this.getClass().getName() + " with message " + errorCreatingFile);
-            LOGGER.info("file.exists() " + file.exists());
-
-            LOGGER.info(file.exists() + " file.exists()");
             FileOutputStream fileOutputStream = new FileOutputStream(file);
-            LOGGER.info("file.exists() " + file.exists());
-            LOGGER.info("file is created in saveFile from " + this.getClass().getName());
-            LOGGER.info("fileOutputStream.toString() is " + fileOutputStream.toString());
             fileOutputStream.write(multipartFile.getBytes());
         } catch (IOException e) {
-            LOGGER.trace("saveFile() from " + this.getClass().getName() + " with message " + errorSavingFile);
-            LOGGER.trace(e);
             throw new FileNotWrittenException(errorSavingFile);
         }
     }

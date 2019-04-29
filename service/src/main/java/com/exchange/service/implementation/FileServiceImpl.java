@@ -12,8 +12,6 @@ import com.exchange.service.FileWriterService;
 import com.exchange.service.validation.CommonValidator;
 import com.exchange.service.validation.FileValidator;
 import com.exchange.wrapper.Response;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
@@ -31,7 +29,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLConnection;
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -41,8 +38,6 @@ import java.util.UUID;
 @Service
 @Transactional
 public class FileServiceImpl implements FileService {
-
-    private static final Logger LOGGER = LogManager.getLogger();
 
     private final FileDao fileDao;
     private final FileValidator fileValidator;
@@ -107,26 +102,16 @@ public class FileServiceImpl implements FileService {
             final FileDto fileDto,
             final MultipartFile multipartFile,
             final Authentication authentication) throws IOException {
-        LOGGER.info("addFile from " + this.getClass().getName());
         Long userId = commonService.getUserIdByAuthentication(authentication);
         fileValidator.validateDescription(fileDto.getDescription());
         String encodeName = UUID.randomUUID().toString();
         fileDto.setUserId(userId);
-        LOGGER.info("multipartFile.getOriginalFilename() " + multipartFile.getOriginalFilename());
-        LOGGER.info("multipartFile.getName() " + multipartFile.getName());
-        LOGGER.info("multipartFile.getContentType() " + multipartFile.getContentType());
-        LOGGER.info("multipartFile.getBytes() " + Arrays.toString(multipartFile.getBytes()));
-        LOGGER.info("multipartFile.getSize() " + multipartFile.getSize());
         fileDto.setRealName(multipartFile.getOriginalFilename());
         fileDto.setDate(LocalDate.now());
         fileDto.setEncodeName(encodeName);
         Long fileId = fileDao.addFile(fileDto);
-        LOGGER.info("fileId is " + fileId);
-        LOGGER.info("fileDto is " + fileDto);
         categoryService.addFileCategories(fileDto.getCategories(), fileId, userId);
-        LOGGER.info("after categoryService.addFileCategories(fileDto.getCategories(), fileId, userId)");
         fileWriterService.saveFile(multipartFile, encodeName);
-        LOGGER.info("after fileWriterService.saveFile(multipartFile, encodeName)");
     }
 
     @Override

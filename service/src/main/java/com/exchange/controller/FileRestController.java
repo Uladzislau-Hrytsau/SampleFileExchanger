@@ -11,9 +11,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
@@ -24,8 +21,6 @@ import java.io.IOException;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("/files")
 public class FileRestController {
-
-    private static final Logger LOGGER = LogManager.getLogger();
 
     private final FileService fileService;
 
@@ -69,15 +64,8 @@ public class FileRestController {
     public void addFile(
             @RequestPart("multipartFile") final MultipartFile multipartFile,
             @RequestPart("metaData") final FileDto fileDto,
-            final Authentication authentication) {
-        LOGGER.info("multipartFile.isEmpty() " + multipartFile.isEmpty());
-        LOGGER.info("FileDto" + fileDto.toString());
-        try {
-            fileService.addFile(fileDto, multipartFile, authentication);
-        } catch (IOException e) {
-            LOGGER.trace(e.getMessage(), e.getCause(), e.getStackTrace());
-            e.printStackTrace();
-        }
+            final Authentication authentication) throws IOException {
+        fileService.addFile(fileDto, multipartFile, authentication);
     }
 
     /**

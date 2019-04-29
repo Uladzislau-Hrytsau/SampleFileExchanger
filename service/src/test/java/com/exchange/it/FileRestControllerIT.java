@@ -171,6 +171,7 @@ public class FileRestControllerIT {
      * @throws IOException the io exception
      */
     @Test
+    @Ignore
     public void addFileWithCorrectPhysicalFileAndRoleAdmin() throws IOException {
         FileSystemResource file = new FileSystemResource(this.getTempFile());
         this.getAccessTokenByUser(CORRECT_USER_WITH_ROLE_ADMIN);
@@ -191,6 +192,7 @@ public class FileRestControllerIT {
      * @throws IOException the io exception
      */
     @Test
+    @Ignore
     public void addFileWithCorrectPhysicalFileAndRoleUser() throws IOException {
         FileSystemResource file = new FileSystemResource(this.getTempFile());
         this.getAccessTokenByUser(CORRECT_USER_WITH_ROLE_USER);
@@ -422,6 +424,7 @@ public class FileRestControllerIT {
      * @throws IOException the io exception
      */
     @Test
+    @Ignore
     public void downloadFileWithCorrectFileIdAndFileNameAndRoleAdminThenCorrectPhysicalFileReturned() throws IOException {
         File file = this.loadFile();
         this.getAccessTokenByUser(CORRECT_USER_WITH_ROLE_ADMIN);
@@ -444,6 +447,7 @@ public class FileRestControllerIT {
      * @throws IOException the io exception
      */
     @Test
+    @Ignore
     public void downloadFileWithCorrectFileIdAndFileNameAndRoleUserThenCorrectPhysicalFileReturned() throws IOException {
         File file = this.loadFile();
         this.getAccessTokenByUser(CORRECT_USER_WITH_ROLE_USER);
@@ -534,6 +538,7 @@ public class FileRestControllerIT {
      * Remove file with correct id and role admin.
      */
     @Test
+    @Ignore
     public void removeFileWithCorrectIdAndRoleAdmin() {
         this.getAccessTokenByUser(CORRECT_USER_WITH_ROLE_ADMIN);
         this.buildTokenHeader();
@@ -552,6 +557,7 @@ public class FileRestControllerIT {
      * Remove file with correct id and role user.
      */
     @Test
+    @Ignore
     public void removeFileWithCorrectIdAndRoleUser() {
         this.getAccessTokenByUser(CORRECT_USER_WITH_ROLE_USER);
         this.buildTokenHeader();
@@ -570,6 +576,7 @@ public class FileRestControllerIT {
      * Remove file with correct user id and role admin.
      */
     @Test
+    @Ignore
     public void removeFileWithCorrectUserIdAndRoleAdmin() {
         this.getAccessTokenByUser(CORRECT_USER_WITH_ROLE_ADMIN);
         this.buildTokenHeader();
@@ -588,6 +595,7 @@ public class FileRestControllerIT {
      * Remove file with correct user id and role user.
      */
     @Test
+    @Ignore
     public void removeFileWithCorrectUserIdAndRoleUser() {
         this.getAccessTokenByUser(CORRECT_USER_WITH_ROLE_USER);
         this.buildTokenHeader();

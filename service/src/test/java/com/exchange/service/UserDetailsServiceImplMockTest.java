@@ -54,10 +54,10 @@ public class UserDetailsServiceImplMockTest {
     private UserDetailsServiceImpl userDetailsService;
 
     /**
-     * Load user by username correct login correct user details returned.
+     * Load user by username with correct login then correct user details returned.
      */
     @Test
-    public void loadUserByUsername_correctLogin_correctUserDetailsReturned() {
+    public void loadUserByUsernameWithCorrectLoginThenCorrectUserDetailsReturned() {
         doNothing().when(userValidatorMock).validateLogin(any());
         when(userDetailsDaoMock.getUserDetailsByLogin(any())).thenReturn(CORRECT_USER_DETAILS_DTO);
         UserDetails actualUserDetails = (UserDetails) userDetailsService.loadUserByUsername(CORRECT_NAME);
@@ -70,10 +70,10 @@ public class UserDetailsServiceImplMockTest {
     }
 
     /**
-     * Load user by username incorrect login validation exception.
+     * Load user by username with incorrect login then throw validation exception.
      */
     @Test(expected = ValidationException.class)
-    public void loadUserByUsername_incorrectLogin_validationException() {
+    public void loadUserByUsernameWithIncorrectLoginThenThrowValidationException() {
         doThrow(ValidationException.class).when(userValidatorMock).validateLogin(any());
         userDetailsService.loadUserByUsername(any());
         verify(userValidatorMock, times(TIMES_ONE)).validateLogin(any());
@@ -82,10 +82,10 @@ public class UserDetailsServiceImplMockTest {
     }
 
     /**
-     * Gets granted authorities by user details dto correct user details dto correct granted authorities.
+     * Gets granted authorities by user details dto with correct user details dto then correct granted authorities.
      */
     @Test
-    public void getGrantedAuthoritiesByUserDetailsDto_correctUserDetailsDto_correctGrantedAuthorities() {
+    public void getGrantedAuthoritiesByUserDetailsDtoWithCorrectUserDetailsDtoThenCorrectGrantedAuthorities() {
         Set<GrantedAuthority> actualGrantedAuthoritiesByUserDetailsDto =
                 userDetailsService.getGrantedAuthoritiesByUserDetailsDto(CORRECT_USER_DETAILS_DTO);
         assertEquals(CORRECT_GRANTED_AUTHORITY, actualGrantedAuthoritiesByUserDetailsDto);

@@ -14,8 +14,8 @@ import java.util.Set;
 /**
  * The type Security rest controller.
  */
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class SecurityRestController {
 
     private final RoleService roleService;

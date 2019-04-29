@@ -10,7 +10,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -82,10 +81,10 @@ public class FileDaoImplTest {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     /**
-     * Gets files by limit and offset correct limit and offset correct files returned.
+     * Gets files by limit and offset with correct limit and offset then correct files returned.
      */
     @Test
-    public void getFilesByLimitAndOffset_correctLimitAndOffset_correctFilesReturned() {
+    public void getFilesByLimitAndOffsetWithCorrectLimitAndOffsetThenCorrectFilesReturned() {
         Integer offset = OFFSET_ZERO;
         Integer limit = COUNT_ALL_FILES;
         List<File> files = fileDao.getFilesByLimitAndOffset(limit, offset);
@@ -95,10 +94,10 @@ public class FileDaoImplTest {
     }
 
     /**
-     * Gets files by limit and offset negative offset correct files returned.
+     * Gets files by limit and offset with negative offset then correct files returned.
      */
     @Test
-    public void getFilesByLimitAndOffset_negativeOffset_correctFilesReturned() {
+    public void getFilesByLimitAndOffsetWithNegativeOffsetThenCorrectFilesReturned() {
         Integer limit = LIMIT_THREE;
         Integer offset = -(COUNT_ALL_FILES);
         List<File> files = fileDao.getFilesByLimitAndOffset(limit, offset);
@@ -108,10 +107,10 @@ public class FileDaoImplTest {
     }
 
     /**
-     * Gets files by limit and offset negative limit all files returned.
+     * Gets files by limit and offset with negative limit then all files returned.
      */
     @Test
-    public void getFilesByLimitAndOffset_negativeLimit_allFilesReturned() {
+    public void getFilesByLimitAndOffsetWithNegativeLimitThenAllFilesReturned() {
         Integer actualSizeFiles = COUNT_ALL_FILES;
         Integer limit = -(LIMIT_THREE);
         Integer offset = OFFSET_ZERO;
@@ -123,10 +122,10 @@ public class FileDaoImplTest {
     }
 
     /**
-     * Gets files by limit and offset null limit and offset all files returned.
+     * Gets files by limit and offset with null limit and offset then all files.
      */
     @Test
-    public void getFilesByLimitAndOffset_nullLimitAndOffset_allFilesReturned() {
+    public void getFilesByLimitAndOffsetWithNullLimitAndOffsetThenAllFiles() {
         Integer actualSizeFiles = COUNT_ALL_FILES;
         List<File> files = fileDao.getFilesByLimitAndOffset(null, null);
         Integer expectedSize = files.size();
@@ -135,10 +134,10 @@ public class FileDaoImplTest {
     }
 
     /**
-     * Add file correct file dto correct file dto id returned.
+     * Add file with correct file dto then correct file dto id returned.
      */
     @Test
-    public void addFile_correctFileDto_correctFileDtoIdReturned() {
+    public void addFileWithCorrectFileDtoThenCorrectFileDtoIdReturned() {
         Long beforeAdding = fileDao.getFileCount();
         Long fileId = fileDao.addFile(STILL_NOT_CREATED_FILE_DTO);
         Long afterAdding = fileDao.getFileCount();
@@ -152,26 +151,26 @@ public class FileDaoImplTest {
     }
 
     /**
-     * Add file incorrect file dto count not changed and duplicate key exception returned.
+     * Add file with incorrect file dto then count not changed and duplicate key exception.
      */
     @Test(expected = DuplicateKeyException.class)
-    public void addFile_incorrectFileDto_CountNotChangedAndDuplicateKeyExceptionReturned() {
+    public void addFileWithIncorrectFileDtoThenCountNotChangedAndDuplicateKeyException() {
         fileDao.addFile(ALREADY_CREATED_FILE_DTO);
     }
 
     /**
-     * Add file incorrect file dto __ count not changed and null pointer exception returned.
+     * Add file with incorrect file dto then throw count not changed and null pointer exception.
      */
     @Test(expected = NullPointerException.class)
-    public void addFile_incorrectFileDto__CountNotChangedAndNullPointerExceptionReturned() {
+    public void addFileWithIncorrectFileDtoThenThrowCountNotChangedAndNullPointerException() {
         fileDao.addFile(null);
     }
 
     /**
-     * Update file correct file updating dto true returned.
+     * Update file with correct file updating dto then true returned.
      */
     @Test
-    public void updateFile_correctFileUpdatingDto_trueReturned() {
+    public void updateFileWithCorrectFileUpdatingDtoThenTrueReturned() {
         File beforeUpdating = this.getFileById(CORRECT_UPDATED_FILE.getId());
         Boolean updatingResult = fileDao.updateFile(CORRECT_UPDATED_FILE);
         File afterUpdating = this.getFileById(CORRECT_UPDATED_FILE.getId());
@@ -192,30 +191,30 @@ public class FileDaoImplTest {
     }
 
     /**
-     * Update file incorrect file updating dto false returned.
+     * Update file with incorrect file updating dto then false returned.
      */
     @Test
-    public void updateFile_incorrectFileUpdatingDto_falseReturned() {
+    public void updateFileWithIncorrectFileUpdatingDtoThenFalseReturned() {
         Boolean updatingResult = fileDao.updateFile(INCORRECT_UPDATED_FILE);
         assertNotNull(updatingResult);
         assertFalse(updatingResult);
     }
 
     /**
-     * Update file incorrect file updating dto null pointer exception and false returned.
+     * Update file with incorrect file updating dto then throw null pointer exception and false returned.
      */
     @Test(expected = NullPointerException.class)
-    public void updateFile_incorrectFileUpdatingDto_nullPointerExceptionAndFalseReturned() {
+    public void updateFileWithIncorrectFileUpdatingDtoThenThrowNullPointerExceptionAndFalseReturned() {
         Boolean updatingResult = fileDao.updateFile(null);
         assertNotNull(updatingResult);
         assertFalse(updatingResult);
     }
 
     /**
-     * Delete file correct file id true returned.
+     * Delete file with correct file id then true returned.
      */
     @Test
-    public void deleteFile_correctFileId_trueReturned() {
+    public void deleteFileWithCorrectFileIdThenTrueReturned() {
         Long countBeforeDeleteFile = fileDao.getFileCount();
         Boolean actualDeleteFileResult = fileDao.deleteFile(CORRECT_FILE_ID);
         Long countAfterDeleteFile = fileDao.getFileCount();
@@ -227,10 +226,10 @@ public class FileDaoImplTest {
     }
 
     /**
-     * Delete file incorrect file id false returned.
+     * Delete file with incorrect file id then false returned.
      */
     @Test
-    public void deleteFile_incorrectFileId_falseReturned() {
+    public void deleteFileWithIncorrectFileIdThenFalseReturned() {
         Long countBeforeDeleteFile = fileDao.getFileCount();
         Boolean actualDeleteFileResult = fileDao.deleteFile(INCORRECT_FILE_ID);
         Long countAfterDeleteFile = fileDao.getFileCount();
@@ -242,10 +241,10 @@ public class FileDaoImplTest {
     }
 
     /**
-     * Delete file null file id false returned.
+     * Delete file with null file id then false returned.
      */
     @Test
-    public void deleteFile_nullFileId_falseReturned() {
+    public void deleteFileWithNullFileIdThenFalseReturned() {
         Long countBeforeDeleteFile = fileDao.getFileCount();
         Boolean actualDeleteFileResult = fileDao.deleteFile(null);
         Long countAfterDeleteFile = fileDao.getFileCount();
@@ -257,10 +256,10 @@ public class FileDaoImplTest {
     }
 
     /**
-     * Gets files by user id and folder id correct user id and folder id correct file structure dto returned.
+     * Gets files by user id and folder id with correct user id and folder id then correct file structure dto returned.
      */
     @Test
-    public void getFilesByUserIdAndFolderId_correctUserIdAndFolderId_correctFileStructureDtoReturned() {
+    public void getFilesByUserIdAndFolderIdWithCorrectUserIdAndFolderIdThenCorrectFileStructureDtoReturned() {
         List<FileStructureDto> fileStructureDtoBeforeAdding = fileDao.getFilesByUserIdAndFolderId(CORRECT_USER_ID, CORRECT_FOLDER_ID);
         fileDao.addFile(STILL_NOT_CREATED_FILE_DTO);
         List<FileStructureDto> fileStructureDtoAfterAdding = fileDao.getFilesByUserIdAndFolderId(CORRECT_USER_ID, CORRECT_FOLDER_ID);
@@ -272,10 +271,10 @@ public class FileDaoImplTest {
     }
 
     /**
-     * Gets files by user id and folder id incorrect user id and correct folder id correct file structure dto returned.
+     * Gets files by user id and folder id with incorrect user id and correct folder id then correct file structure dto returned.
      */
     @Test
-    public void getFilesByUserIdAndFolderId_incorrectUserIdAndCorrectFolderId_correctFileStructureDtoReturned() {
+    public void getFilesByUserIdAndFolderIdWithIncorrectUserIdAndCorrectFolderIdThenCorrectFileStructureDtoReturned() {
         List<FileStructureDto> fileStructureDtoBeforeAdding = fileDao.getFilesByUserIdAndFolderId(INCORRECT_USER_ID, CORRECT_FOLDER_ID);
         fileDao.addFile(STILL_NOT_CREATED_FILE_DTO);
         List<FileStructureDto> fileStructureDtoAfterAdding = fileDao.getFilesByUserIdAndFolderId(INCORRECT_USER_ID, CORRECT_FOLDER_ID);
@@ -287,10 +286,10 @@ public class FileDaoImplTest {
     }
 
     /**
-     * Gets files by user id and folder id correct user id and incorrect folder id correct file structure dto returned.
+     * Gets files by user id and folder id with correct user id and incorrect folder id then correct file structure dto returned.
      */
     @Test
-    public void getFilesByUserIdAndFolderId_correctUserIdAndIncorrectFolderId_correctFileStructureDtoReturned() {
+    public void getFilesByUserIdAndFolderIdWithCorrectUserIdAndIncorrectFolderIdThenCorrectFileStructureDtoReturned() {
         List<FileStructureDto> fileStructureDtoBeforeAdding = fileDao.getFilesByUserIdAndFolderId(CORRECT_FILE_ID, INCORRECT_FOLDER_ID);
         fileDao.addFile(STILL_NOT_CREATED_FILE_DTO);
         List<FileStructureDto> fileStructureDtoAfterAdding = fileDao.getFilesByUserIdAndFolderId(CORRECT_FILE_ID, INCORRECT_FOLDER_ID);
@@ -302,10 +301,10 @@ public class FileDaoImplTest {
     }
 
     /**
-     * Gets files by user id and folder id null user id and folder id correct file structure dto returned.
+     * Gets files by user id and folder id with null user id and folder id then correct file structure dto returned.
      */
     @Test
-    public void getFilesByUserIdAndFolderId_nullUserIdAndFolderId_correctFileStructureDtoReturned() {
+    public void getFilesByUserIdAndFolderIdWithNullUserIdAndFolderIdThenCorrectFileStructureDtoReturned() {
         List<FileStructureDto> fileStructureDtoBeforeAdding = fileDao.getFilesByUserIdAndFolderId(null, null);
         fileDao.addFile(STILL_NOT_CREATED_FILE_DTO);
         List<FileStructureDto> fileStructureDtoAfterAdding = fileDao.getFilesByUserIdAndFolderId(null, null);
@@ -317,10 +316,10 @@ public class FileDaoImplTest {
     }
 
     /**
-     * Gets file count correct count returned.
+     * Gets file count with correct count returned.
      */
     @Test
-    public void getFileCount_correctCountReturned() {
+    public void getFileCountWithCorrectCountReturned() {
         Long countBeforeDeleting = fileDao.getFileCount();
         Boolean deletingResult = fileDao.deleteFile(CORRECT_FILE_ID);
         Long countAfterDeleting = fileDao.getFileCount();
@@ -331,10 +330,10 @@ public class FileDaoImplTest {
     }
 
     /**
-     * Gets file name by file id correct file id correct file name returned.
+     * Gets file name by file id with correct file id then correct file name returned.
      */
     @Test
-    public void getFileNameByFileId_correctFileId_correctFileNameReturned() {
+    public void getFileNameByFileIdWithCorrectFileIdThenCorrectFileNameReturned() {
         Long fileId = fileDao.addFile(STILL_NOT_CREATED_FILE_DTO);
         assertNotNull(fileId);
         String fileNameAfterAdding = fileDao.getFileNameByFileId(fileId);
@@ -343,26 +342,26 @@ public class FileDaoImplTest {
     }
 
     /**
-     * Gets file name by file id incorrect file id empty result data access exception returned.
+     * Gets file name by file id with incorrect file id then throw empty result data access exception.
      */
     @Test(expected = EmptyResultDataAccessException.class)
-    public void getFileNameByFileId_incorrectFileId_emptyResultDataAccessExceptionReturned() {
+    public void getFileNameByFileIdWithIncorrectFileIdThenThrowEmptyResultDataAccessException() {
         fileDao.getFileNameByFileId(INCORRECT_FILE_ID);
     }
 
     /**
-     * Gets file name by file id null file id correct file name returned.
+     * Gets file name by file id with null file id then throw empty result data access exception.
      */
     @Test(expected = EmptyResultDataAccessException.class)
-    public void getFileNameByFileId_nullFileId_correctFileNameReturned() {
+    public void getFileNameByFileIdWithNullFileIdThenThrowEmptyResultDataAccessException() {
         fileDao.getFileNameByFileId(null);
     }
 
     /**
-     * Gets file names by folder id and user id correct folder id and user id correct file names returned.
+     * Gets file names by folder id and user id with correct folder id and user id then correct file names returned.
      */
     @Test
-    public void getFileNamesByFolderIdAndUserId_correctFolderIdAndUserId_correctFileNamesReturned() {
+    public void getFileNamesByFolderIdAndUserIdWithCorrectFolderIdAndUserIdThenCorrectFileNamesReturned() {
         List<String> actualFileNames = fileDao.getFileNamesByFolderIdAndUserId(CORRECT_FOLDER_ID, CORRECT_USER_ID);
         assertNotNull(actualFileNames);
         List<FileStructureDto> fileStructureDtos = fileDao.getFilesByUserIdAndFolderId(CORRECT_USER_ID, CORRECT_FOLDER_ID);
@@ -372,18 +371,18 @@ public class FileDaoImplTest {
     }
 
     /**
-     * Gets file names by folder id and user id incorrect folder id and correct user id data integrity violation exception returned.
+     * Gets file names by folder id and user id with incorrect folder id and correct user id then data integrity violation exception.
      */
-    @Test(expected = DataIntegrityViolationException.class)
-    public void getFileNamesByFolderIdAndUserId_incorrectFolderIdAndCorrectUserId_dataIntegrityViolationExceptionReturned() {
+    @Test
+    public void getFileNamesByFolderIdAndUserIdWithIncorrectFolderIdAndCorrectUserIdThenDataIntegrityViolationException() {
         fileDao.getFileNamesByFolderIdAndUserId(INCORRECT_FOLDER_ID, CORRECT_USER_ID);
     }
 
     /**
-     * Gets file names by folder id and user id correct folder id and incorrect user id correct file names returned.
+     * Gets file names by folder id and user id with correct folder id and incorrect user id then correct file names returned.
      */
     @Test
-    public void getFileNamesByFolderIdAndUserId_correctFolderIdAndIncorrectUserId_correctFileNamesReturned() {
+    public void getFileNamesByFolderIdAndUserIdWithCorrectFolderIdAndIncorrectUserIdThenCorrectFileNamesReturned() {
         List<String> actualFileNames = fileDao.getFileNamesByFolderIdAndUserId(CORRECT_FOLDER_ID, INCORRECT_USER_ID);
         assertNotNull(actualFileNames);
         List<FileStructureDto> fileStructureDtos = fileDao.getFilesByUserIdAndFolderId(CORRECT_USER_ID, INCORRECT_USER_ID);
@@ -393,10 +392,10 @@ public class FileDaoImplTest {
     }
 
     /**
-     * Gets file names by folder id and user id incorrect folder id and user id correct file names returned.
+     * Gets file names by folder id and user id with incorrect folder id and user id then correct file names returned.
      */
     @Test
-    public void getFileNamesByFolderIdAndUserId_incorrectFolderIdAndUserId_correctFileNamesReturned() {
+    public void getFileNamesByFolderIdAndUserIdWithIncorrectFolderIdAndUserIdThenCorrectFileNamesReturned() {
         List<String> actualFileNames = fileDao.getFileNamesByFolderIdAndUserId(INCORRECT_FOLDER_ID, INCORRECT_USER_ID);
         assertNotNull(actualFileNames);
         List<FileStructureDto> fileStructureDtos = fileDao.getFilesByUserIdAndFolderId(INCORRECT_FOLDER_ID, INCORRECT_USER_ID);
@@ -406,10 +405,10 @@ public class FileDaoImplTest {
     }
 
     /**
-     * Gets file names by folder id and user id null folder id and user id correct file names returned.
+     * Gets file names by folder id and user id with null folder id and user id then correct file names returned.
      */
     @Test
-    public void getFileNamesByFolderIdAndUserId_nullFolderIdAndUserId_correctFileNamesReturned() {
+    public void getFileNamesByFolderIdAndUserIdWithNullFolderIdAndUserIdThenCorrectFileNamesReturned() {
         List<String> actualFileNames = fileDao.getFileNamesByFolderIdAndUserId(null, null);
         assertNotNull(actualFileNames);
         List<FileStructureDto> fileStructureDtos = fileDao.getFilesByUserIdAndFolderId(null, null);
@@ -419,10 +418,10 @@ public class FileDaoImplTest {
     }
 
     /**
-     * Gets file information by file id and user id correct file id and user id correct file information returned.
+     * Gets file information by file id and user id with correct file id and user id then correct file information returned.
      */
     @Test
-    public void getFileInformationByFileIdAndUserId_correctFileIdAndUserId_correctFileInformationReturned() {
+    public void getFileInformationByFileIdAndUserIdWithCorrectFileIdAndUserIdThenCorrectFileInformationReturned() {
         Long fileId = fileDao.addFile(STILL_NOT_CREATED_FILE_DTO);
         assertNotNull(fileId);
         FileUpdatingDto fileAfterAdding = fileDao.getFileInformationByFileIdAndUserId(fileId, STILL_NOT_CREATED_FILE_DTO.getUserId());
@@ -434,35 +433,35 @@ public class FileDaoImplTest {
     }
 
     /**
-     * Gets file information by file id and user id incorrect file id and correct user id empty result data access exception returned.
+     * Gets file information by file id and user id with incorrect file id and correct user id then throw empty result data access exception.
      */
     @Test(expected = EmptyResultDataAccessException.class)
-    public void getFileInformationByFileIdAndUserId_incorrectFileIdAndCorrectUserId_EmptyResultDataAccessExceptionReturned() {
+    public void getFileInformationByFileIdAndUserIdWithIncorrectFileIdAndCorrectUserIdThenThrowEmptyResultDataAccessException() {
         fileDao.getFileInformationByFileIdAndUserId(INCORRECT_FILE_ID, CORRECT_USER_ID);
 
     }
 
     /**
-     * Gets file information by file id and user id correct file id and incorrect user id empty result data access exception returned.
+     * Gets file information by file id and user id with correct file id and incorrect user id then throw empty result data access exception.
      */
     @Test(expected = EmptyResultDataAccessException.class)
-    public void getFileInformationByFileIdAndUserId_correctFileIdAndIncorrectUserId_EmptyResultDataAccessExceptionReturned() {
+    public void getFileInformationByFileIdAndUserIdWithCorrectFileIdAndIncorrectUserIdThenThrowEmptyResultDataAccessException() {
         fileDao.getFileInformationByFileIdAndUserId(CORRECT_FILE_ID, INCORRECT_USER_ID);
     }
 
     /**
-     * Gets file information by file id and user id incorrect file id and incorrect user id empty result data access exception returned.
+     * Gets file information by file id and user id with incorrect file id and incorrect user id then throw empty result data access exception.
      */
     @Test(expected = EmptyResultDataAccessException.class)
-    public void getFileInformationByFileIdAndUserId_incorrectFileIdAndIncorrectUserId_EmptyResultDataAccessExceptionReturned() {
+    public void getFileInformationByFileIdAndUserIdWithIncorrectFileIdAndIncorrectUserIdThenThrowEmptyResultDataAccessException() {
         fileDao.getFileInformationByFileIdAndUserId(INCORRECT_FILE_ID, INCORRECT_USER_ID);
     }
 
     /**
-     * Gets file names by user id correct user id correct file names returned.
+     * Gets file names by user id with correct user id then correct file names returned.
      */
     @Test
-    public void getFileNamesByUserId_correctUserId_correctFileNamesReturned() {
+    public void getFileNamesByUserIdWithCorrectUserIdThenCorrectFileNamesReturned() {
         List<String> fileNamesBeforeAdding = fileDao.getFileNamesByUserId(STILL_NOT_CREATED_FILE_DTO.getUserId());
         fileDao.addFile(STILL_NOT_CREATED_FILE_DTO);
         List<String> fileNamesAfterAdding = fileDao.getFileNamesByUserId(STILL_NOT_CREATED_FILE_DTO.getUserId());
@@ -474,10 +473,10 @@ public class FileDaoImplTest {
     }
 
     /**
-     * Gets file names by user id incorrect user id correct file names returned.
+     * Gets file names by user id with incorrect user id then correct file names returned.
      */
     @Test
-    public void getFileNamesByUserId_incorrectUserId_correctFileNamesReturned() {
+    public void getFileNamesByUserIdWithIncorrectUserIdThenCorrectFileNamesReturned() {
         List<String> fileNames = fileDao.getFileNamesByUserId(INCORRECT_USER_ID);
         assertNotNull(fileNames);
         Integer actualFileNamesSize = fileNames.size();
@@ -486,10 +485,10 @@ public class FileDaoImplTest {
     }
 
     /**
-     * Gets file names by user id null user id correct file names returned.
+     * Gets file names by user id with null user id then correct file names returned.
      */
     @Test
-    public void getFileNamesByUserId_nullUserId_correctFileNamesReturned() {
+    public void getFileNamesByUserIdWithNullUserIdThenCorrectFileNamesReturned() {
         List<String> fileNames = fileDao.getFileNamesByUserId(null);
         assertNotNull(fileNames);
         Integer actualFileNamesSize = fileNames.size();

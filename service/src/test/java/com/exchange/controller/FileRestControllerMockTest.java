@@ -87,12 +87,12 @@ public class FileRestControllerMockTest {
     }
 
     /**
-     * Gets users by page and size correct page and size correct response returned.
+     * Gets users by page and size with correct page and size then throw correct response returned.
      *
      * @throws Exception the exception
      */
     @Test
-    public void getUsersByPageAndSize_correctPageAndSize_correctResponseReturned() throws Exception {
+    public void getUsersByPageAndSizeWithCorrectPageAndSizeThenThrowCorrectResponseReturned() throws Exception {
         given(fileServiceMock.getFilesAndCountByPageAndSize(any(Integer.class), any(Integer.class)))
                 .willReturn(CORRECT_RESPONSE);
         mockMvc.perform(get(FILES_URI)
@@ -106,12 +106,12 @@ public class FileRestControllerMockTest {
     }
 
     /**
-     * Gets users by page and size incorrect page and size validation exception.
+     * Gets users by page and size with incorrect page and size then throw validation exception.
      *
      * @throws Exception the exception
      */
     @Test
-    public void getUsersByPageAndSize_incorrectPageAndSize_validationException() throws Exception {
+    public void getUsersByPageAndSizeWithIncorrectPageAndSizeThenThrowValidationException() throws Exception {
         given(fileServiceMock.getFilesAndCountByPageAndSize(any(Integer.class), any(Integer.class)))
                 .willThrow(ValidationException.class);
         mockMvc.perform(get(FILES_URI)
@@ -124,12 +124,12 @@ public class FileRestControllerMockTest {
     }
 
     /**
-     * Gets users by page and size non page and size bad request.
+     * Gets users by page and size with non page and size then throw bad request.
      *
      * @throws Exception the exception
      */
     @Test
-    public void getUsersByPageAndSize_nonPageAndSize_badRequest() throws Exception {
+    public void getUsersByPageAndSizeWithNonPageAndSizeThenThrowBadRequest() throws Exception {
         mockMvc.perform(get(FILES_URI)
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isBadRequest());
@@ -138,12 +138,12 @@ public class FileRestControllerMockTest {
     }
 
     /**
-     * Update file correct file updating dto.
+     * Update file with correct file updating dto.
      *
      * @throws Exception the exception
      */
     @Test
-    public void updateFile_correctFileUpdatingDto() throws Exception {
+    public void updateFileWithCorrectFileUpdatingDto() throws Exception {
         doNothing().when(fileServiceMock).updateFile(any(FileUpdatingDto.class));
         mockMvc.perform(put(FILES_URI)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -154,12 +154,12 @@ public class FileRestControllerMockTest {
     }
 
     /**
-     * Update file incorrect file updating dto validation exception.
+     * Update file with incorrect file updating dto then throw validation exception.
      *
      * @throws Exception the exception
      */
     @Test
-    public void updateFile_incorrectFileUpdatingDto_validationException() throws Exception {
+    public void updateFileWithIncorrectFileUpdatingDtoThenThrowValidationException() throws Exception {
         doThrow(ValidationException.class).when(fileServiceMock).updateFile(any(FileUpdatingDto.class));
         mockMvc.perform(put(FILES_URI)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -170,12 +170,12 @@ public class FileRestControllerMockTest {
     }
 
     /**
-     * Update file incorrect file updating dto internal server exception.
+     * Update file with incorrect file updating dto then throw internal server exception.
      *
      * @throws Exception the exception
      */
     @Test
-    public void updateFile_incorrectFileUpdatingDto_internalServerException() throws Exception {
+    public void updateFileWithIncorrectFileUpdatingDtoThenThrowInternalServerException() throws Exception {
         doThrow(InternalServerException.class).when(fileServiceMock).updateFile(any(FileUpdatingDto.class));
         mockMvc.perform(put(FILES_URI)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -186,12 +186,12 @@ public class FileRestControllerMockTest {
     }
 
     /**
-     * Update file non file updating dto bad request.
+     * Update file with non file updating dto then throw bad request.
      *
      * @throws Exception the exception
      */
     @Test
-    public void updateFile_nonFileUpdatingDto_badRequest() throws Exception {
+    public void updateFileWithNonFileUpdatingDtoThenThrowBadRequest() throws Exception {
         mockMvc.perform(put(FILES_URI)
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isBadRequest());
@@ -200,12 +200,12 @@ public class FileRestControllerMockTest {
     }
 
     /**
-     * Download file correct file id and file name.
+     * Download file with correct file id and file name.
      *
      * @throws Exception the exception
      */
     @Test
-    public void downloadFile_correctFileIdAndFileName() throws Exception {
+    public void downloadFileWithCorrectFileIdAndFileName() throws Exception {
         doNothing().when(fileServiceMock).downloadFileByFileIdAndFileName(any(Long.class), any(String.class), any(HttpServletResponse.class));
         mockMvc.perform(get(FILES_URI)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -217,12 +217,12 @@ public class FileRestControllerMockTest {
     }
 
     /**
-     * Download file __ validation exception.
+     * Download file with correct file id and file name then throw bad request.
      *
      * @throws Exception the exception
      */
     @Test
-    public void downloadFile__ValidationException() throws Exception {
+    public void downloadFileWithCorrectFileIdAndFileNameThenThrowBadRequest() throws Exception {
         doThrow(ValidationException.class).when(fileServiceMock).downloadFileByFileIdAndFileName(any(Long.class), any(String.class), any(HttpServletResponse.class));
         mockMvc.perform(get(FILES_URI)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -234,12 +234,12 @@ public class FileRestControllerMockTest {
     }
 
     /**
-     * Download file incorrect file id and file name internal server exception.
+     * Download file with incorrect file id and file name then throw internal server exception.
      *
      * @throws Exception the exception
      */
     @Test
-    public void downloadFile_incorrectFileIdAndFileName_internalServerException() throws Exception {
+    public void downloadFileWithIncorrectFileIdAndFileNameThenThrowInternalServerException() throws Exception {
         doThrow(InternalServerException.class)
                 .when(fileServiceMock).downloadFileByFileIdAndFileName(
                 any(Long.class), any(String.class), any(HttpServletResponse.class));
@@ -253,12 +253,12 @@ public class FileRestControllerMockTest {
     }
 
     /**
-     * Download file non file id and file name bad request.
+     * Download file with non file id and file name then throw bad request.
      *
      * @throws Exception the exception
      */
     @Test
-    public void downloadFile_nonFileIdAndFileName_badRequest() throws Exception {
+    public void downloadFileWithNonFileIdAndFileNameThenThrowBadRequest() throws Exception {
         mockMvc.perform(get(FILES_URI)
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isBadRequest());
@@ -267,12 +267,12 @@ public class FileRestControllerMockTest {
     }
 
     /**
-     * Delete file correct id.
+     * Delete file with correct id.
      *
      * @throws Exception the exception
      */
     @Test
-    public void deleteFile_correctId() throws Exception {
+    public void deleteFileWithCorrectId() throws Exception {
         doNothing().when(fileServiceMock).deleteFile(any(Long.class));
         mockMvc.perform(delete(FILES_URI)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -283,12 +283,12 @@ public class FileRestControllerMockTest {
     }
 
     /**
-     * Delete file incorrect id validation exception.
+     * Delete file with incorrect id then throw validation exception.
      *
      * @throws Exception the exception
      */
     @Test
-    public void deleteFile_incorrectId_validationException() throws Exception {
+    public void deleteFileWithIncorrectIdThenThrowValidationException() throws Exception {
         doThrow(ValidationException.class).when(fileServiceMock).deleteFile(any(Long.class));
         mockMvc.perform(delete(FILES_URI)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -299,12 +299,12 @@ public class FileRestControllerMockTest {
     }
 
     /**
-     * Delete file incorrect id file not deleted exception.
+     * Delete file with incorrect id then throw file not deleted exception.
      *
      * @throws Exception the exception
      */
     @Test
-    public void deleteFile_incorrectId_fileNotDeletedException() throws Exception {
+    public void deleteFileWithIncorrectIdThenThrowFileNotDeletedException() throws Exception {
         doThrow(FileNotDeletedException.class).when(fileServiceMock).deleteFile(any(Long.class));
         mockMvc.perform(delete(FILES_URI)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -315,12 +315,12 @@ public class FileRestControllerMockTest {
     }
 
     /**
-     * Delete file incorrect id internal server exception.
+     * Delete file with incorrect id then throw internal server exception.
      *
      * @throws Exception the exception
      */
     @Test
-    public void deleteFile_incorrectId_internalServerException() throws Exception {
+    public void deleteFileWithIncorrectIdThenThrowInternalServerException() throws Exception {
         doThrow(InternalServerException.class).when(fileServiceMock).deleteFile(any(Long.class));
         mockMvc.perform(delete(FILES_URI)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -331,12 +331,12 @@ public class FileRestControllerMockTest {
     }
 
     /**
-     * Delete file non id internal server exception.
+     * Delete file with non id then throw internal server exception.
      *
      * @throws Exception the exception
      */
     @Test
-    public void deleteFile_nonId_internalServerException() throws Exception {
+    public void deleteFileWithNonIdThenThrowInternalServerException() throws Exception {
         mockMvc.perform(delete(FILES_URI)
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isBadRequest());
@@ -345,12 +345,12 @@ public class FileRestControllerMockTest {
     }
 
     /**
-     * Gets file information by file id correct file id and authentication correct file updating dto.
+     * Gets file information by file id with correct file id and authentication then correct file updating dto.
      *
      * @throws Exception the exception
      */
     @Test
-    public void getFileInformationByFileId_correctFileIdAndAuthentication_correctFileUpdatingDto() throws Exception {
+    public void getFileInformationByFileIdWithCorrectFileIdAndAuthenticationThenCorrectFileUpdatingDto() throws Exception {
         given(fileServiceMock.getFileInformationByFileIdAndAuthentication(any(Long.class), any(Authentication.class)))
                 .willReturn(CORRECT_FILE_UPDATING_DTO);
         mockMvc.perform(get(FILES_URI)
@@ -364,12 +364,12 @@ public class FileRestControllerMockTest {
     }
 
     /**
-     * Gets file information by file id incorrect file id and authentication validation exception.
+     * Gets file information by file id with incorrect file id and authentication then throw validation exception.
      *
      * @throws Exception the exception
      */
     @Test
-    public void getFileInformationByFileId_incorrectFileIdAndAuthentication_validationException() throws Exception {
+    public void getFileInformationByFileIdWithIncorrectFileIdAndAuthenticationThenThrowValidationException() throws Exception {
         given(fileServiceMock.getFileInformationByFileIdAndAuthentication(any(Long.class), any(Authentication.class)))
                 .willThrow(ValidationException.class);
         mockMvc.perform(get(FILES_URI)
@@ -382,12 +382,12 @@ public class FileRestControllerMockTest {
     }
 
     /**
-     * Gets file information by file id non file id and authentication validation exception.
+     * Gets file information by file id with non file id and authentication then throw validation exception.
      *
      * @throws Exception the exception
      */
     @Test
-    public void getFileInformationByFileId_nonFileIdAndAuthentication_validationException() throws Exception {
+    public void getFileInformationByFileIdWithNonFileIdAndAuthenticationThenThrowValidationException() throws Exception {
         mockMvc.perform(get(FILES_URI)
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isBadRequest());

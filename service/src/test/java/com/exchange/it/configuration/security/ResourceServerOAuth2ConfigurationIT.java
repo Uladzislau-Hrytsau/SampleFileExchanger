@@ -1,4 +1,4 @@
-package com.exchange.configuration.security;
+package com.exchange.it.configuration.security;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -8,12 +8,12 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 
 /**
- * The type Resource server o auth 2 config.
+ * The type Resource server o auth 2 configuration it.
  */
 @Configuration
 @EnableResourceServer
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class ResourceServerOAuth2Config
+public class ResourceServerOAuth2ConfigurationIT
         extends ResourceServerConfigurerAdapter {
 
     private static final String OAUTH_TOKEN_ENDPOINT = "/oauth/token";
@@ -32,6 +32,5 @@ public class ResourceServerOAuth2Config
                 .antMatchers(HttpMethod.OPTIONS, USER_ENDPOINT).permitAll()
                 .antMatchers(HttpMethod.POST, USER_ENDPOINT).permitAll()
                 .antMatchers(ALL_ENDPOINTS).access(HAS_ROLE_ADMIN_OR_HAS_ROLE_USER);
-
     }
 }

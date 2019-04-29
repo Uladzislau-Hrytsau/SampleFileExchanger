@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.*;
 /**
  * The type Folder rest controller.
  */
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("/folders")
 public class FolderRestController {
 

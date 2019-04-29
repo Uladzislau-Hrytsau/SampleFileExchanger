@@ -23,28 +23,28 @@ public class CommonServiceMockTest {
     private CommonService commonService;
 
     /**
-     * Gets offset by size and page correct size and page correct offset.
+     * Gets offset by size and page with correct size and page then correct offset.
      */
     @Test
-    public void getOffsetBySizeAndPage_correctSizeAndPage_correctOffset() {
+    public void getOffsetBySizeAndPageWithCorrectSizeAndPageThenCorrectOffset() {
         Integer actualOffset = commonService.getOffsetBySizeAndPage(CORRECT_SIZE, CORRECT_PAGE);
         Integer expectedOffset = CORRECT_SIZE * (CORRECT_PAGE - 1);
         assertEquals(expectedOffset, actualOffset);
     }
 
     /**
-     * Check batch result correct batch result true returned.
+     * Check batch result with correct batch result then true returned.
      */
     @Test
-    public void checkBatchResult_correctBatchResult_trueReturned() {
+    public void checkBatchResultWithCorrectBatchResultThenTrueReturned() {
         assertTrue(commonService.checkBatchResult(CORRECT_BATCH_RESULT));
     }
 
     /**
-     * Check batch result incorrect batch result false returned.
+     * Check batch result with incorrect batch result then false returned.
      */
     @Test
-    public void checkBatchResult_incorrectBatchResult_falseReturned() {
+    public void checkBatchResultWithIncorrectBatchResultThenFalseReturned() {
         assertFalse(commonService.checkBatchResult(INCORRECT_BATCH_RESULT));
     }
 

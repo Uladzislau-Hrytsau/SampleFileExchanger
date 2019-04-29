@@ -32,10 +32,10 @@ public class FolderValidatorMockTest {
     private FolderValidator folderValidator;
 
     /**
-     * Validate folder by user id correct folder id and user id correct.
+     * Validate folder by user id with correct folder id and user id then correct.
      */
     @Test
-    public void validateFolderByUserId_correctFolderIdAndUserId_correct() {
+    public void validateFolderByUserIdWithCorrectFolderIdAndUserIdThenCorrect() {
         when(commonValidatorMock.isValidIdentifier(anyLong())).thenReturn(Boolean.TRUE);
         when(folderDaoMock.existsParentIdByUserId(anyLong(), anyLong())).thenReturn(Boolean.TRUE);
         folderValidator.validateFolderByUserId(CORRECT_FOLDER_ID, CORRECT_USER_ID);
@@ -45,10 +45,10 @@ public class FolderValidatorMockTest {
     }
 
     /**
-     * Validate folder by user id incorrect folder id and correct user id validation exception.
+     * Validate folder by user id with incorrect folder id and correct user id then throw validation exception.
      */
     @Test(expected = ValidationException.class)
-    public void validateFolderByUserId_incorrectFolderIdAndCorrectUserId_validationException() {
+    public void validateFolderByUserIdWithIncorrectFolderIdAndCorrectUserIdThenThrowValidationException() {
         when(commonValidatorMock.isValidIdentifier(anyLong())).thenReturn(Boolean.FALSE);
         when(folderDaoMock.existsParentIdByUserId(anyLong(), anyLong())).thenReturn(Boolean.TRUE);
         folderValidator.validateFolderByUserId(INCORRECT_FOLDER_ID, anyLong());
@@ -58,10 +58,10 @@ public class FolderValidatorMockTest {
     }
 
     /**
-     * Validate folder by user id correct folder id and incorrect user id validation exception.
+     * Validate folder by user id with correct folder id and incorrect user id then throw validation exception.
      */
     @Test(expected = ValidationException.class)
-    public void validateFolderByUserId_correctFolderIdAndIncorrectUserId_validationException() {
+    public void validateFolderByUserIdWithCorrectFolderIdAndIncorrectUserIdThenThrowValidationException() {
         when(commonValidatorMock.isValidIdentifier(anyLong())).thenReturn(Boolean.TRUE);
         when(folderDaoMock.existsParentIdByUserId(anyLong(), anyLong())).thenReturn(Boolean.FALSE);
         folderValidator.validateFolderByUserId(anyLong(), INCORRECT_USER_ID);
@@ -71,10 +71,10 @@ public class FolderValidatorMockTest {
     }
 
     /**
-     * Validate folder id correct folder id correct.
+     * Validate folder id with correct folder id then correct.
      */
     @Test
-    public void validateFolderId_correctFolderId_correct() {
+    public void validateFolderIdWithCorrectFolderIdThenCorrect() {
         when(commonValidatorMock.isValidIdentifier(anyLong())).thenReturn(Boolean.TRUE);
         folderValidator.validateFolderId(anyLong());
         verify(commonValidatorMock, times(TIMES_ONE)).isValidIdentifier(anyLong());
@@ -82,10 +82,10 @@ public class FolderValidatorMockTest {
     }
 
     /**
-     * Validate folder id correct folder id validation exception.
+     * Validate folder id with correct folder id then throw validation exception.
      */
     @Test(expected = ValidationException.class)
-    public void validateFolderId_correctFolderId_validationException() {
+    public void validateFolderIdWithCorrectFolderIdThenThrowValidationException() {
         when(commonValidatorMock.isValidIdentifier(anyLong())).thenReturn(Boolean.FALSE);
         folderValidator.validateFolderId(anyLong());
         verify(commonValidatorMock, times(TIMES_ONE)).isValidIdentifier(anyLong());
@@ -93,10 +93,10 @@ public class FolderValidatorMockTest {
     }
 
     /**
-     * Exists by user id correct folder id and user id correct.
+     * Exists by user id with correct folder id and user id then correct.
      */
     @Test
-    public void existsByUserId_correctFolderIdAndUserId_correct() {
+    public void existsByUserIdWithCorrectFolderIdAndUserIdThenCorrect() {
         when(folderDaoMock.existsParentIdByUserId(anyLong(), anyLong())).thenReturn(Boolean.TRUE);
         folderValidator.existsByUserId(anyLong(), anyLong());
         verify(folderDaoMock, times(TIMES_ONE)).existsParentIdByUserId(anyLong(), anyLong());
@@ -104,10 +104,10 @@ public class FolderValidatorMockTest {
     }
 
     /**
-     * Exists by user id correct folder id and user id validation exception.
+     * Exists by user id with correct folder id and user id then throw validation exception.
      */
     @Test(expected = ValidationException.class)
-    public void existsByUserId_correctFolderIdAndUserId_validationException() {
+    public void existsByUserIdWithCorrectFolderIdAndUserIdThenThrowValidationException() {
         when(folderDaoMock.existsParentIdByUserId(anyLong(), anyLong())).thenReturn(Boolean.FALSE);
         folderValidator.existsByUserId(anyLong(), anyLong());
         verify(folderDaoMock, times(TIMES_ONE)).existsParentIdByUserId(anyLong(), anyLong());
@@ -115,26 +115,26 @@ public class FolderValidatorMockTest {
     }
 
     /**
-     * Validate folder name correct name correct.
+     * Validate folder name with correct name then correct.
      */
     @Test
-    public void validateFolderName_correctName_correct() {
+    public void validateFolderNameWithCorrectNameThenCorrect() {
         folderValidator.validateFolderName(CORRECT_NAME);
     }
 
     /**
-     * Validate folder name incorrect name validation exception.
+     * Validate folder name with incorrect name then throw validation exception.
      */
     @Test(expected = ValidationException.class)
-    public void validateFolderName_incorrectName_validationException() {
+    public void validateFolderNameWithIncorrectNameThenThrowValidationException() {
         folderValidator.validateFolderName(EMPTY_NAME);
     }
 
     /**
-     * Validate folder name null name validation exception.
+     * Validate folder name with null name then throw validation exception.
      */
     @Test(expected = ValidationException.class)
-    public void validateFolderName_nullName_validationException() {
+    public void validateFolderNameWithNullNameThenThrowValidationException() {
         folderValidator.validateFolderName(null);
     }
 

@@ -62,10 +62,10 @@ public class StructureServiceImplMockTest {
     private StructureServiceImpl structureService;
 
     /**
-     * Gets structure and categories by folder id and authentication correct folder id and authentication correct structure dto returned.
+     * Gets structure and categories by folder id and authentication with correct folder id and authentication then correct structure dto returned.
      */
     @Test
-    public void getStructureAndCategoriesByFolderIdAndAuthentication_correctFolderIdAndAuthentication_correctStructureDtoReturned() {
+    public void getStructureAndCategoriesByFolderIdAndAuthenticationWithCorrectFolderIdAndAuthenticationThenCorrectStructureDtoReturned() {
         doNothing().when(folderValidatorMock).validateFolderId(any());
         when(commonServiceMock.getUserIdByAuthentication(any())).thenReturn(CORRECT_USER_ID);
         when(fileDaoMock.getFilesByUserIdAndFolderId(any(), any())).thenReturn(CORRECT_FILE_STRUCTURE_DTOS);
@@ -85,10 +85,10 @@ public class StructureServiceImplMockTest {
     }
 
     /**
-     * Gets structure and categories by folder id and authentication incorrect folder id validation exception.
+     * Gets structure and categories by folder id and authentication with incorrect folder id then throw validation exception.
      */
     @Test(expected = ValidationException.class)
-    public void getStructureAndCategoriesByFolderIdAndAuthentication_incorrectFolderId_validationException() {
+    public void getStructureAndCategoriesByFolderIdAndAuthenticationWithIncorrectFolderIdThenThrowValidationException() {
         doThrow(ValidationException.class).when(folderValidatorMock).validateFolderId(any());
         structureService.getStructureAndCategoriesByFolderIdAndAuthentication(INCORRECT_FOLDER_ID, authenticationMock);
         verify(folderValidatorMock, times(TIMES_ONE)).validateFolderId(any());

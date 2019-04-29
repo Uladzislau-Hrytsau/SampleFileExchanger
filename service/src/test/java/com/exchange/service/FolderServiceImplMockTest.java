@@ -48,10 +48,10 @@ public class FolderServiceImplMockTest {
     private FolderServiceImpl folderService;
 
     /**
-     * Add folder correct folder id correct.
+     * Add folder with correct folder id then correct.
      */
     @Test
-    public void addFolder_correctFolderId_correct() {
+    public void addFolderWithCorrectFolderIdThenCorrect() {
         doNothing().when(folderValidatorMock).validateFolderName(anyString());
         when(folderDaoMock.addFolder(any(), any())).thenReturn(anyLong());
         when(commonValidatorMock.isValidIdentifier(CORRECT_IDENTIFIER)).thenReturn(Boolean.TRUE);
@@ -64,10 +64,10 @@ public class FolderServiceImplMockTest {
     }
 
     /**
-     * Add folder incorrect folder id internal server exception.
+     * Add folder with incorrect folder id then throw internal server exception.
      */
     @Test(expected = InternalServerException.class)
-    public void addFolder_incorrectFolderId_internalServerException() {
+    public void addFolderWithIncorrectFolderIdThenThrowInternalServerException() {
         doNothing().when(folderValidatorMock).validateFolderName(anyString());
         when(folderDaoMock.addFolder(any(), any())).thenReturn(anyLong());
         when(commonValidatorMock.isValidIdentifier(CORRECT_IDENTIFIER)).thenReturn(Boolean.FALSE);
@@ -80,10 +80,10 @@ public class FolderServiceImplMockTest {
     }
 
     /**
-     * Delete by folder id and authentication correct folder id correct.
+     * Delete by folder id and authentication with correct folder id then correct.
      */
     @Test
-    public void deleteByFolderIdAndAuthentication_correctFolderId_correct() {
+    public void deleteByFolderIdAndAuthenticationWithCorrectFolderIdThenCorrect() {
         when(commonServiceMock.getUserIdByAuthentication(any())).thenReturn(CORRECT_IDENTIFIER);
         doNothing().when(folderValidatorMock).validateFolderByUserId(CORRECT_IDENTIFIER, CORRECT_IDENTIFIER);
         doNothing().when(fileWriterServiceMock).deleteFilesByNames(any());
@@ -97,10 +97,10 @@ public class FolderServiceImplMockTest {
     }
 
     /**
-     * Delete by folder id and authentication incorrect folder id internal server exception.
+     * Delete by folder id and authentication with incorrect folder id then throw internal server exception.
      */
     @Test(expected = InternalServerException.class)
-    public void deleteByFolderIdAndAuthentication_incorrectFolderId_internalServerException() {
+    public void deleteByFolderIdAndAuthenticationWithIncorrectFolderIdThenThrowInternalServerException() {
         when(commonServiceMock.getUserIdByAuthentication(any())).thenReturn(CORRECT_IDENTIFIER);
         doNothing().when(folderValidatorMock).validateFolderByUserId(CORRECT_IDENTIFIER, CORRECT_IDENTIFIER);
         doNothing().when(fileWriterServiceMock).deleteFilesByNames(any());
@@ -115,10 +115,10 @@ public class FolderServiceImplMockTest {
     }
 
     /**
-     * Update folder correct folder structure dto correct.
+     * Update folder with correct folder structure dto then correct.
      */
     @Test
-    public void updateFolder_correctFolderStructureDto_correct() {
+    public void updateFolderWithCorrectFolderStructureDtoThenCorrect() {
         doNothing().when(folderValidatorMock).validateFolderName(any());
         doNothing().when(folderValidatorMock).validateFolderId(any());
         when(commonServiceMock.getUserIdByAuthentication(authentication)).thenReturn(CORRECT_IDENTIFIER);
@@ -133,10 +133,10 @@ public class FolderServiceImplMockTest {
     }
 
     /**
-     * Update folder incorrect folder structure dto internal server exception.
+     * Update folder with incorrect folder structure dto then throw internal server exception.
      */
     @Test(expected = InternalServerException.class)
-    public void updateFolder_incorrectFolderStructureDto_internalServerException() {
+    public void updateFolderWithIncorrectFolderStructureDtoThenThrowInternalServerException() {
         doNothing().when(folderValidatorMock).validateFolderName(any());
         doNothing().when(folderValidatorMock).validateFolderId(any());
         when(commonServiceMock.getUserIdByAuthentication(authentication)).thenReturn(CORRECT_IDENTIFIER);

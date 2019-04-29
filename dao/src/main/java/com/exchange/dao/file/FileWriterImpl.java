@@ -30,10 +30,11 @@ public class FileWriterImpl implements FileWriter {
     @Override
     public void saveFile(final MultipartFile multipartFile, final String filePath) {
         File file = new File(filePath);
-        try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
-            if (file.createNewFile()) {
+        try {
+            if (!file.createNewFile()) {
                 throw new FileNotCreatedException(errorCreatingFile);
             }
+            FileOutputStream fileOutputStream = new FileOutputStream(file);
             fileOutputStream.write(multipartFile.getBytes());
         } catch (IOException e) {
             throw new FileNotWrittenException(errorSavingFile);

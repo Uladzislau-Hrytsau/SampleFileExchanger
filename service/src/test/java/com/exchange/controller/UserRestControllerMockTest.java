@@ -77,12 +77,12 @@ public class UserRestControllerMockTest {
     }
 
     /**
-     * Gets users by page and size correct page and size correct response returned.
+     * Gets users by page and size with correct page and size then throw correct response returned.
      *
      * @throws Exception the exception
      */
     @Test
-    public void getUsersByPageAndSize_correctPageAndSize_correctResponseReturned() throws Exception {
+    public void getUsersByPageAndSizeWithCorrectPageAndSizeThenThrowCorrectResponseReturned() throws Exception {
         given(userServiceMock.getUsersAndCountByPageAndSize(any(Integer.class), any(Integer.class)))
                 .willReturn(CORRECT_RESPONSE);
         mockMvc.perform(get(USERS_URI)
@@ -96,12 +96,12 @@ public class UserRestControllerMockTest {
     }
 
     /**
-     * Gets users by page and size non page and size bad request.
+     * Gets users by page and size with non page and size then throw bad request.
      *
      * @throws Exception the exception
      */
     @Test
-    public void getUsersByPageAndSize_nonPageAndSize_badRequest() throws Exception {
+    public void getUsersByPageAndSizeWithNonPageAndSizeThenThrowBadRequest() throws Exception {
         mockMvc.perform(get(USERS_URI)
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isBadRequest());
@@ -110,12 +110,12 @@ public class UserRestControllerMockTest {
     }
 
     /**
-     * Add user correct user.
+     * Add user with correct user.
      *
      * @throws Exception the exception
      */
     @Test
-    public void addUser_correctUser() throws Exception {
+    public void addUserWithCorrectUser() throws Exception {
         doNothing().when(userServiceMock).addUser(any(User.class));
         mockMvc.perform(post(USERS_URI)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -126,12 +126,12 @@ public class UserRestControllerMockTest {
     }
 
     /**
-     * Add user incorrect user validation exception.
+     * Add user with incorrect user then throw validation exception.
      *
      * @throws Exception the exception
      */
     @Test
-    public void addUser_incorrectUser_validationException() throws Exception {
+    public void addUserWithIncorrectUserThenThrowValidationException() throws Exception {
         doThrow(ValidationException.class).when(userServiceMock).addUser(any(User.class));
         mockMvc.perform(post(USERS_URI)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -142,12 +142,12 @@ public class UserRestControllerMockTest {
     }
 
     /**
-     * Add user incorrect user internal server exception.
+     * Add user with incorrect user then throw internal server exception.
      *
      * @throws Exception the exception
      */
     @Test
-    public void addUser_incorrectUser_internalServerException() throws Exception {
+    public void addUserWithIncorrectUserThenThrowInternalServerException() throws Exception {
         doThrow(InternalServerException.class).when(userServiceMock).addUser(any(User.class));
         mockMvc.perform(post(USERS_URI)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -158,12 +158,12 @@ public class UserRestControllerMockTest {
     }
 
     /**
-     * Add user non user bad request.
+     * Add user with non user then throw bad request.
      *
      * @throws Exception the exception
      */
     @Test
-    public void addUser_nonUser_badRequest() throws Exception {
+    public void addUserWithNonUserThenThrowBadRequest() throws Exception {
         mockMvc.perform(post(USERS_URI)
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isBadRequest());
@@ -172,12 +172,12 @@ public class UserRestControllerMockTest {
     }
 
     /**
-     * Update user correct user updating dto.
+     * Update user with correct user updating dto.
      *
      * @throws Exception the exception
      */
     @Test
-    public void updateUser_correctUserUpdatingDto() throws Exception {
+    public void updateUserWithCorrectUserUpdatingDto() throws Exception {
         doNothing().when(userServiceMock).updateUser(any(UserUpdatingDto.class));
         mockMvc.perform(put(USERS_URI)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -188,12 +188,12 @@ public class UserRestControllerMockTest {
     }
 
     /**
-     * Update user incorrect user updating dto validation exception.
+     * Update user with incorrect user updating dto then throw validation exception.
      *
      * @throws Exception the exception
      */
     @Test
-    public void updateUser_incorrectUserUpdatingDto_validationException() throws Exception {
+    public void updateUserWithIncorrectUserUpdatingDtoThenThrowValidationException() throws Exception {
         doThrow(ValidationException.class).when(userServiceMock).updateUser(any(UserUpdatingDto.class));
         mockMvc.perform(put(USERS_URI)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -204,12 +204,12 @@ public class UserRestControllerMockTest {
     }
 
     /**
-     * Update user incorrect user updating dto internal server exception.
+     * Update user with incorrect user updating dto then throw internal server exception.
      *
      * @throws Exception the exception
      */
     @Test
-    public void updateUser_incorrectUserUpdatingDto_internalServerException() throws Exception {
+    public void updateUserWithIncorrectUserUpdatingDtoThenThrowInternalServerException() throws Exception {
         doThrow(InternalServerException.class).when(userServiceMock).updateUser(any(UserUpdatingDto.class));
         mockMvc.perform(put(USERS_URI)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -220,12 +220,12 @@ public class UserRestControllerMockTest {
     }
 
     /**
-     * Update user non user updating dto bad request.
+     * Update user with non user updating dto then throw bad request.
      *
      * @throws Exception the exception
      */
     @Test
-    public void updateUser_nonUserUpdatingDto_badRequest() throws Exception {
+    public void updateUserWithNonUserUpdatingDtoThenThrowBadRequest() throws Exception {
         mockMvc.perform(put(USERS_URI)
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isBadRequest());
@@ -234,12 +234,12 @@ public class UserRestControllerMockTest {
     }
 
     /**
-     * Delete user correct user id.
+     * Delete user with correct user id.
      *
      * @throws Exception the exception
      */
     @Test
-    public void deleteUser_correctUserId() throws Exception {
+    public void deleteUserWithCorrectUserId() throws Exception {
         doNothing().when(userServiceMock).deleteUser(any(Long.class));
         mockMvc.perform(delete(USERS_URI)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -250,12 +250,12 @@ public class UserRestControllerMockTest {
     }
 
     /**
-     * Delete user incorrect user id validation exception.
+     * Delete user with incorrect user id then throw validation exception.
      *
      * @throws Exception the exception
      */
     @Test
-    public void deleteUser_incorrectUserId_validationException() throws Exception {
+    public void deleteUserWithIncorrectUserIdThenThrowValidationException() throws Exception {
         doThrow(ValidationException.class).when(userServiceMock).deleteUser(any(Long.class));
         mockMvc.perform(delete(USERS_URI)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -266,12 +266,12 @@ public class UserRestControllerMockTest {
     }
 
     /**
-     * Delete user incorrect user id file not deleted exception.
+     * Delete user with incorrect user id then throw file not deleted exception.
      *
      * @throws Exception the exception
      */
     @Test
-    public void deleteUser_incorrectUserId_fileNotDeletedException() throws Exception {
+    public void deleteUserWithIncorrectUserIdThenThrowFileNotDeletedException() throws Exception {
         doThrow(FileNotDeletedException.class).when(userServiceMock).deleteUser(any(Long.class));
         mockMvc.perform(delete(USERS_URI)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -282,12 +282,12 @@ public class UserRestControllerMockTest {
     }
 
     /**
-     * Delete user incorrect user id internal server exception.
+     * Delete user with incorrect user id then throw internal server exception.
      *
      * @throws Exception the exception
      */
     @Test
-    public void deleteUser_incorrectUserId_internalServerException() throws Exception {
+    public void deleteUserWithIncorrectUserIdThenThrowInternalServerException() throws Exception {
         doThrow(InternalServerException.class).when(userServiceMock).deleteUser(any(Long.class));
         mockMvc.perform(delete(USERS_URI)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -298,12 +298,12 @@ public class UserRestControllerMockTest {
     }
 
     /**
-     * Delete user non user id bad request.
+     * Delete user with non user id then throw bad request.
      *
      * @throws Exception the exception
      */
     @Test
-    public void deleteUser_nonUserId_badRequest() throws Exception {
+    public void deleteUserWithNonUserIdThenThrowBadRequest() throws Exception {
         mockMvc.perform(delete(USERS_URI)
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isBadRequest());

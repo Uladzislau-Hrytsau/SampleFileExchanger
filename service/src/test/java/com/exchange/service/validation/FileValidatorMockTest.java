@@ -23,10 +23,10 @@ public class FileValidatorMockTest {
     private FileValidator fileValidator;
 
     /**
-     * Validate file id correct file id correct.
+     * Validate file id with correct file id then correct.
      */
     @Test
-    public void validateFileId_correctFileId_correct() {
+    public void validateFileIdWithCorrectFileIdThenCorrect() {
         when(commonValidatorMock.isValidIdentifier(anyLong())).thenReturn(Boolean.TRUE);
         fileValidator.validateFileId(anyLong());
         verify(commonValidatorMock, times(TIMES_ONE)).isValidIdentifier(anyLong());
@@ -34,10 +34,10 @@ public class FileValidatorMockTest {
     }
 
     /**
-     * Validate file id incorrect file id validation exception.
+     * Validate file id with incorrect file id then throw validation exception.
      */
     @Test(expected = ValidationException.class)
-    public void validateFileId_incorrectFileId_validationException() {
+    public void validateFileIdWithIncorrectFileIdThenThrowValidationException() {
         when(commonValidatorMock.isValidIdentifier(anyLong())).thenReturn(Boolean.FALSE);
         fileValidator.validateFileId(anyLong());
         verify(commonValidatorMock, times(TIMES_ONE)).isValidIdentifier(anyLong());
@@ -45,10 +45,10 @@ public class FileValidatorMockTest {
     }
 
     /**
-     * Validate description correct description correct.
+     * Validate description with correct description then correct.
      */
     @Test
-    public void validateDescription_correctDescription_correct() {
+    public void validateDescriptionWithCorrectDescriptionThenCorrect() {
         when(commonValidatorMock.isValidString(anyString())).thenReturn(Boolean.TRUE);
         fileValidator.validateDescription(anyString());
         verify(commonValidatorMock, times(TIMES_ONE)).isValidString(anyString());
@@ -56,10 +56,10 @@ public class FileValidatorMockTest {
     }
 
     /**
-     * Validate description incorrect description validation exception.
+     * Validate description with incorrect description then throw validation exception.
      */
     @Test(expected = ValidationException.class)
-    public void validateDescription_incorrectDescription_validationException() {
+    public void validateDescriptionWithIncorrectDescriptionThenThrowValidationException() {
         when(commonValidatorMock.isValidString(anyString())).thenReturn(Boolean.FALSE);
         fileValidator.validateDescription(anyString());
         verify(commonValidatorMock, times(TIMES_ONE)).isValidString(anyString());
@@ -67,10 +67,10 @@ public class FileValidatorMockTest {
     }
 
     /**
-     * Validate name correct name correct.
+     * Validate name with correct name then correct.
      */
     @Test
-    public void validateName_correctName_correct() {
+    public void validateNameWithCorrectNameThenCorrect() {
         when(commonValidatorMock.isValidString(anyString())).thenReturn(Boolean.TRUE);
         fileValidator.validateName(anyString());
         verify(commonValidatorMock, times(TIMES_ONE)).isValidString(anyString());
@@ -78,10 +78,10 @@ public class FileValidatorMockTest {
     }
 
     /**
-     * Validate name incorrect name validation exception.
+     * Validate name with incorrect name then throw validation exception.
      */
     @Test(expected = ValidationException.class)
-    public void validateName_incorrectName_validationException() {
+    public void validateNameWithIncorrectNameThenThrowValidationException() {
         when(commonValidatorMock.isValidString(anyString())).thenReturn(Boolean.FALSE);
         fileValidator.validateName(anyString());
         verify(commonValidatorMock, times(TIMES_ONE)).isValidString(anyString());

@@ -41,12 +41,12 @@ public class FileWriterServiceImplMockTest {
     private FileWriterServiceImpl fileWriterService;
 
     /**
-     * Save file correct multipart file and encode name.
+     * Save file with correct multipart file and encode name.
      *
      * @throws IOException the io exception
      */
     @Test
-    public void saveFile_correctMultipartFileAndEncodeName() throws IOException {
+    public void saveFileWithCorrectMultipartFileAndEncodeName() throws IOException {
         MockMultipartFile mockMultipartFile = new MockMultipartFile(
                 "file", "originalName", null, "file".getBytes());
         doNothing().when(fileWriterMock).saveFile(any(), any());
@@ -56,10 +56,10 @@ public class FileWriterServiceImplMockTest {
     }
 
     /**
-     * Gets file by name correct file name correct file.
+     * Gets file by name with correct file name then correct file.
      */
     @Test
-    public void getFileByName_correctFileName_correctFile() {
+    public void getFileByNameWithCorrectFileNameThenCorrectFile() {
         when(fileWriterMock.getFileByName(any())).thenReturn(any());
         fileWriterService.getFileByName(CORRECT_ENCODE_NAME);
         verify(fileWriterMock, times(TIMES_ONE)).getFileByName(any());
@@ -67,10 +67,10 @@ public class FileWriterServiceImplMockTest {
     }
 
     /**
-     * Delete file by name correct file name.
+     * Delete file by name with correct file name.
      */
     @Test
-    public void deleteFileByName_correctFileName() {
+    public void deleteFileByNameWithCorrectFileName() {
         when(fileWriterMock.deleteFileByPath(any())).thenReturn(Boolean.TRUE);
         fileWriterService.deleteFileByName(CORRECT_ENCODE_NAME);
         verify(fileWriterMock, times(TIMES_ONE)).deleteFileByPath(any());
@@ -78,10 +78,10 @@ public class FileWriterServiceImplMockTest {
     }
 
     /**
-     * Delete file by name incorrect file name file not deleted exception.
+     * Delete file by name with incorrect file name then throw file not deleted exception.
      */
     @Test(expected = FileNotDeletedException.class)
-    public void deleteFileByName_incorrectFileName_fileNotDeletedException() {
+    public void deleteFileByNameWithIncorrectFileNameThenThrowFileNotDeletedException() {
         when(fileWriterMock.deleteFileByPath(any())).thenReturn(Boolean.FALSE);
         fileWriterService.deleteFileByName(INCORRECT_ENCODE_NAME);
         verify(fileWriterMock, times(TIMES_ONE)).deleteFileByPath(any());
@@ -89,10 +89,10 @@ public class FileWriterServiceImplMockTest {
     }
 
     /**
-     * Delete files by name correct file names.
+     * Delete files by name with correct file names.
      */
     @Test
-    public void deleteFilesByName_correctFileNames() {
+    public void deleteFilesByNameWithCorrectFileNames() {
         when(fileWriterMock.deleteFileByPath(any())).thenReturn(Boolean.TRUE);
         fileWriterService.deleteFilesByNames(CORRECT_FILE_NAMES);
         verify(fileWriterMock, times(CORRECT_FILE_NAMES.size())).deleteFileByPath(any());
@@ -100,10 +100,10 @@ public class FileWriterServiceImplMockTest {
     }
 
     /**
-     * Delete files by name incorrect file names file not deleted exception.
+     * Delete files by name with incorrect file names then throw file not deleted exception.
      */
     @Test(expected = FileNotDeletedException.class)
-    public void deleteFilesByName_incorrectFileNames_fileNotDeletedException() {
+    public void deleteFilesByNameWithIncorrectFileNamesThenThrowFileNotDeletedException() {
         when(fileWriterMock.deleteFileByPath(any())).thenReturn(Boolean.FALSE);
         fileWriterService.deleteFilesByNames(CORRECT_FILE_NAMES);
         verify(fileWriterMock, times(CORRECT_FILE_NAMES.size())).deleteFileByPath(any());
@@ -111,10 +111,10 @@ public class FileWriterServiceImplMockTest {
     }
 
     /**
-     * Gets file path correct encode name correct file path.
+     * Gets file path with correct encode name then correct file path.
      */
     @Test
-    public void getFilePath_correctEncodeName_correctFilePath() {
+    public void getFilePathWithCorrectEncodeNameThenCorrectFilePath() {
         when(servletContextMock.getRealPath(any())).thenReturn(CORRECT_FILE_PATH);
         String actualFilePath = fileWriterService.getFilePath(CORRECT_ENCODE_NAME);
         String expectedFilePath = CORRECT_FILE_PATH;

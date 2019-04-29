@@ -48,10 +48,10 @@ public class RoleServiceImplMockTest {
     private RoleServiceImpl roleService;
 
     /**
-     * Gets roles by authentication correct authentication correct roles returned.
+     * Gets roles by authentication with correct authentication then correct roles returned.
      */
     @Test
-    public void getRolesByAuthentication_correctAuthentication_correctRolesReturned() {
+    public void getRolesByAuthenticationWithCorrectAuthenticationThenCorrectRolesReturned() {
         when(commonServiceMock.getAuthoritiesByAuthentication(authenticationMock)).thenReturn(CORRECT_GRANTED_AUTHORITY);
         Set<String> actualRoles = roleService.getRolesByAuthentication(authenticationMock);
         assertEquals(CORRECT_ROLES, actualRoles);
@@ -60,10 +60,10 @@ public class RoleServiceImplMockTest {
     }
 
     /**
-     * Add user role correct user id and role id correct.
+     * Add user role with correct user id and role id then correct.
      */
     @Test
-    public void addUserRole_correctUserIdAndRoleId_correct() {
+    public void addUserRoleWithCorrectUserIdAndRoleIdThenCorrect() {
         when(roleDaoMock.addUserRole(any(), any())).thenReturn(Boolean.TRUE);
         roleService.addUserRole(any(), any());
         verify(roleDaoMock, timeout(TIMES_ONE)).addUserRole(any(), any());
@@ -71,10 +71,10 @@ public class RoleServiceImplMockTest {
     }
 
     /**
-     * Add user role correct user id and role id validation exception.
+     * Add user role with correct user id and role id then throw validation exception.
      */
     @Test(expected = ValidationException.class)
-    public void addUserRole_correctUserIdAndRoleId_validationException() {
+    public void addUserRoleWithCorrectUserIdAndRoleIdThenThrowValidationException() {
         when(roleDaoMock.addUserRole(any(), any())).thenReturn(Boolean.FALSE);
         roleService.addUserRole(any(), any());
         verify(roleDaoMock, timeout(TIMES_ONE)).addUserRole(any(), any());
@@ -82,10 +82,10 @@ public class RoleServiceImplMockTest {
     }
 
     /**
-     * Gets roles by granted authorities correct granted authorities correct roles returned.
+     * Gets roles by granted authorities with correct granted authorities then correct roles returned.
      */
     @Test
-    public void getRolesByGrantedAuthorities_correctGrantedAuthorities_correctRolesReturned() {
+    public void getRolesByGrantedAuthoritiesWithCorrectGrantedAuthoritiesThenCorrectRolesReturned() {
         Set<String> actualRolesByGrantedAuthorities = roleService.getRolesByGrantedAuthorities(CORRECT_GRANTED_AUTHORITY);
         assertEquals(CORRECT_ROLES, actualRolesByGrantedAuthorities);
         verifyNoMoreInteractions(roleDaoMock, authenticationMock, userDetailsMock, commonServiceMock);

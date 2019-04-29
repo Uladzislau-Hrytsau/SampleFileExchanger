@@ -125,6 +125,14 @@
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.containers</groupId>
+            <artifactId>jersey-container-servlet-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.inject</groupId>
+            <artifactId>jersey-hk2</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -132,6 +140,7 @@
             <plugin>
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
+                <version>9.4.14.v20181114</version>
                 <configuration>
                     <scanIntervalSeconds>10</scanIntervalSeconds>
                     <webApp>
@@ -140,7 +149,41 @@
                     <httpConnector>
                         <port>8088</port>
                     </httpConnector>
+                    <scanIntervalSeconds>0</scanIntervalSeconds>
+                    <stopPort>9000</stopPort>
+                    <stopKey>STOP</stopKey>
+                    <supportedPackagings>
+                        <supportedPackaging>war</supportedPackaging>
+                    </supportedPackagings>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>start-jetty</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>start</goal>
+                        </goals>
+                        <configuration>
+                            <useTestScope>true</useTestScope>
+                            <webApp>
+                                <descriptor>${basedir}/src/test/webapp/WEB-INF/web-test.xml</descriptor>
+                                <contextPath>/</contextPath>
+                            </webApp>
+                            <scanIntervalSeconds>0</scanIntervalSeconds>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>stop-jetty</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>stop</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

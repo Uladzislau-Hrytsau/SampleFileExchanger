@@ -72,10 +72,10 @@ public class UserServiceImplMockTest {
     private UserServiceImpl userService;
 
     /**
-     * Gets users and count by page and size correct page and size correct response returned.
+     * Gets users and count by page and size with correct page and size then correct response returned.
      */
     @Test
-    public void getUsersAndCountByPageAndSize_correctPageAndSize_correctResponseReturned() {
+    public void getUsersAndCountByPageAndSizeWithCorrectPageAndSizeThenCorrectResponseReturned() {
         doNothing().when(commonValidatorMock).validatePageAndSize(any(), any());
         when(userDaoMock.getUsersByLimitAndOffset(any(), any())).thenReturn(CORRECT_USERS);
         when(userDaoMock.getUserCount()).thenReturn(Long.valueOf(CORRECT_USERS.size()));
@@ -97,10 +97,10 @@ public class UserServiceImplMockTest {
     }
 
     /**
-     * Gets users and count by page and size incorrect page and size validation exception.
+     * Gets users and count by page and size with incorrect page and size then throw validation exception.
      */
     @Test(expected = ValidationException.class)
-    public void getUsersAndCountByPageAndSize_incorrectPageAndSize_validationException() {
+    public void getUsersAndCountByPageAndSizeWithIncorrectPageAndSizeThenThrowValidationException() {
         doThrow(ValidationException.class).when(commonValidatorMock).validatePageAndSize(any(), any());
         userService.getUsersAndCountByPageAndSize(CORRECT_PAGE, CORRECT_SIZE);
         verify(commonValidatorMock, times(TIMES_ONE)).validatePageAndSize(any(), any());
@@ -114,10 +114,10 @@ public class UserServiceImplMockTest {
     }
 
     /**
-     * Add user correct user.
+     * Add user with correct user.
      */
     @Test
-    public void addUser_correctUser() {
+    public void addUserWithCorrectUser() {
         doNothing().when(userValidatorMock).validateExistingLogin(CORRECT_LOGIN, userDaoMock);
         doNothing().when(userValidatorMock).validatePassword(any());
         when(bCryptPasswordEncoderMock.encode(any())).thenReturn(CORRECT_ENCODE_PASSWORD);
@@ -143,10 +143,10 @@ public class UserServiceImplMockTest {
     }
 
     /**
-     * Add user incorrect user login validation exception.
+     * Add user with incorrect user login then throw validation exception.
      */
     @Test(expected = ValidationException.class)
-    public void addUser_incorrectUserLogin_validationException() {
+    public void addUserWithIncorrectUserLoginThenThrowValidationException() {
         doThrow(ValidationException.class).when(userValidatorMock).validateExistingLogin(any(), any());
         when(userDaoMock.addUser(any())).thenReturn(CORRECT_USER_ID);
         userService.addUser(CORRECT_USER);
@@ -168,10 +168,10 @@ public class UserServiceImplMockTest {
     }
 
     /**
-     * Add user incorrect user password validation exception.
+     * Add user with incorrect user password then throw validation exception.
      */
     @Test(expected = ValidationException.class)
-    public void addUser_incorrectUserPassword_validationException() {
+    public void addUserWithIncorrectUserPasswordThenThrowValidationException() {
         doNothing().when(userValidatorMock).validateExistingLogin(any(), any());
         doThrow(ValidationException.class).when(userValidatorMock).validatePassword(any());
         when(userDaoMock.addUser(any())).thenReturn(CORRECT_USER_ID);
@@ -195,10 +195,10 @@ public class UserServiceImplMockTest {
     }
 
     /**
-     * Add user incorrect user id internal server exception.
+     * Add user with incorrect user id then throw internal server exception.
      */
     @Test(expected = InternalServerException.class)
-    public void addUser_incorrectUserId_internalServerException() {
+    public void addUserWithIncorrectUserIdThenThrowInternalServerException() {
         doNothing().when(userValidatorMock).validateExistingLogin(any(), any());
         doNothing().when(userValidatorMock).validatePassword(any());
         when(bCryptPasswordEncoderMock.encode(any())).thenReturn(CORRECT_ENCODE_PASSWORD);
@@ -224,10 +224,10 @@ public class UserServiceImplMockTest {
     }
 
     /**
-     * Update user correct user updating dto.
+     * Update user with correct user updating dto.
      */
     @Test
-    public void updateUser_correctUserUpdatingDto() {
+    public void updateUserWithCorrectUserUpdatingDto() {
         doNothing().when(userValidatorMock).validatePassword(any());
         doNothing().when(userValidatorMock).validateInformation(any());
         when(commonValidatorMock.validateDate(any())).thenReturn(CORRECT_BIRTH_DATE);
@@ -251,10 +251,10 @@ public class UserServiceImplMockTest {
     }
 
     /**
-     * Update user incorrect user updating dto password validation exception.
+     * Update user with incorrect user updating dto password then throw validation exception.
      */
     @Test(expected = ValidationException.class)
-    public void updateUser_incorrectUserUpdatingDtoPassword_validationException() {
+    public void updateUserWithIncorrectUserUpdatingDtoPasswordThenThrowValidationException() {
         doThrow(ValidationException.class).when(userValidatorMock).validatePassword(any());
         userService.updateUser(CORRECT_USER_UPDATING_DTO);
         verify(userValidatorMock, times(TIMES_ONE)).validatePassword(any());
@@ -274,10 +274,10 @@ public class UserServiceImplMockTest {
     }
 
     /**
-     * Update user incorrect user updating dto information validation exception.
+     * Update user with incorrect user updating dto information then throw validation exception.
      */
     @Test(expected = ValidationException.class)
-    public void updateUser_incorrectUserUpdatingDtoInformation_validationException() {
+    public void updateUserWithIncorrectUserUpdatingDtoInformationThenThrowValidationException() {
         doNothing().when(userValidatorMock).validatePassword(any());
         doThrow(ValidationException.class).when(userValidatorMock).validateInformation(any());
         userService.updateUser(CORRECT_USER_UPDATING_DTO);
@@ -298,10 +298,10 @@ public class UserServiceImplMockTest {
     }
 
     /**
-     * Update user incorrect user updating dto information internal server exception.
+     * Update user with incorrect user updating dto information then throw internal server exception.
      */
     @Test(expected = InternalServerException.class)
-    public void updateUser_incorrectUserUpdatingDtoInformation_internalServerException() {
+    public void updateUserWithIncorrectUserUpdatingDtoInformationThenThrowInternalServerException() {
         doNothing().when(userValidatorMock).validatePassword(any());
         doNothing().when(userValidatorMock).validateInformation(any());
         when(commonValidatorMock.validateDate(any())).thenReturn(CORRECT_BIRTH_DATE);
@@ -325,10 +325,10 @@ public class UserServiceImplMockTest {
     }
 
     /**
-     * Delete user correct user id.
+     * Delete user with correct user id.
      */
     @Test
-    public void deleteUser_correctUserId() {
+    public void deleteUserWithCorrectUserId() {
         doNothing().when(userValidatorMock).validateUserId(any());
         doNothing().when(fileWriterServiceMock).deleteFilesByNames(any());
         when(userDaoMock.deleteUser(any())).thenReturn(Boolean.TRUE);
@@ -347,10 +347,10 @@ public class UserServiceImplMockTest {
     }
 
     /**
-     * Delete user incorrect user id validation exception.
+     * Delete user with incorrect user id then throw validation exception.
      */
     @Test(expected = ValidationException.class)
-    public void deleteUser_incorrectUserId_validationException() {
+    public void deleteUserWithIncorrectUserIdThenThrowValidationException() {
         doThrow(ValidationException.class).when(userValidatorMock).validateUserId(any());
         userService.deleteUser(CORRECT_USER_ID);
         verify(userValidatorMock, times(TIMES_ONE)).validateUserId(any());
@@ -368,10 +368,10 @@ public class UserServiceImplMockTest {
     }
 
     /**
-     * Delete user incorrect file names file not deleted exception.
+     * Delete user with incorrect file names then throw file not deleted exception.
      */
     @Test(expected = FileNotDeletedException.class)
-    public void deleteUser_incorrectFileNames_fileNotDeletedException() {
+    public void deleteUserWithIncorrectFileNamesThenThrowFileNotDeletedException() {
         doNothing().when(userValidatorMock).validateUserId(any());
         doThrow(FileNotDeletedException.class).when(fileWriterServiceMock).deleteFilesByNames(any());
         userService.deleteUser(CORRECT_USER_ID);
@@ -390,10 +390,10 @@ public class UserServiceImplMockTest {
     }
 
     /**
-     * Delete user incorrect user id internal server exception.
+     * Delete user with incorrect user id then throw internal server exception.
      */
     @Test(expected = InternalServerException.class)
-    public void deleteUser_incorrectUserId_internalServerException() {
+    public void deleteUserWithIncorrectUserIdThenThrowInternalServerException() {
         doNothing().when(userValidatorMock).validateUserId(any());
         doNothing().when(fileWriterServiceMock).deleteFilesByNames(any());
         when(userDaoMock.deleteUser(any())).thenReturn(Boolean.FALSE);
@@ -413,10 +413,10 @@ public class UserServiceImplMockTest {
     }
 
     /**
-     * Gets user count correct count returned.
+     * Gets user count with correct count returned.
      */
     @Test
-    public void getUserCount_correctCountReturned() {
+    public void getUserCountWithCorrectCountReturned() {
         when(userDaoMock.getUserCount()).thenReturn(Long.valueOf(CORRECT_SIZE));
         userService.getUserCount();
         verify(userDaoMock, times(TIMES_ONE)).getUserCount();

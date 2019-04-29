@@ -33,10 +33,10 @@ public class CategoryValidatorMockTest {
     private CategoryValidator categoryValidator;
 
     /**
-     * Validate categories by user id correct categories and user id correct.
+     * Validate categories by user id with correct categories and user id then correct.
      */
     @Test
-    public void validateCategoriesByUserId_correctCategoriesAndUserId_correct() {
+    public void validateCategoriesByUserIdWithCorrectCategoriesAndUserIdThenCorrect() {
         when(categoryDaoMock.existsCategoriesByUserId(anySet(), anyLong())).thenReturn(Boolean.TRUE);
         categoryValidator.validateCategoriesByUserId(CORRECT_CATEGORIES, CORRECT_USER_ID);
         verify(categoryDaoMock, times(TIMES_ONE)).existsCategoriesByUserId(anySet(), anyLong());
@@ -44,20 +44,20 @@ public class CategoryValidatorMockTest {
     }
 
     /**
-     * Validate categories by user id incorrect categories and correct user id validation exception.
+     * Validate categories by user id with incorrect categories and correct user id then throw validation exception.
      */
     @Test(expected = ValidationException.class)
-    public void validateCategoriesByUserId_incorrectCategoriesAndCorrectUserId_validationException() {
+    public void validateCategoriesByUserIdWithIncorrectCategoriesAndCorrectUserIdThenThrowValidationException() {
         categoryValidator.validateCategoriesByUserId(anySet(), anyLong());
         verify(categoryDaoMock, never()).existsCategoriesByUserId(anySet(), anyLong());
         verifyNoMoreInteractions(categoryDaoMock);
     }
 
     /**
-     * Validate categories by user id correct categories and user id validation exception.
+     * Validate categories by user id with correct categories and user id then throw validation exception.
      */
     @Test(expected = ValidationException.class)
-    public void validateCategoriesByUserId_correctCategoriesAndUserId_validationException() {
+    public void validateCategoriesByUserIdWithCorrectCategoriesAndUserIdThenThrowValidationException() {
         when(categoryDaoMock.existsCategoriesByUserId(anySet(), anyLong())).thenReturn(Boolean.FALSE);
         categoryValidator.validateCategoriesByUserId(CORRECT_CATEGORIES, INCORRECT_USER_ID);
         verify(categoryDaoMock, times(TIMES_ONE)).existsCategoriesByUserId(anySet(), anyLong());

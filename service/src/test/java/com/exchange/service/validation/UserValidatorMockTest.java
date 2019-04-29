@@ -34,10 +34,10 @@ public class UserValidatorMockTest {
     private UserValidator userValidator;
 
     /**
-     * Validate user id correct user id correct.
+     * Validate user id with correct user id then correct.
      */
     @Test
-    public void validateUserId_correctUserId_correct() {
+    public void validateUserIdWithCorrectUserIdThenCorrect() {
         when(commonValidatorMock.isValidIdentifier(anyLong())).thenReturn(Boolean.TRUE);
         userValidator.validateUserId(CORRECT_USER_ID);
         verify(commonValidatorMock, times(TIMES_ONE)).isValidIdentifier(anyLong());
@@ -45,10 +45,10 @@ public class UserValidatorMockTest {
     }
 
     /**
-     * Validate user id incorrect user id validation exception.
+     * Validate user id with incorrect user id then throw validation exception.
      */
     @Test(expected = ValidationException.class)
-    public void validateUserId_incorrectUserId_validationException() {
+    public void validateUserIdWithIncorrectUserIdThenThrowValidationException() {
         when(commonValidatorMock.isValidIdentifier(anyLong())).thenReturn(Boolean.FALSE);
         userValidator.validateUserId(INCORRECT_USER_ID);
         verify(commonValidatorMock, times(TIMES_ONE)).isValidIdentifier(anyLong());
@@ -56,10 +56,10 @@ public class UserValidatorMockTest {
     }
 
     /**
-     * Validate existing login correct login and user dao correct.
+     * Validate existing login with correct login and user dao then correct.
      */
     @Test
-    public void validateExistingLogin_correctLoginAndUserDao_correct() {
+    public void validateExistingLoginWithCorrectLoginAndUserDaoThenCorrect() {
         when(commonValidatorMock.isValidString(anyString())).thenReturn(Boolean.TRUE);
         when(userDaoMock.checkUserByLogin(anyString())).thenReturn(Boolean.FALSE);
         userValidator.validateExistingLogin(CORRECT_LOGIN, userDaoMock);
@@ -69,10 +69,10 @@ public class UserValidatorMockTest {
     }
 
     /**
-     * Validate existing login incorrect login and correct user dao validation exception.
+     * Validate existing login with incorrect login and correct user dao then throw validation exception.
      */
     @Test(expected = ValidationException.class)
-    public void validateExistingLogin_incorrectLoginAndCorrectUserDao_validationException() {
+    public void validateExistingLoginWithIncorrectLoginAndCorrectUserDaoThenThrowValidationException() {
         when(commonValidatorMock.isValidString(anyString())).thenReturn(Boolean.FALSE);
         userValidator.validateExistingLogin(EMPTY_LOGIN, userDaoMock);
         verify(commonValidatorMock, times(TIMES_ONE)).isValidString(anyString());
@@ -81,10 +81,10 @@ public class UserValidatorMockTest {
     }
 
     /**
-     * Validate existing login correct login and incorrect user dao validation exception.
+     * Validate existing login with correct login and incorrect user dao then throw validation exception.
      */
     @Test(expected = ValidationException.class)
-    public void validateExistingLogin_correctLoginAndIncorrectUserDao_validationException() {
+    public void validateExistingLoginWithCorrectLoginAndIncorrectUserDaoThenThrowValidationException() {
         when(commonValidatorMock.isValidString(anyString())).thenReturn(Boolean.FALSE);
         when(userDaoMock.checkUserByLogin(anyString())).thenReturn(Boolean.TRUE);
         userValidator.validateExistingLogin(CORRECT_LOGIN, userDaoMock);
@@ -94,10 +94,10 @@ public class UserValidatorMockTest {
     }
 
     /**
-     * Validate password correct password correct.
+     * Validate password with correct password then correct.
      */
     @Test
-    public void validatePassword_correctPassword_correct() {
+    public void validatePasswordWithCorrectPasswordThenCorrect() {
         when(commonValidatorMock.isValidString(anyString())).thenReturn(Boolean.TRUE);
         userValidator.validatePassword(CORRECT_PASSWORD);
         verify(commonValidatorMock, times(TIMES_ONE)).isValidString(anyString());
@@ -105,10 +105,10 @@ public class UserValidatorMockTest {
     }
 
     /**
-     * Validate password incorrect password validation exception.
+     * Validate password with incorrect password then throw validation exception.
      */
     @Test(expected = ValidationException.class)
-    public void validatePassword_incorrectPassword_validationException() {
+    public void validatePasswordWithIncorrectPasswordThenThrowValidationException() {
         when(commonValidatorMock.isValidString(anyString())).thenReturn(Boolean.FALSE);
         userValidator.validatePassword(EMPTY_PASSWORD);
         verify(commonValidatorMock, times(TIMES_ONE)).isValidString(anyString());
@@ -116,10 +116,10 @@ public class UserValidatorMockTest {
     }
 
     /**
-     * Validate information correct information correct.
+     * Validate information with correct information then correct.
      */
     @Test
-    public void validateInformation_correctInformation_correct() {
+    public void validateInformationWithCorrectInformationThenCorrect() {
         when(commonValidatorMock.isValidString(anyString())).thenReturn(Boolean.TRUE);
         userValidator.validatePassword(CORRECT_INFORMATION);
         verify(commonValidatorMock, times(TIMES_ONE)).isValidString(anyString());
@@ -127,10 +127,10 @@ public class UserValidatorMockTest {
     }
 
     /**
-     * Validate information incorrect information correct.
+     * Validate information with incorrect information then correct.
      */
     @Test(expected = ValidationException.class)
-    public void validateInformation_incorrectInformation_correct() {
+    public void validateInformationWithIncorrectInformationThenCorrect() {
         when(commonValidatorMock.isValidString(anyString())).thenReturn(Boolean.FALSE);
         userValidator.validatePassword(INCORRECT_INFORMATION);
         verify(commonValidatorMock, times(TIMES_ONE)).isValidString(anyString());

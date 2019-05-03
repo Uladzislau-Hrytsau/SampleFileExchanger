@@ -21,7 +21,7 @@ public interface RoleService {
      * Add user role.
      *
      * @param userId the user id
-     * @param roleId the role id
+     * @param roleId the role idz
      */
     void addUserRole(Long userId, Integer roleId);
 }

@@ -17,7 +17,7 @@ import java.util.Collections;
  */
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = {"com.exchange"})
+//@ComponentScan(basePackages = {"com.exchange"})
 @PropertySource({
         "classpath:message.properties"})
 public class WebConfiguration {
